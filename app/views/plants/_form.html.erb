@@ -62,6 +62,11 @@
   </div>
 
   <div class="field">
+    <%= form.label :discharge_point_id %>
+    <%= form.collection_select(:discharge_point_id, @points, :id, :name, {prompt: 'Select a Discharge Point'})  %>
+  </div>
+
+  <div class="field">
     <%= form.label :flow_design %>
     <%= form.text_field :flow_design %>
   </div>

@@ -2,6 +2,7 @@ class PlantsController < ApplicationController
   before_action :set_plant, only: [:show, :edit, :update, :destroy]
   before_action :set_companies, only: [:new, :edit, :index, :show]
   before_action :set_countries, only: [:new, :edit, :index, :show]
+  before_action :set_discharge_points, only: [:new, :edit, :show]
 
   # GET /plants
   # GET /plants.json
@@ -80,11 +81,16 @@ class PlantsController < ApplicationController
     @countries = Country.all
   end
 
+  def set_discharge_points
+    @points = DischargePoint.all
+  end
+
   def plant_params
     params.require(:plant).permit(
       :active, :name, :code, :company_id, :address01, :address02,
       :state, :zip, :phone, :flow_design, :lab_number_per_cycle,
-      :internal_number_per_cycle, :startup_date, :country_id
+      :internal_number_per_cycle, :startup_date, :country_id,
+      :discharge_point_id
     )
   end
 end
