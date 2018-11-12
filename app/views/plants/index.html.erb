@@ -1,0 +1,51 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Plants</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Active</th>
+      <th>Name</th>
+      <th>Code</th>
+      <th>Company</th>
+      <th>Address01</th>
+      <th>Address02</th>
+      <th>State</th>
+      <th>Zip</th>
+      <th>Phone</th>
+      <th>Flow design</th>
+      <th>Lab number per cycle</th>
+      <th>Internal number per cycle</th>
+      <th>Startup date</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @plants.each do |plant| %>
+      <tr>
+        <td><%= plant.active %></td>
+        <td><%= plant.name %></td>
+        <td><%= plant.code %></td>
+        <td><%= plant.company.name %></td>
+        <td><%= plant.address01 %></td>
+        <td><%= plant.address02 %></td>
+        <td><%= plant.state %></td>
+        <td><%= plant.zip %></td>
+        <td><%= plant.phone %></td>
+        <td><%= plant.flow_design %></td>
+        <td><%= plant.lab_number_per_cycle %></td>
+        <td><%= plant.internal_number_per_cycle %></td>
+        <td><%= plant.startup_date %></td>
+        <td><%= link_to 'Show', plant %></td>
+        <td><%= link_to 'Edit', edit_plant_path(plant) %></td>
+        <td><%= link_to 'Destroy', plant, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Plant', new_plant_path %>

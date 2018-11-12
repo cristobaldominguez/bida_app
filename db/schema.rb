@@ -25,6 +25,27 @@ ActiveRecord::Schema.define(version: 2018_10_26_024934) do
     t.index ["industry_id"], name: "index_companies_on_industry_id"
   end
 
+  create_table "plants", force: :cascade do |t|
+    t.boolean "active", default: true
+    t.string "name"
+    t.string "code"
+    t.bigint "company_id", null: false
+    t.string "address01"
+    t.string "address02"
+    t.string "state"
+    t.string "zip"
+    t.string "phone"
+    t.string "flow_design"
+    t.integer "lab_number_per_cycle"
+    t.integer "internal_number_per_cycle"
+    t.date "startup_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "country_id"
+    t.index ["company_id"], name: "index_plants_on_company_id"
+    t.index ["country_id"], name: "index_plants_on_country_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -37,4 +58,5 @@ ActiveRecord::Schema.define(version: 2018_10_26_024934) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "plants", "companies"
 end

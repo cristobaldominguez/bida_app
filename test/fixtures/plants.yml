@@ -1,0 +1,31 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  active: false
+  name: MyString
+  code: MyString
+  company: one
+  address01: MyString
+  address02: MyString
+  state: MyString
+  zip: MyString
+  phone: MyString
+  flow_design: MyString
+  lab_number_per_cycle: 1
+  internal_number_per_cycle: 1
+  startup_date: 2018-11-09
+
+two:
+  active: false
+  name: MyString
+  code: MyString
+  company: two
+  address01: MyString
+  address02: MyString
+  state: MyString
+  zip: MyString
+  phone: MyString
+  flow_design: MyString
+  lab_number_per_cycle: 1
+  internal_number_per_cycle: 1
+  startup_date: 2018-11-09

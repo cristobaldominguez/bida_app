@@ -1,0 +1,74 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Active:</strong>
+  <%= @plant.active %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @plant.name %>
+</p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @plant.code %>
+</p>
+
+<p>
+  <strong>Company:</strong>
+  <%= @plant.company.name %>
+</p>
+
+<p>
+  <strong>Address01:</strong>
+  <%= @plant.address01 %>
+</p>
+
+<p>
+  <strong>Address02:</strong>
+  <%= @plant.address02 %>
+</p>
+
+<p>
+  <strong>State:</strong>
+  <%= @plant.state %>
+</p>
+
+<p>
+  <strong>Zip:</strong>
+  <%= @plant.zip %>
+</p>
+
+<p>
+  <strong>Country:</strong>
+  <%= @plant.country.name %>
+</p>
+
+<p>
+  <strong>Phone:</strong>
+  <%= @plant.phone %>
+</p>
+
+<p>
+  <strong>Flow design:</strong>
+  <%= @plant.flow_design %>
+</p>
+
+<p>
+  <strong>Lab number per cycle:</strong>
+  <%= @plant.lab_number_per_cycle %>
+</p>
+
+<p>
+  <strong>Internal number per cycle:</strong>
+  <%= @plant.internal_number_per_cycle %>
+</p>
+
+<p>
+  <strong>Startup date:</strong>
+  <%= @plant.startup_date %>
+</p>
+
+<%= link_to 'Edit', edit_plant_path(@plant) %> |
+<%= link_to 'Back', plants_path %>
