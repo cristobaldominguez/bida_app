@@ -1,0 +1,31 @@
+<h1>Companies</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Active</th>
+      <th>Name</th>
+      <th>Taxid</th>
+      <th>Industry</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @companies.each do |company| %>
+      <tr>
+        <td><%= company.active %></td>
+        <td><%= company.name %></td>
+        <td><%= company.taxid %></td>
+        <td><%= company.industry.name %></td>
+        <td><%= link_to 'Show', company %></td>
+        <td><%= link_to 'Edit', edit_company_path(company) %></td>
+        <td><%= link_to 'Destroy', company, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Company', new_company_path %>

@@ -15,6 +15,16 @@ ActiveRecord::Schema.define(version: 2018_10_26_024934) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "companies", force: :cascade do |t|
+    t.boolean "active", default: true
+    t.string "name"
+    t.string "taxid"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "industry_id"
+    t.index ["industry_id"], name: "index_companies_on_industry_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
