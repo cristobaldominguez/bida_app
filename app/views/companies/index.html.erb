@@ -3,7 +3,6 @@
 <table>
   <thead>
     <tr>
-      <th>Active</th>
       <th>Name</th>
       <th>Taxid</th>
       <th>Industry</th>
@@ -14,7 +13,6 @@
   <tbody>
     <% @companies.each do |company| %>
       <tr>
-        <td><%= company.active %></td>
         <td><%= company.name %></td>
         <td><%= company.taxid %></td>
         <td><%= company.industry.name %></td>
