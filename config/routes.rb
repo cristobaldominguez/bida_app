@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
-  resources :plants
-  resources :companies
+  resources :companies do
+    resources :plants
+  end
   devise_for :users
 
   devise_scope :user do

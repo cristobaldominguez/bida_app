@@ -36,9 +36,9 @@
         <td><%= plant.lab_number_per_cycle %></td>
         <td><%= plant.internal_number_per_cycle %></td>
         <td><%= plant.startup_date %></td>
-        <td><%= link_to 'Show', plant %></td>
-        <td><%= link_to 'Edit', edit_plant_path(plant) %></td>
-        <td><%= link_to 'Destroy', plant, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', [@company, plant] %></td>
+        <td><%= link_to 'Edit', edit_company_plant_path(@company, plant) %></td>
+        <td><%= link_to 'Destroy', [@company, plant], method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -46,4 +46,4 @@
 
 <br>
 
-<%= link_to 'New Plant', new_plant_path %>
+<%= link_to 'New Plant', new_company_plant_path %>

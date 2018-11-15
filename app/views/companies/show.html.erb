@@ -13,5 +13,22 @@
   <%= @company.industry.name %>
 </p>
 
+<p>
+  <strong>Companies:</strong>
+  <% if @plants %>
+  <ul>
+  <% @plants.each do |plant| %>
+    <li>
+      <span><%= plant.name %></span>
+      <span><%= link_to 'Show', company_plant_path(plant) %></span>
+      <span><%= link_to 'Edit', edit_company_plant_path(plant) %></span>
+      <span><%= link_to 'Destroy', company_plant_path(plant), method: :delete, data: { confirm: 'Are you sure?' }  %></span>
+    </li>
+  <% end %>
+    <li><span><%= link_to 'New Plant', new_company_plant_path(@company) %></span></li>
+  </ul>
+  <% end %>
+</p>
+
 <%= link_to 'Edit', edit_company_path(@company) %> |
 <%= link_to 'Back', companies_path %>
