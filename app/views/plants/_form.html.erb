@@ -57,6 +57,23 @@
   </div>
 
   <div class="field">
+    <%= form.label :system_size %>
+
+    <div class="system_size">
+      <ul class="system_size__elements">
+      <%= render 'system_size', plant: @plant %>
+      </ul>
+      <div class="system_size__bottom">
+        <a href="#" class="system_size__plus">+</a>
+      </div>
+    </div>
+
+    <%= form.label 'Total Size of the modules' %>
+    <%= form.text_field 'system_size_total', value: @plant.system_size.reduce(:+) %>
+    <%= form.hidden_field :system_size %>
+  </div>
+
+  <div class="field">
     <%= form.label :discharge_point_id %>
     <%= form.collection_select(:discharge_point_id, @points, :id, :name, {prompt: 'Select a Discharge Point'})  %>
   </div>

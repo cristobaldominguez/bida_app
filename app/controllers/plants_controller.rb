@@ -1,8 +1,8 @@
 class PlantsController < ApplicationController
   before_action :set_plant, only: [:show, :edit, :update, :destroy]
-  before_action :set_company, only: [:show, :edit,:new, :create, :update, :destroy]
+  before_action :set_company, only: [:show, :edit, :new, :create, :update, :destroy]
   before_action :set_companies, only: :index
-  before_action :set_countries, only: [:new, :edit, :create, :update]
+  before_action :set_discharge_points, :set_countries, only: [:new, :edit, :create, :update]
 
   # GET companies/:company_id/plants
   # GET companies/:company_id/plants.json
@@ -97,7 +97,7 @@ class PlantsController < ApplicationController
       :active, :name, :code, :company_id, :address01, :address02,
       :state, :zip, :phone, :flow_design, :lab_number_per_cycle,
       :internal_number_per_cycle, :startup_date, :country_id,
-      :discharge_point_id
+      :discharge_point_id, system_size: []
     )
   end
 end
