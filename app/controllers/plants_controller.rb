@@ -1,8 +1,8 @@
 class PlantsController < ApplicationController
-  before_action :set_plant, only: [:show, :edit, :update, :destroy]
-  before_action :set_company, only: [:show, :edit, :new, :create, :update, :destroy]
+  before_action :set_plant, only: %i[show edit update destroy]
+  before_action :set_company, only: %i[show edit new create update destroy]
   before_action :set_companies, only: :index
-  before_action :set_discharge_points, :set_countries, only: [:new, :edit, :create, :update]
+  before_action :set_discharge_points, :set_countries, only: %i[new edit create update]
 
   # GET companies/:company_id/plants
   # GET companies/:company_id/plants.json
@@ -13,13 +13,12 @@ class PlantsController < ApplicationController
 
   # GET companies/:company_id/plants/1
   # GET companies/:company_id/plants/1.json
-  def show
-  end
+  def show; end
 
   # GET companies/:company_id/plants/new
   def new
     @plant = @company.plants.build
-   end
+  end
 
   # GET companies/:company_id/plants/1/edit
   def edit
@@ -45,7 +44,6 @@ class PlantsController < ApplicationController
   # PATCH/PUT companies/:company_id/plants/1
   # PATCH/PUT companies/:company_id/plants/1.json
   def update
-
     @plant.system_size = params[:plant][:system_size].split(' ').map(&:to_i)
     respond_to do |format|
       if @plant.update(plant_params)
