@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     resources :plants
   end
   devise_for :users
+  resources :users
 
   devise_scope :user do
     authenticated :user do
