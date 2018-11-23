@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :alerts
   resources :companies do
     resources :plants
   end

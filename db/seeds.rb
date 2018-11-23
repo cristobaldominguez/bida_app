@@ -21,4 +21,20 @@ if Rails.env == 'development'
     DischargePoint.create!(name: point)
   end
 
+  incidents = ['ph Imbalance', 'Worms Mortality', 'Odors', 'Run off Chemicals', 'Flooding']
+  incidents.each do |incident|
+    IncidentType.create!(name: incident)
+  end
+
+  statuses = ['Open', 'Fixed', 'Being Remedied']
+  statuses.each do |status|
+    Status.create!(name: status)
+  end
+
+  priorities = ['Within 24 Hours', 'Within 3 Days', 'Within 7 Days', 'Within 30 Days']
+  priorities.each do |priority|
+    Priority.create!(name: priority)
+  end
+
+  puts 'Added Seeds!'
 end

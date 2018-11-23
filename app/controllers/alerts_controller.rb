@@ -1,0 +1,89 @@
+class AlertsController < ApplicationController
+  before_action :set_alert, only: [:show, :edit, :update, :destroy]
+  before_action :set_incident_type, :set_status, :set_priority, only: [:new, :edit, :create, :update]
+
+  # GET /alerts
+  # GET /alerts.json
+  def index
+    @alerts = Alert.all
+  end
+
+  # GET /alerts/1
+  # GET /alerts/1.json
+  def show; end
+
+  # GET /alerts/new
+  def new
+    @alert = Alert.new
+  end
+
+  # GET /alerts/1/edit
+  def edit; end
+
+  # POST /alerts
+  # POST /alerts.json
+  def create
+    @alert = Alert.new(alert_params)
+    @alert.user = current_user
+    @alert.plant = Plant.active.first
+
+    respond_to do |format|
+      if @alert.save
+        format.html { redirect_to @alert, notice: 'Alert was successfully created.' }
+        format.json { render :show, status: :created, location: @alert }
+      else
+        format.html { render :new }
+        format.json { render json: @alert.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # PATCH/PUT /alerts/1
+  # PATCH/PUT /alerts/1.json
+  def update
+    respond_to do |format|
+      if @alert.update(alert_params)
+        format.html { redirect_to @alert, notice: 'Alert was successfully updated.' }
+        format.json { render :show, status: :ok, location: @alert }
+      else
+        format.html { render :edit }
+        format.json { render json: @alert.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # DELETE /alerts/1
+  # DELETE /alerts/1.json
+  def destroy
+    @alert.active = false
+    @alert.save
+    respond_to do |format|
+      format.html { redirect_to alerts_url, notice: 'Alert was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+
+  private
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_alert
+    @alert = Alert.find(params[:id])
+  end
+
+  def set_incident_type
+    @incidents = IncidentType.all
+  end
+
+  def set_status
+    @statuses = Status.all
+  end
+
+  def set_priority
+    @priorities = Priority.all
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def alert_params
+    params.require(:alert).permit(:user_id, :plant_id, :incident_type_id, :status_id, :priority_id, :incident_description, :negative_impact, :solution, :incident_resolution, :solution_target_date, :technician_hours_required)
+  end
+end

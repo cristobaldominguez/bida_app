@@ -5,4 +5,6 @@ class User < ApplicationRecord
          :rememberable, :validatable
 
   has_and_belongs_to_many :plants
+  has_and_belongs_to_many :alerts
+
 end

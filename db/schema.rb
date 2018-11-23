@@ -10,10 +10,41 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_20_213537) do
+ActiveRecord::Schema.define(version: 2018_11_22_223718) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "alerts", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "plant_id"
+    t.bigint "incident_type_id"
+    t.bigint "status_id"
+    t.bigint "priority_id"
+    t.text "incident_description"
+    t.text "negative_impact"
+    t.text "solution"
+    t.text "incident_resolution"
+    t.date "solution_target_date"
+    t.integer "technician_hours_required"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "active", default: true
+    t.index ["incident_type_id"], name: "index_alerts_on_incident_type_id"
+    t.index ["plant_id"], name: "index_alerts_on_plant_id"
+    t.index ["priority_id"], name: "index_alerts_on_priority_id"
+    t.index ["status_id"], name: "index_alerts_on_status_id"
+    t.index ["user_id"], name: "index_alerts_on_user_id"
+  end
+
+  create_table "alerts_users", id: false, force: :cascade do |t|
+    t.bigint "alert_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "alerts_id"
+    t.bigint "users_id"
+    t.index ["alerts_id"], name: "index_alerts_users_on_alerts_id"
+    t.index ["users_id"], name: "index_alerts_users_on_users_id"
+  end
 
   create_table "companies", force: :cascade do |t|
     t.boolean "active", default: true
@@ -32,6 +63,12 @@ ActiveRecord::Schema.define(version: 2018_11_20_213537) do
   end
 
   create_table "discharge_points", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "incident_types", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -72,6 +109,18 @@ ActiveRecord::Schema.define(version: 2018_11_20_213537) do
     t.bigint "user_id", null: false
   end
 
+  create_table "priorities", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "statuses", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -91,6 +140,13 @@ ActiveRecord::Schema.define(version: 2018_11_20_213537) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "alerts", "incident_types"
+  add_foreign_key "alerts", "plants"
+  add_foreign_key "alerts", "priorities"
+  add_foreign_key "alerts", "statuses"
+  add_foreign_key "alerts", "users"
+  add_foreign_key "alerts_users", "alerts", column: "alerts_id"
+  add_foreign_key "alerts_users", "users", column: "users_id"
   add_foreign_key "companies", "industries"
   add_foreign_key "plants", "companies"
   add_foreign_key "plants", "countries"

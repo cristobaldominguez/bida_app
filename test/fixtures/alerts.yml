@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  plant: one
+  incident: one
+  status: one
+  priority: one
+  incident_description: MyText
+  negative_impact: MyText
+  solution: MyText
+  incident_resolution: MyText
+  solution_target_date: 2018-11-22
+  technician_hours_required: 1
+
+two:
+  user: two
+  plant: two
+  incident: two
+  status: two
+  priority: two
+  incident_description: MyText
+  negative_impact: MyText
+  solution: MyText
+  incident_resolution: MyText
+  solution_target_date: 2018-11-22
+  technician_hours_required: 1

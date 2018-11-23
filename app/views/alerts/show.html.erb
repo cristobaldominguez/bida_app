@@ -1,0 +1,47 @@
+<p>
+  <strong>Incident Type:</strong>
+  <%= @alert.incident_type.name %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @alert.status.name %>
+</p>
+
+<p>
+  <strong>Priority:</strong>
+  <%= @alert.priority.name %>
+</p>
+
+<p>
+  <strong>Incident description:</strong>
+  <%= @alert.incident_description %>
+</p>
+
+<p>
+  <strong>Negative impact:</strong>
+  <%= @alert.negative_impact %>
+</p>
+
+<p>
+  <strong>Solution:</strong>
+  <%= @alert.solution %>
+</p>
+
+<p>
+  <strong>Incident resolution:</strong>
+  <%= @alert.incident_resolution %>
+</p>
+
+<p>
+  <strong>Solution target date:</strong>
+  <%= @alert.solution_target_date %>
+</p>
+
+<p>
+  <strong>Technician hours required:</strong>
+  <%= @alert.technician_hours_required %>
+</p>
+
+<%= link_to 'Edit', edit_alert_path(@alert) %> |
+<%= link_to 'Back', alerts_path %>

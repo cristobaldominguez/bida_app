@@ -1,0 +1,39 @@
+<h1>Alerts</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Incident</th>
+      <th>Status</th>
+      <th>Priority</th>
+      <th>Incident description</th>
+      <th>Negative impact</th>
+      <th>Solution</th>
+      <th>Incident resolution</th>
+      <th>Solution target date</th>
+      <th>Technician hours required</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @alerts.each do |alert| %>
+      <tr>
+        <td><%= alert.incident_type.name %></td>
+        <td><%= alert.status.name %></td>
+        <td><%= alert.priority.name %></td>
+        <td><%= alert.incident_description %></td>
+        <td><%= alert.negative_impact %></td>
+        <td><%= alert.solution %></td>
+        <td><%= alert.incident_resolution %></td>
+        <td><%= alert.solution_target_date %></td>
+        <td><%= alert.technician_hours_required %></td>
+        <td><%= link_to 'Show', alert %></td>
+        <td><%= link_to 'Edit', edit_alert_path(alert) %></td>
+        <td><%= link_to 'Destroy', alert, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'New Alert', new_alert_path %>
