@@ -1,4 +1,5 @@
 class AlertsController < ApplicationController
+  before_action :set_create_assignment, only: :create
   before_action :set_alert, only: [:show, :edit, :update, :destroy]
   before_action :set_incident_type, :set_status, :set_priority, only: [:new, :edit, :create, :update]
 
@@ -10,32 +11,33 @@ class AlertsController < ApplicationController
 
   # GET /alerts/1
   # GET /alerts/1.json
-  def show; end
+  def show
+    @plant = Alert.find(params[:id]).plant
+  end
 
   # GET /alerts/new
   def new
-    @alert = Alert.new
+    @plant = Plant.find(params[:plant_id])
+    @alert = @plant.alerts.build
   end
-
-  # GET /alerts/1/edit
-  def edit; end
 
   # POST /alerts
   # POST /alerts.json
   def create
-    @alert = Alert.new(alert_params)
-    @alert.user = current_user
-    @alert.plant = Plant.active.first
-
     respond_to do |format|
       if @alert.save
-        format.html { redirect_to @alert, notice: 'Alert was successfully created.' }
+        format.html { redirect_to plant_path(@alert.plant), notice: 'Alert was successfully created.' }
         format.json { render :show, status: :created, location: @alert }
       else
         format.html { render :new }
         format.json { render json: @alert.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  # GET /alerts/1/edit
+  def edit
+    @plant = Alert.find(params[:id]).plant
   end
 
   # PATCH/PUT /alerts/1
@@ -57,8 +59,9 @@ class AlertsController < ApplicationController
   def destroy
     @alert.active = false
     @alert.save
+
     respond_to do |format|
-      format.html { redirect_to alerts_url, notice: 'Alert was successfully destroyed.' }
+      format.html { redirect_to plant_path(@alert.plant), notice: 'Alert was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -80,6 +83,12 @@ class AlertsController < ApplicationController
 
   def set_priority
     @priorities = Priority.all
+  end
+
+  def set_create_assignment
+    @alert = Alert.new(alert_params)
+    @alert.user = current_user
+    @alert.plant = Plant.find(params[:plant_id])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

@@ -1,4 +1,4 @@
-<%= form_with(model: alert, local: true) do |form| %>
+<%= form_with(model: alert, url: [alert.plant, alert], local: true) do |form| %>
   <% if alert.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(alert.errors.count, "error") %> prohibited this alert from being saved:</h2>

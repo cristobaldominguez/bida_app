@@ -37,15 +37,6 @@ ActiveRecord::Schema.define(version: 2018_11_22_223718) do
     t.index ["user_id"], name: "index_alerts_on_user_id"
   end
 
-  create_table "alerts_users", id: false, force: :cascade do |t|
-    t.bigint "alert_id", null: false
-    t.bigint "user_id", null: false
-    t.bigint "alerts_id"
-    t.bigint "users_id"
-    t.index ["alerts_id"], name: "index_alerts_users_on_alerts_id"
-    t.index ["users_id"], name: "index_alerts_users_on_users_id"
-  end
-
   create_table "companies", force: :cascade do |t|
     t.boolean "active", default: true
     t.string "name"
@@ -145,8 +136,6 @@ ActiveRecord::Schema.define(version: 2018_11_22_223718) do
   add_foreign_key "alerts", "priorities"
   add_foreign_key "alerts", "statuses"
   add_foreign_key "alerts", "users"
-  add_foreign_key "alerts_users", "alerts", column: "alerts_id"
-  add_foreign_key "alerts_users", "users", column: "users_id"
   add_foreign_key "companies", "industries"
   add_foreign_key "plants", "companies"
   add_foreign_key "plants", "countries"
