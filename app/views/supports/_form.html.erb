@@ -1,0 +1,46 @@
+<%= form_with(model: support, url:[support.plant, support], local: true) do |form| %>
+  <% if support.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(support.errors.count, "error") %> prohibited this support from being saved:</h2>
+
+      <ul>
+      <% support.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <label for="">Number: #<%= support.number %></label>
+  </div>
+
+  <div class="field">
+    <label for="">Attention</label>
+    <%= form.collection_check_boxes(:user_id, @support.plant.users, :id, :name)  %>
+  </div>
+
+  <div class="field">
+    <%= form.label :start_date %>
+    <%= form.date_select :start_date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :end_date %>
+    <%= form.date_select :end_date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :client_onsite %>
+    <%= form.check_box :client_onsite %>
+  </div>
+
+  <div class="field">
+    <%= form.label :name_client_onsite %>
+    <%= form.text_field :name_client_onsite %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :rememberable, :validatable
 
   has_many :alerts, dependent: :destroy
+  has_many :supports, dependent: :destroy
 
   has_and_belongs_to_many :plants
 end

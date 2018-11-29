@@ -4,8 +4,10 @@ Rails.application.routes.draw do
   end
   resources :plants, path_prefix: '/companies/:company_id', except: [:new, :create, :destroy] do
     resources :alerts, only: [:new, :create, :update, :destroy]
+    resources :supports, only: [:new, :create, :update, :destroy]
   end
   resources :alerts, path_prefix: '/plants/:plant_id', except: [:new, :create, :update, :destroy]
+  resources :supports, path_prefix: '/plants/:plant_id', except: [:new, :create, :update, :destroy]
 
   devise_for :users
   resources :users

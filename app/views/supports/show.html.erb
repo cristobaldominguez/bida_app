@@ -1,0 +1,27 @@
+<p>
+  <strong>Number:</strong>
+  <%= @support.number %>
+</p>
+
+<p>
+  <strong>Start date:</strong>
+  <%= @support.start_date %>
+</p>
+
+<p>
+  <strong>End date:</strong>
+  <%= @support.end_date %>
+</p>
+
+<p>
+  <strong>Client onsite:</strong>
+  <%= @support.client_onsite %>
+</p>
+
+<p>
+  <strong>Name client onsite:</strong>
+  <%= @support.name_client_onsite %>
+</p>
+
+<%= link_to 'Edit', edit_support_path(@support) %> |
+<%= link_to 'Back', supports_path %>
