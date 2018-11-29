@@ -16,13 +16,13 @@ class SupportsController < ApplicationController
   def new
     @plant = Plant.find(params[:plant_id])
     @support = @plant.supports.build
-    @support.number = Support.all.size + 1000
     @attention = Plant.find(params[:plant_id]).users
   end
 
   # POST /plants/1/supports
   # POST /plants/1/supports.json
   def create
+    @support.number = Support.all.size + 1000 + 1
     respond_to do |format|
       if @support.save
         format.html { redirect_to @support, notice: 'Support was successfully created.' }

@@ -1,7 +1,4 @@
-<p>
-  <strong>Number:</strong>
-  <%= @support.number %>
-</p>
+<h1>Support Ticket #<%= @support.number %></h1>
 
 <p>
   <strong>Start date:</strong>
@@ -24,4 +21,4 @@
 </p>
 
 <%= link_to 'Edit', edit_support_path(@support) %> |
-<%= link_to 'Back', supports_path %>
+<%= link_to 'Back', plant_path(@support.plant) %>
