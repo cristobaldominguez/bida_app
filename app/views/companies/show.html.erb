@@ -14,14 +14,14 @@
 </p>
 
 <p>
-  <strong>Companies:</strong>
+  <strong>Plants:</strong>
   <% if @plants %>
   <ul>
   <% @plants.each do |plant| %>
     <li>
       <span><%= plant.name %></span>
-      <span><%= link_to 'Show', [@company, plant] %></span>
-      <span><%= link_to 'Edit', edit_company_plant_path(@company, plant) %></span>
+      <span><%= link_to 'Show', plant %></span>
+      <span><%= link_to 'Edit', edit_plant_path(plant) %></span>
       <span><%= link_to 'Destroy', [@company, plant], method: :delete, data: { confirm: 'Are you sure?' }  %></span>
     </li>
   <% end %>

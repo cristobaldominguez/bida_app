@@ -73,5 +73,35 @@
   <%= @plant.startup_date %>
 </p>
 
-<%= link_to 'Edit', edit_company_plant_path(@company, @plant) %> |
+<p>
+  <strong>Alerts:</strong>
+  <ul>
+  <% @alerts.each do |alert| %>
+  <li>
+    <span><%= alert.title %></span>
+    <span><%= link_to 'Show', alert %></span>
+    <span><%= link_to 'Edit', edit_alert_path(alert) %></span>
+    <span><%= link_to 'Destroy', [@plant, alert], method: :delete, data: { confirm: 'Are you sure?' }  %></span>
+  </li>
+  <% end %>
+  <li><%= link_to 'New Alert', new_plant_alert_path(@plant) %></li>
+</ul>
+</p>
+
+<p>
+  <strong>Supports:</strong>
+  <ul>
+  <% @supports.each do |support| %>
+  <li>
+    <span>#<%= support.number %></span>
+    <span><%= link_to 'Show', support %></span>
+    <span><%= link_to 'Edit', edit_support_path(support) %></span>
+    <span><%= link_to 'Destroy', [@plant, support], method: :delete, data: { confirm: 'Are you sure?' }  %></span>
+  </li>
+  <% end %>
+  <li><%= link_to 'New Support', new_plant_support_path(@plant) %></li>
+</ul>
+</p>
+
+<%= link_to 'Edit', edit_plant_path(@plant) %> |
 <%= link_to 'Back', company_path(@company) %>

@@ -1,6 +1,6 @@
 class PlantsController < ApplicationController
   before_action :set_plant, only: %i[show edit update destroy]
-  before_action :set_company, only: %i[show edit new create update destroy]
+  before_action :set_company, only: %i[show create update destroy]
   before_action :set_companies, only: :index
   before_action :set_discharge_points, :set_countries, only: %i[new edit create update]
 
@@ -13,26 +13,31 @@ class PlantsController < ApplicationController
 
   # GET companies/:company_id/plants/1
   # GET companies/:company_id/plants/1.json
-  def show; end
+  def show
+    @alerts = @plant.alerts.active
+    @supports = @plant.supports.active
+  end
 
   # GET companies/:company_id/plants/new
   def new
+    @company = Company.find(params[:company_id])
     @plant = @company.plants.build
+    @attention = @company.plants.users
   end
 
   # GET companies/:company_id/plants/1/edit
   def edit
     @plant = Plant.find(params[:id])
+    @company = @plant.company
   end
 
   # POST companies/:company_id/plants
   # POST companies/:company_id/plants.json
   def create
     @plant = @company.plants.build(plant_params)
-
     respond_to do |format|
       if @plant.save
-        format.html { redirect_to [@company, @plant], notice: 'Plant was successfully created.' }
+        format.html { redirect_to @plant, notice: 'Plant was successfully created.' }
         format.json { render :show, status: :created, location: @plant }
       else
         format.html { render :new }
@@ -47,7 +52,7 @@ class PlantsController < ApplicationController
     @plant.system_size = params[:plant][:system_size].split(' ').map(&:to_i)
     respond_to do |format|
       if @plant.update(plant_params)
-        format.html { redirect_to company_plant_path(@company, @plant), notice: 'Plant was successfully updated.' }
+        format.html { redirect_to @plant, notice: 'Plant was successfully updated.' }
         format.json { render :show, status: :ok, location: @plant }
       else
         format.html { render :edit }
@@ -61,9 +66,8 @@ class PlantsController < ApplicationController
   def destroy
     @plant.active = false
     @plant.save
-
     respond_to do |format|
-      format.html { redirect_to company_plants_path(@company), notice: 'Plant was successfully destroyed.' }
+      format.html { redirect_to company_path(@company), notice: 'Plant was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -75,7 +79,7 @@ class PlantsController < ApplicationController
   end
 
   def set_company
-    @company = Company.find(params[:company_id])
+    @company = params[:company_id].nil? ? Plant.find(params[:id]).company : Company.find(params[:company_id])
   end
 
   def set_companies

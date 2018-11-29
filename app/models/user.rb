@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :recoverable,
          :rememberable, :validatable
 
-  has_and_belongs_to_many :plants
   has_many :alerts, dependent: :destroy
 
+  has_and_belongs_to_many :plants
 end
