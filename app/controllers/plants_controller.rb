@@ -97,7 +97,8 @@ class PlantsController < ApplicationController
   def plant_params
     params.require(:plant).permit(
       :name, :code, :company_id, :address01, :address02, :state, :zip, :phone,
-      :flow_design, :startup_date, :country_id, :discharge_point_id, system_size: []
+      :flow_design, :startup_date, :country_id, :discharge_point_id, :contact_id,
+      :bf_contact_id, system_size: []
     )
   end
 end

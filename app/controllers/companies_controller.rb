@@ -74,8 +74,8 @@ class CompaniesController < ApplicationController
       @industries = Industry.all
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def company_params
-      params.require(:company).permit(:active, :name, :taxid, :industry_id)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def company_params
+    params.require(:company).permit(:active, :name, :taxid, :industry_id, :contact_id, :bf_contact_id)
+  end
 end
