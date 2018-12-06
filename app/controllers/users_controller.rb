@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :set_plants, only: [:new, :create, :update]
-  before_action :grouped_plants, only: :edit
+  before_action :set_plants, only: [:create, :update]
+  before_action :grouped_plants, only: [:edit, :new]
 
   # GET /users
   # GET /users.json

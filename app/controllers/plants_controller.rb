@@ -3,6 +3,7 @@ class PlantsController < ApplicationController
   before_action :set_company, only: %i[show create update destroy]
   before_action :set_companies, only: :index
   before_action :set_discharge_points, :set_countries, only: %i[new edit create update]
+  before_action :set_users, only: %i[new edit create update]
 
   # GET companies/:company_id/plants
   # GET companies/:company_id/plants.json
@@ -22,7 +23,6 @@ class PlantsController < ApplicationController
   def new
     @company = Company.find(params[:company_id])
     @plant = @company.plants.build
-    @attention = @company.plants.users
   end
 
   # GET companies/:company_id/plants/1/edit
@@ -92,6 +92,10 @@ class PlantsController < ApplicationController
 
   def set_discharge_points
     @points = DischargePoint.all
+  end
+
+  def set_users
+    @users = User.active
   end
 
   def plant_params
