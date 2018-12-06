@@ -15,4 +15,7 @@ class User < ApplicationRecord
   has_many :contact_plants, class_name: 'Plant', foreign_key: 'contact_id'
   has_many :bf_contact_plants, class_name: 'Plant', foreign_key: 'bf_contact_id'
 
+  def full_name
+    "#{name} #{lastname}"
+  end
 end
