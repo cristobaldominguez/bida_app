@@ -82,8 +82,6 @@ ActiveRecord::Schema.define(version: 2018_11_29_133937) do
     t.string "zip"
     t.string "phone"
     t.string "flow_design"
-    t.integer "lab_number_per_cycle"
-    t.integer "internal_number_per_cycle"
     t.date "startup_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
