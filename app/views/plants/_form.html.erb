@@ -82,11 +82,15 @@
   </div>
 
   <div class="field">
+    <%= form.label 'Plant Contact' %>
+    <%= form.collection_select(:contact_id, @users, :id, :full_name, {prompt: 'Select a Company Contact'})  %>
   </div>
 
   <div class="field">
     <%= form.label :startup_date %>
     <%= form.date_select :startup_date %>
+    <%= form.label 'BF Contact' %>
+    <%= form.collection_select(:bf_contact_id, @users, :id, :full_name, {prompt: 'Select a Company Contact'})  %>
   </div>
 
   <div class="actions">

@@ -8,4 +8,11 @@ class User < ApplicationRecord
   has_many :supports, dependent: :destroy
 
   has_and_belongs_to_many :plants
+
+  has_many :contact_companies, class_name: 'Company', foreign_key: 'contact_id'
+  has_many :bf_contact_companies, class_name: 'Company', foreign_key: 'bf_contact_id'
+
+  has_many :contact_plants, class_name: 'Plant', foreign_key: 'contact_id'
+  has_many :bf_contact_plants, class_name: 'Plant', foreign_key: 'bf_contact_id'
+
 end

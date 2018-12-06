@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_29_133937) do
+ActiveRecord::Schema.define(version: 2018_12_04_161417) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,10 @@ ActiveRecord::Schema.define(version: 2018_11_29_133937) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "industry_id"
+    t.bigint "bf_contact_id"
+    t.bigint "contact_id"
+    t.index ["bf_contact_id"], name: "index_companies_on_bf_contact_id"
+    t.index ["contact_id"], name: "index_companies_on_contact_id"
     t.index ["industry_id"], name: "index_companies_on_industry_id"
   end
 
@@ -88,7 +92,11 @@ ActiveRecord::Schema.define(version: 2018_11_29_133937) do
     t.bigint "country_id"
     t.bigint "discharge_point_id"
     t.string "system_size"
+    t.bigint "bf_contact_id"
+    t.bigint "contact_id"
+    t.index ["bf_contact_id"], name: "index_plants_on_bf_contact_id"
     t.index ["company_id"], name: "index_plants_on_company_id"
+    t.index ["contact_id"], name: "index_plants_on_contact_id"
     t.index ["country_id"], name: "index_plants_on_country_id"
     t.index ["discharge_point_id"], name: "index_plants_on_discharge_point_id"
   end

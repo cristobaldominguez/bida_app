@@ -26,6 +26,16 @@
     <%= form.collection_select(:industry_id, @industries, :id, :name, {prompt: 'Select an Industry'})  %>
   </div>
 
+  <div class="field">
+    <label>Company Contact</label>
+    <%= form.collection_select(:contact_id, @users, :id, :full_name, {prompt: 'Select a BF Contact'})  %>
+  </div>
+
+  <div class="field">
+    <label>BF Contact</label>
+    <%= form.collection_select(:bf_contact_id, @users, :id, :full_name, {prompt: 'Select a BF Contact'})  %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>
