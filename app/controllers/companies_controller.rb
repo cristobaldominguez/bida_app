@@ -1,7 +1,7 @@
 class CompaniesController < ApplicationController
   before_action :set_company, only: [:show, :edit, :update, :destroy]
   before_action :set_industries, only: [:new, :edit, :show]
-  before_action :set_all_users, only: [:new, :create, :edit, :update]
+  before_action :set_users, only: [:new, :create, :edit, :update]
 
   # GET /companies
   # GET /companies.json
@@ -74,7 +74,7 @@ class CompaniesController < ApplicationController
     @company = Company.find(params[:id])
   end
 
-  def set_all_users
+  def set_users
     @users = User.all
   end
 
