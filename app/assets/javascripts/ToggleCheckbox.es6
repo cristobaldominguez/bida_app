@@ -10,14 +10,17 @@ const ToggleCheckbox = (function(){
 
   function domManipulation() {
     const toggle_checkbox = document.querySelector('.toggle_checkbox')
+
+    if(!toggle_checkbox){return 0}
+
     toggle_checkbox.addEventListener('change', function(e){
       const checkbox_value = e.target.checked
+
       state.checks.forEach(function(check){
-        // console.log(check)
         check.checked = checkbox_value
       })
-    })
 
+    })
   }
 
   return {

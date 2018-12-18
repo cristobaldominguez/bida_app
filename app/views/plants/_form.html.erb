@@ -97,11 +97,19 @@
         </td>
         <td><%= standard.check_box :isRange, class: 'check' %></td>
         <%= standard.fields_for :bounds do |bound| %>
+        <% if standard.object.isRange %>
+        <td class="col_span">
+        <% else %>
         <td colspan="2" class="col_span">
+        <% end %>
           <%= bound.hidden_field :outlet_id, value: bound.object.outlet.id %>
           <%= bound.text_field :from, placeholder: 'Number', class: "responsive #{bound.object.outlet.name.downcase}_from" %>
         </td>
+        <% if standard.object.isRange %>
+        <td class="hidden">
+        <% else %>
         <td class="hidden hide">
+        <% end %>
           <%= bound.hidden_field :outlet_id, value: bound.object.outlet.id %>
           <%= bound.text_field :to, placeholder: 'Number', class: "responsive #{bound.object.outlet.name.downcase}_to" %>
         </td>
