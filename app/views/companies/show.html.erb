@@ -31,7 +31,7 @@
     <li>
       <span><%= plant.name %></span>
       <span><%= link_to 'Show', plant %></span>
-      <span><%= link_to 'Edit', edit_plant_path(@company, plant) %></span>
+      <span><%= link_to 'Edit', edit_plant_path(plant) %></span>
       <span><%= link_to 'Destroy', [@company, plant], method: :delete, data: { confirm: 'Are you sure?' }  %></span>
     </li>
   <% end %>
