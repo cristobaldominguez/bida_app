@@ -1,7 +1,7 @@
 class CreatePlants < ActiveRecord::Migration[5.2]
   def change
     create_table :plants do |t|
-      t.boolean :active, :default => true
+      t.boolean :active, default: true
       t.string :name
       t.string :code
       t.references :company, foreign_key: true, null: false
@@ -10,9 +10,7 @@ class CreatePlants < ActiveRecord::Migration[5.2]
       t.string :state
       t.string :zip
       t.string :phone
-      t.string :flow_design
-      t.integer :lab_number_per_cycle
-      t.integer :internal_number_per_cycle
+      t.integer :flow_design
       t.date :startup_date
 
       t.timestamps
