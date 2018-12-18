@@ -58,6 +58,30 @@
   <%= @plant.flow_design %>
 </p>
 
+<div class="field standards">
+  <h3>Standard</h3>
+  <table class="standards__view">
+    <tr>
+      <th class="standard__th">Active</th>
+      <th>Name</th>
+      <th colspan="2">In</th>
+      <th colspan="2">Out</th>
+    </tr>
+  <% @plant.standards.each do |standard| %>
+    <% if (standard.enabled) %>
+    <tr>
+      <td><input type="checkbox" name="<%= standard.option.name %>" checked="true" disabled></td>
+      <td><%= standard.option.name %></td>
+      <% standard.bounds.each do |bound| %>
+      <td><%= bound.from %></td>
+      <td><%= bound.to %></td>
+      <% end %>
+    </tr>
+    <% end %>
+  <% end %>
+  </table>
+</div>
+
 <p>
   <strong>Startup date:</strong>
   <%= @plant.startup_date %>
