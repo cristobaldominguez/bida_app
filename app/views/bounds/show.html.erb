@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Standard:</strong>
+  <%= @bound.standard %>
+</p>
+
+<p>
+  <strong>Outlet:</strong>
+  <%= @bound.outlet %>
+</p>
+
+<p>
+  <strong>From:</strong>
+  <%= @bound.from %>
+</p>
+
+<p>
+  <strong>To:</strong>
+  <%= @bound.to %>
+</p>
+
+<p>
+  <strong>Active:</strong>
+  <%= @bound.active %>
+</p>
+
+<%= link_to 'Edit', edit_bound_path(@bound) %> |
+<%= link_to 'Back', bounds_path %>

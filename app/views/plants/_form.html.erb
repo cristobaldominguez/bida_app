@@ -79,6 +79,45 @@
   </div>
 
   <div class="field">
+    <h3>Standards</h3>
+    <table>
+      <tr>
+        <th>Active</th>
+        <th>Name</th>
+        <th>Is Range</th>
+        <th colspan="2">In</th>
+        <th colspan="2">Out</th>
+      </tr>
+    <%= form.fields_for :standards do |standard| %>
+      <tr>
+        <td><%= standard.check_box :enabled, class: 'active' %></td>
+        <td>
+          <%= standard.label standard.object.option.name %>
+          <%= standard.hidden_field :option_id, value: standard.object.option.id %>
+        </td>
+        <td><%= standard.check_box :isRange, class: 'check' %></td>
+        <%= standard.fields_for :bounds do |bound| %>
+        <td colspan="2" class="col_span">
+          <%= bound.hidden_field :outlet_id, value: bound.object.outlet.id %>
+          <%= bound.text_field :from, placeholder: 'Number', class: "responsive #{bound.object.outlet.name.downcase}_from" %>
+        </td>
+        <td class="hidden hide">
+          <%= bound.hidden_field :outlet_id, value: bound.object.outlet.id %>
+          <%= bound.text_field :to, placeholder: 'Number', class: "responsive #{bound.object.outlet.name.downcase}_to" %>
+        </td>
+        <% end %>
+      </tr>
+    <% end %>
+    </table>
+  </div>
+
+    <div class="field">
+      <input class="toggle_checkbox" type="checkbox" name="toggle_checkbox" checked="checked">
+      <label for="toggle_checkbox">Toggle Active</label>
+    </div>
+
+
+  <div class="field">
     <%= form.label :startup_date %>
     <%= form.date_select :startup_date %>
   </div>

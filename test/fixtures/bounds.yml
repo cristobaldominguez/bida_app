@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  standard: one
+  outlet: one
+  from: 1.5
+  to: 1.5
+  active: false
+
+two:
+  standard: two
+  outlet: two
+  from: 1.5
+  to: 1.5
+  active: false

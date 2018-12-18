@@ -23,12 +23,20 @@ class PlantsController < ApplicationController
   def new
     @company = Company.find(params[:company_id])
     @plant = @company.plants.build
-  end
 
-  # GET companies/:company_id/plants/1/edit
-  def edit
-    @plant = Plant.find(params[:id])
-    @company = @plant.company
+    outlets = Outlet.all
+    options = Option.all
+    standards = []
+
+    options.each do |option|
+      standards << @plant.standards.build(option_id: option.id)
+    end
+
+    standards.each do |standard|
+      outlets.each do |outlet|
+        standard.bounds.build(outlet_id: outlet.id)
+      end
+    end
   end
 
   # POST companies/:company_id/plants
@@ -44,6 +52,12 @@ class PlantsController < ApplicationController
         format.json { render json: @plant.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  # GET companies/:company_id/plants/1/edit
+  def edit
+    @plant = Plant.find(params[:id])
+    @company = @plant.company
   end
 
   # PATCH/PUT companies/:company_id/plants/1
@@ -102,7 +116,9 @@ class PlantsController < ApplicationController
     params.require(:plant).permit(
       :name, :code, :company_id, :address01, :address02, :state, :zip, :phone,
       :flow_design, :startup_date, :country_id, :discharge_point_id, :contact_id,
-      :bf_contact_id, system_size: []
+      :bf_contact_id, standards_attributes: [:option_id, :plant_id, :isRange,
+        :enabled, bounds_attributes: [:standard_id, :outlet_id, :from, :to]
+      ], system_size: []
     )
   end
 end

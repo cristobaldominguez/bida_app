@@ -48,5 +48,21 @@ if Rails.env == 'development'
     Priority.create!(name: priority)
   end
 
+  # Outlets
+  Outlet.destroy_all
+  outlets = %w[In Out]
+  outlets.each do |outlet|
+    Outlet.create!(name: outlet)
+  end
+
+  # Options
+  Option.destroy_all
+  options = ['Flow', 'Ph', 'Temp', 'EC', 'TDS', 'BOD', 'COD', 'TSS', 'FOG', 'TN', 'TKN',
+             'Ammonia as N', 'Nitrate as N', 'Nitrite as N', 'TP', 'DO', 'Alkalinity as CaCo3',
+             'Bicarbonate as CaCO3', 'Fecal Coliform', 'Foam Concentrate']
+  options.each do |option|
+    Option.create!(name: option)
+  end
+
   puts 'Seeds Added!'
 end

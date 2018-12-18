@@ -11,4 +11,6 @@ class Plant < ApplicationRecord
   belongs_to :bf_contact, class_name: 'User'
 
   # validates :company, presence: true
+  has_many :standards, dependent: :destroy
+  accepts_nested_attributes_for :standards, allow_destroy: true
 end

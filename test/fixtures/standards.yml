@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  option: one
+  plant: one
+  active: false
+
+two:
+  option: two
+  plant: two
+  active: false

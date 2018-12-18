@@ -37,6 +37,18 @@ ActiveRecord::Schema.define(version: 2018_12_04_161417) do
     t.index ["user_id"], name: "index_alerts_on_user_id"
   end
 
+  create_table "bounds", force: :cascade do |t|
+    t.bigint "standard_id"
+    t.bigint "outlet_id"
+    t.float "from"
+    t.float "to"
+    t.boolean "active"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["outlet_id"], name: "index_bounds_on_outlet_id"
+    t.index ["standard_id"], name: "index_bounds_on_standard_id"
+  end
+
   create_table "companies", force: :cascade do |t|
     t.boolean "active", default: true
     t.string "name"
@@ -75,6 +87,18 @@ ActiveRecord::Schema.define(version: 2018_12_04_161417) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "options", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "outlets", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "plants", force: :cascade do |t|
     t.boolean "active", default: true
     t.string "name"
@@ -85,7 +109,7 @@ ActiveRecord::Schema.define(version: 2018_12_04_161417) do
     t.string "state"
     t.string "zip"
     t.string "phone"
-    t.string "flow_design"
+    t.integer "flow_design"
     t.date "startup_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -110,6 +134,18 @@ ActiveRecord::Schema.define(version: 2018_12_04_161417) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "standards", force: :cascade do |t|
+    t.bigint "option_id"
+    t.bigint "plant_id"
+    t.boolean "active", default: true
+    t.boolean "enabled", default: true
+    t.boolean "isRange", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["option_id"], name: "index_standards_on_option_id"
+    t.index ["plant_id"], name: "index_standards_on_plant_id"
   end
 
   create_table "statuses", force: :cascade do |t|
@@ -162,10 +198,14 @@ ActiveRecord::Schema.define(version: 2018_12_04_161417) do
   add_foreign_key "alerts", "priorities"
   add_foreign_key "alerts", "statuses"
   add_foreign_key "alerts", "users"
+  add_foreign_key "bounds", "outlets"
+  add_foreign_key "bounds", "standards"
   add_foreign_key "companies", "industries"
   add_foreign_key "plants", "companies"
   add_foreign_key "plants", "countries"
   add_foreign_key "plants", "discharge_points"
+  add_foreign_key "standards", "options"
+  add_foreign_key "standards", "plants"
   add_foreign_key "supports", "plants"
   add_foreign_key "supports", "users"
 end
