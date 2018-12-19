@@ -116,9 +116,8 @@ class PlantsController < ApplicationController
     params.require(:plant).permit(
       :name, :code, :company_id, :address01, :address02, :state, :zip, :phone,
       :flow_design, :startup_date, :country_id, :discharge_point_id, :contact_id,
-      :bf_contact_id, standards_attributes: [:option_id, :plant_id, :isRange,
-        :enabled, bounds_attributes: [:standard_id, :outlet_id, :from, :to]
-      ], system_size: []
+      :bf_contact_id, standards_attributes: [:id, :option_id, :plant_id, :isRange,
+        :enabled, bounds_attributes: [:id, :standard_id, :outlet_id, :from, :to]], system_size: []
     )
   end
 end
