@@ -59,7 +59,7 @@
 </p>
 
 <div class="field standards">
-  <h3>Standard</h3>
+  <h3>Standards</h3>
   <table class="standards__view">
     <tr>
       <th class="standard__th">Active</th>
@@ -73,8 +73,12 @@
       <td><input type="checkbox" name="<%= standard.option.name %>" checked="true" disabled></td>
       <td><%= standard.option.name %></td>
       <% standard.bounds.each do |bound| %>
+      <% if standard.isRange %>
       <td><%= bound.from %></td>
       <td><%= bound.to %></td>
+      <% else %>
+      <td colspan="2" class="standards__th"><%= bound.from %></td>
+      <% end %>
       <% end %>
     </tr>
     <% end %>
