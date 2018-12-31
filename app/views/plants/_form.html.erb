@@ -90,7 +90,7 @@
       </tr>
     <%= form.fields_for :standards do |standard| %>
       <tr>
-        <td><%= standard.check_box :enabled, class: 'active' %></td>
+        <td><%= standard.check_box :enabled, class: "standard", data: { "target" => standard.object.option.name.parameterize.underscore } %></td>
         <td>
           <%= standard.label standard.object.option.name %>
           <%= standard.hidden_field :option_id, value: standard.object.option.id %>
@@ -103,7 +103,7 @@
         <td colspan="2" class="col_span">
         <% end %>
           <%= bound.hidden_field :outlet_id, value: bound.object.outlet.id %>
-          <%= bound.text_field :from, placeholder: 'Number', class: "responsive #{bound.object.outlet.name.downcase}_from" %>
+          <%= bound.text_field :from, placeholder: 'Number', class: "responsive #{bound.object.outlet.name.parameterize.underscore}_from" %>
         </td>
         <% if standard.object.isRange %>
         <td class="hidden">
@@ -111,18 +111,17 @@
         <td class="hidden hide">
         <% end %>
           <%= bound.hidden_field :outlet_id, value: bound.object.outlet.id %>
-          <%= bound.text_field :to, placeholder: 'Number', class: "responsive #{bound.object.outlet.name.downcase}_to" %>
+          <%= bound.text_field :to, placeholder: 'Number', class: "responsive #{bound.object.outlet.name.parameterize.underscore}_to" %>
         </td>
         <% end %>
       </tr>
     <% end %>
     </table>
+    <input class="toggle_checkbox" type="checkbox" name="toggle_checkbox" checked="checked">
+    <label for="toggle_checkbox">Toggle Active</label>
   </div>
 
     <div class="field">
-      <input class="toggle_checkbox" type="checkbox" name="toggle_checkbox" checked="checked">
-      <label for="toggle_checkbox">Toggle Active</label>
-    </div>
 
 
   <div class="field">
