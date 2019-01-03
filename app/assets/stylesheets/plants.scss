@@ -39,3 +39,11 @@ span.size__delete {
   color: #333;
   padding: 5px;
 }
+
+.description {
+  display: none;
+
+  &.show {
+    display: block;
+  }
+}
