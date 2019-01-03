@@ -1,0 +1,215 @@
+<%= form_with(model: inspection, local: true) do |form| %>
+  <% if inspection.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(inspection.errors.count, "error") %> prohibited this inspection from being saved:</h2>
+
+      <ul>
+      <% inspection.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <h2 class="cell_division">General Info</h2>
+
+  <h2 class="cell_division">Water Quality</h2>
+
+  <%= form.fields_for :fluents do |fluent| %>
+    <h3><%= fluent.object.output.name %></h3>
+
+    <div class="field">
+      <%= fluent.label "#{fluent.object.output.name} Sampling pH" %>
+      <%= fluent.text_field :ph %>
+    </div>
+
+    <div class="field">
+      <%= fluent.label "#{fluent.object.output.name} Sampling Color" %>
+      <%= fluent.collection_select(:color_id, @colors, :id, :option, {prompt: 'Select a Color'})  %>
+    </div>
+
+    <div class="field description">
+      <%= fluent.label "#{fluent.object.output.name} #{:color_description}" %>
+      <%= fluent.text_area :color_description %>
+    </div>
+
+    <div class="field">
+      <%= fluent.label "#{fluent.object.output.name} Sampling Odor" %>
+      <%= fluent.collection_select(:odor_id, @odors, :id, :option, {prompt: 'Select an Odor'})  %>
+    </div>
+
+    <div class="field description">
+      <%= fluent.label "#{fluent.object.output.name} #{:odor_description}" %>
+      <%= fluent.text_area :odor_description %>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :cod %>
+    <%= form.text_field :cod %>
+  </div>
+
+  <div class="field">
+    <%= form.label :ec %>
+    <%= form.text_field :ec %>
+  </div>
+
+  <div class="field">
+    <%= form.label :bod %>
+    <%= form.text_field :bod %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tss %>
+    <%= form.text_field :tss %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tn %>
+    <%= form.text_field :tn %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tp %>
+    <%= form.text_field :tp %>
+  </div>
+
+  <div class="field">
+    <%= form.label :sample_comments %>
+    <%= form.text_area :sample_comments %>
+  </div>
+
+  <h2 class="cell_division">Primary Screen</h2>
+
+  <div class="field">
+    <%= form.label :screen_id %>
+    <%= form.collection_select(:screen_id, @screens, :id, :option, {prompt: 'Select a Screen'})  %>
+  </div>
+
+  <div class="field">
+    <%= form.label :collection_bin_id %>
+    <%= form.collection_select(:collection_bin_id, @collectionbins, :id, :option, {prompt: 'Select a Collection Bin'})  %>
+  </div>
+
+  <div class="field">
+    <%= form.label :screen_comments %>
+    <%= form.text_area :screen_comments %>
+  </div>
+
+  <h2 class="cell_division">Pumps and Irrigation System</h2>
+
+  <div class="field">
+    <%= form.label 'Pumps noice' %>
+    <%= form.collection_select(:noice_id, @noices, :id, :option, {prompt: 'Select a Noice'})  %>
+  </div>
+
+  <div class="field description">
+    <%= form.label :pumps_noice_description %>
+    <%= form.text_area :pumps_noice_description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :pumps_psi %>
+    <%= form.text_field :pumps_psi %>
+  </div>
+
+  <div class="field">
+    <%= form.label :sprinklers_pressure_id %>
+    <%= form.collection_select(:sprinklers_pressure_id, @sprinklers_pressures, :id, :option, {prompt: 'Select the Sprinkler\'s Pressure'})  %>
+  </div>
+
+  <div class="field">
+    <%= form.label :sprinklers_head_id %>
+    <%= form.collection_select(:sprinklers_head_id, @sprinklers_heads, :id, :option, {prompt: 'Select the Sprinkler\'s Head'})  %>
+  </div>
+
+  <div class="field">
+    <%= form.label :piping_id %>
+    <%= form.collection_select(:piping_id, @pipings, :id, :option, {prompt: 'Select a Pipe State'})  %>
+  </div>
+
+  <div class="field">
+    <%= form.label :pumps_comments %>
+    <%= form.text_area :pumps_comments %>
+  </div>
+
+  <h2 class="cell_division">BIDA System</h2>
+
+  <div class="field">
+    <%= form.label :system_surface_id %>
+    <%= form.collection_select(:system_surface_id, @system_surfaces, :id, :option, {prompt: 'Select a System Surface'})  %>
+  </div>
+
+  <div class="field">
+    <%= form.label :worms_color_id %>
+    <%= form.collection_select(:worms_color_id, @worms_color, :id, :option, {prompt: 'Select a Worms Color'})  %>
+  </div>
+
+  <div class="field description">
+    <%= form.label :worms_color_description %>
+    <%= form.text_area :worms_color_description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :worms_activity_id %>
+    <%= form.collection_select(:worms_activity_id, @worms_activity, :id, :option, {prompt: 'Select a Worms Activity'})  %>
+  </div>
+
+  <div class="field description">
+    <%= form.label :worms_activity_description %>
+    <%= form.text_area :worms_activity_description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :worms_density_id %>
+    <%= form.collection_select(:worms_density_id, @worms_density, :id, :option, {prompt: 'Select a Worms Density'})  %>
+  </div>
+
+  <div class="field">
+    <%= form.label :bed_compaction_id %>
+    <%= form.collection_select(:bed_compaction_id, @bed_compactions, :id, :option, {prompt: 'Select a Bed Compaction'})  %>
+  </div>
+
+  <div class="field">
+    <%= form.label :ponding_id %>
+    <%= form.collection_select(:ponding_id, @pondings, :id, :option, {prompt: 'Select a Ponding'})  %>
+  </div>
+
+  <div class="field">
+    <%= form.label :bida_comments %>
+    <%= form.text_area :bida_comments %>
+  </div>
+
+  <h2 class="cell_division">General</h2>
+
+  <div class="field">
+    <%= form.label :odor_id %>
+    <%= form.collection_select(:odor_id, @odors, :id, :option, {prompt: 'Select an Odor'})  %>
+  </div>
+
+  <div class="field description">
+    <%= form.label :plant_odor_description %>
+    <%= form.text_area :plant_odor_description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :birds %>
+    <%= form.select(:birds, @birds, {prompt: 'Select an Option'})  %>
+  </div>
+
+  <div class="field">
+    <%= form.label 'Flies' %>
+    <%= form.collection_select(:fly_id, @flies, :id, :option, {prompt: 'Select an Option'})  %>
+  </div>
+
+  <h2 class="cell_division">Summary/Recommendations</h2>
+
+  <div class="field">
+    <%= form.label :summary_comments %>
+    <%= form.text_area :summary_comments %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

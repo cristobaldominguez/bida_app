@@ -1,0 +1,63 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  active: false
+  user: one
+  plant: one
+  cod: 1.5
+  ec: 1.5
+  bod: 1.5
+  tss: 1.5
+  tn: 1.5
+  tp: 1.5
+  sample_comments: MyText
+  screen: one
+  collection_bin: one
+  screen_comments: MyText
+  noice: one
+  pumps_noice_description: MyText
+  pumps_psi: 1.5
+  sprinklers_pressure: one
+  sprinklers_head: one
+  piping: one
+  pumps_comments: MyText
+  system_surface: one
+  bed_compaction: one
+  ponding: one
+  bida_comments: MyText
+  odor: one
+  plant_odor_description: MyText
+  birds: false
+  fly: one
+  summary_comments: MyText
+
+two:
+  active: false
+  user: two
+  plant: two
+  cod: 1.5
+  ec: 1.5
+  bod: 1.5
+  tss: 1.5
+  tn: 1.5
+  tp: 1.5
+  sample_comments: MyText
+  screen: two
+  collection_bin: two
+  screen_comments: MyText
+  noice: two
+  pumps_noice_description: MyText
+  pumps_psi: 1.5
+  sprinklers_pressure: two
+  sprinklers_head: two
+  piping: two
+  pumps_comments: MyText
+  system_surface: two
+  bed_compaction: two
+  ponding: two
+  bida_comments: MyText
+  odor: two
+  plant_odor_description: MyText
+  birds: false
+  fly: two
+  summary_comments: MyText

@@ -64,5 +64,117 @@ if Rails.env == 'development'
     Option.create!(name: option)
   end
 
+  # Odor
+  Odor.destroy_all
+  odors = ['Typical', 'No Typical (Describe)']
+  odors.each do |odor|
+    Odor.create!(option: odor)
+  end
+
+  # Color
+  Color.destroy_all
+  colors = ['Typical', 'No Typical (Describe)']
+  colors.each do |color|
+    Color.create!(option: color)
+  end
+
+  # Screen
+  Screen.destroy_all
+  screens = ['Normal', 'Clogged', 'Film has Formed']
+  screens.each do |screen|
+    Screen.create!(option: screen)
+  end
+
+  # CollectionBin
+  CollectionBin.destroy_all
+  collection_bins = %w[Normal Full Spillage]
+  collection_bins.each do |collection_bin|
+    CollectionBin.create!(option: collection_bin)
+  end
+
+  # Noice
+  Noice.destroy_all
+  noices = ['Normal', 'Unnormal (Describe)']
+  noices.each do |noice|
+    Noice.create!(option: noice)
+  end
+
+  # SprinklersPressure
+  SprinklersPressure.destroy_all
+  sprinklers_pressures = %w[Low Normal High]
+  sprinklers_pressures.each do |pressure|
+    SprinklersPressure.create!(option: pressure)
+  end
+
+  # SprinklersHead
+  SprinklersHead.destroy_all
+  sprinklers_heads = %w[Normal Clogged Missing]
+  sprinklers_heads.each do |head|
+    SprinklersHead.create!(option: head)
+  end
+
+  # Piping
+  Piping.destroy_all
+  pipings = %w[Normal Leaking Broken]
+  pipings.each do |piping|
+    Piping.create!(option: piping)
+  end
+
+  # SystemSurface
+  SystemSurface.destroy_all
+  system_surfaces = ['Normal', 'Vegetation Growing', 'Trash']
+  system_surfaces.each do |surface|
+    SystemSurface.create!(option: surface)
+  end
+
+  # WormsColor
+  WormsColor.destroy_all
+  worms_colors = ['Normal', 'Unnormal (Describe)']
+  worms_colors.each do |color|
+    WormsColor.create!(option: color)
+  end
+
+  # WormsActivity
+  WormsActivity.destroy_all
+  worms_activities = ['Active', 'No Active (Describe)']
+  worms_activities.each do |activity|
+    WormsActivity.create!(option: activity)
+  end
+
+  # WormsDensity
+  WormsDensity.destroy_all
+  worms_densities = %w[Low Normal High]
+  worms_densities.each do |activity|
+    WormsDensity.create!(option: activity)
+  end
+
+  # BedCompaction
+  BedCompaction.destroy_all
+  bed_compactions = ['Normal', 'Compaction (Need Rototill)']
+  bed_compactions.each do |compaction|
+    BedCompaction.create!(option: compaction)
+  end
+
+  # Ponding
+  Ponding.destroy_all
+  pondings = ['No Ponding', 'High Ponding (Urgent Rototill)']
+  pondings.each do |ponding|
+    Ponding.create!(option: ponding)
+  end
+
+  # Fly
+  Fly.destroy_all
+  flies = %w[No Low High]
+  flies.each do |fly|
+    Fly.create!(option: fly)
+  end
+
+  # Output
+  Output.destroy_all
+  outputs = %w[Influent Effluent]
+  outputs.each do |output|
+    Output.create!(name: output)
+  end
+
   puts 'Seeds Added!'
 end

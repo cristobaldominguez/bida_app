@@ -37,6 +37,12 @@ ActiveRecord::Schema.define(version: 2018_12_04_161417) do
     t.index ["user_id"], name: "index_alerts_on_user_id"
   end
 
+  create_table "bed_compactions", force: :cascade do |t|
+    t.string "option"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "bounds", force: :cascade do |t|
     t.bigint "standard_id"
     t.bigint "outlet_id"
@@ -47,6 +53,18 @@ ActiveRecord::Schema.define(version: 2018_12_04_161417) do
     t.datetime "updated_at", null: false
     t.index ["outlet_id"], name: "index_bounds_on_outlet_id"
     t.index ["standard_id"], name: "index_bounds_on_standard_id"
+  end
+
+  create_table "collection_bins", force: :cascade do |t|
+    t.string "option"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "colors", force: :cascade do |t|
+    t.string "option"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "companies", force: :cascade do |t|
@@ -75,6 +93,28 @@ ActiveRecord::Schema.define(version: 2018_12_04_161417) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "flies", force: :cascade do |t|
+    t.string "option"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "fluents", force: :cascade do |t|
+    t.bigint "inspection_id"
+    t.bigint "output_id"
+    t.float "ph"
+    t.bigint "color_id"
+    t.text "color_description"
+    t.bigint "odor_id"
+    t.text "odor_description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["color_id"], name: "index_fluents_on_color_id"
+    t.index ["inspection_id"], name: "index_fluents_on_inspection_id"
+    t.index ["odor_id"], name: "index_fluents_on_odor_id"
+    t.index ["output_id"], name: "index_fluents_on_output_id"
+  end
+
   create_table "incident_types", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -87,6 +127,73 @@ ActiveRecord::Schema.define(version: 2018_12_04_161417) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "inspections", force: :cascade do |t|
+    t.boolean "active"
+    t.bigint "user_id"
+    t.bigint "plant_id"
+    t.float "cod"
+    t.float "ec"
+    t.float "bod"
+    t.float "tss"
+    t.float "tn"
+    t.float "tp"
+    t.text "sample_comments"
+    t.bigint "screen_id"
+    t.bigint "collection_bin_id"
+    t.text "screen_comments"
+    t.bigint "noice_id"
+    t.text "pumps_noice_description"
+    t.float "pumps_psi"
+    t.bigint "sprinklers_pressure_id"
+    t.bigint "sprinklers_head_id"
+    t.bigint "piping_id"
+    t.text "pumps_comments"
+    t.bigint "system_surface_id"
+    t.bigint "bed_compaction_id"
+    t.bigint "ponding_id"
+    t.text "bida_comments"
+    t.bigint "odor_id"
+    t.text "plant_odor_description"
+    t.boolean "birds"
+    t.bigint "fly_id"
+    t.text "summary_comments"
+    t.bigint "worms_color_id"
+    t.text "worms_color_description"
+    t.bigint "worms_activity_id"
+    t.text "worms_activity_description"
+    t.bigint "worms_density_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bed_compaction_id"], name: "index_inspections_on_bed_compaction_id"
+    t.index ["collection_bin_id"], name: "index_inspections_on_collection_bin_id"
+    t.index ["fly_id"], name: "index_inspections_on_fly_id"
+    t.index ["noice_id"], name: "index_inspections_on_noice_id"
+    t.index ["odor_id"], name: "index_inspections_on_odor_id"
+    t.index ["piping_id"], name: "index_inspections_on_piping_id"
+    t.index ["plant_id"], name: "index_inspections_on_plant_id"
+    t.index ["ponding_id"], name: "index_inspections_on_ponding_id"
+    t.index ["screen_id"], name: "index_inspections_on_screen_id"
+    t.index ["sprinklers_head_id"], name: "index_inspections_on_sprinklers_head_id"
+    t.index ["sprinklers_pressure_id"], name: "index_inspections_on_sprinklers_pressure_id"
+    t.index ["system_surface_id"], name: "index_inspections_on_system_surface_id"
+    t.index ["user_id"], name: "index_inspections_on_user_id"
+    t.index ["worms_activity_id"], name: "index_inspections_on_worms_activity_id"
+    t.index ["worms_color_id"], name: "index_inspections_on_worms_color_id"
+    t.index ["worms_density_id"], name: "index_inspections_on_worms_density_id"
+  end
+
+  create_table "noices", force: :cascade do |t|
+    t.string "option"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "odors", force: :cascade do |t|
+    t.string "option"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "options", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -95,6 +202,18 @@ ActiveRecord::Schema.define(version: 2018_12_04_161417) do
 
   create_table "outlets", force: :cascade do |t|
     t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "outputs", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "pipings", force: :cascade do |t|
+    t.string "option"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -130,8 +249,32 @@ ActiveRecord::Schema.define(version: 2018_12_04_161417) do
     t.bigint "user_id", null: false
   end
 
+  create_table "pondings", force: :cascade do |t|
+    t.string "option"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "priorities", force: :cascade do |t|
     t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "screens", force: :cascade do |t|
+    t.string "option"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "sprinklers_heads", force: :cascade do |t|
+    t.string "option"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "sprinklers_pressures", force: :cascade do |t|
+    t.string "option"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -174,6 +317,12 @@ ActiveRecord::Schema.define(version: 2018_12_04_161417) do
     t.bigint "user_id", null: false
   end
 
+  create_table "system_surfaces", force: :cascade do |t|
+    t.string "option"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -193,6 +342,24 @@ ActiveRecord::Schema.define(version: 2018_12_04_161417) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "worms_activities", force: :cascade do |t|
+    t.string "option"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "worms_colors", force: :cascade do |t|
+    t.string "option"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "worms_densities", force: :cascade do |t|
+    t.string "option"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   add_foreign_key "alerts", "incident_types"
   add_foreign_key "alerts", "plants"
   add_foreign_key "alerts", "priorities"
@@ -201,6 +368,26 @@ ActiveRecord::Schema.define(version: 2018_12_04_161417) do
   add_foreign_key "bounds", "outlets"
   add_foreign_key "bounds", "standards"
   add_foreign_key "companies", "industries"
+  add_foreign_key "fluents", "colors"
+  add_foreign_key "fluents", "inspections"
+  add_foreign_key "fluents", "odors"
+  add_foreign_key "fluents", "outputs"
+  add_foreign_key "inspections", "bed_compactions"
+  add_foreign_key "inspections", "collection_bins"
+  add_foreign_key "inspections", "flies"
+  add_foreign_key "inspections", "noices"
+  add_foreign_key "inspections", "odors"
+  add_foreign_key "inspections", "pipings"
+  add_foreign_key "inspections", "plants"
+  add_foreign_key "inspections", "pondings"
+  add_foreign_key "inspections", "screens"
+  add_foreign_key "inspections", "sprinklers_heads"
+  add_foreign_key "inspections", "sprinklers_pressures"
+  add_foreign_key "inspections", "system_surfaces"
+  add_foreign_key "inspections", "users"
+  add_foreign_key "inspections", "worms_activities"
+  add_foreign_key "inspections", "worms_colors"
+  add_foreign_key "inspections", "worms_densities"
   add_foreign_key "plants", "companies"
   add_foreign_key "plants", "countries"
   add_foreign_key "plants", "discharge_points"

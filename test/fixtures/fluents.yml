@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  inspection: one
+  output: one
+  ph: 1.5
+  color: one
+  color_description: MyText
+  odor: one
+  odor_description: MyText
+
+two:
+  inspection: two
+  output: two
+  ph: 1.5
+  color: two
+  color_description: MyText
+  odor: two
+  odor_description: MyText
