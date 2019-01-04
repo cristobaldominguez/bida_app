@@ -10,7 +10,9 @@ class Plant < ApplicationRecord
   belongs_to :contact, class_name: 'User'
   belongs_to :bf_contact, class_name: 'User'
 
-  # validates :company, presence: true
   has_many :standards, dependent: :destroy
+  has_many :sampling_lists, dependent: :destroy
+
   accepts_nested_attributes_for :standards, allow_destroy: true
+  accepts_nested_attributes_for :sampling_lists, allow_destroy: true
 end

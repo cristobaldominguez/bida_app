@@ -128,9 +128,10 @@ ActiveRecord::Schema.define(version: 2018_12_04_161417) do
   end
 
   create_table "inspections", force: :cascade do |t|
-    t.boolean "active"
+    t.boolean "active", default: true
     t.bigint "user_id"
     t.bigint "plant_id"
+    t.boolean "on_site_client"
     t.float "cod"
     t.float "ec"
     t.float "bod"
@@ -141,8 +142,8 @@ ActiveRecord::Schema.define(version: 2018_12_04_161417) do
     t.bigint "screen_id"
     t.bigint "collection_bin_id"
     t.text "screen_comments"
-    t.bigint "noice_id"
-    t.text "pumps_noice_description"
+    t.bigint "noise_id"
+    t.text "pumps_noise_description"
     t.float "pumps_psi"
     t.bigint "sprinklers_pressure_id"
     t.bigint "sprinklers_head_id"
@@ -164,14 +165,18 @@ ActiveRecord::Schema.define(version: 2018_12_04_161417) do
     t.bigint "worms_density_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "on_site_user_id"
+    t.bigint "report_technician_id"
     t.index ["bed_compaction_id"], name: "index_inspections_on_bed_compaction_id"
     t.index ["collection_bin_id"], name: "index_inspections_on_collection_bin_id"
     t.index ["fly_id"], name: "index_inspections_on_fly_id"
-    t.index ["noice_id"], name: "index_inspections_on_noice_id"
+    t.index ["noise_id"], name: "index_inspections_on_noise_id"
     t.index ["odor_id"], name: "index_inspections_on_odor_id"
+    t.index ["on_site_user_id"], name: "index_inspections_on_on_site_user_id"
     t.index ["piping_id"], name: "index_inspections_on_piping_id"
     t.index ["plant_id"], name: "index_inspections_on_plant_id"
     t.index ["ponding_id"], name: "index_inspections_on_ponding_id"
+    t.index ["report_technician_id"], name: "index_inspections_on_report_technician_id"
     t.index ["screen_id"], name: "index_inspections_on_screen_id"
     t.index ["sprinklers_head_id"], name: "index_inspections_on_sprinklers_head_id"
     t.index ["sprinklers_pressure_id"], name: "index_inspections_on_sprinklers_pressure_id"
@@ -182,7 +187,7 @@ ActiveRecord::Schema.define(version: 2018_12_04_161417) do
     t.index ["worms_density_id"], name: "index_inspections_on_worms_density_id"
   end
 
-  create_table "noices", force: :cascade do |t|
+  create_table "noises", force: :cascade do |t|
     t.string "option"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -375,7 +380,7 @@ ActiveRecord::Schema.define(version: 2018_12_04_161417) do
   add_foreign_key "inspections", "bed_compactions"
   add_foreign_key "inspections", "collection_bins"
   add_foreign_key "inspections", "flies"
-  add_foreign_key "inspections", "noices"
+  add_foreign_key "inspections", "noises"
   add_foreign_key "inspections", "odors"
   add_foreign_key "inspections", "pipings"
   add_foreign_key "inspections", "plants"

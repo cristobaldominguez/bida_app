@@ -92,11 +92,11 @@ if Rails.env == 'development'
     CollectionBin.create!(option: collection_bin)
   end
 
-  # Noice
-  Noice.destroy_all
-  noices = ['Normal', 'Unnormal (Describe)']
-  noices.each do |noice|
-    Noice.create!(option: noice)
+  # Noise
+  Noise.destroy_all
+  noises = ['Normal', 'Unnormal (Describe)']
+  noises.each do |noise|
+    Noise.create!(option: noise)
   end
 
   # SprinklersPressure

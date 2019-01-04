@@ -1,9 +1,10 @@
 class CreateInspections < ActiveRecord::Migration[5.2]
   def change
     create_table :inspections do |t|
-      t.boolean :active
+      t.boolean :active, default: true
       t.references :user, foreign_key: true
       t.references :plant, foreign_key: true
+      t.boolean :on_site_client
       t.float :cod
       t.float :ec
       t.float :bod
@@ -14,8 +15,8 @@ class CreateInspections < ActiveRecord::Migration[5.2]
       t.references :screen, foreign_key: true
       t.references :collection_bin, foreign_key: true
       t.text :screen_comments
-      t.references :noice, foreign_key: true
-      t.text :pumps_noice_description
+      t.references :noise, foreign_key: true
+      t.text :pumps_noise_description
       t.float :pumps_psi
       t.references :sprinklers_pressure, foreign_key: true
       t.references :sprinklers_head, foreign_key: true

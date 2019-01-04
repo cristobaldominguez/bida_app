@@ -23,14 +23,14 @@ class InspectionsTest < ApplicationSystemTestCase
     fill_in "Collection Bin", with: @inspection.collection_bin_id
     fill_in "Ec", with: @inspection.ec
     fill_in "Fly", with: @inspection.fly_id
-    fill_in "Noice", with: @inspection.noice_id
+    fill_in "Noise", with: @inspection.noise_id
     fill_in "Odor", with: @inspection.odor_id
     fill_in "Piping", with: @inspection.piping_id
     fill_in "Plant", with: @inspection.plant_id
     fill_in "Plant Odor Description", with: @inspection.plant_odor_description
     fill_in "Ponding", with: @inspection.ponding_id
     fill_in "Pumps Comments", with: @inspection.pumps_comments
-    fill_in "Pumps Noice Description", with: @inspection.pumps_noice_description
+    fill_in "Pumps Noise Description", with: @inspection.pumps_noise_description
     fill_in "Pumps Psi", with: @inspection.pumps_psi
     fill_in "Sample Comments", with: @inspection.sample_comments
     fill_in "Screen Comments", with: @inspection.screen_comments
@@ -62,14 +62,14 @@ class InspectionsTest < ApplicationSystemTestCase
     fill_in "Collection Bin", with: @inspection.collection_bin_id
     fill_in "Ec", with: @inspection.ec
     fill_in "Fly", with: @inspection.fly_id
-    fill_in "Noice", with: @inspection.noice_id
+    fill_in "Noise", with: @inspection.noise_id
     fill_in "Odor", with: @inspection.odor_id
     fill_in "Piping", with: @inspection.piping_id
     fill_in "Plant", with: @inspection.plant_id
     fill_in "Plant Odor Description", with: @inspection.plant_odor_description
     fill_in "Ponding", with: @inspection.ponding_id
     fill_in "Pumps Comments", with: @inspection.pumps_comments
-    fill_in "Pumps Noice Description", with: @inspection.pumps_noice_description
+    fill_in "Pumps Noise Description", with: @inspection.pumps_noise_description
     fill_in "Pumps Psi", with: @inspection.pumps_psi
     fill_in "Sample Comments", with: @inspection.sample_comments
     fill_in "Screen Comments", with: @inspection.screen_comments

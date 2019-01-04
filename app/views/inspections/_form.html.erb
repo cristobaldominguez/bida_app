@@ -1,4 +1,4 @@
-<%= form_with(model: inspection, local: true) do |form| %>
+<%= form_with(model: inspection, url:[inspection.plant, inspection], local: true) do |form| %>
   <% if inspection.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(inspection.errors.count, "error") %> prohibited this inspection from being saved:</h2>
@@ -13,10 +13,25 @@
 
   <h2 class="cell_division">General Info</h2>
 
+  <div class="field">
+    <%= form.label :on_site_client %>
+    <%= form.select(:on_site_client, @on_site_client, {prompt: 'Select an Option'})  %>
+  </div>
+
+  <div class="field description <%= 'show' if inspection.on_site_client %>">
+    <%= form.label 'Onsite Client' %>
+    <%= form.collection_select(:on_site_user_id, @users, :id, :full_name, {prompt: 'Select a Client'})  %>
+  </div>
+
+  <div class="field">
+    <%= form.label 'Report Technician *' %>
+    <%= form.collection_select(:report_technician_id, @users, :id, :full_name, {prompt: 'Select a Technician'})  %>
+  </div>
+
   <h2 class="cell_division">Water Quality</h2>
 
   <%= form.fields_for :fluents do |fluent| %>
-    <h3><%= fluent.object.output.name %></h3>
+    <h3><%= fluent.hidden_field :output_id, value: fluent.object.output.id %><%= fluent.object.output.name %></h3>
 
     <div class="field">
       <%= fluent.label "#{fluent.object.output.name} Sampling pH" %>
@@ -99,13 +114,13 @@
   <h2 class="cell_division">Pumps and Irrigation System</h2>
 
   <div class="field">
-    <%= form.label 'Pumps noice' %>
-    <%= form.collection_select(:noice_id, @noices, :id, :option, {prompt: 'Select a Noice'})  %>
+    <%= form.label 'Pumps noise' %>
+    <%= form.collection_select(:noise_id, @noises, :id, :option, {prompt: 'Select a Noise'})  %>
   </div>
 
   <div class="field description">
-    <%= form.label :pumps_noice_description %>
-    <%= form.text_area :pumps_noice_description %>
+    <%= form.label :pumps_noise_description %>
+    <%= form.text_area :pumps_noise_description %>
   </div>
 
   <div class="field">

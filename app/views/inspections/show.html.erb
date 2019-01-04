@@ -1,20 +1,55 @@
-<p id="notice"><%= notice %></p>
+<h2 class="cell_division">General Info</h2>
 
 <p>
-  <strong>Active:</strong>
-  <%= @inspection.active %>
+  <strong>Client OnSite:</strong>
+  <% if (@inspection.on_site_client) %>
+  <%= @inspection.on_site_user.full_name %>
+  <% else %>
+  <%= @inspection.on_site_client %>
+  <% end %>
 </p>
 
 <p>
-  <strong>User:</strong>
-  <%= @inspection.user %>
+  <strong>Report Technician:</strong>
+  <%= @inspection.report_technician.full_name %>
 </p>
 
-<p>
-  <strong>Plant:</strong>
-  <%= @inspection.plant %>
-</p>
+<h2 class="cell_division">Water Quality</h2>
 
+<% @inspection.fluents.each do |fluent|%>
+<div class="fluent <%= fluent.output.name.parameterize.underscore %>">
+  <h4><%= fluent.output.name %></h4>
+
+  <p>
+    <strong>pH:</strong>
+    <%= fluent.ph %>
+  </p>
+
+  <p>
+    <strong>Color:</strong>
+    <%= fluent.color.option %>
+  </p>
+
+  <% if fluent.color_description != '' %>
+  <p>
+    <strong>Color Description:</strong>
+    <%= fluent.color_description %>
+  </p>
+  <% end %>
+
+  <p>
+    <strong>Odor:</strong>
+    <%= fluent.odor.option %>
+  </p>
+
+  <% if fluent.odor_description != '' %>
+  <p>
+    <strong>Color Description:</strong>
+    <%= fluent.odor_description %>
+  </p>
+  <% end %>
+</div>
+<% end %>
 <p>
   <strong>Cod:</strong>
   <%= @inspection.cod %>
@@ -50,14 +85,16 @@
   <%= @inspection.sample_comments %>
 </p>
 
+<h2 class="cell_division">Primary Screen</h2>
+
 <p>
   <strong>Screen:</strong>
-  <%= @inspection.screen %>
+  <%= @inspection.screen.option %>
 </p>
 
 <p>
   <strong>Collection Bin:</strong>
-  <%= @inspection.collection_bin %>
+  <%= @inspection.collection_bin.option %>
 </p>
 
 <p>
@@ -65,14 +102,16 @@
   <%= @inspection.screen_comments %>
 </p>
 
+<h2 class="cell_division">Pumps and Irrigation System</h2>
+
 <p>
-  <strong>Noice:</strong>
-  <%= @inspection.noice %>
+  <strong>Pumps Noise:</strong>
+  <%= @inspection.noise.option %>
 </p>
 
 <p>
-  <strong>Pumps noice description:</strong>
-  <%= @inspection.pumps_noice_description %>
+  <strong>Pumps noise description:</strong>
+  <%= @inspection.pumps_noise_description %>
 </p>
 
 <p>
@@ -82,17 +121,17 @@
 
 <p>
   <strong>Sprinklers pressure:</strong>
-  <%= @inspection.sprinklers_pressure %>
+  <%= @inspection.sprinklers_pressure.option %>
 </p>
 
 <p>
   <strong>Sprinklers head:</strong>
-  <%= @inspection.sprinklers_head %>
+  <%= @inspection.sprinklers_head.option %>
 </p>
 
 <p>
   <strong>Piping:</strong>
-  <%= @inspection.piping %>
+  <%= @inspection.piping.option %>
 </p>
 
 <p>
@@ -100,19 +139,21 @@
   <%= @inspection.pumps_comments %>
 </p>
 
+<h2 class="cell_division">BIDA System</h2>
+
 <p>
   <strong>System surface:</strong>
-  <%= @inspection.system_surface %>
+  <%= @inspection.system_surface.option %>
 </p>
 
 <p>
   <strong>Bed compaction:</strong>
-  <%= @inspection.bed_compaction %>
+  <%= @inspection.bed_compaction.option %>
 </p>
 
 <p>
   <strong>Ponding:</strong>
-  <%= @inspection.ponding %>
+  <%= @inspection.ponding.option %>
 </p>
 
 <p>
@@ -120,9 +161,11 @@
   <%= @inspection.bida_comments %>
 </p>
 
+<h2 class="cell_division">General</h2>
+
 <p>
   <strong>Odor:</strong>
-  <%= @inspection.odor %>
+  <%= @inspection.odor.option %>
 </p>
 
 <p>
@@ -132,13 +175,15 @@
 
 <p>
   <strong>Birds:</strong>
-  <%= @inspection.birds %>
+  <%= @inspection.birds ? 'Yes' : 'No' %>
 </p>
 
 <p>
   <strong>Fly:</strong>
-  <%= @inspection.fly %>
+  <%= @inspection.fly.option %>
 </p>
+
+<h2 class="cell_division">Summary/Recommendations</h2>
 
 <p>
   <strong>Summary comments:</strong>
@@ -146,4 +191,4 @@
 </p>
 
 <%= link_to 'Edit', edit_inspection_path(@inspection) %> |
-<%= link_to 'Back', inspections_path %>
+<%= link_to 'Back', plant_path(@inspection.plant) %>

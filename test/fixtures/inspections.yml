@@ -14,8 +14,8 @@ one:
   screen: one
   collection_bin: one
   screen_comments: MyText
-  noice: one
-  pumps_noice_description: MyText
+  noise: one
+  pumps_noise_description: MyText
   pumps_psi: 1.5
   sprinklers_pressure: one
   sprinklers_head: one
@@ -45,8 +45,8 @@ two:
   screen: two
   collection_bin: two
   screen_comments: MyText
-  noice: two
-  pumps_noice_description: MyText
+  noise: two
+  pumps_noise_description: MyText
   pumps_psi: 1.5
   sprinklers_pressure: two
   sprinklers_head: two

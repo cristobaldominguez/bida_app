@@ -17,6 +17,7 @@ class PlantsController < ApplicationController
   def show
     @alerts = @plant.alerts.active
     @supports = @plant.supports.active
+    @inspections = @plant.inspections.active
   end
 
   # GET companies/:company_id/plants/new
