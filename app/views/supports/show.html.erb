@@ -1,4 +1,4 @@
-<h1>Support Ticket #<%= @support.number %></h1>
+<h1>Support <%= @support.number %></h1>
 
 <p>
   <strong>Start date:</strong>
@@ -17,7 +17,12 @@
 
 <p>
   <strong>Name client onsite:</strong>
-  <%= @support.name_client_onsite %>
+  <%= @support.client.full_name %>
+</p>
+
+<p>
+  <strong>Name BF Technician:</strong>
+  <%= @support.bf_technician.full_name %>
 </p>
 
 <%= link_to 'Edit', edit_support_path(@support) %> |

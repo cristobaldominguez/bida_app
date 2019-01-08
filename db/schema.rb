@@ -304,15 +304,17 @@ ActiveRecord::Schema.define(version: 2018_12_04_161417) do
 
   create_table "supports", force: :cascade do |t|
     t.boolean "active", default: true, null: false
-    t.integer "number"
     t.date "start_date"
     t.date "end_date"
     t.boolean "client_onsite"
-    t.string "name_client_onsite"
+    t.bigint "client_id"
+    t.bigint "bf_technician_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "plant_id"
     t.bigint "user_id"
+    t.index ["bf_technician_id"], name: "index_supports_on_bf_technician_id"
+    t.index ["client_id"], name: "index_supports_on_client_id"
     t.index ["plant_id"], name: "index_supports_on_plant_id"
     t.index ["user_id"], name: "index_supports_on_user_id"
   end

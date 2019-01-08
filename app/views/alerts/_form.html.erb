@@ -22,17 +22,17 @@
   </div>
 
   <div class="field">
-    <%= form.label :priority_id %>
+    <%= form.label 'Solution Priority' %>
     <%= form.collection_select :priority_id, @priorities, :id, :name %>
   </div>
 
   <div class="field">
-    <%= form.label :incident_description %>
+    <%= form.label 'Incident Description' %>
     <%= form.text_area :incident_description %>
   </div>
 
   <div class="field">
-    <%= form.label :negative_impact %>
+    <%= form.label 'Negative Impact to System Description' %>
     <%= form.text_area :negative_impact %>
   </div>
 

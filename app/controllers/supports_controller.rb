@@ -16,13 +16,12 @@ class SupportsController < ApplicationController
   def new
     @plant = Plant.find(params[:plant_id])
     @support = @plant.supports.build
-    @attention = Plant.find(params[:plant_id]).users
+    @attention = @plant.users
   end
 
   # POST /plants/1/supports
   # POST /plants/1/supports.json
   def create
-    @support.number = Support.all.size + 1000 + 1
     respond_to do |format|
       if @support.save
         format.html { redirect_to @support, notice: 'Support was successfully created.' }
@@ -77,6 +76,6 @@ class SupportsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def support_params
-    params.require(:support).permit(:active, :number, :start_date, :end_date, :client_onsite, :name_client_onsite)
+    params.require(:support).permit(:active, :number, :start_date, :end_date, :client_onsite, :client_id, :bf_technician_id)
   end
 end

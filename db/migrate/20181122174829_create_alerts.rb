@@ -6,6 +6,7 @@ class CreateAlerts < ActiveRecord::Migration[5.2]
       t.references :incident_type, foreign_key: true
       t.references :status, foreign_key: true
       t.references :priority, foreign_key: true
+      t.boolean :active, null: false, default: true
       t.text :incident_description
       t.text :negative_impact
       t.text :solution

@@ -43,6 +43,8 @@ class AlertsController < ApplicationController
   # PATCH/PUT /alerts/1
   # PATCH/PUT /alerts/1.json
   def update
+    params[:alert][:status_id] = params[:alert][:incident_resolution].length > 10 ? Status.find_by(name: "Fixed").id : params[:alert][:status_id]
+
     respond_to do |format|
       if @alert.update(alert_params)
         format.html { redirect_to @alert, notice: 'Alert was successfully updated.' }
@@ -93,6 +95,8 @@ class AlertsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def alert_params
-    params.require(:alert).permit(:user_id, :plant_id, :incident_type_id, :status_id, :priority_id, :incident_description, :negative_impact, :solution, :incident_resolution, :solution_target_date, :technician_hours_required)
+    params.require(:alert).permit(:user_id, :plant_id, :incident_type_id, :status_id,
+      :priority_id, :incident_description, :negative_impact, :solution, :incident_resolution,
+      :solution_target_date, :technician_hours_required)
   end
 end
