@@ -349,6 +349,17 @@ ActiveRecord::Schema.define(version: 2018_12_04_161417) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "work_summaries", force: :cascade do |t|
+    t.bigint "support_id"
+    t.boolean "active", default: true
+    t.string "description"
+    t.integer "hours"
+    t.text "materials"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["support_id"], name: "index_work_summaries_on_support_id"
+  end
+
   create_table "worms_activities", force: :cascade do |t|
     t.string "option"
     t.datetime "created_at", null: false
@@ -402,4 +413,5 @@ ActiveRecord::Schema.define(version: 2018_12_04_161417) do
   add_foreign_key "standards", "plants"
   add_foreign_key "supports", "plants"
   add_foreign_key "supports", "users"
+  add_foreign_key "work_summaries", "supports"
 end

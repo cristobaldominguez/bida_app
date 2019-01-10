@@ -2,6 +2,8 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+$blue: #007aff;
+
 span.size__delete {
   color:red;
   float:right;
@@ -13,7 +15,8 @@ span.size__delete {
   }
 }
 
-.field .hide {
+.field .hide,
+.work_summary--hide {
   display: none;
 }
 
@@ -45,5 +48,69 @@ span.size__delete {
 
   &.show {
     display: block;
+  }
+}
+
+.plus_button {
+  background-color: $blue;
+  color: white;
+  display: inline-block;
+  border-radius: 50%;
+  border: 1px solid transparent;
+
+  &__link {
+    padding: 30px;
+    display: inline-block;
+    color: white;
+    text-decoration: none;
+    font-weight: bolder;
+    font-size: 1.5rem;
+
+    &:hover {
+      background: transparent;
+    }
+  }
+
+  &:hover {
+    border-color: $blue;
+    background-color: white;
+
+    a {
+      color: $blue;
+    }
+  }
+}
+
+.system_size__bottom {
+  @extend .plus_button;
+
+  .system_size__plus {
+    @extend .plus_button__link;
+  }
+}
+
+
+.work_summary {
+  list-style: none;
+  position: relative;
+
+  &__delete_div {
+    position: absolute;
+    right: 0;
+    text-align: right;
+    top: 0;
+  }
+
+  &__delete {
+    background-color: red;
+    padding: 4px 9px;
+    border-radius: 50%;
+    display: inline-block;
+    color: white;
+    text-decoration: none;
+
+    &:visited {
+      color: white;
+    }
   }
 }

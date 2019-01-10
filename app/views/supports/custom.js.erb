@@ -1,0 +1,23 @@
+var work_summaries = document.querySelector('.work_summaries')
+var num = work_summaries.querySelectorAll('li.work_summary').length
+
+var li = document.createElement('li')
+li.className = 'work_summary'
+li.innerHTML = `<div class="work_summary__delete_div"><a href="#" class="work_summary__delete">x</a></div>
+  <input type="hidden" value="false" name="support[work_summaries_attributes][${num}][_destroy]" id="support_work_summaries_attributes_${num}__destroy">
+  <div class='field'>
+    <label for='support_work_summaries_attributes_${num}_description'>Description</label>
+    <input type='text' name='support[work_summaries_attributes][${num}][description]' id='support_work_summaries_attributes_${num}_description'>
+  </div>
+
+  <div class='field'>
+    <label for='support_work_summaries_attributes_${num}_hours'>Hours</label>
+    <input type='number' name='support[work_summaries_attributes][${num}][hours]' id='support_work_summaries_attributes_${num}_hours'>
+  </div>
+
+  <div class='field'>
+    <label for='support_work_summaries_attributes_${num}_materials'>Material</label>
+    <textarea name='support[work_summaries_attributes][${num}][materials]' id='support_work_summaries_attributes_${num}_materials'></textarea>
+  </div>`
+
+work_summaries.appendChild(li)

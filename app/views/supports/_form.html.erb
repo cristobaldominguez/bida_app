@@ -13,6 +13,11 @@
 
   <div class="field">
     <%= form.label 'Attention' %>
+    <ul>
+    <% @support.plant.users.each do |u| %>
+      <li><%= u.full_name %></li>
+    <% end %>
+    </ul>
   </div>
 
   <div class="field">
@@ -38,6 +43,41 @@
   <div class="field">
     <%= form.label :bf_technician %>
     <%= form.collection_select(:bf_technician_id, @support.plant.users, :id, :full_name, {prompt: 'Select a Technician'})  %>
+  </div>
+
+  <h2 class="cell_division">Work Summary</h2>
+
+  <ul class="work_summaries">
+    <%= form.fields_for :work_summaries do |ws| %>
+
+    <li class="work_summary" data-id="<%= ws.object.id %>">
+      <div class="work_summary__delete_div">
+        <%= link_to 'x', ws.object.persisted? ? work_summary_path(ws.object.id) : '#', class: 'work_summary__delete', remote: ws.object.persisted?, method: :delete %>
+      </div>
+      <%= ws.hidden_field :_destroy %>
+      <div class="field">
+        <%= ws.label :description %>
+        <%= ws.text_field :description %>
+      </div>
+
+      <div class="field">
+        <%= ws.label :hours %>
+        <%= ws.number_field :hours %>
+      </div>
+
+      <div class="field">
+        <%= ws.label :materials %>
+        <%= ws.text_area :materials %>
+      </div>
+    </li>
+    <% end %>
+
+  </ul>
+
+  <div class="work_summary">
+    <div class="system_size__bottom">
+      <%= link_to '+', custom_plant_supports_path(support.plant), remote: true, class: 'system_size__plus'  %>
+    </div>
   </div>
 
   <div class="actions">

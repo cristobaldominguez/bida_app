@@ -25,5 +25,14 @@
   <%= @support.bf_technician.full_name %>
 </p>
 
+<ul>
+<% @support.work_summaries.each do |work_summary| %>
+  <li>
+    <p>Description: <%= work_summary.description %></p>
+    <p>Hours: <%= work_summary.hours %></p>
+    <p>Materials: <%= work_summary.materials %></p>
+  </li>
+<% end %>
+</ul>
 <%= link_to 'Edit', edit_support_path(@support) %> |
 <%= link_to 'Back', plant_path(@support.plant) %>

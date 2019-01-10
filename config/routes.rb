@@ -6,12 +6,18 @@ Rails.application.routes.draw do
   end
   resources :plants, path_prefix: '/companies/:company_id', except: %i[new create update destroy] do
     resources :alerts, only: %i[new create update destroy]
-    resources :supports, only: %i[new create update destroy]
+    resources :supports, only: %i[new create update destroy] do
+      collection do
+        get 'custom'
+      end
+    end
     resources :inspections, only: %i[new create update destroy]
   end
   resources :alerts, path_prefix: '/plants/:plant_id', except: %i[new create update destroy]
   resources :supports, path_prefix: '/plants/:plant_id', except: %i[new create update destroy]
   resources :inspections, path_prefix: '/plants/:plant_id', except: %i[new create update destroy]
+
+  resources :work_summaries, only: :destroy
 
   devise_for :users
   resources :users
