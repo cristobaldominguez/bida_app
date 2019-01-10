@@ -11,7 +11,9 @@ document.addEventListener('turbolinks:load', function() {
     const toggle_checkbox = document.querySelector('.toggle_checkbox')
 
     // Bind Events
-    toggle_checkbox.addEventListener('change', toggleAllCheckboxes)
+    if (toggle_checkbox) {
+      toggle_checkbox.addEventListener('change', toggleAllCheckboxes)
+    }
 
     standards.forEach(function(standard){
       standard.addEventListener('change', toggleOneCheckbox)
