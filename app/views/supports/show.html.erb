@@ -1,6 +1,15 @@
 <h1>Support <%= @support.number %></h1>
 
 <p>
+  <strong>Atention:</strong>
+  <ul>
+    <% @support.users.each do |user| %>
+    <li><%= user.full_name %></li>
+    <% end %>
+</ul>
+</p>
+
+<p>
   <strong>Start date:</strong>
   <%= @support.start_date %>
 </p>

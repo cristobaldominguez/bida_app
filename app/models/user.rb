@@ -10,6 +10,7 @@ class User < ApplicationRecord
   has_and_belongs_to_many :plants
   has_and_belongs_to_many :inspections
   has_and_belongs_to_many :supports
+  has_and_belongs_to_many :alerts
 
   has_many :contact_companies, class_name: 'Company', foreign_key: 'contact_id'
   has_many :bf_contact_companies, class_name: 'Company', foreign_key: 'bf_contact_id'

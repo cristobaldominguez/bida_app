@@ -37,6 +37,11 @@ ActiveRecord::Schema.define(version: 2018_12_04_161417) do
     t.index ["user_id"], name: "index_alerts_on_user_id"
   end
 
+  create_table "alerts_users", id: false, force: :cascade do |t|
+    t.bigint "alert_id", null: false
+    t.bigint "user_id", null: false
+  end
+
   create_table "bed_compactions", force: :cascade do |t|
     t.string "option"
     t.datetime "created_at", null: false

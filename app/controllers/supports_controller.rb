@@ -90,6 +90,7 @@ class SupportsController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def support_params
     params.require(:support).permit(:active, :number, :start_date, :end_date,
-      :client_onsite, :client_id, :bf_technician_id, work_summaries_attributes: [:description, :hours, :materials, :id, :_destroy, :active])
+      :client_onsite, :client_id, :bf_technician_id, user_ids: [],
+      work_summaries_attributes: [:description, :hours, :materials, :id, :_destroy, :active])
   end
 end

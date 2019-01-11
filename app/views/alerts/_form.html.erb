@@ -12,6 +12,15 @@
   <% end %>
 
   <div class="field">
+    <%= form.label 'Attention' %>
+    <ul>
+    <%= form.collection_check_boxes(:user_ids, @alert.plant.users, :id, :full_name) do |user| %>
+      <li><%= user.check_box %> <%= user.label %></li>
+    <% end %>
+    </ul>
+  </div>
+
+  <div class="field">
     <%= form.label :incident_type_id %>
     <%= form.collection_select :incident_type_id, @incidents, :id, :name %>
   </div>

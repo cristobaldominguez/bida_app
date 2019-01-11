@@ -97,6 +97,6 @@ class AlertsController < ApplicationController
   def alert_params
     params.require(:alert).permit(:user_id, :plant_id, :incident_type_id, :status_id,
       :priority_id, :incident_description, :negative_impact, :solution, :incident_resolution,
-      :solution_target_date, :technician_hours_required)
+      :solution_target_date, :technician_hours_required, user_ids: [])
   end
 end

@@ -14,8 +14,8 @@
   <div class="field">
     <%= form.label 'Attention' %>
     <ul>
-    <% @support.plant.users.each do |u| %>
-      <li><%= u.full_name %></li>
+    <%= form.collection_check_boxes(:user_ids, @support.plant.users, :id, :full_name) do |user| %>
+      <li><%= user.check_box %> <%= user.label %></li>
     <% end %>
     </ul>
   </div>

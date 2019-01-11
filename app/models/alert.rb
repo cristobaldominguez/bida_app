@@ -6,6 +6,8 @@ class Alert < ApplicationRecord
   belongs_to :priority
   belongs_to :user
 
+  has_and_belongs_to_many :users
+
   def title
     "##{id} #{incident_type.name}"
   end

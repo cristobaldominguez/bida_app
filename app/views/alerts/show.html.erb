@@ -1,4 +1,13 @@
 <p>
+  <strong>Atention:</strong>
+  <ul>
+    <% @alert.users.each do |user| %>
+    <li><%= user.full_name %></li>
+    <% end %>
+</ul>
+</p>
+
+<p>
   <strong>Incident Type:</strong>
   <%= @alert.incident_type.name %>
 </p>
