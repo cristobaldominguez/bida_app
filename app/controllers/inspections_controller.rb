@@ -16,6 +16,7 @@ class InspectionsController < ApplicationController
   # GET /inspections/new
   def new
     @inspection = Inspection.new
+    @plant = Plant.find(params[:plant_id])
 
     outputs = Output.all
     outputs.each do |output|

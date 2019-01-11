@@ -121,7 +121,7 @@
   <ul>
   <% @supports.each do |support| %>
   <li>
-    <span>#<%= support.number %></span>
+    <span><%= support.number %></span>
     <span><%= link_to 'Show', support %></span>
     <span><%= link_to 'Edit', edit_support_path(support) %></span>
     <span><%= link_to 'Destroy', [@plant, support], method: :delete, data: { confirm: 'Are you sure?' }  %></span>

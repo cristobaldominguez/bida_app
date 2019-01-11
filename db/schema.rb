@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 2018_12_04_161417) do
     t.bigint "incident_type_id"
     t.bigint "status_id"
     t.bigint "priority_id"
+    t.boolean "active", default: true, null: false
     t.text "incident_description"
     t.text "negative_impact"
     t.text "solution"
@@ -29,7 +30,6 @@ ActiveRecord::Schema.define(version: 2018_12_04_161417) do
     t.integer "technician_hours_required"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "active", default: true
     t.index ["incident_type_id"], name: "index_alerts_on_incident_type_id"
     t.index ["plant_id"], name: "index_alerts_on_plant_id"
     t.index ["priority_id"], name: "index_alerts_on_priority_id"
