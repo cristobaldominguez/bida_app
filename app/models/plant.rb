@@ -6,6 +6,7 @@ class Plant < ApplicationRecord
 
   has_many :alerts, dependent: :destroy
   has_many :supports, dependent: :destroy
+  has_many :inspections, dependent: :destroy
 
   belongs_to :contact, class_name: 'User'
   belongs_to :bf_contact, class_name: 'User'

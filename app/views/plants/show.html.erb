@@ -131,5 +131,20 @@
 </ul>
 </p>
 
+<p>
+  <strong>Inspections:</strong>
+  <ul>
+  <% @inspections.each do |inspection| %>
+  <li>
+    <span>#<%= inspection.id %></span>
+    <span><%= link_to 'Show', inspection %></span>
+    <span><%= link_to 'Edit', edit_inspection_path(inspection) %></span>
+    <span><%= link_to 'Destroy', [@plant, inspection], method: :delete, data: { confirm: 'Are you sure?' }  %></span>
+  </li>
+  <% end %>
+  <li><%= link_to 'New Inspection', new_plant_inspection_path(@plant) %></li>
+</ul>
+</p>
+
 <%= link_to 'Edit', edit_plant_path(@plant) %> |
 <%= link_to 'Back', company_path(@company) %>
