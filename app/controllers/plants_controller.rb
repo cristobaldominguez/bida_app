@@ -3,7 +3,8 @@ class PlantsController < ApplicationController
   before_action :set_company, only: %i[show create update destroy]
   before_action :set_companies, only: :index
   before_action :set_discharge_points, :set_countries, only: %i[new edit create update]
-  before_action :set_users, only: %i[new edit create update]
+  before_action :set_users, :set_frecuencies, only: %i[new edit create update]
+  before_action :set_accesses, only: %i[create]
 
   # GET companies/:company_id/plants
   # GET companies/:company_id/plants.json
@@ -27,23 +28,54 @@ class PlantsController < ApplicationController
 
     outlets = Outlet.all
     options = Option.all
+    accesses = Access.all
     standards = []
+    sampling_lists = []
 
     options.each do |option|
-      standards << @plant.standards.build(option_id: option.id)
+      standards << @plant.standards.build(option: option)
     end
 
     standards.each do |standard|
       outlets.each do |outlet|
-        standard.bounds.build(outlet_id: outlet.id)
+        standard.bounds.build(outlet: outlet)
       end
     end
+
+    accesses.each do |access|
+      sampling_lists << @plant.sampling_lists.build(access: access, per_cycle: 1)
+    end
+
+    standards.each do |standard|
+      sampling_lists.each do |sampling_list|
+        sampling_list.samplings.build(standard: standard)
+      end
+    end
+
+    # raise
   end
 
   # POST companies/:company_id/plants
   # POST companies/:company_id/plants.json
   def create
     @plant = @company.plants.build(plant_params)
+    accesses = Access.all
+    samplings_names = {}
+
+    accesses.each do |access|
+      symbol = access.name.downcase.to_sym
+      samplings_names[symbol] = params[symbol].keys
+    end
+
+    @plant.sampling_lists.each do |sampling_list|
+      samplings_names[sampling_list.access.name.downcase.to_sym].each do |sn|
+        standard = @plant.standards.select { |stan| stan.option.name.downcase == sn }.first
+
+        sampling_list.samplings.build(standard: standard)
+        sampling_list.save
+      end
+    end
+
     respond_to do |format|
       if @plant.save
         format.html { redirect_to @plant, notice: 'Plant was successfully created.' }
@@ -57,14 +89,22 @@ class PlantsController < ApplicationController
 
   # GET companies/:company_id/plants/1/edit
   def edit
+    samplings = []
     @plant = Plant.find(params[:id])
     @company = @plant.company
+
+    @plant.sampling_lists.order(created_at: :desc).limit(2).each do |sl|
+      @plant.standards.each do |stdr|
+        sl.samplings.build(standard: stdr)
+      end
+    end
   end
 
   # PATCH/PUT companies/:company_id/plants/1
   # PATCH/PUT companies/:company_id/plants/1.json
   def update
     @plant.system_size = params[:plant][:system_size].split(' ').map(&:to_i)
+
     respond_to do |format|
       if @plant.update(plant_params)
         format.html { redirect_to @plant, notice: 'Plant was successfully updated.' }
@@ -113,12 +153,19 @@ class PlantsController < ApplicationController
     @users = User.active
   end
 
+  def set_frecuencies
+    @frecuencies = Frecuency.all
+  end
+
+  def set_accesses
+    accesses = Access.all
+  end
+
   def plant_params
     params.require(:plant).permit(
-      :name, :code, :company_id, :address01, :address02, :state, :zip, :phone,
-      :flow_design, :startup_date, :country_id, :discharge_point_id, :contact_id,
-      :bf_contact_id, standards_attributes: [:id, :option_id, :plant_id, :isRange,
-        :enabled, bounds_attributes: [:id, :standard_id, :outlet_id, :from, :to]], system_size: []
-    )
+      :name, :code, :company_id, :address01, :address02, :state, :zip, :phone, :flow_design, :startup_date,
+      :country_id, :discharge_point_id, :contact_id, :bf_contact_id, standards_attributes: [:id, :option_id,
+        :plant_id, :isRange, :enabled, bounds_attributes: [:id, :standard_id, :outlet_id, :from, :to]],
+      system_size: [], sampling_lists_attributes: [:id, :access_id, :frecuency_id, :per_cycle])
   end
 end

@@ -1,0 +1,32 @@
+<%= form_with(model: standard, local: true) do |form| %>
+  <% if standard.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(standard.errors.count, "error") %> prohibited this standard from being saved:</h2>
+
+      <ul>
+      <% standard.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :option_id %>
+    <%= form.text_field :option_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :plant_id %>
+    <%= form.text_field :plant_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :active %>
+    <%= form.check_box :active %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Plant:</strong>
+  <%= @sampling_list.plant %>
+</p>
+
+<p>
+  <strong>Access:</strong>
+  <%= @sampling_list.access %>
+</p>
+
+<p>
+  <strong>Frecuency:</strong>
+  <%= @sampling_list.frecuency %>
+</p>
+
+<p>
+  <strong>Per cycle:</strong>
+  <%= @sampling_list.per_cycle %>
+</p>
+
+<%= link_to 'Edit', edit_sampling_list_path(@sampling_list) %> |
+<%= link_to 'Back', sampling_lists_path %>

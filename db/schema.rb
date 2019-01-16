@@ -10,10 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_04_161417) do
+ActiveRecord::Schema.define(version: 2019_01_11_201846) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "accesses", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "alerts", force: :cascade do |t|
     t.bigint "user_id"
@@ -118,6 +124,12 @@ ActiveRecord::Schema.define(version: 2018_12_04_161417) do
     t.index ["inspection_id"], name: "index_fluents_on_inspection_id"
     t.index ["odor_id"], name: "index_fluents_on_odor_id"
     t.index ["output_id"], name: "index_fluents_on_output_id"
+  end
+
+  create_table "frecuencies", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "incident_types", force: :cascade do |t|
@@ -271,6 +283,29 @@ ActiveRecord::Schema.define(version: 2018_12_04_161417) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "sampling_lists", force: :cascade do |t|
+    t.bigint "plant_id"
+    t.bigint "access_id"
+    t.bigint "frecuency_id"
+    t.integer "per_cycle"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["access_id"], name: "index_sampling_lists_on_access_id"
+    t.index ["frecuency_id"], name: "index_sampling_lists_on_frecuency_id"
+    t.index ["plant_id"], name: "index_sampling_lists_on_plant_id"
+  end
+
+  create_table "samplings", force: :cascade do |t|
+    t.bigint "standard_id"
+    t.float "value_in"
+    t.float "value_out"
+    t.bigint "sampling_list_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["sampling_list_id"], name: "index_samplings_on_sampling_list_id"
+    t.index ["standard_id"], name: "index_samplings_on_standard_id"
+  end
+
   create_table "screens", force: :cascade do |t|
     t.string "option"
     t.datetime "created_at", null: false
@@ -414,6 +449,11 @@ ActiveRecord::Schema.define(version: 2018_12_04_161417) do
   add_foreign_key "plants", "companies"
   add_foreign_key "plants", "countries"
   add_foreign_key "plants", "discharge_points"
+  add_foreign_key "sampling_lists", "accesses"
+  add_foreign_key "sampling_lists", "frecuencies"
+  add_foreign_key "sampling_lists", "plants"
+  add_foreign_key "samplings", "sampling_lists"
+  add_foreign_key "samplings", "standards"
   add_foreign_key "standards", "options"
   add_foreign_key "standards", "plants"
   add_foreign_key "supports", "plants"

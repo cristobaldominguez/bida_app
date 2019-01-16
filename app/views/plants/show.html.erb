@@ -86,6 +86,17 @@
   </table>
 </div>
 
+<% @plant.sampling_lists.each do |sampling_list| %>
+<div class="field">
+  <h3><%= sampling_list.access.name %> Samplings</h3>
+  <ul>
+  <% sampling_list.samplings.each do |sampling| %>
+    <li><input type="checkbox" name="standards[<%= sampling.standard.option.name %>]" value="1" checked disabled> <%= sampling.standard.option.name %></li>
+  <% end %>
+  </ul>
+</div>
+<% end %>
+
 <p>
   <strong>Startup date:</strong>
   <%= @plant.startup_date %>

@@ -1,0 +1,2 @@
+module SamplingListsHelper
+end

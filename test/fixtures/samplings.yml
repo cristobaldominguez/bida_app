@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  standard: one
+  value: 1.5
+  sampling_list: one
+
+two:
+  standard: two
+  value: 1.5
+  sampling_list: two

@@ -121,8 +121,29 @@
     <label for="toggle_checkbox">Toggle Active</label>
   </div>
 
+    <%= form.fields_for :sampling_lists do |sampling_list| %>
     <div class="field">
+      <h3><%= sampling_list.hidden_field :access_id, value: sampling_list.object.access.id %><%= sampling_list.object.access.name %> Samplings</h3>
 
+      <ul class="<%= sampling_list.object.access.name.parameterize.underscore %>_samplings">
+        <li class="hide no_standards">No Standard Selected</li>
+        <% sampling_list.object.samplings.each do |sampling| %>
+        <li class="<%= sampling.standard.option.name.parameterize.underscore %>">
+          <input type="checkbox" name="<%= sampling.sampling_list.access.name.parameterize.underscore %>[<%= sampling.standard.option.name.parameterize.underscore %>]" checked> <%= sampling.standard.option.name %></li>
+        <% end %>
+      </ul>
+
+      <div class="field">
+        <%= form.label :frecuency_id %>
+        <%= sampling_list.collection_select(:frecuency_id, @frecuencies, :id, :name, {prompt: 'Select a Frecuency'})  %>
+      </div>
+
+      <div class="field">
+        <%= form.label :per_cycle %>
+        <%= sampling_list.number_field :per_cycle, placeholder: 'Number' %>
+      </div>
+    </div>
+    <% end %>
 
   <div class="field">
     <%= form.label :startup_date %>

@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Sampling Lists</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Plant</th>
+      <th>Access</th>
+      <th>Frecuency</th>
+      <th>Per cycle</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @sampling_lists.each do |sampling_list| %>
+      <tr>
+        <td><%= sampling_list.plant %></td>
+        <td><%= sampling_list.access %></td>
+        <td><%= sampling_list.frecuency %></td>
+        <td><%= sampling_list.per_cycle %></td>
+        <td><%= link_to 'Show', sampling_list %></td>
+        <td><%= link_to 'Edit', edit_sampling_list_path(sampling_list) %></td>
+        <td><%= link_to 'Destroy', sampling_list, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Sampling List', new_sampling_list_path %>

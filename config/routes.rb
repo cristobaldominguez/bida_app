@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   resources :bounds
   resources :standards
+  resources :sampling_lists
   resources :companies do
     resources :plants, only: %i[new create update destroy]
   end

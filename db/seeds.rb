@@ -64,6 +64,20 @@ if Rails.env == 'development'
     Option.create!(name: option)
   end
 
+  # Access
+  Access.destroy_all
+  accesses = %w[Lab Internal]
+  accesses.each do |access|
+    Access.create!(name: access)
+  end
+
+  # Frecuency
+  Frecuency.destroy_all
+  frecuencies = %w[Weekly Monthly Annualy]
+  frecuencies.each do |frecuency|
+    Frecuency.create!(name: frecuency)
+  end
+
   # Odor
   Odor.destroy_all
   odors = ['Typical', 'No Typical (Describe)']
