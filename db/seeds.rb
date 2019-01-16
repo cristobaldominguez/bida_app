@@ -3,6 +3,23 @@
 
 if Rails.env == 'development'
 
+  # Users
+  User.destroy_all
+  users = [{ name: 'Cristóbal', lastname: 'Domínguez', email: 'cris@me.com', password: '123123' },
+           { name: 'Matías', lastname: 'Sjogren', email: 'matias@bf.com', password: '123123' },
+           { name: 'Ida', lastname: 'Hoffman', email: 'ida.hoffman87@example.com', password: '123123' },
+           { name: 'Ellen', lastname: 'Sanders', email: 'ellen.sanders@example.com', password: '123123' },
+           { name: 'Lester', lastname: 'Murray', email: 'lester.murray@example.com', password: '123123' },
+           { name: 'Vicki', lastname: 'Hunter', email: 'vicki.hunter@example.com', password: '123123' },
+           { name: 'Frank', lastname: 'Horton', email: 'frank.horton@example.com', password: '123123' },
+           { name: 'Jorge', lastname: 'Berry', email: 'jorge.berry@example.com', password: '123123' },
+           { name: 'Ethan', lastname: 'Fletcher', email: 'ethan.fletcher@example.com', password: '123123' },
+           { name: 'Jane', lastname: 'Hansen', email: 'jane.hansen@example.com', password: '123123' },
+           { name: 'Leonard', lastname: 'Crawford', email: 'leonard.crawford@example.com', password: '123123' }]
+  users.each do |user|
+    User.create!(name: user[:name], lastname: user[:lastname], email: user[:email], password: user[:password])
+  end
+
   # Countries
   Country.destroy_all
   countries = ['Australia', 'Chile', 'United States', 'New Zealand', 'Peru']
