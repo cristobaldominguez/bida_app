@@ -62,13 +62,13 @@ class PlantsController < ApplicationController
     samplings_names = {}
 
     accesses.each do |access|
-      symbol = access.name.downcase.to_sym
+      symbol = access.name.convert_as_parameter.to_sym
       samplings_names[symbol] = params[symbol].keys
     end
 
     @plant.sampling_lists.each do |sampling_list|
-      samplings_names[sampling_list.access.name.downcase.to_sym].each do |sn|
-        standard = @plant.standards.select { |stan| stan.option.name.downcase.parameterize.underscore == sn.downcase.parameterize.underscore }.first
+      samplings_names[sampling_list.access.name.convert_as_parameter.to_sym].each do |sn|
+        standard = @plant.standards.select { |stan| stan.option.name.convert_as_parameter == sn.convert_as_parameter }.first
         sampling_list.samplings.build(standard: standard)
         sampling_list.save
       end
@@ -106,15 +106,15 @@ class PlantsController < ApplicationController
   # PATCH/PUT companies/:company_id/plants/1
   # PATCH/PUT companies/:company_id/plants/1.json
   def update
-    options_sym = Option.all.map { |op| op.name.downcase.parameterize.underscore.to_sym }
+    options_sym = Option.all.map { |op| op.name.convert_as_parameter.to_sym }
     @plant.system_size = params[:plant][:system_size].split(' ').map(&:to_i)
 
     @plant.sampling_lists.each do |sl|
       acc = sl.access.name
-      all_params = params[acc.downcase.parameterize.underscore.to_sym].permit(options_sym).to_h.map { |k, _| k }
+      all_params = params[acc.convert_as_parameter.to_sym].permit(options_sym).to_h.map { |k, _| k }
 
       all_params.each do |p|
-        strds = @plant.standards.select { |standard| standard.option.name.downcase.parameterize.underscore == p }
+        strds = @plant.standards.select { |standard| standard.option.name.convert_as_parameter == p }
 
         if strds.first.samplings.empty?
           sl.samplings.build(standard: strds.first)
