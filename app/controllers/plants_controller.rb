@@ -25,6 +25,7 @@ class PlantsController < ApplicationController
   def new
     @company = Company.find(params[:company_id])
     @plant = @company.plants.build
+    @is_new = true
 
     outlets = Outlet.all
     options = Option.all
@@ -51,8 +52,6 @@ class PlantsController < ApplicationController
         sampling_list.samplings.build(standard: standard)
       end
     end
-
-    # raise
   end
 
   # POST companies/:company_id/plants
@@ -69,8 +68,7 @@ class PlantsController < ApplicationController
 
     @plant.sampling_lists.each do |sampling_list|
       samplings_names[sampling_list.access.name.downcase.to_sym].each do |sn|
-        standard = @plant.standards.select { |stan| stan.option.name.downcase == sn }.first
-
+        standard = @plant.standards.select { |stan| stan.option.name.downcase.parameterize.underscore == sn.downcase.parameterize.underscore }.first
         sampling_list.samplings.build(standard: standard)
         sampling_list.save
       end
@@ -89,7 +87,6 @@ class PlantsController < ApplicationController
 
   # GET companies/:company_id/plants/1/edit
   def edit
-    samplings = []
     @plant = Plant.find(params[:id])
     @company = @plant.company
 
@@ -98,12 +95,33 @@ class PlantsController < ApplicationController
         sl.samplings.build(standard: stdr)
       end
     end
+
+    @plant.sampling_lists.each do |sampling_list|
+      @plant.standards.each do |standard|
+        sampling_list.samplings.find_or_initialize_by(standard: standard)
+      end
+    end
   end
 
   # PATCH/PUT companies/:company_id/plants/1
   # PATCH/PUT companies/:company_id/plants/1.json
   def update
+    options_sym = Option.all.map { |op| op.name.downcase.parameterize.underscore.to_sym }
     @plant.system_size = params[:plant][:system_size].split(' ').map(&:to_i)
+
+    @plant.sampling_lists.each do |sl|
+      acc = sl.access.name
+      all_params = params[acc.downcase.parameterize.underscore.to_sym].permit(options_sym).to_h.map { |k, _| k }
+
+      all_params.each do |p|
+        strds = @plant.standards.select { |standard| standard.option.name.downcase.parameterize.underscore == p }
+
+        if strds.first.samplings.empty?
+          sl.samplings.build(standard: strds.first)
+          sl.save
+        end
+      end
+    end
 
     respond_to do |format|
       if @plant.update(plant_params)

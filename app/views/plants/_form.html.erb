@@ -128,8 +128,12 @@
       <ul class="<%= sampling_list.object.access.name.parameterize.underscore %>_samplings">
         <li class="hide no_standards">No Standard Selected</li>
         <% sampling_list.object.samplings.each do |sampling| %>
-        <li class="<%= sampling.standard.option.name.parameterize.underscore %>">
-          <input type="checkbox" name="<%= sampling.sampling_list.access.name.parameterize.underscore %>[<%= sampling.standard.option.name.parameterize.underscore %>]" checked> <%= sampling.standard.option.name %></li>
+        <li class="<%= sampling.standard.option.name.parameterize.underscore %> <%= 'hide' unless sampling.standard.enabled || @is_new %>">
+          <input type="checkbox"
+            name="<%= sampling.sampling_list.access.name.parameterize.underscore %>[<%= sampling.standard.option.name.parameterize.underscore %>]"
+            <%= 'checked' if sampling.persisted? || @is_new %>>
+            <%= sampling.standard.option.name %>
+        </li>
         <% end %>
       </ul>
 

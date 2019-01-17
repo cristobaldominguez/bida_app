@@ -22,9 +22,9 @@ document.addEventListener('turbolinks:load', function() {
     function init(){
       state.inputs      = document.querySelectorAll('.standard')
       state.samplings   = document.querySelectorAll('ul[class$="_samplings"]')
-      state.selections  = [].slice.call(state.inputs).map(input => true)
+      state.selections  = [].slice.call(state.inputs).map(input => input.checked)
 
-      Observer.subscribe(render)
+      Events.on('checkbox/render', render)
     }
 
     function toggleOneCheckbox(e){
@@ -34,7 +34,7 @@ document.addEventListener('turbolinks:load', function() {
 
       state.selections[index] = !state.selections[index]
 
-      Observer.notifyAll()
+      Events.emit('checkbox/render', null)
     }
 
     function toggleAllCheckboxes(e) {
@@ -45,7 +45,7 @@ document.addEventListener('turbolinks:load', function() {
         check.checked = value
       })
 
-      Observer.notifyAll()
+      Events.emit('checkbox/render', null)
     }
 
     function render() {
