@@ -89,14 +89,15 @@ class PlantsController < ApplicationController
   def edit
     @plant = Plant.find(params[:id])
     @company = @plant.company
+    sampling_lists = @plant.sampling_lists
 
-    @plant.sampling_lists.order(created_at: :desc).limit(2).each do |sl|
+    sampling_lists.order(created_at: :desc).limit(2).each do |sl|
       @plant.standards.each do |stdr|
         sl.samplings.build(standard: stdr)
       end
     end
 
-    @plant.sampling_lists.each do |sampling_list|
+    sampling_lists.each do |sampling_list|
       @plant.standards.each do |standard|
         sampling_list.samplings.find_or_initialize_by(standard: standard)
       end

@@ -3,7 +3,10 @@
 
 if Rails.env == 'development'
 
+  puts '----------- Adding Seeds! -----------'
+
   # Users
+  puts 'Adding Users'
   User.destroy_all
   users = [{ name: 'Cristóbal', lastname: 'Domínguez', email: 'cris@me.com', password: '123123' },
            { name: 'Matías', lastname: 'Sjogren', email: 'matias@bf.com', password: '123123' },
@@ -21,6 +24,7 @@ if Rails.env == 'development'
   end
 
   # Countries
+  puts 'Adding Countries'
   Country.destroy_all
   countries = ['Australia', 'Chile', 'United States', 'New Zealand', 'Peru']
   countries.sort { |a, b| a <=> b }.each do |country|
@@ -28,6 +32,7 @@ if Rails.env == 'development'
   end
 
   # Industries
+  puts 'Adding Industries'
   Industry.destroy_all
   industries = ['Beverage', 'Brewery', 'Dairy', 'Domestic Sewage', 'Energy', 'Food Processor',
                 'Goverment', 'Grower', 'Milk Processor', 'Municipality', 'Real State',
@@ -38,6 +43,7 @@ if Rails.env == 'development'
   end
 
   # Discharge Points
+  puts 'Adding Discharge Points'
   DischargePoint.destroy_all
   discharge_point = ['Irrigation', 'Stream', 'Land Application', 'Infiltration', 'Pond', 'Sewer', 'Other']
   discharge_point.sort { |a, b| a <=> b }.each do |point|
@@ -45,6 +51,7 @@ if Rails.env == 'development'
   end
 
   # Incident Types
+  puts 'Adding Incident Types'
   IncidentType.destroy_all
   incidents = ['ph Imbalance', 'Worms Mortality', 'Odors', 'Run off Chemicals', 'Flooding']
   incidents.each do |incident|
@@ -52,6 +59,7 @@ if Rails.env == 'development'
   end
 
   # Statuses
+  puts 'Adding Statuses'
   Status.destroy_all
   statuses = ['Open', 'Fixed', 'Being Remedied']
   statuses.each do |status|
@@ -59,6 +67,7 @@ if Rails.env == 'development'
   end
 
   # Priorities
+  puts 'Adding Priorities'
   Priority.destroy_all
   priorities = ['Within 24 Hours', 'Within 3 Days', 'Within 7 Days', 'Within 30 Days']
   priorities.each do |priority|
@@ -66,6 +75,7 @@ if Rails.env == 'development'
   end
 
   # Outlets
+  puts 'Adding Outlets'
   Outlet.destroy_all
   outlets = %w[In Out]
   outlets.each do |outlet|
@@ -73,6 +83,7 @@ if Rails.env == 'development'
   end
 
   # Options
+  puts 'Adding Options'
   Option.destroy_all
   options = ['Flow', 'Ph', 'Temp', 'EC', 'TDS', 'BOD', 'COD', 'TSS', 'FOG', 'TN', 'TKN',
              'Ammonia as N', 'Nitrate as N', 'Nitrite as N', 'TP', 'DO', 'Alkalinity as CaCo3',
@@ -81,126 +92,144 @@ if Rails.env == 'development'
     Option.create!(name: option)
   end
 
-  # Access
+  # Accesses
+  puts 'Adding Accesses'
   Access.destroy_all
   accesses = %w[Lab Internal]
   accesses.each do |access|
     Access.create!(name: access)
   end
 
-  # Frecuency
+  # Frecuencies
+  puts 'Adding Frecuencies'
   Frecuency.destroy_all
   frecuencies = %w[Weekly Monthly Annualy]
   frecuencies.each do |frecuency|
     Frecuency.create!(name: frecuency)
   end
 
-  # Odor
+  # Odors
+  puts 'Adding Odors'
   Odor.destroy_all
   odors = ['Typical', 'No Typical (Describe)']
   odors.each do |odor|
     Odor.create!(option: odor)
   end
 
-  # Color
+  # Colors
+  puts 'Adding Colors'
   Color.destroy_all
   colors = ['Typical', 'No Typical (Describe)']
   colors.each do |color|
     Color.create!(option: color)
   end
 
-  # Screen
+  # Screens
+  puts 'Adding Screens'
   Screen.destroy_all
   screens = ['Normal', 'Clogged', 'Film has Formed']
   screens.each do |screen|
     Screen.create!(option: screen)
   end
 
-  # CollectionBin
+  # Collection Bins
+  puts 'Adding Collection Bins'
   CollectionBin.destroy_all
   collection_bins = %w[Normal Full Spillage]
   collection_bins.each do |collection_bin|
     CollectionBin.create!(option: collection_bin)
   end
 
-  # Noise
+  # Noises
+  puts 'Adding Noises'
   Noise.destroy_all
   noises = ['Normal', 'Unnormal (Describe)']
   noises.each do |noise|
     Noise.create!(option: noise)
   end
 
-  # SprinklersPressure
+  # Sprinklers Pressures
+  puts 'Adding Sprinklers Pressures'
   SprinklersPressure.destroy_all
   sprinklers_pressures = %w[Low Normal High]
   sprinklers_pressures.each do |pressure|
     SprinklersPressure.create!(option: pressure)
   end
 
-  # SprinklersHead
+  # Sprinklers Heads
+  puts 'Adding Sprinklers Heads'
   SprinklersHead.destroy_all
   sprinklers_heads = %w[Normal Clogged Missing]
   sprinklers_heads.each do |head|
     SprinklersHead.create!(option: head)
   end
 
-  # Piping
+  # Pipings
+  puts 'Adding Pipings'
   Piping.destroy_all
   pipings = %w[Normal Leaking Broken]
   pipings.each do |piping|
     Piping.create!(option: piping)
   end
 
-  # SystemSurface
+  # System Surfaces
+  puts 'Adding System Surfaces'
   SystemSurface.destroy_all
   system_surfaces = ['Normal', 'Vegetation Growing', 'Trash']
   system_surfaces.each do |surface|
     SystemSurface.create!(option: surface)
   end
 
-  # WormsColor
+  # Worms Colors
+  puts 'Adding Worms Colors'
   WormsColor.destroy_all
   worms_colors = ['Normal', 'Unnormal (Describe)']
   worms_colors.each do |color|
     WormsColor.create!(option: color)
   end
 
-  # WormsActivity
+  # Worms Activities
+  puts 'Adding Worms Activities'
   WormsActivity.destroy_all
   worms_activities = ['Active', 'No Active (Describe)']
   worms_activities.each do |activity|
     WormsActivity.create!(option: activity)
   end
 
-  # WormsDensity
+  # Worms Densities
+  puts 'Adding Worms Densities'
   WormsDensity.destroy_all
   worms_densities = %w[Low Normal High]
   worms_densities.each do |activity|
     WormsDensity.create!(option: activity)
   end
 
-  # BedCompaction
+  # Bed Compactions
+  puts 'Adding Bed Compactions'
   BedCompaction.destroy_all
   bed_compactions = ['Normal', 'Compaction (Need Rototill)']
   bed_compactions.each do |compaction|
     BedCompaction.create!(option: compaction)
   end
 
-  # Ponding
+  # Pondings
+  puts 'Adding Pondings'
   Ponding.destroy_all
   pondings = ['No Ponding', 'High Ponding (Urgent Rototill)']
   pondings.each do |ponding|
     Ponding.create!(option: ponding)
   end
 
-  # Fly
+  # Flies
+  puts 'Adding Flies'
   Fly.destroy_all
   flies = %w[No Low High]
   flies.each do |fly|
     Fly.create!(option: fly)
   end
 
-  # Output
+  # Outputs
+  puts 'Adding Outputs'
   Output.destroy_all
   outputs = %w[Influent Effluent]
   outputs.each do |output|

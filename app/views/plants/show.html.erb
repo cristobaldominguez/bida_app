@@ -9,11 +9,6 @@
 </p>
 
 <p>
-  <strong>Company:</strong>
-  <%= @plant.company.name %>
-</p>
-
-<p>
   <strong>Address01:</strong>
   <%= @plant.address01 %>
 </p>
@@ -58,8 +53,9 @@
   <%= @plant.flow_design %>
 </p>
 
+<h2 class="cell_division">Standards</h2>
+
 <div class="field standards">
-  <h3>Standards</h3>
   <table class="standards__view">
     <tr>
       <th class="standard__th">Active</th>
@@ -112,8 +108,7 @@
   <%= @plant.bf_contact&.full_name %>
 </p>
 
-<p>
-  <strong>Alerts:</strong>
+<h2 class="cell_division">Alerts</h2>
   <ul>
   <% @alerts.each do |alert| %>
   <li>
@@ -125,10 +120,8 @@
   <% end %>
   <li><%= link_to 'New Alert', new_plant_alert_path(@plant) %></li>
 </ul>
-</p>
 
-<p>
-  <strong>Supports:</strong>
+<h2 class="cell_division">Supports</h2>
   <ul>
   <% @supports.each do |support| %>
   <li>
@@ -140,10 +133,8 @@
   <% end %>
   <li><%= link_to 'New Support', new_plant_support_path(@plant) %></li>
 </ul>
-</p>
 
-<p>
-  <strong>Inspections:</strong>
+<h2 class="cell_division">Inspections</h2>
   <ul>
   <% @inspections.each do |inspection| %>
   <li>
@@ -155,7 +146,6 @@
   <% end %>
   <li><%= link_to 'New Inspection', new_plant_inspection_path(@plant) %></li>
 </ul>
-</p>
 
 <%= link_to 'Edit', edit_plant_path(@plant) %> |
 <%= link_to 'Back', company_path(@company) %>

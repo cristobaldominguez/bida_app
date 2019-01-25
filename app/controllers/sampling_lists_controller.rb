@@ -62,13 +62,13 @@ class SamplingListsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_sampling_list
-      @sampling_list = SamplingList.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def sampling_list_params
-      params.require(:sampling_list).permit(:plant_id, :access_id, :frecuency_id, :per_cycle)
-    end
+  def set_sampling_list
+    @sampling_list = SamplingList.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def sampling_list_params
+    params.require(:sampling_list).permit(:plant_id, :access_id, :frecuency_id, :per_cycle)
+  end
 end
