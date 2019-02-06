@@ -9,8 +9,7 @@ class SamplingListsController < ApplicationController
 
   # GET /sampling_lists/1
   # GET /sampling_lists/1.json
-  def show
-  end
+  def show; end
 
   # GET /sampling_lists/new
   def new
@@ -19,6 +18,8 @@ class SamplingListsController < ApplicationController
 
   # GET /sampling_lists/1/edit
   def edit
+    @plant = @sampling_list.plant
+    @samplings = @sampling_list.samplings.includes(standard: [:option])
   end
 
   # POST /sampling_lists
@@ -69,6 +70,6 @@ class SamplingListsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def sampling_list_params
-    params.require(:sampling_list).permit(:plant_id, :access_id, :frecuency_id, :per_cycle)
+    params.require(:sampling_list).permit(samplings_attributes: %i[id standard_id value_in value_out sampling_list_id])
   end
 end

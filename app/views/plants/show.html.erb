@@ -63,7 +63,7 @@
       <th colspan="2">In</th>
       <th colspan="2">Out</th>
     </tr>
-  <% @plant.standards.each do |standard| %>
+  <% @standards.each do |standard| %>
     <% if (standard.enabled) %>
     <tr>
       <td><input type="checkbox" name="<%= standard.option.name %>" checked="true" disabled></td>
@@ -82,7 +82,7 @@
   </table>
 </div>
 
-<% @plant.sampling_lists.each do |sampling_list| %>
+<% @sampling_lists.each do |sampling_list| %>
 <div class="field">
   <h3><%= sampling_list.access.name %> Samplings</h3>
   <ul>
@@ -145,6 +145,12 @@
   </li>
   <% end %>
   <li><%= link_to 'New Inspection', new_plant_inspection_path(@plant) %></li>
+</ul>
+
+<h2 class="cell_division">Samplings</h2>
+<ul>
+  <li><%= link_to 'Lab', @lab_samplings %></li>
+  <li><%= link_to 'Internal', @internal_samplings %></li>
 </ul>
 
 <%= link_to 'Edit', edit_plant_path(@plant) %> |

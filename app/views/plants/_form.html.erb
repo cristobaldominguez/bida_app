@@ -121,7 +121,7 @@
     <label for="toggle_checkbox">Toggle Active</label>
   </div>
 
-    <%= form.fields_for :sampling_lists do |sampling_list| %>
+    <%= form.fields_for :sampling_lists, @samplings do |sampling_list| %>
     <div class="field">
       <h3><%= sampling_list.hidden_field :access_id, value: sampling_list.object.access.id %><%= sampling_list.object.access.name %> Samplings</h3>
 

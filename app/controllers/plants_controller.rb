@@ -19,6 +19,13 @@ class PlantsController < ApplicationController
     @alerts = @plant.alerts.active
     @supports = @plant.supports.active
     @inspections = @plant.inspections.active
+    @standards = @plant.standards.includes(:option, :bounds)
+    @sampling_lists = @plant.sampling_lists.includes(:access, samplings: :standard)
+    @log_standards = @plant.log_standards.includes(:frecuency, task: :log_type).order('log_types.id')
+
+    @logbook = @plant.logbooks.last.created_at.month == Date.today.month ? edit_logbook_path(@plant.logbooks.last) : new_plant_logbook_path(@plant)
+    @lab_samplings = check_sampling_link(@plant, 'Lab')
+    @internal_samplings = check_sampling_link(@plant, 'Internal')
   end
 
   # GET companies/:company_id/plants/new
@@ -178,6 +185,44 @@ class PlantsController < ApplicationController
 
   def set_accesses
     accesses = Access.all
+  end
+
+  def check_sampling_link(plant, target)
+    start_date = Date.new
+    current_date = Date.today
+    sampling_target = target == 'Lab' ? plant.sampling_lists.lab : plant.sampling_lists.internal
+    frecuency_name = sampling_target.last.frecuency.name
+    sampling_cycle = sampling_target.last.per_cycle
+
+    case frecuency_name
+    when 'Daily'    then start_date = current_date.beginning_of_day
+    when 'Weekly'   then start_date = current_date.beginning_of_week
+    when 'Monthly'  then start_date = current_date.at_beginning_of_month
+    when 'Annualy'  then start_date = current_date.beginning_of_year
+    end
+
+    sampling_targets = sampling_target.select { |elem| elem.created_at.to_date.between?(start_date, current_date) }
+    sampling_list = generate_new_sampling_lists(target) if sampling_targets.size < sampling_cycle
+
+    sampling_param = sampling_list.blank? ? sampling_target.last : sampling_list
+    edit_sampling_list_path(sampling_param)
+  end
+
+  def generate_new_sampling_lists(target)
+    sampling_target = target == 'Lab' ? @plant.sampling_lists.lab : @plant.sampling_lists.internal
+    plant_samplings = sampling_target.includes(:access, :samplings)
+    sampling_list = plant_samplings.max_by(&:created_at)
+
+    new_sl = SamplingList.create(plant_id: sampling_list.plant_id,
+                                 access_id: sampling_list.access_id,
+                                 frecuency_id: sampling_list.frecuency_id,
+                                 per_cycle: sampling_list.per_cycle)
+
+    sampling_list.samplings.each do |sampling|
+      new_sl.samplings.create(standard_id: sampling.standard_id, value_in: 0.0, value_out: 0.0)
+    end
+
+    new_sl
   end
 
   def plant_params

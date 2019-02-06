@@ -11,25 +11,25 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :plant_id %>
-    <%= form.text_field :plant_id %>
-  </div>
 
-  <div class="field">
-    <%= form.label :access_id %>
-    <%= form.text_field :access_id %>
-  </div>
+  <table class="">
+    <tbody>
+      <tr>
+        <th>Name</th>
+        <th>In</th>
+        <th>Out</th>
+      </tr>
+      <%= form.fields_for :samplings, @samplings do |sampling| %>
+      <tr>
+        <%= sampling.hidden_field :id %>
+        <td><%= sampling.object.standard.option.name %></td>
+        <td><%= sampling.number_field :value_in %></td>
+        <td><%= sampling.number_field :value_out %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
 
-  <div class="field">
-    <%= form.label :frecuency_id %>
-    <%= form.text_field :frecuency_id %>
-  </div>
-
-  <div class="field">
-    <%= form.label :per_cycle %>
-    <%= form.number_field :per_cycle %>
-  </div>
 
   <div class="actions">
     <%= form.submit %>
