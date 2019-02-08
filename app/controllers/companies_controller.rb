@@ -75,7 +75,7 @@ class CompaniesController < ApplicationController
   end
 
   def set_users
-    @users = User.all
+    @users = User.active.sort_by_id
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

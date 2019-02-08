@@ -7,6 +7,7 @@ class AlertsController < ApplicationController
   # GET /alerts.json
   def index
     @alerts = Alert.all
+    @plant = Plant.find(params[:plant_id])
   end
 
   # GET /alerts/1

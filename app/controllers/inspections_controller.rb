@@ -7,6 +7,7 @@ class InspectionsController < ApplicationController
   # GET /inspections.json
   def index
     @inspections = Inspection.all
+    @plant = Plant.find(params[:plant_id])
   end
 
   # GET /inspections/1
