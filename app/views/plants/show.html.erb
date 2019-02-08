@@ -93,6 +93,34 @@
 </div>
 <% end %>
 
+<h2 class="cell_division">Logbook</h2>
+
+<table>
+  <tbody>
+    <tr>
+      <th>Active</th>
+      <th>Task</th>
+      <th>Frecuency</th>
+      <th>Cycle</th>
+      <th>Responsible</th>
+    </tr>
+    <% current_id = 0 %>
+    <% @log_standards.each do |log| %>
+      <% if current_id != log.task.log_type.id %>
+      <tr><td colspan="5" class="cell_division"><%= log.task.log_type.name %></td></tr>
+      <% end %>
+      <% current_id = log.task.log_type.id %>
+    <tr>
+      <td><input type="checkbox" name="active" value="Boat" <%= 'checked' if log.active %> disabled></td>
+      <td><%= log.task.name %></td>
+      <td><%= log.frecuency.name %></td>
+      <td><%= log.cycle %></td>
+      <td><%= @responsibles[log.responsible][1] %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
 <p>
   <strong>Startup date:</strong>
   <%= @plant.startup_date %>
@@ -145,6 +173,11 @@
   </li>
   <% end %>
   <li><%= link_to 'New Inspection', new_plant_inspection_path(@plant) %></li>
+</ul>
+
+<h2 class="cell_division">Logbook</h2>
+<ul>
+  <li><%= link_to 'Logbook', @logbook %></li>
 </ul>
 
 <h2 class="cell_division">Samplings</h2>

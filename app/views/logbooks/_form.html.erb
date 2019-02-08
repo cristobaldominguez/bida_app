@@ -1,0 +1,67 @@
+<%= form_with(model: logbook, local: true) do |form| %>
+  <% if logbook.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(logbook.errors.count, "error") %> prohibited this logbook from being saved:</h2>
+
+      <ul>
+      <% logbook.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <table class="form_logs">
+    <tbody>
+      <tr>
+        <th>Task</th>
+        <th>Value</th>
+        <th>Cycle</th>
+        <th>Frecuency</th>
+        <th>Responsible</th>
+      </tr>
+
+<% current_id = 0 %>
+<%= form.fields_for :logs, @logs do |log| %>
+  <%= log.fields_for :log_standard do |strd| %>
+    <% if strd.object.active %>
+      <% if current_id != strd.object.task.log_type.id %>
+      <tr class="no_background"><td colspan="5" class="cell_division"><%= strd.object.task.log_type.name %></td></tr>
+      <% end %>
+      <% current_id = strd.object.task.log_type.id %>
+      <tr>
+        <%= log.hidden_field 'persisted', value: log.object.persisted? %>
+        <%= strd.fields_for :task do |t| %>
+        <% input_type = t.object.input_type.option %>
+        <td><%= t.object.name %></td>
+        <td>
+          <% if input_type == 'checkbox' %>
+          <%= log.check_box :value, class: 'check' %>
+          <% elsif ['inches', 'pH record', 'PSI', '% of bed', 'COD Record'].include?(input_type) %>
+          <%= log.number_field :value %>
+          <% elsif input_type == 'date' %>
+          <%= log.date_field :value, min: @today %>
+          <% elsif input_type == 'boolean' %>
+          <%= log.collection_radio_buttons(:value, [[1, 'Yes'],[0, 'No']], :first, :second) %>
+          <% elsif input_type == 'Low/Medium/High Density' %>
+          <%= log.collection_select(:value, [['Low', 'Low'],['Medium','Medium'],['High Density','High Density']], :first, :second, {prompt: 'Select an Alternative'})  %>
+          <% elsif input_type == 'Low/Medium/Strong Odor' %>
+          <%= log.collection_select(:value, [['Low', 'Low'],['Medium','Medium'],['Strong Odor','Strong Odor']], :first, :second, {prompt: 'Select an Alternative'})  %>
+          <% end %>
+        </td>
+        <% end %>
+
+        <td><%= log.object.log_standard.cycle %></td>
+        <td><%= log.object.log_standard.frecuency.name %></td>
+        <td><%= log.object.log_standard.responsible == 1 ? 'BioFiltro' : logbook.plant.company.name %></td>
+      </tr>
+    <% end %>
+  <% end %>
+<% end %>
+    </tbody>
+  </table>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

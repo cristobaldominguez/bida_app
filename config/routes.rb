@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :log_standards
+  resources :tasks
   resources :bounds
   resources :standards
   resources :companies do
@@ -8,6 +10,7 @@ Rails.application.routes.draw do
     resources :alerts, only: %i[new create update destroy]
     resources :supports, only: %i[new create update destroy] do
     resources :sampling_lists, only: %i[index new create update destroy]
+    resources :logbooks, only: %i[new create]
       collection do
         get 'custom'
       end
@@ -17,6 +20,7 @@ Rails.application.routes.draw do
   resources :alerts, path_prefix: '/plants/:plant_id', except: %i[new create update destroy]
   resources :supports, path_prefix: '/plants/:plant_id', except: %i[new create update destroy]
   resources :inspections, path_prefix: '/plants/:plant_id', except: %i[new create update destroy]
+  resources :logbooks, path_prefix: '/plants/:plant_id', except: %i[new create]
   resources :sampling_lists, path_prefix: '/plants/:plant_id', except: %i[new create update destroy]
 
   resources :work_summaries, only: :destroy

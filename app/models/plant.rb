@@ -8,6 +8,9 @@ class Plant < ApplicationRecord
   has_many :supports, dependent: :destroy
   has_many :inspections, dependent: :destroy
 
+  has_many :log_standards
+  has_many :logbooks
+
   belongs_to :contact, class_name: 'User'
   belongs_to :bf_contact, class_name: 'User'
 
@@ -16,4 +19,5 @@ class Plant < ApplicationRecord
 
   accepts_nested_attributes_for :standards, allow_destroy: true
   accepts_nested_attributes_for :sampling_lists, allow_destroy: true
+  accepts_nested_attributes_for :log_standards, allow_destroy: true
 end

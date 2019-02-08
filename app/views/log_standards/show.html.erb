@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Task:</strong>
+  <%= @log_standard.task %>
+</p>
+
+<p>
+  <strong>Frecuency:</strong>
+  <%= @log_standard.frecuency %>
+</p>
+
+<p>
+  <strong>Plant:</strong>
+  <%= @log_standard.plant %>
+</p>
+
+<p>
+  <strong>Active:</strong>
+  <%= @log_standard.active %>
+</p>
+
+<p>
+  <strong>Cycle:</strong>
+  <%= @log_standard.cycle %>
+</p>
+
+<p>
+  <strong>Responsible:</strong>
+  <%= @log_standard.responsible %>
+</p>
+
+<%= link_to 'Edit', edit_log_standard_path(@log_standard) %> |
+<%= link_to 'Back', log_standards_path %>

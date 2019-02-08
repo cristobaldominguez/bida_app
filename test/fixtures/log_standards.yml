@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  task: one
+  frecuency: one
+  plant: one
+  active: false
+  cycle: 1
+  responsible: 1
+
+two:
+  task: two
+  frecuency: two
+  plant: two
+  active: false
+  cycle: 1
+  responsible: 1

@@ -103,7 +103,7 @@ if Rails.env == 'development'
   # Frecuencies
   puts 'Adding Frecuencies'
   Frecuency.destroy_all
-  frecuencies = %w[Weekly Monthly Annualy]
+  frecuencies = %w[Daily Weekly Monthly Annualy]
   frecuencies.each do |frecuency|
     Frecuency.create!(name: frecuency)
   end
@@ -236,5 +236,67 @@ if Rails.env == 'development'
     Output.create!(name: output)
   end
 
-  puts 'Seeds Added!'
+  # Log Types
+  puts 'Adding Log Types'
+  LogType.destroy_all
+  log_types = ['1) Solid Separation',
+               '2) pH Adjustement',
+               '3) EQ tank',
+               '4) Piping',
+               '5) BIDA',
+               '6) Telemetry',
+               '7) Water Quality',
+               '8) Upload Logbook to Dropbox']
+  log_types.each do |category|
+    LogType.create!(name: category)
+  end
+
+  # Input Types
+  puts 'Adding Input Types'
+  InputType.destroy_all
+  input_types = ['checkbox', 'inches', 'pH record', 'date', 'PSI', 'boolean', '% of bed', 'Low/Medium/High Density', 'COD Record', 'Low/Medium/Strong Odor']
+  input_types.each do |input_type|
+    InputType.create!(option: input_type)
+  end
+
+  # Tasks
+  puts 'Adding Tasks'
+  Task.destroy_all
+  tasks = [{ name: 'Check correct operation (1 wash cycle)', log_type_id: 1, input_type_id: 1, frecuency_id: 1, cycle: 1, responsible: 0 },
+           { name: 'Clean screen and water jets of rotary screen', log_type_id: 1, input_type_id: 1, frecuency_id: 2, cycle: 1, responsible: 1 },
+           { name: 'Remove solids from container bin', log_type_id: 1, input_type_id: 1, frecuency_id: 2, cycle: 1, responsible: 0 },
+           { name: 'Check solids level on settling tanks (notify supervisor when more 1 ft)', log_type_id: 1, input_type_id: 2, frecuency_id: 2, cycle: 1, responsible: 1 },
+           { name: 'Check pH chemical tank level (notify Supervisor when is 40% and 20% level)', log_type_id: 2, input_type_id: 1, frecuency_id: 1, cycle: 1, responsible: 1 },
+           { name: 'Check pH onsite equipment (If pH is < 5.5 or > 8.5 call Supervisor)', log_type_id: 2, input_type_id: 3, frecuency_id: 2, cycle: 1, responsible: 1 },
+           { name: 'Check in/out of EQ tank for leaks or blocks', log_type_id: 3, input_type_id: 1, frecuency_id: 2, cycle: 1, responsible: 1 },
+           { name: 'Check all pumps for leaks and noise', log_type_id: 3, input_type_id: 1, frecuency_id: 2, cycle: 1, responsible: 1 },
+           { name: 'Pump maintenance (open, clean and replace seals)', log_type_id: 3, input_type_id: 4, frecuency_id: 4, cycle: 1, responsible: 1 },
+           { name: 'Check solids level (notify supervisor when more 1 ft)', log_type_id: 3, input_type_id: 2, frecuency_id: 2, cycle: 1, responsible: 1 },
+           { name: 'Revise irrigation (ensure adequate pressure and dispersal - notify BF Supervisor if any problem)', log_type_id: 4, input_type_id: 1, frecuency_id: 1, cycle: 1, responsible: 1 },
+           { name: 'Check main irrigation pipe pressure (range 14-20)', log_type_id: 4, input_type_id: 5, frecuency_id: 2, cycle: 1, responsible: 1 },
+           { name: 'Check flies and add flies control product if neccesary (X gallons/day)', log_type_id: 5, input_type_id: 6, frecuency_id: 1, cycle: 1, responsible: 1 },
+           { name: 'Add bacteria to EQ tank (0.5 pounds)', log_type_id: 5, input_type_id: 1, frecuency_id: 2, cycle: 1, responsible: 1 },
+           { name: 'Till puddles', log_type_id: 5, input_type_id: 6, frecuency_id: 1, cycle: 1, responsible: 1 },
+           { name: 'Unclog sprinklers head', log_type_id: 5, input_type_id: 1, frecuency_id: 2, cycle: 1, responsible: 1 },
+           { name: 'Till the complete bed (out of season - Sunday in preference)', log_type_id: 5, input_type_id: 7, frecuency_id: 3, cycle: 1, responsible: 1 },
+           { name: 'Till the complete bed (in season - Sunday in preference)', log_type_id: 5, input_type_id: 7, frecuency_id: 3, cycle: 3, responsible: 1 },
+           { name: 'Check worms density (1 sample every 5,000 sqf)', log_type_id: 5, input_type_id: 8, frecuency_id: 3, cycle: 1, responsible: 1 },
+           { name: 'Clean effluent sieve box', log_type_id: 5, input_type_id: 1, frecuency_id: 2, cycle: 2, responsible: 1 },
+           { name: 'Validate pH sensor record onsite with paper/equipment', log_type_id: 6, input_type_id: 3, frecuency_id: 2, cycle: 1, responsible: 1 },
+           { name: 'Calibrate Sensors', log_type_id: 6, input_type_id: 1, frecuency_id: 3, cycle: 2, responsible: 1 },
+           { name: 'Replace Sensor', log_type_id: 6, input_type_id: 1, frecuency_id: 4, cycle: 2, responsible: 1 },
+           { name: 'Water lab sample BOD/TSS (1st week of the month)', log_type_id: 7, input_type_id: 4, frecuency_id: 3, cycle: 1, responsible: 1 },
+           { name: 'Water internal sample COD', log_type_id: 7, input_type_id: 9, frecuency_id: 3, cycle: 2, responsible: 1 },
+           { name: 'Smell treated water', log_type_id: 7, input_type_id: 10, frecuency_id: 2, cycle: 1, responsible: 1 },
+           { name: 'Upload picture: BioFiltro USA -> Active Accounts -> Fetzer -> Logbook', log_type_id: 8, input_type_id: 1, frecuency_id: 2, cycle: 1, responsible: 1 }]
+  tasks.each do |task|
+    Task.create!(name: task[:name],
+                 log_type_id: task[:log_type_id],
+                 input_type_id: task[:input_type_id],
+                 frecuency_id: task[:frecuency_id],
+                 cycle: task[:cycle],
+                 responsible: task[:responsible])
+  end
+
+  puts '----------- Seeds Added! -----------'
 end

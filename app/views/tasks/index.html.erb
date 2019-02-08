@@ -1,0 +1,34 @@
+<h1>Tasks</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Frecuency</th>
+      <th>Cycle</th>
+      <th>Responsible</th>
+      <th>Input Type</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tasks.keys.size.times do |i| %>
+    <% i += 1 %>
+      <tr><td colspan="7" class="cell_division"><%= @log_types.find(i).name %></td></tr>
+    <% @tasks[i].each do |task| %>
+      <tr>
+        <td><%= task.name %></td>
+        <td><%= task.frecuency.name %></td>
+        <td><%= task.cycle %></td>
+        <td><%= @responsibles[task.responsible][1] %></td>
+        <td><%= task.input_type.option %></td>
+        <td><%= link_to 'Edit', edit_task_path(task) %></td>
+        <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'New Task', new_task_path %>

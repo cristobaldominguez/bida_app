@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Logbooks</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Plant</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @logbooks.each do |logbook| %>
+      <tr>
+        <td><%= logbook.plant %></td>
+        <td><%= link_to 'Show', logbook %></td>
+        <td><%= link_to 'Edit', edit_logbook_path(logbook) %></td>
+        <td><%= link_to 'Destroy', logbook, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Logbook', new_logbook_path %>

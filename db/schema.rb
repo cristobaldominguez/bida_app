@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_11_201846) do
+ActiveRecord::Schema.define(version: 2019_01_24_010440) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -144,6 +144,12 @@ ActiveRecord::Schema.define(version: 2019_01_11_201846) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "input_types", force: :cascade do |t|
+    t.string "option", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "inspections", force: :cascade do |t|
     t.boolean "active", default: true
     t.bigint "user_id"
@@ -202,6 +208,45 @@ ActiveRecord::Schema.define(version: 2019_01_11_201846) do
     t.index ["worms_activity_id"], name: "index_inspections_on_worms_activity_id"
     t.index ["worms_color_id"], name: "index_inspections_on_worms_color_id"
     t.index ["worms_density_id"], name: "index_inspections_on_worms_density_id"
+  end
+
+  create_table "log_standards", force: :cascade do |t|
+    t.bigint "task_id"
+    t.bigint "plant_id"
+    t.bigint "frecuency_id"
+    t.boolean "active", default: true
+    t.integer "responsible", default: 0
+    t.integer "cycle", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["frecuency_id"], name: "index_log_standards_on_frecuency_id"
+    t.index ["plant_id"], name: "index_log_standards_on_plant_id"
+    t.index ["task_id"], name: "index_log_standards_on_task_id"
+  end
+
+  create_table "log_types", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "logbooks", force: :cascade do |t|
+    t.bigint "plant_id"
+    t.boolean "active", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["plant_id"], name: "index_logbooks_on_plant_id"
+  end
+
+  create_table "logs", force: :cascade do |t|
+    t.bigint "logbook_id"
+    t.bigint "log_standard_id"
+    t.boolean "active", default: true
+    t.string "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["log_standard_id"], name: "index_logs_on_log_standard_id"
+    t.index ["logbook_id"], name: "index_logs_on_logbook_id"
   end
 
   create_table "noises", force: :cascade do |t|
@@ -370,6 +415,21 @@ ActiveRecord::Schema.define(version: 2019_01_11_201846) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "tasks", force: :cascade do |t|
+    t.bigint "log_type_id"
+    t.bigint "input_type_id"
+    t.bigint "frecuency_id"
+    t.integer "cycle", default: 1, null: false
+    t.integer "responsible", default: 0
+    t.boolean "active", default: true
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["frecuency_id"], name: "index_tasks_on_frecuency_id"
+    t.index ["input_type_id"], name: "index_tasks_on_input_type_id"
+    t.index ["log_type_id"], name: "index_tasks_on_log_type_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -446,6 +506,12 @@ ActiveRecord::Schema.define(version: 2019_01_11_201846) do
   add_foreign_key "inspections", "worms_activities"
   add_foreign_key "inspections", "worms_colors"
   add_foreign_key "inspections", "worms_densities"
+  add_foreign_key "log_standards", "frecuencies"
+  add_foreign_key "log_standards", "plants"
+  add_foreign_key "log_standards", "tasks"
+  add_foreign_key "logbooks", "plants"
+  add_foreign_key "logs", "log_standards"
+  add_foreign_key "logs", "logbooks"
   add_foreign_key "plants", "companies"
   add_foreign_key "plants", "countries"
   add_foreign_key "plants", "discharge_points"
@@ -458,5 +524,8 @@ ActiveRecord::Schema.define(version: 2019_01_11_201846) do
   add_foreign_key "standards", "plants"
   add_foreign_key "supports", "plants"
   add_foreign_key "supports", "users"
+  add_foreign_key "tasks", "frecuencies"
+  add_foreign_key "tasks", "input_types"
+  add_foreign_key "tasks", "log_types"
   add_foreign_key "work_summaries", "supports"
 end

@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Log type:</strong>
+  <%= @task.log_type.name %>
+</p>
+
+<p>
+  <strong>Input type:</strong>
+  <%= @task.input_type %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @task.name %>
+</p>
+
+<%= link_to 'Edit', edit_task_path(@task) %> |
+<%= link_to 'Back', tasks_path %>

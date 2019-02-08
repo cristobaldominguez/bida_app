@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  log_type: one
+  input_type: one
+  name: MyString
+
+two:
+  log_type: two
+  input_type: two
+  name: MyString

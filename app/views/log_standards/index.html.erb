@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Log Standards</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Task</th>
+      <th>Frecuency</th>
+      <th>Plant</th>
+      <th>Active</th>
+      <th>Cycle</th>
+      <th>Responsible</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @log_standards.each do |log_standard| %>
+      <tr>
+        <td><%= log_standard.task %></td>
+        <td><%= log_standard.frecuency %></td>
+        <td><%= log_standard.plant %></td>
+        <td><%= log_standard.active %></td>
+        <td><%= log_standard.cycle %></td>
+        <td><%= log_standard.responsible %></td>
+        <td><%= link_to 'Show', log_standard %></td>
+        <td><%= link_to 'Edit', edit_log_standard_path(log_standard) %></td>
+        <td><%= link_to 'Destroy', log_standard, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Log Standard', new_log_standard_path %>

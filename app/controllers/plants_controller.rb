@@ -4,7 +4,7 @@ class PlantsController < ApplicationController
   before_action :set_companies, only: :index
   before_action :set_discharge_points, :set_countries, only: %i[new edit create update]
   before_action :set_users, :set_frecuencies, only: %i[new edit create update]
-  before_action :set_accesses, only: %i[create]
+  before_action :set_responsibles, only: %i[new edit create update show]
 
   # GET companies/:company_id/plants
   # GET companies/:company_id/plants.json
@@ -34,9 +34,11 @@ class PlantsController < ApplicationController
     @plant = @company.plants.build
     @is_new = true
 
+    @frecuencies = Frecuency.all
     outlets = Outlet.all
     options = Option.all
     accesses = Access.all
+    tasks = Task.all.order(:id).includes(:log_type)
     standards = []
     sampling_lists = []
 
@@ -58,6 +60,10 @@ class PlantsController < ApplicationController
       sampling_lists.each do |sampling_list|
         sampling_list.samplings.build(standard: standard)
       end
+    end
+
+    tasks.each do |task|
+      @plant.log_standards.build(task: task, frecuency_id: task[:frecuency_id], cycle: task[:cycle], responsible: task[:responsible])
     end
   end
 
@@ -81,6 +87,13 @@ class PlantsController < ApplicationController
       end
     end
 
+    logbook = @plant.logbooks.build
+
+    @plant.log_standards.each do |log_standard|
+      log_standard.logs.build(logbook: logbook)
+      log_standard.save
+    end
+
     respond_to do |format|
       if @plant.save
         format.html { redirect_to @plant, notice: 'Plant was successfully created.' }
@@ -96,19 +109,11 @@ class PlantsController < ApplicationController
   def edit
     @plant = Plant.find(params[:id])
     @company = @plant.company
+    standards = @plant.standards.includes(:option, bounds: :outlet)
+    # sampling_lists = @plant.sampling_lists.includes(:access, :samplings).order(created_at: :desc).limit(2)
     sampling_lists = @plant.sampling_lists
-
-    sampling_lists.order(created_at: :desc).limit(2).each do |sl|
-      @plant.standards.each do |stdr|
-        sl.samplings.build(standard: stdr)
-      end
-    end
-
-    sampling_lists.each do |sampling_list|
-      @plant.standards.each do |standard|
-        sampling_list.samplings.find_or_initialize_by(standard: standard)
-      end
-    end
+    @log_standards = @plant.log_standards.includes(task: [:log_type]).order('log_types.id')
+    build_samplings(sampling_lists, standards)
   end
 
   # PATCH/PUT companies/:company_id/plants/1
@@ -176,33 +181,36 @@ class PlantsController < ApplicationController
   end
 
   def set_users
-    @users = User.active
+    @users = User.active.sort_by_id
   end
 
   def set_frecuencies
     @frecuencies = Frecuency.all
   end
 
-  def set_accesses
-    accesses = Access.all
+  def set_responsibles
+    @company = params[:company_id].present? ? Company.find(params[:company_id]) : Plant.find(params[:id]).company
+    @responsibles = [[0, @company.name], [1, 'BioFiltro']]
+  end
+
+  def build_samplings(sampling_lists, standards)
+    sampling_lists.each do |sampling_list|
+      standards.each do |standard|
+        # N+1
+        sampling_list.samplings.find_or_initialize_by(standard: standard)
+      end
+    end
   end
 
   def check_sampling_link(plant, target)
-    start_date = Date.new
     current_date = Date.today
     sampling_target = target == 'Lab' ? plant.sampling_lists.lab : plant.sampling_lists.internal
     frecuency_name = sampling_target.last.frecuency.name
     sampling_cycle = sampling_target.last.per_cycle
+    start_date = def_start_date(frecuency_name)
 
-    case frecuency_name
-    when 'Daily'    then start_date = current_date.beginning_of_day
-    when 'Weekly'   then start_date = current_date.beginning_of_week
-    when 'Monthly'  then start_date = current_date.at_beginning_of_month
-    when 'Annualy'  then start_date = current_date.beginning_of_year
-    end
-
-    sampling_targets = sampling_target.select { |elem| elem.created_at.to_date.between?(start_date, current_date) }
-    sampling_list = generate_new_sampling_lists(target) if sampling_targets.size < sampling_cycle
+    sampling_lists = sampling_target.select { |elem| elem.created_at.to_date.between?(start_date, current_date) }
+    sampling_list = generate_new_sampling_lists(target) if sampling_lists.size < sampling_cycle
 
     sampling_param = sampling_list.blank? ? sampling_target.last : sampling_list
     edit_sampling_list_path(sampling_param)
@@ -225,11 +233,25 @@ class PlantsController < ApplicationController
     new_sl
   end
 
+  def def_start_date(frecuency_name)
+    start_date = Date.new
+    current_date = Date.today
+    case frecuency_name
+    when 'Daily'    then start_date = current_date.beginning_of_day
+    when 'Weekly'   then start_date = current_date.beginning_of_week
+    when 'Monthly'  then start_date = current_date.at_beginning_of_month
+    when 'Annualy'  then start_date = current_date.beginning_of_year
+    end
+
+    start_date
+  end
+
   def plant_params
     params.require(:plant).permit(
       :name, :code, :company_id, :address01, :address02, :state, :zip, :phone, :flow_design, :startup_date,
       :country_id, :discharge_point_id, :contact_id, :bf_contact_id, standards_attributes: [:id, :option_id,
         :plant_id, :isRange, :enabled, bounds_attributes: [:id, :standard_id, :outlet_id, :from, :to]],
-      system_size: [], sampling_lists_attributes: [:id, :access_id, :frecuency_id, :per_cycle])
+      system_size: [], sampling_lists_attributes: [:id, :access_id, :frecuency_id, :per_cycle],
+      log_standards_attributes: [:id, :task_id, :plant_id, :active, :responsible, :cycle, :frecuency_id ])
   end
 end

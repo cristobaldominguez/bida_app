@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  logbook: one
+  log_standard: one
+  value: MyString
+
+two:
+  logbook: two
+  log_standard: two
+  value: MyString
