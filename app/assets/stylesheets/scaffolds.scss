@@ -1,6 +1,6 @@
 body {
-  background-color: #fff;
-  color: #333;
+  background-color: var(--bg);
+  color: var(--text);
   margin: 33px;
   font-family: verdana, arial, helvetica, sans-serif;
   font-size: 13px;
@@ -20,15 +20,15 @@ pre {
 }
 
 a {
-  color: #000;
+  color: var(--links);
 
   &:visited {
-    color: #666;
+    color: var(--links);
   }
 
   &:hover {
-    color: #fff;
-    background-color: #000;
+    color: var(--links-hover);
+    background-color: var(--links-hover-bg);
   }
 }
 
@@ -81,4 +81,162 @@ div {
 
 label {
   display: block;
+}
+
+input {
+  background-color: var(--input-bg);
+  color: var(--input-text);
+  border-radius: 3px;
+  border: var(--input-border);
+  padding: 4px;
+}
+
+button, input[type="submit"], input[type="reset"] {
+  background-color: var(--blue);
+  color: var(--white);
+  border: var(--submit-border);
+  border-radius: 3px;
+  padding: 3px 5px;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+
+  &:hover {
+    background-color: var(--submit-bg);
+    color: var(--submit-text);
+    border: var(--submit-border);
+  }
+}
+
+span.size__delete {
+  color: var(--danger);
+  float: right;
+  padding: 3px 5px;
+
+  &:hover {
+    background-color: var(--danger);
+    color: var(--danger-hover);
+    border-radius: 3px;
+  }
+}
+
+.field .hide,
+.work_summary--hide {
+  display: none;
+}
+
+.field input.responsive {
+  width: 100%;
+}
+
+.standards {
+
+  &__view {
+
+  }
+
+  &__th {
+    text-align: center;
+  }
+}
+
+.cell_division {
+  font-size: 1rem;
+  font-weight: normal;
+  background: var(--cel-division-bg);
+  color: var(--cel-division-text);
+  padding: 5px;
+}
+
+.description {
+  display: none;
+
+  &.show {
+    display: block;
+  }
+}
+
+.plus_button {
+  background-color: var(--blue);
+  color: white;
+  display: inline-block;
+  border-radius: 50%;
+  border: 1px solid transparent;
+
+  &__link {
+    padding: 30px;
+    display: inline-block;
+    color: white;
+    text-decoration: none;
+    font-weight: bolder;
+    font-size: 1.5rem;
+
+    &:hover {
+      background: transparent;
+    }
+  }
+
+  &:hover {
+    border-color: var(--blue);
+    background-color: var(--bg);
+
+    a {
+      color: var(--blue);
+    }
+  }
+}
+
+.system_size__bottom {
+  @extend .plus_button;
+
+  .system_size__plus {
+    @extend .plus_button__link;
+  }
+}
+
+.work_summary {
+  list-style: none;
+  position: relative;
+
+  &__delete_div {
+    position: absolute;
+    right: 0;
+    text-align: right;
+    top: 0;
+  }
+
+  &__delete {
+    background-color: red;
+    padding: 4px 9px;
+    border-radius: 50%;
+    display: inline-block;
+    color: white;
+    text-decoration: none;
+
+    &:visited {
+      color: white;
+    }
+  }
+}
+
+table.form_logs {
+
+  tr {
+
+    td {
+      padding: 4px;
+      background-color: rgba(255,255,255,.05);
+    }
+
+    &:nth-child(even) {
+    }
+
+    &.no_background{
+
+      td {
+        background-color: transparent;
+      }
+    }
+  }
+
 }

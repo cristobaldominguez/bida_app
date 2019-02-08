@@ -10,6 +10,60 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require_tree .
  *= require_self
+ *= require_tree .
  */
+
+
+ :root {
+  /* Corporative Colors */
+  --blue: #007aff;
+  --white: #fff;
+
+  /* Alerts Colors */
+  --danger: #f00;
+  --danger-hover: #fff;
+
+  /* Regular Colors */
+  --bg: #fff;
+  --text: #333;
+  --links: #666;
+  --links-hover: #fff;
+  --cel-division-text: #333;
+  --cel-division-bg: #eeeeee;
+  --links-hover-bg: #005abd;
+  --input-bg: rgba(0,0,0,.05);
+  --input-text: #333;
+  --input-border: 1px solid rgba( 0,0,0, .1 );
+  --submit-bg: #fff;
+  --submit-text: #007aff;
+  --submit-border: 1px solid #007aff;
+  --system-size-bottom: #292c34;
+
+ }
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Alerts Colors */
+    --danger: #fa5b5b;
+    --danger-hover: #fff;
+    --warning: #f3f551;
+    --warning-hover: #aaab39;
+
+    /* Regular Colors */
+    --bg: #292c34;
+    --text: #acb2be;
+    --links: #72aeea;
+    --links-hover: #fff;
+    --cel-division-text: #ccc;
+    --cel-division-bg: #3f4249;
+    --links-hover-bg: #005abd;
+    --input-bg: rgba(0,0,0,.5);
+    --input-text: #ccc;
+    --input-border: 1px solid rgba( 255,255,255,.2 );
+    --submit-bg: #292c34;
+    --submit-text: #007aff;
+    --submit-border: 1px solid #007aff;
+    --system-size-bottom: #292c34;
+  }
+}
