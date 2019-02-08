@@ -21,20 +21,20 @@
         <th>Responsible</th>
       </tr>
 
-<% current_id = 0 %>
-<%= form.fields_for :logs, @logs do |log| %>
-  <%= log.fields_for :log_standard do |strd| %>
-    <% if strd.object.active %>
-      <% if current_id != strd.object.task.log_type.id %>
-      <tr class="no_background"><td colspan="5" class="cell_division"><%= strd.object.task.log_type.name %></td></tr>
+      <% current_id = 0 %>
+      <%= form.fields_for :logs, @logs do |log| %>
+      <%= log.fields_for :log_standard do |log_standard| %>
+      <%= log_standard.fields_for :task do |task| %>
+      <%= task.fields_for :input_type do |input| %>
+      <% if current_id != log_standard.object.task.log_type.id %>
+      <tr class="no_background"><td colspan="5" class="cell_division"><%= log_standard.object.task.log_type.name %></td></tr>
       <% end %>
-      <% current_id = strd.object.task.log_type.id %>
+      <% current_id = log_standard.object.task.log_type.id %>
       <tr>
-        <%= log.hidden_field 'persisted', value: log.object.persisted? %>
-        <%= strd.fields_for :task do |t| %>
-        <% input_type = t.object.input_type.option %>
-        <td><%= t.object.name %></td>
+        <td><%= log_standard.object.task.name %></td>
         <td>
+          <% input_type = log_standard.object.task.input_type.option %>
+          <%= input.hidden_field :option, value: input_type %>
           <% if input_type == 'checkbox' %>
           <%= log.check_box :value, class: 'check' %>
           <% elsif ['inches', 'pH record', 'PSI', '% of bed', 'COD Record'].include?(input_type) %>
@@ -49,15 +49,14 @@
           <%= log.collection_select(:value, [['Low', 'Low'],['Medium','Medium'],['Strong Odor','Strong Odor']], :first, :second, {prompt: 'Select an Alternative'})  %>
           <% end %>
         </td>
-        <% end %>
-
         <td><%= log.object.log_standard.cycle %></td>
         <td><%= log.object.log_standard.frecuency.name %></td>
         <td><%= log.object.log_standard.responsible == 1 ? 'BioFiltro' : logbook.plant.company.name %></td>
       </tr>
-    <% end %>
-  <% end %>
-<% end %>
+      <% end %>
+      <% end %>
+      <% end %>
+      <% end %>
     </tbody>
   </table>
 

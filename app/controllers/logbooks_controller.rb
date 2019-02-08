@@ -49,40 +49,32 @@ class LogbooksController < ApplicationController
     current_date = Date.today
     logs = @logbook.logs.includes(log_standard: [:frecuency, task: %i[input_type log_type]])
     @logs = logs.order(:id).to_a
-    # @logs << logs.build(log_standard_id: 5, value: 0.0)
 
     display_logs = logs.map do |log|
       frecuency_name = log.log_standard.frecuency.name
       start_date = def_start_date(frecuency_name)
 
       selected_logs = logs.select { |elem| elem.log_standard == log.log_standard }.select { |elem| elem.created_at.to_date.between?(start_date, current_date) }
-      selected_logs.size < log.log_standard.cycle ? logs.build(log_standard_id: log.log_standard_id) : log
-      # byebug
+      desition = create_new_log?(selected_logs, log)
+      desition ? logs.build(log_standard_id: log.log_standard_id) : log
     end
 
     @logs = display_logs.sort_by { |log| log.log_standard.task.log_type.name }
-
-    # raise
   end
 
   # PATCH/PUT /logbooks/1
   # PATCH/PUT /logbooks/1.json
   def update
-    # iterar sobre los logs que vienen en params
-    # build al logbook sólo si no es persistente
-    # con .build o con @logbook << Log.new()
-    # @logbook.save
-    # byebug
-
-    # prams[:logbook].delete(:logs)
-
-    params[:logbook][:logs_attributes].each_pair do |_, parameter|
-      @logbook.logs.create(log_standard_id: parameter['log_standard_attributes']['id'], value: parameter['value']) if parameter['persisted'] == 'false' && parameter['value']
+    params[:logbook][:logs_attributes].each do |key, parameter|
+      if parameter[:id].nil? && (parameter[:value].blank? || parameter[:log_standard_attributes][:task_attributes][:input_type][:option] == 'checkbox')
+        @logbook.logs.create(log_standard_id: parameter[:log_standard_attributes][:id].to_i, value: parameter[:value])
+        params[:logbook][:logs_attributes].extract!(key)
+      end
     end
 
     respond_to do |format|
       if @logbook.update(logbook_params)
-        format.html { redirect_to @logbook, notice: 'Logbook was successfully updated.' }
+        format.html { redirect_to edit_logbook_path(@logbook), notice: 'Logbook was successfully updated.' }
         format.json { render :show, status: :ok, location: @logbook }
       else
         format.html { render :edit }
@@ -134,6 +126,17 @@ class LogbooksController < ApplicationController
     end
 
     start_date
+  end
+
+  def create_new_log?(logs, log)
+    cycle_quantity = log.log_standard.cycle
+
+    return true if logs.size.zero? && logs.size < cycle_quantity
+
+    last_log_value = logs.last.value
+    last_log_type = logs.last.log_standard.task.input_type.option
+
+    (logs.size < cycle_quantity) && (last_log_value.blank? || (last_log_type == 'checkbox' && last_log_value == '0'))
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
