@@ -83,7 +83,8 @@ label {
   display: block;
 }
 
-input {
+input,
+textarea {
   background-color: var(--input-bg);
   color: var(--input-text);
   border-radius: 3px;
