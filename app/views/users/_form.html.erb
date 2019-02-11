@@ -46,6 +46,11 @@
     <%= form.text_field :mobile %>
   </div>
 
+  <div class="field">
+    <%= form.label :role %>
+    <%= form.collection_select(:role, @roles, :first, :second) %>
+  </div>
+
   <ul class="field">
     <% @plants.each do |country, value| %>
     <li>

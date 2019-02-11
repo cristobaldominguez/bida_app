@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :set_plants, only: [:create, :update]
   before_action :grouped_plants, only: [:edit, :new]
+  before_action :set_roles, only: [:edit, :new]
 
   # GET /users
   # GET /users.json
@@ -80,8 +81,12 @@ class UsersController < ApplicationController
     @plants = Plant.active.group_by { |p| p.country.name }
   end
 
+  def set_roles
+    @roles = User.roles.map { |role, k| [role, role.to_s.humanize] }
+  end
+
   # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
-    params.require(:user).permit(:name, :lastname, :email, :active, :address01, :address02, :phone, :mobile, :plants)
+    params.require(:user).permit(:name, :lastname, :email, :active, :address01, :address02, :phone, :mobile, :plants, :role)
   end
 end
