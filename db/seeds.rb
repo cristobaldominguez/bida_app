@@ -8,19 +8,20 @@ if Rails.env == 'development'
   # Users
   puts 'Adding Users'
   User.destroy_all
-  users = [{ name: 'Cristóbal', lastname: 'Domínguez', email: 'cris@me.com', password: '123123' },
-           { name: 'Matías', lastname: 'Sjogren', email: 'matias@bf.com', password: '123123' },
-           { name: 'Ida', lastname: 'Hoffman', email: 'ida.hoffman87@example.com', password: '123123' },
-           { name: 'Ellen', lastname: 'Sanders', email: 'ellen.sanders@example.com', password: '123123' },
-           { name: 'Lester', lastname: 'Murray', email: 'lester.murray@example.com', password: '123123' },
-           { name: 'Vicki', lastname: 'Hunter', email: 'vicki.hunter@example.com', password: '123123' },
-           { name: 'Frank', lastname: 'Horton', email: 'frank.horton@example.com', password: '123123' },
-           { name: 'Jorge', lastname: 'Berry', email: 'jorge.berry@example.com', password: '123123' },
-           { name: 'Ethan', lastname: 'Fletcher', email: 'ethan.fletcher@example.com', password: '123123' },
-           { name: 'Jane', lastname: 'Hansen', email: 'jane.hansen@example.com', password: '123123' },
-           { name: 'Leonard', lastname: 'Crawford', email: 'leonard.crawford@example.com', password: '123123' }]
+  roles = [:client, :operator, :operations_manager, :bf_viewer, :administrative]
+  users = [{ name: 'Cristóbal', lastname: 'Domínguez', email: 'cris@me.com', password: '123123', role: :admin },
+           { name: 'Matías', lastname: 'Sjogren', email: 'matias@bf.com', password: '123123', role: :admin },
+           { name: 'Ida', lastname: 'Hoffman', email: 'ida.hoffman87@example.com', password: '123123', role: roles.sample },
+           { name: 'Ellen', lastname: 'Sanders', email: 'ellen.sanders@example.com', password: '123123', role: roles.sample },
+           { name: 'Lester', lastname: 'Murray', email: 'lester.murray@example.com', password: '123123', role: roles.sample },
+           { name: 'Vicki', lastname: 'Hunter', email: 'vicki.hunter@example.com', password: '123123', role: roles.sample },
+           { name: 'Frank', lastname: 'Horton', email: 'frank.horton@example.com', password: '123123', role: roles.sample },
+           { name: 'Jorge', lastname: 'Berry', email: 'jorge.berry@example.com', password: '123123', role: roles.sample },
+           { name: 'Ethan', lastname: 'Fletcher', email: 'ethan.fletcher@example.com', password: '123123', role: roles.sample },
+           { name: 'Jane', lastname: 'Hansen', email: 'jane.hansen@example.com', password: '123123', role: roles.sample },
+           { name: 'Leonard', lastname: 'Crawford', email: 'leonard.crawford@example.com', password: '123123', role: roles.sample }]
   users.each do |user|
-    User.create!(name: user[:name], lastname: user[:lastname], email: user[:email], password: user[:password])
+    User.create!(name: user[:name], lastname: user[:lastname], email: user[:email], password: user[:password], role: user[:role])
   end
 
   # Countries
