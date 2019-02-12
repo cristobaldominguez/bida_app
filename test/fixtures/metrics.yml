@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  metric_type: one
+  length: MyString
+  volume: MyString
+  area: MyString
+  mass: MyString
+
+two:
+  metric_type: two
+  length: MyString
+  volume: MyString
+  area: MyString
+  mass: MyString

@@ -299,5 +299,24 @@ if Rails.env == 'development'
                  responsible: task[:responsible])
   end
 
+  # Metric Types
+  puts 'Adding Metric Types'
+  MetricType.destroy_all
+  metric_types = ['Imperial', 'Metric']
+  metric_types.each do |metric_type|
+    MetricType.create!(option: metric_type)
+  end
+
+  # Metrics
+  puts 'Adding Metrics'
+  Metric.destroy_all
+  metric_types = MetricType.all
+  metrics = { Imperial: { length: 'Feet', volume: 'Gallon', area: 'Square Foot', mass: 'Pounds' },
+              Metric: { length: 'Meters', volume: 'Liter', area: 'Square Meter', mass: 'Kilogram' } }
+  metrics.each do |k, metric|
+    metric_type = metric_types.find_by(option: k.to_s)
+    metric_type.metrics.create!(length: metric[:length], volume: metric[:volume], area: metric[:area], mass: metric[:mass])
+  end
+
   puts '----------- Seeds Added! -----------'
 end

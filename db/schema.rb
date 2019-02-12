@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_11_174747) do
+ActiveRecord::Schema.define(version: 2019_02_12_190453) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -96,6 +96,8 @@ ActiveRecord::Schema.define(version: 2019_02_11_174747) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "metric_id"
+    t.index ["metric_id"], name: "index_countries_on_metric_id"
   end
 
   create_table "discharge_points", force: :cascade do |t|
@@ -247,6 +249,23 @@ ActiveRecord::Schema.define(version: 2019_02_11_174747) do
     t.datetime "updated_at", null: false
     t.index ["log_standard_id"], name: "index_logs_on_log_standard_id"
     t.index ["logbook_id"], name: "index_logs_on_logbook_id"
+  end
+
+  create_table "metric_types", force: :cascade do |t|
+    t.string "option"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "metrics", force: :cascade do |t|
+    t.bigint "metric_type_id"
+    t.string "length"
+    t.string "volume"
+    t.string "area"
+    t.string "mass"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["metric_type_id"], name: "index_metrics_on_metric_type_id"
   end
 
   create_table "noises", force: :cascade do |t|
@@ -487,6 +506,7 @@ ActiveRecord::Schema.define(version: 2019_02_11_174747) do
   add_foreign_key "bounds", "outlets"
   add_foreign_key "bounds", "standards"
   add_foreign_key "companies", "industries"
+  add_foreign_key "countries", "metrics"
   add_foreign_key "fluents", "colors"
   add_foreign_key "fluents", "inspections"
   add_foreign_key "fluents", "odors"
@@ -513,6 +533,7 @@ ActiveRecord::Schema.define(version: 2019_02_11_174747) do
   add_foreign_key "logbooks", "plants"
   add_foreign_key "logs", "log_standards"
   add_foreign_key "logs", "logbooks"
+  add_foreign_key "metrics", "metric_types"
   add_foreign_key "plants", "companies"
   add_foreign_key "plants", "countries"
   add_foreign_key "plants", "discharge_points"
