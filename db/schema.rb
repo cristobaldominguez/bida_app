@@ -263,6 +263,7 @@ ActiveRecord::Schema.define(version: 2019_02_12_190453) do
     t.string "volume"
     t.string "area"
     t.string "mass"
+    t.string "temperature"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["metric_type_id"], name: "index_metrics_on_metric_type_id"

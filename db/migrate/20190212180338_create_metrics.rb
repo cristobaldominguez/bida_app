@@ -6,6 +6,7 @@ class CreateMetrics < ActiveRecord::Migration[5.2]
       t.string :volume
       t.string :area
       t.string :mass
+      t.string :temperature
 
       t.timestamps
     end

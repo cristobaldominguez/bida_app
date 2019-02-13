@@ -311,11 +311,11 @@ if Rails.env == 'development'
   puts 'Adding Metrics'
   Metric.destroy_all
   metric_types = MetricType.all
-  metrics = { Imperial: { length: 'Feet', volume: 'Gallon', area: 'Square Foot', mass: 'Pounds' },
-              Metric: { length: 'Meters', volume: 'Liter', area: 'Square Meter', mass: 'Kilogram' } }
+  metrics = { Imperial: { length: 'Feet', volume: 'Gallon', area: 'Square Foot', mass: 'Pounds', temperature: 'Fahrenheit' },
+              Metric: { length: 'Meters', volume: 'Liter', area: 'Square Meter', mass: 'Kilogram', temperature: 'Celsius' } }
   metrics.each do |k, metric|
     metric_type = metric_types.find_by(option: k.to_s)
-    metric_type.metrics.create!(length: metric[:length], volume: metric[:volume], area: metric[:area], mass: metric[:mass])
+    metric_type.metrics.create!(length: metric[:length], volume: metric[:volume], area: metric[:area], mass: metric[:mass], temperature: metric[:temperature])
   end
 
   puts '----------- Seeds Added! -----------'
