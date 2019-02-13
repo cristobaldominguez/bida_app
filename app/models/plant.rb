@@ -20,4 +20,8 @@ class Plant < ApplicationRecord
   accepts_nested_attributes_for :standards, allow_destroy: true
   accepts_nested_attributes_for :sampling_lists, allow_destroy: true
   accepts_nested_attributes_for :log_standards, allow_destroy: true
+
+  def metrics
+    country.metric
+  end
 end

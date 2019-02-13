@@ -26,6 +26,8 @@ class PlantsController < ApplicationController
     @logbook = @plant.logbooks.last.created_at.month == Date.today.month ? edit_logbook_path(@plant.logbooks.last) : new_plant_logbook_path(@plant)
     @lab_samplings = check_sampling_link(@plant, 'Lab')
     @internal_samplings = check_sampling_link(@plant, 'Internal')
+    @system_size = @plant.system_size.sum
+    @volume_metric = @system_size > 1 ? @plant.country.metric.volume.pluralize : @plant.country.metric.volume
   end
 
   # GET companies/:company_id/plants/new

@@ -45,12 +45,12 @@
 
 <p>
   <strong>System Size:</strong>
-  <%= @plant.system_size.sum %>
+  <%= @plant.system_size.sum %> <%= @plant.system_size.sum > 1 ? @plant.metrics.volume.pluralize : @plant.metrics.volume %>
 </p>
 
 <p>
   <strong>Flow design:</strong>
-  <%= @plant.flow_design %>
+  <%= @plant.flow_design %> <%= @plant.flow_design > 1 ? @plant.metrics.volume.pluralize : @plant.metrics.volume %> per day.
 </p>
 
 <h2 class="cell_division">Standards</h2>
