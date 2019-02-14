@@ -15,7 +15,7 @@ document.addEventListener('turbolinks:load', function() {
     function onChange(e){
       const sel = getSelectedText(e.target)
       const response = checkRegex(sel)
-      const target = this.parentNode.nextSibling.nextSibling
+      const target = this.parentNode.parentNode.nextSibling.nextSibling
 
       if (response) {
         target.classList.add('show')
