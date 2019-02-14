@@ -1,4 +1,4 @@
-<%= form_with(model: support, url:[support.plant, support], local: true) do |form| %>
+<%= form_with(model: support, url:[@plant, support], local: true) do |form| %>
   <% if support.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(support.errors.count, "error") %> prohibited this support from being saved:</h2>

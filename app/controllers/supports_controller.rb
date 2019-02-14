@@ -28,7 +28,7 @@ class SupportsController < ApplicationController
   def create
     respond_to do |format|
       if @support.save
-        format.html { redirect_to @support, notice: 'Support was successfully created.' }
+        format.html { redirect_to plant_supports_path(@plant), notice: 'Support was successfully created.' }
         format.json { render :show, status: :created, location: @support }
       else
         format.html { render :new }
@@ -48,7 +48,7 @@ class SupportsController < ApplicationController
   def update
     respond_to do |format|
       if @support.update(support_params)
-        format.html { redirect_to @support, notice: 'Support was successfully updated.' }
+        format.html { redirect_to plant_supports_path(@plant), notice: 'Support was successfully updated.' }
         format.json { render :show, status: :ok, location: @support }
       else
         format.html { render :edit }
@@ -64,7 +64,7 @@ class SupportsController < ApplicationController
     @support.save
 
     respond_to do |format|
-      format.html { redirect_to plant_path(@support.plant), notice: 'Support was successfully destroyed.' }
+      format.html { redirect_to plant_supports_path(@plant), notice: 'Support was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
