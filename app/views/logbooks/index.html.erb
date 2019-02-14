@@ -11,7 +11,7 @@
   <tbody>
     <% @logbooks.each do |logbook| %>
       <tr>
-        <td><%= logbook.plant %></td>
+        <td><%= logbook.plant.created_at.to_date.strftime("%B %Y") %></td>
         <td><%= link_to 'Show', logbook %></td>
         <td><%= link_to 'Edit', edit_logbook_path(logbook) %></td>
         <td><%= link_to 'Destroy', logbook, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -22,4 +22,4 @@
 
 <br>
 
-<%= link_to 'New Logbook', new_logbook_path %>
+<%#= link_to 'New Logbook', new_logbook_path %>

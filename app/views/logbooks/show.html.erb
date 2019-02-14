@@ -1,7 +1,44 @@
-<p>
-  <strong>Plant:</strong>
-  <%= @logbook.plant %>
-</p>
+<table class="form_logs">
+  <tbody>
+    <tr>
+      <th>Task</th>
+      <th>Value</th>
+      <th>Cycle</th>
+      <th>Frecuency</th>
+      <th>Responsible</th>
+    </tr>
+
+    <% current_id = 0 %>
+    <% @logs.each do |log| %>
+
+    <% if current_id != log.log_standard.task.log_type.id %>
+    <tr class="no_background"><td colspan="5" class="cell_division"><%= log.log_standard.task.log_type.name %></td></tr>
+    <% end %>
+    <% current_id = log.log_standard.task.log_type.id %>
+    <tr>
+      <td><%= log.log_standard.task.name %></td>
+      <td>
+
+        <% input_type = log.log_standard.task.input_type.option %>
+        <% if input_type == 'checkbox' %>
+        <%= log.value ? 'Yes' : 'No' %>
+        <% elsif ['inches', 'pH record', 'PSI', '% of bed', 'COD Record'].include?(input_type) %>
+        <%= log.value %>
+        <% elsif input_type == 'date' %>
+        <%= log.value.to_date %>
+        <% elsif input_type == 'boolean' %>
+        <%= log.value == '1' ? 'Yes' : 'No' %>
+        <% else %>
+        <%= log.value %>
+        <% end %>
+      </td>
+      <td><%= log.log_standard.cycle %></td>
+      <td><%= log.log_standard.frecuency.name %></td>
+      <td><%= log.log_standard.responsible == 1 ? 'BioFiltro' : @logbook.plant.company.name %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
 
 <%= link_to 'Edit', edit_logbook_path(@logbook) %> |
 <%= link_to 'Back', logbooks_path %>

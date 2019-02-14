@@ -10,7 +10,10 @@ class LogbooksController < ApplicationController
 
   # GET /logbooks/1
   # GET /logbooks/1.json
-  def show; end
+  def show
+    # @logbooks.includes(:log_standard)
+    @logs = @logbook.logs.includes(log_standard: [:frecuency, task: [:log_type, :input_type]]).order('log_types.id')
+  end
 
   # GET /logbooks/new
   def new
