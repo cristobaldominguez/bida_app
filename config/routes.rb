@@ -10,14 +10,13 @@ Rails.application.routes.draw do
     resources :sampling_lists, only: %i[index new create update destroy]
     resources :logbooks, only: %i[new create]
     resources :inspections, only: %i[index new create]
-    resources :alerts, only: %i[index new create update destroy]
+    resources :alerts
     resources :supports, only: %i[index new create update destroy] do
       collection do
         get 'custom'
       end
     end
   end
-  resources :alerts, path_prefix: '/plants/:plant_id', except: %i[index new create update destroy]
   resources :supports, path_prefix: '/plants/:plant_id', except: %i[index new create update destroy]
   resources :inspections, path_prefix: '/plants/:plant_id', except: %i[index new create]
   resources :logbooks, path_prefix: '/plants/:plant_id', except: %i[new create]

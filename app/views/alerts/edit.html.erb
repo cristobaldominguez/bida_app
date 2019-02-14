@@ -2,5 +2,5 @@
 
 <%= render 'form', alert: @alert %>
 
-<%= link_to 'Show', @alert %> |
-<%= link_to 'Back', plant_path(@plant) %>
+<%= link_to 'Show', plant_alert_path(@plant, @alert) %> |
+<%= link_to 'Back', plant_alerts_path(@plant) %>

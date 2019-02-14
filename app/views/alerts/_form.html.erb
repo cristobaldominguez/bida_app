@@ -1,4 +1,4 @@
-<%= form_with(model: alert, url: [alert.plant, alert], local: true) do |form| %>
+<%= form_with(model: alert, url: [@plant, alert], local: true) do |form| %>
   <% if alert.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(alert.errors.count, "error") %> prohibited this alert from being saved:</h2>
@@ -22,17 +22,17 @@
 
   <div class="field">
     <%= form.label :incident_type_id %>
-    <%= form.collection_select :incident_type_id, @incidents, :id, :name %>
+    <%= form.collection_select :incident_type_id, @incidents, :id, :name, {prompt: 'Select a Incident Type'} %>
   </div>
 
   <div class="field">
     <%= form.label :status_id %>
-    <%= form.collection_select :status_id, @statuses, :id, :name %>
+    <%= form.collection_select :status_id, @statuses, :id, :name, {prompt: 'Select a Status'} %>
   </div>
 
   <div class="field">
     <%= form.label 'Solution Priority' %>
-    <%= form.collection_select :priority_id, @priorities, :id, :name %>
+    <%= form.collection_select :priority_id, @priorities, :id, :name, {prompt: 'Select a Priority'} %>
   </div>
 
   <div class="field">

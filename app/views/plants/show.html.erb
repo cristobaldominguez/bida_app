@@ -141,8 +141,8 @@
   <% @alerts.each do |alert| %>
   <li>
     <span><%= alert.title %></span>
-    <span><%= link_to 'Show', alert %></span>
-    <span><%= link_to 'Edit', edit_alert_path(alert) %></span>
+    <span><%= link_to 'Show', plant_alert_path(@plant, alert) %></span>
+    <span><%= link_to 'Edit', edit_plant_alert_path(@plant, alert) %></span>
     <span><%= link_to 'Destroy', [@plant, alert], method: :delete, data: { confirm: 'Are you sure?' }  %></span>
   </li>
   <% end %>

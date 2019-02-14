@@ -6,7 +6,7 @@ class AlertsController < ApplicationController
   # GET /alerts
   # GET /alerts.json
   def index
-    @alerts = Alert.all
+    @alerts = Alert.active
     @plant = Plant.find(params[:plant_id])
   end
 
@@ -48,7 +48,7 @@ class AlertsController < ApplicationController
 
     respond_to do |format|
       if @alert.update(alert_params)
-        format.html { redirect_to @alert, notice: 'Alert was successfully updated.' }
+        format.html { redirect_to plant_alerts_path(@plant), notice: 'Alert was successfully updated.' }
         format.json { render :show, status: :ok, location: @alert }
       else
         format.html { render :edit }
@@ -64,7 +64,7 @@ class AlertsController < ApplicationController
     @alert.save
 
     respond_to do |format|
-      format.html { redirect_to plant_path(@alert.plant), notice: 'Alert was successfully destroyed.' }
+      format.html { redirect_to plant_alerts_path(@plant), notice: 'Alert was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

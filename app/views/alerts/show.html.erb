@@ -54,5 +54,5 @@
   <%= @alert.technician_hours_required %>
 </p>
 
-<%= link_to 'Edit', edit_alert_path(@alert) %> |
-<%= link_to 'Back', plant_path(@plant) %>
+<%= link_to 'Edit', edit_plant_alert_path(@plant, @alert) %> |
+<%= link_to 'Back', plant_alerts_path(@plant) %>
