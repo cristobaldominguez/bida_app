@@ -1,7 +1,7 @@
 body {
   background-color: var(--bg);
   color: var(--text);
-  margin: 33px;
+  margin: 0;
   font-family: verdana, arial, helvetica, sans-serif;
   font-size: 13px;
   line-height: 18px;
@@ -77,6 +77,10 @@ div {
     font-size: 12px;
     list-style: square;
   }
+}
+
+.container.main {
+  margin-top: 2rem;
 }
 
 label {
@@ -227,6 +231,10 @@ table.form_logs {
     td {
       padding: 4px;
       background-color: rgba(255,255,255,.05);
+
+      select {
+        width: 100%;
+      }
     }
 
     &:nth-child(even) {
