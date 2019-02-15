@@ -48,6 +48,15 @@
           <% end %>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Inspections
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <%= link_to 'Inspection History', plant_inspections_path(@plant), class: 'dropdown-item' %>
+              <%= link_to 'New Inspection', new_plant_inspection_path(@plant), class: 'dropdown-item' %>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Reports
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">

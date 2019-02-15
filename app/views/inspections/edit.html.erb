@@ -2,5 +2,5 @@
 
 <%= render 'form', inspection: @inspection %>
 
-<%= link_to 'Show', @inspection %> |
-<%= link_to 'Back', plant_path(@inspection.plant) %>
+<%= link_to 'Show', [@plant, @inspection] %> |
+<%= link_to 'Back', plant_inspections_path(@plant) %>

@@ -167,8 +167,8 @@
   <% @inspections.each do |inspection| %>
   <li>
     <span>#<%= inspection.id %></span>
-    <span><%= link_to 'Show', inspection %></span>
-    <span><%= link_to 'Edit', edit_inspection_path(inspection) %></span>
+    <span><%= link_to 'Show', [@plant, inspection] %></span>
+    <span><%= link_to 'Edit', edit_plant_inspection_path(@plant, inspection) %></span>
     <span><%= link_to 'Destroy', [@plant, inspection], method: :delete, data: { confirm: 'Are you sure?' }  %></span>
   </li>
   <% end %>

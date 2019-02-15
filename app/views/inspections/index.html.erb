@@ -3,35 +3,7 @@
 <table>
   <thead>
     <tr>
-      <th>Active</th>
-      <th>User</th>
-      <th>Plant</th>
-      <th>Cod</th>
-      <th>Ec</th>
-      <th>Bod</th>
-      <th>Tss</th>
-      <th>Tn</th>
-      <th>Tp</th>
-      <th>Sample comments</th>
-      <th>Screen</th>
-      <th>Collection Bin</th>
-      <th>Screen comments</th>
-      <th>Noise</th>
-      <th>Pumps noise description</th>
-      <th>Pumps PSI</th>
-      <th>Sprinklers pressure</th>
-      <th>Sprinklers head</th>
-      <th>Piping</th>
-      <th>Pumps comments</th>
-      <th>System surface</th>
-      <th>Bed compaction</th>
-      <th>Ponding</th>
-      <th>Bida comments</th>
-      <th>Odor</th>
-      <th>Plant odor description</th>
-      <th>Birds</th>
-      <th>Fly</th>
-      <th>Summary comments</th>
+      <th>Inspection Number</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -39,38 +11,10 @@
   <tbody>
     <% @inspections.each do |inspection| %>
       <tr>
-        <td><%= inspection.active %></td>
-        <td><%= inspection.user %></td>
-        <td><%= inspection.plant %></td>
-        <td><%= inspection.cod %></td>
-        <td><%= inspection.ec %></td>
-        <td><%= inspection.bod %></td>
-        <td><%= inspection.tss %></td>
-        <td><%= inspection.tn %></td>
-        <td><%= inspection.tp %></td>
-        <td><%= inspection.sample_comments %></td>
-        <td><%= inspection.screen %></td>
-        <td><%= inspection.collection_bin %></td>
-        <td><%= inspection.screen_comments %></td>
-        <td><%= inspection.noise %></td>
-        <td><%= inspection.pumps_noise_description %></td>
-        <td><%= inspection.pumps_psi %></td>
-        <td><%= inspection.sprinklers_pressure %></td>
-        <td><%= inspection.sprinklers_head %></td>
-        <td><%= inspection.piping %></td>
-        <td><%= inspection.pumps_comments %></td>
-        <td><%= inspection.system_surface %></td>
-        <td><%= inspection.bed_compaction %></td>
-        <td><%= inspection.ponding %></td>
-        <td><%= inspection.bida_comments %></td>
-        <td><%= inspection.odor %></td>
-        <td><%= inspection.plant_odor_description %></td>
-        <td><%= inspection.birds %></td>
-        <td><%= inspection.fly %></td>
-        <td><%= inspection.summary_comments %></td>
-        <td><%= link_to 'Show', inspection %></td>
-        <td><%= link_to 'Edit', edit_inspection_path(inspection) %></td>
-        <td><%= link_to 'Destroy', inspection, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>#<%= inspection.id %></td>
+        <td><%= link_to 'Show', plant_inspection_path(@plant, inspection) %></td>
+        <td><%= link_to 'Edit', edit_plant_inspection_path(@plant, inspection) %></td>
+        <td><%= link_to 'Destroy', plant_inspection_path(@plant, inspection), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

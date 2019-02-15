@@ -6,7 +6,7 @@ class InspectionsController < ApplicationController
   # GET /inspections
   # GET /inspections.json
   def index
-    @inspections = Inspection.all
+    @inspections = Inspection.active
     @plant = Plant.find(params[:plant_id])
   end
 
@@ -34,7 +34,7 @@ class InspectionsController < ApplicationController
 
     respond_to do |format|
       if @inspection.save
-        format.html { redirect_to @inspection, notice: 'Inspection was successfully created.' }
+        format.html { redirect_to plant_inspections_path(@plant), notice: 'Inspection was successfully created.' }
         format.json { render :show, status: :created, location: @inspection }
       else
         format.html { render :new }
@@ -48,7 +48,7 @@ class InspectionsController < ApplicationController
   def update
     respond_to do |format|
       if @inspection.update(inspection_params)
-        format.html { redirect_to @inspection, notice: 'Inspection was successfully updated.' }
+        format.html { redirect_to plant_inspections_path(@plant), notice: 'Inspection was successfully updated.' }
         format.json { render :show, status: :ok, location: @inspection }
       else
         format.html { render :edit }
@@ -63,7 +63,7 @@ class InspectionsController < ApplicationController
     @inspection.active = false
     @inspection.save
     respond_to do |format|
-      format.html { redirect_to inspections_url, notice: 'Inspection was successfully destroyed.' }
+      format.html { redirect_to plant_inspections_path(@plant), notice: 'Inspection was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
