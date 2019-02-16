@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   end
   resources :plants, path_prefix: '/companies/:company_id', except: %i[new create update destroy] do
     resources :sampling_lists, only: %i[index new create update destroy]
-    resources :logbooks, only: %i[new create]
+    resources :logbooks
     resources :inspections
     resources :alerts
     resources :supports do
@@ -17,7 +17,6 @@ Rails.application.routes.draw do
       end
     end
   end
-  resources :logbooks, path_prefix: '/plants/:plant_id', except: %i[new create]
   resources :sampling_lists, path_prefix: '/plants/:plant_id', except: %i[new create update destroy]
 
   resources :work_summaries, only: :destroy

@@ -1,4 +1,4 @@
-<%= form_with(model: logbook, local: true) do |form| %>
+<%= form_with(model: [@plant, logbook], local: true) do |form| %>
   <% if logbook.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(logbook.errors.count, "error") %> prohibited this logbook from being saved:</h2>
