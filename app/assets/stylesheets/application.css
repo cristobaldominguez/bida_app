@@ -31,6 +31,10 @@
 
   /* Regular Colors */
   --bg: #fff;
+  --bg-hue: 0;
+  --bg-sat: 0%;
+  --bg-lig: 100%;
+
   --text: #333;
   --links: #666;
   --links-hover: #fff;
@@ -47,6 +51,7 @@
   --login-form-bg: #fff;
   --login-form-footer-border: #dce8f1;
   --login-form-footer-bg: #fff;
+  --dropdown-divider-color: #e9ecef;
 
  }
 
@@ -59,7 +64,11 @@
     --warning-hover: #aaab39;
 
     /* Regular Colors */
-    --bg: #292c34;
+    --bg: hsl(224, 7%, 21%);
+    --bg-hue: 224;
+    --bg-sat: 7%;
+    --bg-lig: 18%;
+
     --text: #acb2be;
     --links: #72aeea;
     --links-hover: #fff;
@@ -76,6 +85,7 @@
     --login-form-bg: rgba(255,255,255,.05);
     --login-form-footer-border: rgba(255,255,255,.25);
     --login-form-footer-bg: rgba(255,255,255,.075);
+    --dropdown-divider-color: #444;
   }
 
   input:-webkit-autofill {

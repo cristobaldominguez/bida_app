@@ -80,7 +80,7 @@ div {
 }
 
 .container.main {
-  margin-top: 2rem;
+  margin-top: 6rem;
 }
 
 label {
@@ -124,6 +124,36 @@ span.size__delete {
     border-radius: 3px;
   }
 }
+
+.navbar {
+
+  &.fixed-top {
+    background-color: var(--bg);
+  }
+
+  &-nav {
+
+    .dropdown-menu {
+      background-color: hsl(var(--bg-hue), var(--bg-sat), var(--bg-lig));
+
+      .dropdown-item {
+        color: var(--links);
+
+        &:focus,
+        &:hover {
+          background-color: var(--blue);
+          color: hsl(var(--bg-hue), var(--bg-sat), var(--bg-lig));
+        }
+      }
+    }
+  }
+
+  .dropdown-divider {
+    border-top: 1px solid var(--dropdown-divider-color);
+  }
+}
+
+
 
 .field .hide,
 .work_summary--hide {
@@ -219,7 +249,7 @@ span.size__delete {
     text-decoration: none;
 
     &:visited {
-      color: white;
+      // color: white;
     }
   }
 }
