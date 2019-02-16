@@ -66,6 +66,17 @@
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Samplings
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <%= link_to 'Lab', @lab_samplings, class: 'dropdown-item' %>
+              <%= link_to 'Internal', @internal_samplings, class: 'dropdown-item' %>
+              <a class="dropdown-item" href="#">Lab History</a>
+              <a class="dropdown-item" href="#">Internal History</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Reports
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">

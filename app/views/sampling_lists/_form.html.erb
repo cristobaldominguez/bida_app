@@ -1,4 +1,4 @@
-<%= form_with(model: sampling_list, local: true) do |form| %>
+<%= form_with(model: sampling_list, url: [@plant, sampling_list], local: true) do |form| %>
   <% if sampling_list.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(sampling_list.errors.count, "error") %> prohibited this sampling_list from being saved:</h2>
