@@ -113,18 +113,6 @@ button, input[type="submit"], input[type="reset"] {
   }
 }
 
-span.size__delete {
-  color: var(--danger);
-  float: right;
-  padding: 3px 5px;
-
-  &:hover {
-    background-color: var(--danger);
-    color: var(--danger-hover);
-    border-radius: 3px;
-  }
-}
-
 .navbar {
 
   &.fixed-top {
@@ -221,13 +209,42 @@ span.size__delete {
   }
 }
 
-.system_size__bottom {
-  @extend .plus_button;
+.system_size {
 
-  .system_size__plus {
-    @extend .plus_button__link;
+  &__size {
+    border: 1px solid var(--blue);
+    border-radius: var(--border-radius);
+    padding: 10px;
+    margin: 10px;
+  }
+
+  &__elements {
+    list-style: none;
+  }
+
+  &__bottom {
+    @extend .plus_button;
+
+    .system_size__plus {
+      @extend .plus_button__link;
+    }
+  }
+
+}
+
+span.size__delete {
+  color: var(--danger);
+  float: right;
+  padding: 3px 5px;
+  font-size: 1rem;
+
+  &:hover {
+    background-color: var(--danger);
+    color: var(--danger-hover);
+    border-radius: 3px;
   }
 }
+
 
 .work_summary {
   list-style: none;
@@ -247,10 +264,6 @@ span.size__delete {
     display: inline-block;
     color: white;
     text-decoration: none;
-
-    &:visited {
-      // color: white;
-    }
   }
 }
 

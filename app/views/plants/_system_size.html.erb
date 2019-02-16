@@ -1,13 +1,13 @@
 <% number = 0 %>
 <% if plant.system_size.count > 0 %>
   <% plant.system_size.each do |size| %>
-  <li class="size">
+  <li class="system_size__size">
     <h3>Module #<span class="size__number"><%= number += 1 %></span><span class="size__delete">Delete</span></h3>
     <input type="text" class="size__input" name="size__quantity" placeholder="Size of the module" data-module="1" value="<%= size %>">
   </li>
   <% end %>
 <% else %>
-<li class="size">
+<li class="system_size__size">
   <h3>Module #<span class="size__number"><%= number += 1 %></span><span class="size__delete">Delete</span></h3>
   <input type="text" class="size__input" name="size__quantity" placeholder="Size of the module" data-module="1" value="0">
 </li>
