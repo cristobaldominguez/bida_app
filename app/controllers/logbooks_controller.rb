@@ -1,6 +1,6 @@
 class LogbooksController < ApplicationController
-  before_action :set_logbook, only: [:show, :edit, :update, :destroy]
   before_action :set_date, only: [:edit, :new]
+  load_and_authorize_resource
 
   # GET /logbooks
   # GET /logbooks.json
@@ -98,10 +98,6 @@ class LogbooksController < ApplicationController
   end
 
   private
-
-  def set_logbook
-    @logbook = Logbook.find(params[:id])
-  end
 
   def set_date
     @today = Date.today

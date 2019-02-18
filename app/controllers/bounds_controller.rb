@@ -1,5 +1,5 @@
 class BoundsController < ApplicationController
-  before_action :set_bound, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource
 
   # GET /bounds
   # GET /bounds.json
@@ -63,10 +63,6 @@ class BoundsController < ApplicationController
   end
 
   private
-
-  def set_bound
-    @bound = Bound.find(params[:id])
-  end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def bound_params

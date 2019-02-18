@@ -1,7 +1,7 @@
 class InspectionsController < ApplicationController
   before_action :set_create_assignment, only: :create
-  before_action :set_inspection, only: %i[show edit update destroy]
   prepend_before_action :set_variables, only: %i[new create edit update]
+  load_and_authorize_resource
 
   # GET /inspections
   # GET /inspections.json
@@ -69,10 +69,6 @@ class InspectionsController < ApplicationController
   end
 
   private
-
-  def set_inspection
-    @inspection = Inspection.find(params[:id])
-  end
 
   def set_create_assignment
     @inspection = Inspection.new(inspection_params)

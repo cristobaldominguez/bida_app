@@ -1,7 +1,7 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: [:show, :edit, :update, :destroy]
   before_action :set_variables, only: [:new, :create, :edit, :update]
   before_action :set_responsibles, only: [:index, :edit]
+  load_and_authorize_resource
 
   # GET /tasks
   # GET /tasks.json
@@ -66,10 +66,6 @@ class TasksController < ApplicationController
   end
 
   private
-
-  def set_task
-    @task = Task.find(params[:id])
-  end
 
   def set_variables
     @log_types = LogType.all

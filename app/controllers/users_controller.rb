@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   before_action :set_plants, only: [:create, :update]
   before_action :grouped_plants, only: [:edit, :new]
   before_action :set_roles, only: [:edit, :new]
+  authorize_resource
 
   # GET /users
   # GET /users.json
@@ -78,7 +79,7 @@ class UsersController < ApplicationController
   end
 
   def grouped_plants
-    @plants = Plant.active.group_by { |p| p.country.name }
+    @plants = Plant.active.includes(:country).group_by { |p| p.country.name }
   end
 
   def set_roles

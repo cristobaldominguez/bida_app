@@ -1,6 +1,6 @@
 class SupportsController < ApplicationController
   before_action :set_create_assignment, only: :create
-  before_action :set_support, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource
 
   # GET /supports
   # GET /supports.json
@@ -77,10 +77,6 @@ class SupportsController < ApplicationController
   end
 
   private
-
-  def set_support
-    @support = Support.find(params[:id])
-  end
 
   def set_create_assignment
     @support = Support.new(support_params)

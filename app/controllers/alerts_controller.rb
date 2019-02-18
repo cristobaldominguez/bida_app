@@ -1,7 +1,7 @@
 class AlertsController < ApplicationController
   before_action :set_create_assignment, only: :create
-  before_action :set_alert, only: [:show, :edit, :update, :destroy]
   before_action :set_incident_type, :set_status, :set_priority, only: [:new, :edit, :create, :update]
+  load_and_authorize_resource
 
   # GET /alerts
   # GET /alerts.json
@@ -70,11 +70,6 @@ class AlertsController < ApplicationController
   end
 
   private
-
-  # Use callbacks to share common setup or constraints between actions.
-  def set_alert
-    @alert = Alert.find(params[:id])
-  end
 
   def set_incident_type
     @incidents = IncidentType.all

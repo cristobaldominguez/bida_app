@@ -3,6 +3,10 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_user_plants, :set_plant, :set_logbook_path, :set_samplings_lists
 
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to pages_no_permission_path, notice: exception.message
+  end
+
   protected
 
   def set_samplings_lists

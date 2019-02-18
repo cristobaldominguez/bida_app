@@ -1,7 +1,7 @@
 class CompaniesController < ApplicationController
-  before_action :set_company, only: [:show, :edit, :update, :destroy]
   before_action :set_industries, only: [:new, :edit, :show]
   before_action :set_users, only: [:new, :create, :edit, :update]
+  load_and_authorize_resource
 
   # GET /companies
   # GET /companies.json
@@ -68,10 +68,6 @@ class CompaniesController < ApplicationController
 
   def set_industries
     @industries = Industry.all
-  end
-
-  def set_company
-    @company = Company.find(params[:id])
   end
 
   def set_users

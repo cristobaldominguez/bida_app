@@ -1,5 +1,5 @@
 class LogStandardsController < ApplicationController
-  before_action :set_log_standard, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource
 
   # GET /log_standards
   # GET /log_standards.json
@@ -61,10 +61,6 @@ class LogStandardsController < ApplicationController
   end
 
   private
-
-  def set_log_standard
-    @log_standard = LogStandard.find(params[:id])
-  end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def log_standard_params

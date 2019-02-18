@@ -1,10 +1,10 @@
 class PlantsController < ApplicationController
-  before_action :set_plant, only: %i[show edit update destroy]
   before_action :set_company, only: %i[show create update destroy]
   before_action :set_companies, only: :index
   before_action :set_discharge_points, :set_countries, only: %i[new edit create update]
   before_action :set_users, :set_frecuencies, only: %i[new edit create update]
   before_action :set_responsibles, only: %i[new edit create update show]
+  load_and_authorize_resource
 
   # GET companies/:company_id/plants
   # GET companies/:company_id/plants.json
@@ -158,10 +158,6 @@ class PlantsController < ApplicationController
   end
 
   private
-
-  def set_plant
-    @plant = Plant.find(params[:id])
-  end
 
   def set_company
     @company = params[:company_id].nil? ? Plant.find(params[:id]).company : Company.find(params[:company_id])
