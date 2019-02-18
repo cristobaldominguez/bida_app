@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'pages/index'
+  get 'pages/no_permission'
+
   resources :log_standards
   resources :tasks
   resources :bounds
