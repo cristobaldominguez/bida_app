@@ -30,7 +30,7 @@
   <% @plants.each do |plant| %>
     <li>
       <span><%= plant.name %></span>
-      <span><% if can? :show, Company %><%= link_to 'Show', plant %><% end %></span>
+      <span><% if can? :read, Company %><%= link_to 'Show', plant %><% end %></span>
       <span><% if can? :edit, Company %><%= link_to 'Edit', edit_plant_path(plant) %><% end %></span>
       <span><% if can? :destroy, Company %><%= link_to 'Destroy', [@company, plant], method: :delete, data: { confirm: 'Are you sure?' }  %><% end %></span>
     </li>

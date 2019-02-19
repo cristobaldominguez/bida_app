@@ -2,6 +2,6 @@
 
 <%= render 'form', task: @task %>
 
-<% if can? :show, Task %>
+<% if can? :read, Task %>
 <%= link_to 'Show', @task %>
 <% end %>

@@ -2,6 +2,6 @@
 
 <%= render 'form', sampling_list: @sampling_list %>
 
-<% if can? :show, SamplingList %>
+<% if can? :read, SamplingList %>
 <%= link_to 'Show', @sampling_list %>
 <% end %>

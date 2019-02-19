@@ -2,6 +2,6 @@
 
 <%= render 'form', company: @company %>
 
-<% if can? :show, Company %>
+<% if can? :read, Company %>
 <%= link_to 'Show', @company %>
 <% end %>

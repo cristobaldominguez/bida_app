@@ -2,6 +2,6 @@
 
 <%= render 'form', standard: @standard %>
 
-<% if can? :show, Standard %>
+<% if can? :read, Standard %>
 <%= link_to 'Show', @standard %>
 <% end %>

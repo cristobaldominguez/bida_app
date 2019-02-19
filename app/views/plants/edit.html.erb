@@ -2,6 +2,6 @@
 
 <%= render 'form', plant: @plant %>
 
-<% if can? :show, Plant %>
+<% if can? :read, Plant %>
 <%= link_to 'Show', plant_path %>
 <% end %>

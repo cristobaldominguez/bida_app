@@ -2,6 +2,6 @@
 
 <%= render 'form', alert: @alert %>
 
-<% if can? :show, Alert %>
+<% if can? :read, Alert %>
 <%= link_to 'Show', plant_alert_path(@plant, @alert) %>
 <% end %>

@@ -18,7 +18,7 @@
         <td><%= sampling_list.access %></td>
         <td><%= sampling_list.frecuency %></td>
         <td><%= sampling_list.per_cycle %></td>
-        <td><% if can? :show, SamplingList %><%= link_to 'Show', sampling_list %><% end %></td>
+        <td><% if can? :read, SamplingList %><%= link_to 'Show', sampling_list %><% end %></td>
         <td><% if can? :edit, SamplingList %><%= link_to 'Edit', edit_sampling_list_path(sampling_list) %><% end %></td>
         <td><% if can? :destroy, SamplingList %><%= link_to 'Destroy', sampling_list, method: :delete, data: { confirm: 'Are you sure?' } %><% end %></td>
       </tr>

@@ -2,6 +2,6 @@
 
 <%= render 'form', logbook: @logbook %>
 
-<% if can? :show, Logbook %>
+<% if can? :read, Logbook %>
 <%= link_to 'Show', [@plant, @logbook] %>
 <% end %>

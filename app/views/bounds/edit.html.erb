@@ -2,6 +2,6 @@
 
 <%= render 'form', bound: @bound %>
 
-<% if can? :show, Bound %>
+<% if can? :read, Bound %>
 <%= link_to 'Show', @bound %>
 <% end %>

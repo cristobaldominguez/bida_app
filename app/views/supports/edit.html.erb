@@ -2,6 +2,6 @@
 
 <%= render 'form', support: @support %>
 
-<% if can? :show, Support %>
+<% if can? :read, Support %>
 <%= link_to 'Show', edit_plant_support_path(@plant, @support) %>
 <% end %>
