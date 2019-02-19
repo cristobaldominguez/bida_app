@@ -2,5 +2,6 @@
 
 <%= render 'form', plant: @plant %>
 
-<%= link_to 'Show', plant_path %> |
-<%= link_to 'Back', @company %>
+<% if can? :show, Plant %>
+<%= link_to 'Show', plant_path %>
+<% end %>

@@ -190,5 +190,6 @@
   <%= @inspection.summary_comments %>
 </p>
 
-<%= link_to 'Edit', edit_plant_inspection_path(@plant, @inspection) %> |
-<%= link_to 'Back', plant_inspections_path(@plant) %>
+<% if can? :edit, Inspection %>
+<%= link_to 'Edit', edit_plant_inspection_path(@plant, @inspection) %>
+<% end %>

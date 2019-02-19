@@ -22,14 +22,14 @@
         <td><%= log_standard.active %></td>
         <td><%= log_standard.cycle %></td>
         <td><%= log_standard.responsible %></td>
-        <td><%= link_to 'Show', log_standard %></td>
-        <td><%= link_to 'Edit', edit_log_standard_path(log_standard) %></td>
-        <td><%= link_to 'Destroy', log_standard, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><% if can? :read, LogStandard %><%= link_to 'Show', log_standard %><% end %></td>
+        <td><% if can? :edit, LogStandard %><%= link_to 'Edit', edit_log_standard_path(log_standard) %><% end %></td>
+        <td><% if can? :destroy, LogStandard %><%= link_to 'Destroy', log_standard, method: :delete, data: { confirm: 'Are you sure?' } %><% end %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
-
+<% if can? :create, LogStandard %>
 <%= link_to 'New Log Standard', new_log_standard_path %>
+<% end %>

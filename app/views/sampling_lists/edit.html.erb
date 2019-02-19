@@ -2,4 +2,6 @@
 
 <%= render 'form', sampling_list: @sampling_list %>
 
-<%= link_to 'Back', plant_path(@plant) %>
+<% if can? :show, SamplingList %>
+<%= link_to 'Show', @sampling_list %>
+<% end %>

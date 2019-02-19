@@ -23,5 +23,6 @@
   <%= @bound.active %>
 </p>
 
-<%= link_to 'Edit', edit_bound_path(@bound) %> |
-<%= link_to 'Back', bounds_path %>
+<% if can? :edit, Bound %>
+<%= link_to 'Edit', edit_bound_path(@bound) %>
+<% end %>

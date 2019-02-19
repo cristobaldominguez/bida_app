@@ -18,5 +18,6 @@
   <%= @sampling_list.per_cycle %>
 </p>
 
-<%= link_to 'Edit', edit_sampling_list_path(@sampling_list) %> |
-<%= link_to 'Back', sampling_lists_path %>
+<% if can? :edit, SamplingList %>
+<%= link_to 'Edit', edit_sampling_list_path(@sampling_list) %>
+<% end %>

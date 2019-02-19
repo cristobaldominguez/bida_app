@@ -27,7 +27,7 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <%= link_to 'All Companies', '/', class: 'dropdown-item' %>
-              <% if current_user.admin? %>
+              <% if can? :create, Company %>
               <div class="dropdown-divider"></div>
               <%= link_to 'New Company', new_company_path, class: 'dropdown-item' %>
               <% end %>
@@ -41,7 +41,7 @@
               <% @user_plants.each do |plant| %>
               <%= link_to plant.name, plant_path(plant), class: 'dropdown-item' %>
               <% end %>
-              <% if @plant.present? || @company %>
+              <% if (@plant.present? || (@company && @company.persisted? )) && (can? :create, Plant) %>
               <div class="dropdown-divider"></div>
               <% @company_id = @company || @plant.company %>
               <%= link_to 'New Plant', new_company_plant_path(@company_id), class: 'dropdown-item' %>
@@ -56,8 +56,10 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <%= link_to 'Alert History', plant_alerts_path(@plant), class: 'dropdown-item' %>
+              <% if can? :create, Alert %>
               <div class="dropdown-divider"></div>
               <%= link_to 'New Alert', new_plant_alert_path(@plant), class: 'dropdown-item' %>
+              <% end %>
             </div>
           </li>
           <li class="nav-item dropdown">
@@ -66,8 +68,10 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <%= link_to 'Support History', plant_supports_path(@plant), class: 'dropdown-item' %>
+              <% if can? :create, Support %>
               <div class="dropdown-divider"></div>
               <%= link_to 'New Support', new_plant_support_path(@plant), class: 'dropdown-item' %>
+              <% end %>
             </div>
           </li>
           <li class="nav-item dropdown">
@@ -76,8 +80,10 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <%= link_to 'Inspection History', plant_inspections_path(@plant), class: 'dropdown-item' %>
+              <% if can? :create, Inspection %>
               <div class="dropdown-divider"></div>
               <%= link_to 'New Inspection', new_plant_inspection_path(@plant), class: 'dropdown-item' %>
+              <% end %>
             </div>
           </li>
           <li class="nav-item dropdown">
@@ -121,7 +127,7 @@
               <a class="dropdown-item" href="#">Something else here</a>
             </div>
           </li> -->
-          <% if current_user&.admin? %>
+          <% if can? :read, User %>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Users

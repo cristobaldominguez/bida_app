@@ -12,9 +12,9 @@
     <% @supports.each do |support| %>
       <tr>
         <td><%= support.number %></td>
-        <td><%= link_to 'Show', plant_support_path(@plant, support) %></td>
-        <td><%= link_to 'Edit', edit_plant_support_path(@plant, support) %></td>
-        <td><%= link_to 'Destroy', plant_support_path(@plant, support), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><% if can? :read, Support %><%= link_to 'Show', plant_support_path(@plant, support) %><% end %></td>
+        <td><% if can? :edit, Support %><%= link_to 'Edit', edit_plant_support_path(@plant, support) %><% end %></td>
+        <td><% if can? :destroy, Support %><%= link_to 'Destroy', plant_support_path(@plant, support), method: :delete, data: { confirm: 'Are you sure?' } %><% end %></td>
       </tr>
     <% end %>
   </tbody>
@@ -22,4 +22,6 @@
 
 <br>
 
+<% if can? :create, Support %>
 <%= link_to 'New Support', new_plant_support_path(@plant) %>
+<% end %>

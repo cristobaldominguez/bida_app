@@ -2,5 +2,6 @@
 
 <%= render 'form', inspection: @inspection %>
 
-<%= link_to 'Show', [@plant, @inspection] %> |
-<%= link_to 'Back', plant_inspections_path(@plant) %>
+<% if can? :show, Inspection %>
+<%= link_to 'Show', [@plant, @inspection] %>
+<% end %>

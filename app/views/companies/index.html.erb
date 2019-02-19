@@ -16,14 +16,14 @@
         <td><%= company.name %></td>
         <td><%= company.taxid %></td>
         <td><%= company.industry.name %></td>
-        <td><%= link_to 'Show', company %></td>
-        <td><%= link_to 'Edit', edit_company_path(company) %></td>
-        <td><%= link_to 'Destroy', company, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><% if can? :read, Company %><%= link_to 'Show', company %><% end %></td>
+        <td><% if can? :edit, Company %><%= link_to 'Edit', edit_company_path(company) %><% end %></td>
+        <td><% if can? :destroy, Company %><%= link_to 'Destroy', company, method: :delete, data: { confirm: 'Are you sure?' } %><% end %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
-
+<% if can? :create, Company %>
 <%= link_to 'New Company', new_company_path %>
+<% end %>

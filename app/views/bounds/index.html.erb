@@ -20,14 +20,14 @@
         <td><%= bound.from %></td>
         <td><%= bound.to %></td>
         <td><%= bound.active %></td>
-        <td><%= link_to 'Show', bound %></td>
-        <td><%= link_to 'Edit', edit_bound_path(bound) %></td>
-        <td><%= link_to 'Destroy', bound, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><% if can? :read, Bound %><%= link_to 'Show', bound %><% end %></td>
+        <td><% if can? :edit, Bound %><%= link_to 'Edit', edit_bound_path(bound) %><% end %></td>
+        <td><% if can? :destroy, Bound %><%= link_to 'Destroy', bound, method: :delete, data: { confirm: 'Are you sure?' } %><% end %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
-
+<% if can? :create, Bound %>
 <%= link_to 'New Bound', new_bound_path %>
+<% end %>

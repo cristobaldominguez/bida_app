@@ -16,14 +16,14 @@
         <td><%= standard.option %></td>
         <td><%= standard.plant %></td>
         <td><%= standard.active %></td>
-        <td><%= link_to 'Show', standard %></td>
-        <td><%= link_to 'Edit', edit_standard_path(standard) %></td>
-        <td><%= link_to 'Destroy', standard, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><% if can? :read, Standard %><%= link_to 'Show', standard %><% end %></td>
+        <td><% if can? :edit, Standard %><%= link_to 'Edit', edit_standard_path(standard) %><% end %></td>
+        <td><% if can? :destroy, Standard %><%= link_to 'Destroy', standard, method: :delete, data: { confirm: 'Are you sure?' } %><% end %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
-
+<% if can? :create, Standard %>
 <%= link_to 'New Standard', new_standard_path %>
+<% end %>

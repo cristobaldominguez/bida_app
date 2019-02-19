@@ -12,12 +12,14 @@
     <% @inspections.each do |inspection| %>
       <tr>
         <td>#<%= inspection.id %></td>
-        <td><%= link_to 'Show', plant_inspection_path(@plant, inspection) %></td>
-        <td><%= link_to 'Edit', edit_plant_inspection_path(@plant, inspection) %></td>
-        <td><%= link_to 'Destroy', plant_inspection_path(@plant, inspection), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><% if can? :read, Inspection %><%= link_to 'Show', plant_inspection_path(@plant, inspection) %><% end %></td>
+        <td><% if can? :edit, Inspection %><%= link_to 'Edit', edit_plant_inspection_path(@plant, inspection) %><% end %></td>
+        <td><% if can? :destroy, Inspection %><%= link_to 'Destroy', plant_inspection_path(@plant, inspection), method: :delete, data: { confirm: 'Are you sure?' } %><% end %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
+<% if can? :create, Inspection %>
 <%= link_to 'New Inspection', new_plant_inspection_path(@plant) %>
+<% end %>

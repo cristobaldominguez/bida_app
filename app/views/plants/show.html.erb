@@ -187,5 +187,6 @@
   <li><%= link_to 'Internal', @internal_samplings %></li>
 </ul>
 
+<% if can? :edit, Plant %>
 <%= link_to 'Edit', edit_plant_path(@plant) %> |
-<%= link_to 'Back', company_path(@company) %>
+<% end %>

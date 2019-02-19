@@ -28,5 +28,6 @@
   <%= @log_standard.responsible %>
 </p>
 
-<%= link_to 'Edit', edit_log_standard_path(@log_standard) %> |
-<%= link_to 'Back', log_standards_path %>
+<% if can? :edit, LogStandard %>
+<%= link_to 'Edit', edit_log_standard_path(@log_standard) %>
+<% end %>

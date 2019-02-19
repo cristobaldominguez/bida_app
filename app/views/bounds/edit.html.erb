@@ -2,5 +2,6 @@
 
 <%= render 'form', bound: @bound %>
 
-<%= link_to 'Show', @bound %> |
-<%= link_to 'Back', bounds_path %>
+<% if can? :show, Bound %>
+<%= link_to 'Show', @bound %>
+<% end %>

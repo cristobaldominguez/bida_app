@@ -38,14 +38,14 @@
         <td><%= plant.lab_number_per_cycle %></td>
         <td><%= plant.internal_number_per_cycle %></td>
         <td><%= plant.startup_date %></td>
-        <td><%= link_to 'Show', plant %></td>
-        <td><%= link_to 'Edit', edit_plant_path(plant) %></td>
-        <td><%= link_to 'Destroy', plant, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><% if can? :read, Plant %><%= link_to 'Show', plant %><% end %></td>
+        <td><% if can? :edit, Plant %><%= link_to 'Edit', edit_plant_path(plant) %><% end %></td>
+        <td><% if can? :destroy, Plant %><%= link_to 'Destroy', plant, method: :delete, data: { confirm: 'Are you sure?' } %><% end %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
-
+<% if can? :create, Plant %>
 <%= link_to 'New Plant', new_plant_path %>
+<% end %>

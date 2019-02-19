@@ -43,5 +43,7 @@
   </li>
 <% end %>
 </ul>
-<%= link_to 'Edit', edit_plant_support_path(@support) %> |
-<%= link_to 'Back', plant_supports_path(@plant) %>
+
+<% if can? :edit, Support %>
+<%= link_to 'Edit', edit_plant_support_path(@support) %>
+<% end %>

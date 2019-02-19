@@ -12,12 +12,14 @@
     <% @alerts.each do |alert| %>
       <tr>
         <td><%= alert.title %></td>
-        <td><%= link_to 'Show', plant_alert_path(@plant, alert) %></td>
-        <td><%= link_to 'Edit', edit_plant_alert_path(@plant, alert) %></td>
-        <td><%= link_to 'Destroy', [@plant, alert], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><% if can? :read, Alert %><%= link_to 'Show', plant_alert_path(@plant, alert) %><% end %></td>
+        <td><% if can? :edit, Alert %><%= link_to 'Edit', edit_plant_alert_path(@plant, alert) %><% end %></td>
+        <td><% if can? :destroy, Alert %><%= link_to 'Destroy', [@plant, alert], method: :delete, data: { confirm: 'Are you sure?' } %><% end %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
+<% if can? :create, Alert %>
 <%= link_to 'New Alert', new_plant_alert_path(@plant) %>
+<% end %>

@@ -23,12 +23,14 @@
         <td><%= task.cycle %></td>
         <td><%= @responsibles[task.responsible][1] %></td>
         <td><%= task.input_type.option %></td>
-        <td><%= link_to 'Edit', edit_task_path(task) %></td>
-        <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><% if can? :edit, Standard %><%= link_to 'Edit', edit_task_path(task) %><% end %></td>
+        <td><% if can? :destroy, Standard %><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %><% end %></td>
       </tr>
     <% end %>
     <% end %>
   </tbody>
 </table>
 
+<% if can? :create, Task %>
 <%= link_to 'New Task', new_task_path %>
+<% end %>

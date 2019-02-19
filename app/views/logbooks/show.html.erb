@@ -40,5 +40,6 @@
   </tbody>
 </table>
 
-<%= link_to 'Edit', edit_logbook_path(@logbook) %> |
-<%= link_to 'Back', logbooks_path %>
+<% if can? :edit, Logbook %>
+<%= link_to 'Edit', edit_logbook_path(@logbook) %>
+<% end %>

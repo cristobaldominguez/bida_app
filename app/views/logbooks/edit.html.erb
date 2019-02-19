@@ -2,5 +2,6 @@
 
 <%= render 'form', logbook: @logbook %>
 
-<%= link_to 'Show', [@plant, @logbook] %> |
-<%= link_to 'Back', plant_logbooks_path %>
+<% if can? :show, Logbook %>
+<%= link_to 'Show', [@plant, @logbook] %>
+<% end %>

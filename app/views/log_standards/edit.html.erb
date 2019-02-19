@@ -2,5 +2,6 @@
 
 <%= render 'form', log_standard: @log_standard %>
 
-<%= link_to 'Show', @log_standard %> |
-<%= link_to 'Back', log_standards_path %>
+<% if can? :show, LogStandard %>
+<%= link_to 'Show', @log_standard %>
+<% end %>

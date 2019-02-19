@@ -28,14 +28,14 @@
         <td><%= user.mobile %></td>
         <td><%= user.role.humanize %></td>
         <td><%= user.plants.map { |p| p.name }.join(', ') %></td>
-        <td><%= link_to 'Show', user %></td>
-        <td><%= link_to 'Edit', edit_user_path(user) %></td>
-        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><% if can? :read, User %><%= link_to 'Show', user %><% end %></td>
+        <td><% if can? :edit, User %><%= link_to 'Edit', edit_user_path(user) %><% end %></td>
+        <td><% if can? :destroy, User %><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %><% end %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
-
+<% if can? :create, User %>
 <%= link_to 'New User', new_user_path %>
+<% end %>

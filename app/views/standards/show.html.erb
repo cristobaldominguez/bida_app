@@ -13,5 +13,6 @@
   <%= @standard.active %>
 </p>
 
-<%= link_to 'Edit', edit_standard_path(@standard) %> |
-<%= link_to 'Back', standards_path %>
+<% if can? :edit, Standard %>
+<%= link_to 'Edit', edit_standard_path(@standard) %>
+<% end %>

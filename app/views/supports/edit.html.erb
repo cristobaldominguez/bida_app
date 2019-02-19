@@ -2,5 +2,6 @@
 
 <%= render 'form', support: @support %>
 
-<%= link_to 'Show', edit_plant_support_path(@plant, @support) %> |
-<%= link_to 'Back', plant_supports_path(@plant) %>
+<% if can? :show, Support %>
+<%= link_to 'Show', edit_plant_support_path(@plant, @support) %>
+<% end %>
