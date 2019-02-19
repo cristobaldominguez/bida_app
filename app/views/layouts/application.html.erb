@@ -52,6 +52,7 @@
           </li>
           <% end %>
           <% if @plant.present? && @plant.persisted? %>
+          <% if can? :read, Alert %>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Alerts
@@ -64,6 +65,8 @@
               <% end %>
             </div>
           </li>
+          <% end %>
+          <% if can? :read, Support %>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Supports
@@ -76,6 +79,8 @@
               <% end %>
             </div>
           </li>
+          <% end %>
+          <% if can? :read, Inspection %>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Inspections
@@ -88,6 +93,8 @@
               <% end %>
             </div>
           </li>
+          <% end %>
+          <% if can? :read, Logbook %>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Logbooks
@@ -97,6 +104,8 @@
               <a class="dropdown-item" href="#">Logbooks History</a>
             </div>
           </li>
+          <% end %>
+          <% if can? :read, Sampling %>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Samplings
@@ -108,6 +117,8 @@
               <a class="dropdown-item" href="#">Internal History</a>
             </div>
           </li>
+          <% end %>
+          <%# if can? :read, Report %>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Reports
@@ -117,6 +128,7 @@
               <a class="dropdown-item" href="#">Reports History</a>
             </div>
           </li>
+          <%# end %>
           <% end %>
           <% if can? :read, User %>
           <li class="nav-item dropdown">
