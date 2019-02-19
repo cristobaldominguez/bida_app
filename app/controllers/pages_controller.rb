@@ -1,7 +1,5 @@
 class PagesController < ApplicationController
-  def index
-  end
+  def index; end
 
-  def no_permission
-  end
+  def no_permission; end
 end

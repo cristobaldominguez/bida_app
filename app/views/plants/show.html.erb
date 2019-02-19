@@ -136,57 +136,6 @@
   <%= @plant.bf_contact&.full_name %>
 </p>
 
-<h2 class="cell_division">Alerts</h2>
-  <ul>
-  <% @alerts.each do |alert| %>
-  <li>
-    <span><%= alert.title %></span>
-    <span><%= link_to 'Show', plant_alert_path(@plant, alert) %></span>
-    <span><%= link_to 'Edit', edit_plant_alert_path(@plant, alert) %></span>
-    <span><%= link_to 'Destroy', [@plant, alert], method: :delete, data: { confirm: 'Are you sure?' }  %></span>
-  </li>
-  <% end %>
-  <li><%= link_to 'New Alert', new_plant_alert_path(@plant) %></li>
-</ul>
-
-<h2 class="cell_division">Supports</h2>
-  <ul>
-  <% @supports.each do |support| %>
-  <li>
-    <span><%= support.number %></span>
-    <span><%= link_to 'Show', plant_support_path(@plant) %></span>
-    <span><%= link_to 'Edit', edit_plant_support_path(@plant, support) %></span>
-    <span><%= link_to 'Destroy', [@plant, support], method: :delete, data: { confirm: 'Are you sure?' }  %></span>
-  </li>
-  <% end %>
-  <li><%= link_to 'New Support', new_plant_support_path(@plant) %></li>
-</ul>
-
-<h2 class="cell_division">Inspections</h2>
-  <ul>
-  <% @inspections.each do |inspection| %>
-  <li>
-    <span>#<%= inspection.id %></span>
-    <span><%= link_to 'Show', [@plant, inspection] %></span>
-    <span><%= link_to 'Edit', edit_plant_inspection_path(@plant, inspection) %></span>
-    <span><%= link_to 'Destroy', [@plant, inspection], method: :delete, data: { confirm: 'Are you sure?' }  %></span>
-  </li>
-  <% end %>
-  <li><%= link_to 'New Inspection', new_plant_inspection_path(@plant) %></li>
-</ul>
-
-<h2 class="cell_division">Logbook</h2>
-<ul>
-  <li><%= link_to 'Logbook', @logbook %></li>
-  <li><%= link_to 'Logbook History', logbooks_path %></li>
-</ul>
-
-<h2 class="cell_division">Samplings</h2>
-<ul>
-  <li><%= link_to 'Lab', @lab_samplings %></li>
-  <li><%= link_to 'Internal', @internal_samplings %></li>
-</ul>
-
 <% if can? :edit, Plant %>
 <%= link_to 'Edit', edit_plant_path(@plant) %> |
 <% end %>
