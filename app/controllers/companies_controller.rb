@@ -6,7 +6,7 @@ class CompaniesController < ApplicationController
   # GET /companies
   # GET /companies.json
   def index
-    @companies = current_user.admin? ? Company.includes(:industry).active : current_user.plants.map { |plant| plant.company.includes(:industry) }
+    @companies = current_user.admin? ? Company.includes(:industry).active : current_user.plants.includes(company: [:industry]).map { |plant| plant.company }
   end
 
   # GET /companies/1
