@@ -40,6 +40,7 @@ class ApplicationController < ActionController::Base
   def check_sampling_link(plant, target)
     current_date = Date.today
     return nil if plant.nil?
+
     sampling_target = target == 'Lab' ? plant.sampling_lists.lab : plant.sampling_lists.internal
     frecuency_name = sampling_target.last.frecuency.name
     sampling_cycle = sampling_target.last.per_cycle
