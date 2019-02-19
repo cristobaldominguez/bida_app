@@ -15,7 +15,7 @@ class Ability
       can :destroy, [Logbook, Log, Sampling, SamplingList]
 
     elsif user.operator?
-      can :read, [Company, Plant, Alert, Support, Inspection, Logbook]
+      can :read, [Plant, Alert, Support, Inspection, Logbook]
       can :update, [Logbook, Sampling, SamplingList]
       can :destroy, [Logbook, Sampling, SamplingList]
       can :create, [Log]
