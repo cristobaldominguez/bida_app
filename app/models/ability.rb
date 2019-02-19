@@ -7,8 +7,24 @@ class Ability
     user ||= User.new # guest user (not logged in)
     if user.admin?
       can :manage, :all
-    else
-      can :read, :all
+
+    elsif user.administrative?
+      can :read, [Company, Plant, Alert, Support, Inspection, Logbook, User]
+      can :create, [Company, Plant, Alert, Support, Inspection, User]
+      can :update, [Logbook, Sampling, SamplingList, Alert, Support, Inspection, User]
+      can :destroy, [Logbook, Log, Sampling, SamplingList]
+
+    elsif user.operator?
+      can :read, [Company, Plant, Alert, Support, Inspection, Logbook]
+      can :update, [Logbook, Sampling, SamplingList]
+      can :destroy, [Logbook, Sampling, SamplingList]
+      can :create, [Log]
+
+    # elsif user.operations_manager?
+    # elsif user.client?
+    # elsif user.bf_viewer?
+    # elsif user.no_role?
+
     end
 
     # The first argument to `can` is the action you are giving the user
