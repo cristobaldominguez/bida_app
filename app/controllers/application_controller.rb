@@ -20,6 +20,7 @@ class ApplicationController < ActionController::Base
 
   def set_user_plants
     @user_plants = current_user.plants unless current_user.nil?
+    flash.now[:alert] = 'This user has no associated Plants.' if @user_plants.empty?
   end
 
   def set_logbook_path
