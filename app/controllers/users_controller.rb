@@ -23,6 +23,8 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
+    plants_params = params[:user][:plant_ids].reject(&:blank?).map { |e| @plants.find(e) }
+    @user.plants = plants_params unless plants_params.blank?
 
     respond_to do |format|
       if @user.save
@@ -41,8 +43,8 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-    plants_params = params[:user][:plant_ids]
-    @user.plants = plants_params.reject(&:blank?).map { |e| @plants.find(e) } unless plants_params.blank?
+    plants_params = params[:user][:plant_ids].reject(&:blank?).map { |e| @plants.find(e) }
+    @user.plants = plants_params unless plants_params.blank?
 
     respond_to do |format|
       if @user.update(user_params)
