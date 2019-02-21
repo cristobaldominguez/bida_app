@@ -2,7 +2,7 @@
   <div class="login__form-content">
 
     <header class="fadeIn first">
-      <h1 class="login__logo"><%= image_tag 'logo', class: 'login__logo-img' %></h1>
+      <%= render 'shared/logo' %>
     </header>
 
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
