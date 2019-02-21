@@ -74,6 +74,11 @@
     <% end %>
   </ul>
 
+  <div class="field">
+    <%= form.label :interface_color %>
+    <%= form.collection_select(:interface_color, @interface_colors, :first, :second) %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>

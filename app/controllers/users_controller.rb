@@ -1,8 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :set_plants, only: [:create, :update]
-  before_action :grouped_plants, only: [:edit, :new]
-  before_action :set_roles, only: [:edit, :new]
+  before_action :grouped_plants, :set_roles, :set_interface_colors, only: [:edit, :new, :create]
   authorize_resource
 
   # GET /users
@@ -86,9 +85,13 @@ class UsersController < ApplicationController
     @roles = User.roles.map { |role, k| [role, role.to_s.humanize] }
   end
 
+  def set_interface_colors
+    @interface_colors = User.interface_colors.map { |color, k| [color, color.to_s.humanize] }
+  end
+
   # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
     params.require(:user).permit(:name, :lastname, :email, :active, :address01, :address02, :phone,
-                                 :mobile, :plants, :role, :password, :password_confirmation)
+                                 :interface_color, :mobile, :plants, :role, :password, :password_confirmation)
   end
 end
