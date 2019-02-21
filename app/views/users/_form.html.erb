@@ -27,6 +27,16 @@
   </div>
 
   <div class="field">
+    <%= form.label :password, "Password" %>
+    <%= form.password_field :password, :autocomplete => "off"  %>
+  </div>
+
+  <div class="field">
+    <%= form.label :password_confirmation %>
+    <%= form.password_field :password_confirmation %>
+  </div>
+
+  <div class="field">
     <%= form.label :address01 %>
     <%= form.text_field :address01 %>
   </div>
