@@ -24,7 +24,7 @@ class User < ApplicationRecord
   has_many :client_supports, class_name: 'Support', foreign_key: 'client_id'
   has_many :bf_technician_supports, class_name: 'Support', foreign_key: 'bf_technician_id'
 
-  enum role: [:no_role, :admin, :client, :operator, :operations_manager, :bf_viewer, :administrative]
+  enum role: [:no_role, :admin, :client, :operator, :operations_manager, :viewer]
 
   def full_name
     "#{name} #{lastname}"

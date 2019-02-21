@@ -56,7 +56,6 @@
     <%= form.text_field :mobile %>
   </div>
 
-  <% if (can? :create, User) && (can? :update, User) %>
   <div class="field">
     <%= form.label :role %>
     <%= form.collection_select(:role, @roles, :first, :second) %>
@@ -74,7 +73,6 @@
     </li>
     <% end %>
   </ul>
-  <% end %>
 
   <div class="actions">
     <%= form.submit %>
