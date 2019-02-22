@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :set_plants, only: [:create, :update]
-  before_action :grouped_plants, :set_roles, :set_interface_colors, only: [:edit, :new, :create]
+  before_action :grouped_plants, :set_roles, :set_interface_colors, only: [:edit, :new, :create, :update]
   authorize_resource
 
   # GET /users
@@ -23,8 +23,7 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
-    plants_params = params[:user][:plant_ids].reject(&:blank?).map { |e| @plants.find(e) }
-    @user.plants = plants_params unless plants_params.blank?
+    @user.plants = params[:user][:plant_ids].reject(&:blank?).map { |e| @plants.find(e) }
 
     respond_to do |format|
       if @user.save
@@ -43,8 +42,7 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-    plants_params = params[:user][:plant_ids].reject(&:blank?).map { |e| @plants.find(e) }
-    @user.plants = plants_params unless plants_params.blank?
+    @user.plants = params[:user][:plant_ids].reject(&:blank?).map { |e| @plants.find(e) }
 
     respond_to do |format|
       if @user.update(user_params)
@@ -76,19 +74,19 @@ class UsersController < ApplicationController
   end
 
   def set_plants
-    @plants = Plant.active
+    @plants = Plant.active.includes(:country)
   end
 
   def grouped_plants
-    @plants = Plant.active.includes(:country).group_by { |p| p.country.name }
+    @grouped_plants = Plant.active.includes(:country).group_by { |p| p.country.name }
   end
 
   def set_roles
-    @roles = User.roles.map { |role, k| [role, role.to_s.humanize] }
+    @roles = User.roles.map { |role, _| [role, role.to_s.humanize] }
   end
 
   def set_interface_colors
-    @interface_colors = User.interface_colors.map { |color, k| [color, color.to_s.humanize] }
+    @interface_colors = User.interface_colors.map { |color, _| [color, color.to_s.humanize] }
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

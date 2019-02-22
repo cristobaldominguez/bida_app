@@ -62,11 +62,11 @@
   </div>
 
   <ul class="field">
-    <% @plants.each do |country, value| %>
+    <% @grouped_plants.each do |country, value| %>
     <li>
       <h3><%= country %></h3>
       <ul>
-        <%= form.collection_check_boxes :plant_ids, @plants[country], :id, :name do |b| %>
+        <%= form.collection_check_boxes :plant_ids, @grouped_plants[country], :id, :name do |b| %>
           <li><%= b.check_box %> <%= b.label %></li>
         <% end %>
       </ul>
