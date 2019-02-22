@@ -13,8 +13,7 @@ document.addEventListener('turbolinks:load', function() {
     const plus = document.querySelector('.system_size__plus')
 
     // Event Binding
-    plus.addEventListener('click', add_size)
-
+    plus ? plus.addEventListener('click', add_size) : null
     document.addEventListener('focusout', function (event) {
 
       if (event.target.matches('.size__input')) {
