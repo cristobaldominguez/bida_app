@@ -62,7 +62,6 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
-
   # Bullet Gem
   config.after_initialize do
     Bullet.enable = true
@@ -71,4 +70,17 @@ Rails.application.configure do
     Bullet.rails_logger = true
     Bullet.add_footer = true
   end
+
+  # Devise email service
+  config.action_mailer.smtp_settings = {
+    address: 'smtp.gmail.com',
+    port: 587,
+    domain: 'bida.biofiltro.com',
+    authentication: 'plain',
+    enable_starttls_auto: true,
+    user_name: Rails.application.credentials.gmail[:username],
+    password: Rails.application.credentials.gmail[:password]
+  }
+
+  config.action_mailer.default_url_options = { host: 'localhost:3000' }
 end

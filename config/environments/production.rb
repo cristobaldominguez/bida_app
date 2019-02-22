@@ -91,4 +91,17 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # Devise email service
+  config.action_mailer.smtp_settings = {
+    address: 'smtp.gmail.com',
+    port: 587,
+    domain: 'bida.biofiltro.com',
+    authentication: 'plain',
+    enable_starttls_auto: true,
+    user_name: Rails.application.credentials.gmail[:username],
+    password: Rails.application.credentials.gmail[:password]
+  }
+
+  config.action_mailer.default_url_options = { host: 'bida.biofiltro.com' }
 end
