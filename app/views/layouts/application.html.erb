@@ -154,9 +154,9 @@
               <%= current_user.full_name %>
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-              <%= link_to 'Edit profile', edit_user_path(current_user.id), :class => 'dropdown-item' %>
+              <%= link_to 'Edit profile', edit_user_path(current_user.id), class: 'dropdown-item' %>
               <div class="dropdown-divider"></div>
-              <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'dropdown-item'  %>
+              <%= link_to "Logout", destroy_user_session_path, method: :delete, class: 'dropdown-item'  %>
             </div>
           </li>
           <% end %>
