@@ -46,6 +46,14 @@ div {
   }
 }
 
+table {
+  a {
+    display: inline-block;
+    padding: 1px 3px;
+    border-radius: 3px;
+  }
+}
+
 #notice {
   color: green;
 }
@@ -300,5 +308,21 @@ table.form_logs {
       }
     }
   }
+}
 
+form.button_to {
+  margin-bottom: 0;
+
+  input[type="submit"] {
+    background-color: transparent;
+    border: none;
+    display: inline;
+    color: var(--links);
+
+    &:hover {
+      color: var(--links-hover);
+      background-color: var(--links-hover-bg);
+      text-decoration: underline;
+    }
+  }
 }
