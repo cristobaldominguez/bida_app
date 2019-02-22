@@ -23,7 +23,7 @@ Rails.application.routes.draw do
 
   resources :work_summaries, only: :destroy
 
-  devise_for :users, skip: :registrations
+  devise_for :users, controllers: { confirmations: 'confirmations' }, skip: :registrations
   as :user do
     get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration'
     put 'users' => 'devise/registrations#update', :as => 'user_registration'
