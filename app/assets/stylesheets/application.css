@@ -19,7 +19,7 @@
 
  :root {
   /* Corporative Colors */
-  --blue: #007aff;
+  --blue: #007BB2;
   --white: #fff;
   --bf-cyan: #70caf2;
   --bf-blue: #333366;
@@ -47,13 +47,13 @@
   --links-hover: #fff;
   --cel-division-text: #333;
   --cel-division-bg: #eeeeee;
-  --links-hover-bg: #005abd;
+  --links-hover-bg: #007BB2;
   --input-bg: rgba(0,0,0,.05);
   --input-text: #333;
   --input-border: 1px solid rgba( 0,0,0, .1 );
   --submit-bg: #fff;
-  --submit-text: #007aff;
-  --submit-border: 1px solid #007aff;
+  --submit-text: #007BB2;
+  --submit-border: 1px solid #007BB2;
   --system-size-bottom: #292c34;
   --login-form-bg: #fff;
   --login-form-footer-border: #dce8f1;
@@ -81,13 +81,13 @@
     --links-hover: #fff;
     --cel-division-text: #ccc;
     --cel-division-bg: #3f4249;
-    --links-hover-bg: #005abd;
+    --links-hover-bg: #007BB2;
     --input-bg: rgba(0,0,0,.5);
     --input-text: #ccc;
     --input-border: 1px solid rgba( 255,255,255,.2 );
     --submit-bg: #292c34;
-    --submit-text: #007aff;
-    --submit-border: 1px solid #007aff;
+    --submit-text: #007BB2;
+    --submit-border: 1px solid #007BB2;
     --system-size-bottom: #292c34;
     --login-form-bg: rgba(255,255,255,.05);
     --login-form-footer-border: rgba(255,255,255,.25);
@@ -106,7 +106,7 @@
 
 body.light_interface {
  /* Corporative Colors */
- --blue: #007aff;
+ --blue: #007BB2;
  --white: #fff;
  --bf-cyan: #70caf2;
  --bf-blue: #333366;
@@ -131,13 +131,13 @@ body.light_interface {
  --links-hover: #fff;
  --cel-division-text: #333;
  --cel-division-bg: #eeeeee;
- --links-hover-bg: #005abd;
+ --links-hover-bg: #007BB2;
  --input-bg: rgba(0,0,0,.05);
  --input-text: #333;
  --input-border: 1px solid rgba( 0,0,0, .1 );
  --submit-bg: #fff;
- --submit-text: #007aff;
- --submit-border: 1px solid #007aff;
+ --submit-text: #007BB2;
+ --submit-border: 1px solid #007BB2;
  --system-size-bottom: #292c34;
  --login-form-bg: #fff;
  --login-form-footer-border: #dce8f1;
@@ -164,13 +164,13 @@ body.dark_interface {
   --links-hover: #fff;
   --cel-division-text: #ccc;
   --cel-division-bg: #3f4249;
-  --links-hover-bg: #005abd;
+  --links-hover-bg: #007BB2;
   --input-bg: rgba(0,0,0,.5);
   --input-text: #ccc;
   --input-border: 1px solid rgba( 255,255,255,.2 );
   --submit-bg: #292c34;
-  --submit-text: #007aff;
-  --submit-border: 1px solid #007aff;
+  --submit-text: #007BB2;
+  --submit-border: 1px solid #007BB2;
   --system-size-bottom: #292c34;
   --login-form-bg: rgba(255,255,255,.05);
   --login-form-footer-border: rgba(255,255,255,.25);
