@@ -1,13 +1,44 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <style>
-      /* Email styles need to be inline */
-    </style>
-  </head>
-
-  <body>
-    <%= yield %>
-  </body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<style type="text/css">
+		.ExternalClass,.ExternalClass div,.ExternalClass font,.ExternalClass p,.ExternalClass span,.ExternalClass td,h1,img{line-height:100%}h1,h2{display:block;font-family:Helvetica;font-style:normal;font-weight:700}#templateFooter,#templateHeader{background-color:#F4F4F4;border-top:1px solid #FFF}#outlook a{padding:0}.ExternalClass,.ReadMsgBody{width:100%}a,blockquote,body,li,p,table,td{-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%}table,td{mso-table-lspace:0;mso-table-rspace:0}img{-ms-interpolation-mode:bicubic;border:0;height:auto;outline:0;text-decoration:none}table{border-collapse:collapse!important}#bodyCell,#bodyTable,body{height:100%!important;margin:0;padding:0;width:100%!important}#bodyCell{padding:20px;border-top:4px solid #BBB}#templateContainer{width:600px}#bodyTable,body{background-color:#DEE0E2}h1{color:#202020!important;font-size:26px;letter-spacing:normal;text-align:left;margin:0 0 10px}h2{color:#404040!important;font-size:20px;line-height:100%;letter-spacing:normal;text-align:left;margin:0 0 10px}h3,h4{display:block;font-weight:400;letter-spacing:normal;text-align:left;margin:0 0 10px;line-height:100%;font-family:Helvetica}h3{color:#606060!important;font-size:16px;font-style:italic}h4{color:grey!important;font-size:18px}#templateHeader{border-bottom:1px solid #CCC}.headerContent{color:#505050;font-family:Helvetica;font-size:20px;font-weight:700;line-height:100%;text-align:center;vertical-align:middle;padding:20px 0}.headerContent a .yshortcuts,.headerContent a:link,.headerContent a:visited{color:#EB4102;font-weight:400;text-decoration:underline}#headerImage{height:auto;max-width:200px}.footerContent{color:grey;font-family:Helvetica;font-size:14px;line-height:150%;text-align:left;padding:20px}.footerContent a .yshortcuts,.footerContent a span,.footerContent a:link,.footerContent a:visited{color:#606060;font-weight:400;text-decoration:underline}.footerContent__changePassword{display:inline-block;padding:5px 7px;background-color:#007BB2;color:#fff!important}@media only screen and (max-width:480px){h1,h2,h3,h4{line-height:100%!important}#headerImage,#templateContainer,body{width:100%!important}a,blockquote,body,li,p,table,td{-webkit-text-size-adjust:none!important}body{min-width:100%!important}#bodyCell{padding:10px!important}#templateContainer{max-width:600px!important}h1{font-size:24px!important}h2{font-size:20px!important}h3{font-size:18px!important}h4{font-size:16px!important}#headerImage{height:auto!important}.headerContent{font-size:20px!important;line-height:125%!important}.footerContent{font-size:14px!important;line-height:115%!important}.footerContent a{display:block!important}}
+		</style>
+	</head>
+	<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0">
+		<center>
+			<table align="center" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="bodyTable">
+				<tr>
+					<td align="center" valign="top" id="bodyCell">
+						<table border="0" cellpadding="0" cellspacing="0" id="templateContainer">
+							<tr>
+								<td align="center" valign="top">
+									<table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateHeader">
+										<tr>
+											<td valign="top" class="headerContent">
+												<% url_logo = Rails.env.development? ? 'http://radiotouch.cl/new/email-logo.png' : 'http://app.biofiltro.com' + image_url('email-logo.png') %>
+												<img src="<%= url_logo %>" style="max-width:200px;" id="headerImage" mc:label="header_image" mc:edit="header_image" mc:allowdesigner mc:allowtext />
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+							<tr>
+								<td align="center" valign="top">
+									<table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateFooter">
+										<tr>
+											<td valign="top" class="footerContent" mc:edit="footer_content00">
+												<%= yield %>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</center>
+	</body>
 </html>
