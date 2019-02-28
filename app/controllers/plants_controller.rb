@@ -20,7 +20,7 @@ class PlantsController < ApplicationController
     @supports = @plant.supports.active
     @inspections = @plant.inspections.active
     @standards = @plant.standards.includes(:option, :bounds)
-    @sampling_lists = @plant.sampling_lists.includes(:access, samplings: :standard)
+    @sampling_lists = @plant.sampling_lists.includes(:access, samplings: :standard).group_by(&:access_id).map { |_, k| k.max_by(&:created_at) }
     @log_standards = @plant.log_standards.includes(:frecuency, task: :log_type).order('log_types.id')
 
     @system_size = @plant.system_size.sum
