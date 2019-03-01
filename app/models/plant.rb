@@ -17,6 +17,8 @@ class Plant < ApplicationRecord
   has_many :standards, dependent: :destroy
   has_many :sampling_lists, dependent: :destroy
 
+  has_one_attached :cover
+
   accepts_nested_attributes_for :standards, allow_destroy: true
   accepts_nested_attributes_for :sampling_lists, allow_destroy: true
   accepts_nested_attributes_for :log_standards, allow_destroy: true

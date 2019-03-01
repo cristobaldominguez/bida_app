@@ -93,6 +93,8 @@ class PlantsController < ApplicationController
       log_standard.save
     end
 
+    @plant.cover.attach(params[:plant][:cover])
+
     respond_to do |format|
       if @plant.save
         format.html { redirect_to @plant, notice: 'Plant was successfully created.' }
@@ -134,6 +136,8 @@ class PlantsController < ApplicationController
         end
       end
     end
+
+    @plant.cover.attach(params[:plant][:cover]) if params[:plant][:cover].present?
 
     respond_to do |format|
       if @plant.update(plant_params)
@@ -200,7 +204,7 @@ class PlantsController < ApplicationController
   def plant_params
     params.require(:plant).permit(
       :name, :code, :company_id, :address01, :address02, :state, :zip, :phone, :flow_design, :startup_date,
-      :country_id, :discharge_point_id, :contact_id, :bf_contact_id, standards_attributes: [:id, :option_id,
+      :country_id, :discharge_point_id, :contact_id, :bf_contact_id, :cover, standards_attributes: [:id, :option_id,
         :plant_id, :isRange, :enabled, bounds_attributes: [:id, :standard_id, :outlet_id, :from, :to]],
       system_size: [], sampling_lists_attributes: [:id, :access_id, :frecuency_id, :per_cycle],
       log_standards_attributes: [:id, :task_id, :plant_id, :active, :responsible, :cycle, :frecuency_id ])

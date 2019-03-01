@@ -11,6 +11,17 @@
     </div>
   <% end %>
 
+  <% if plant.cover.attached? %>
+  <p>
+    <%= image_tag plant.cover.variant(resize: '400'), class: 'img-fluid' %>
+  </p>
+  <% end %>
+
+  <div class="field">
+    <%= form.label 'Image Cover' %>
+    <%= form.file_field :cover %>
+  </div>
+
   <div class="field">
     <%= form.label :name %>
     <%= form.text_field :name %>
