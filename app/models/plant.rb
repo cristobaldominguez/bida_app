@@ -18,6 +18,7 @@ class Plant < ApplicationRecord
   has_many :sampling_lists, dependent: :destroy
 
   has_one_attached :cover
+  has_one_attached :discharge_permit
 
   accepts_nested_attributes_for :standards, allow_destroy: true
   accepts_nested_attributes_for :sampling_lists, allow_destroy: true

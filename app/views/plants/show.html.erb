@@ -59,6 +59,15 @@
   <%= @plant.flow_design %> <%= @plant.flow_design > 1 ? @plant.metrics.volume.pluralize : @plant.metrics.volume %> per day.
 </p>
 
+<% if @plant.discharge_permit.attached? %>
+<p>
+  <strong>Discharge Permit:</strong>
+  <%= link_to rails_blob_path(@plant.discharge_permit, disposition: :attachment), class: 'text-icon' do %>
+  <%= render 'shared/icons/document' %> <%= @plant.discharge_permit.filename %>
+  <% end %>
+</p>
+<% end %>
+
 <h2 class="cell_division">Standards</h2>
 
 <div class="field standards">

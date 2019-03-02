@@ -1,4 +1,4 @@
-<%= form_with(model: plant, url: [@company, plant], local: true) do |form| %>
+<%= form_with(model: plant, url: [@company, plant], local: true, multiple: true) do |form| %>
   <% if plant.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(plant.errors.count, "error") %> prohibited this plant from being saved:</h2>
@@ -130,6 +130,17 @@
     </table>
     <input class="toggle_checkbox" type="checkbox" name="toggle_checkbox" checked="checked">
     <label for="toggle_checkbox">Toggle Active</label>
+  </div>
+
+  <div class="field">
+    <%= form.label 'Discharge Permit' %>
+    <%= form.file_field :discharge_permit %>
+
+    <% if plant.discharge_permit.attached? %>
+    <%= link_to rails_blob_path(plant.discharge_permit, disposition: :attachment), class: 'text-icon' do %>
+      <%= render 'shared/icons/document' %> <%= plant.discharge_permit.filename %>
+    <% end %>
+    <% end %>
   </div>
 
     <%= form.fields_for :sampling_lists, @samplings do |sampling_list| %>
