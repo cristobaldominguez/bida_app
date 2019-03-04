@@ -112,10 +112,12 @@ class PlantsController < ApplicationController
     @plant = Plant.find(params[:id])
     @company = @plant.company
     standards = @plant.standards.includes(:option, bounds: :outlet)
-    # sampling_lists = @plant.sampling_lists.includes(:access, :samplings).order(created_at: :desc).limit(2)
+    # sampling_lists = @plant.sampling_lists.includes(:access, :samplings)
     sampling_lists = @plant.sampling_lists
     @log_standards = @plant.log_standards.includes(task: [:log_type]).order('log_types.id')
+
     build_samplings(sampling_lists, standards)
+    @samplings = sampling_lists.group_by(&:access_id).map { |_, k| k.max_by(&:created_at) }
   end
 
   # PATCH/PUT companies/:company_id/plants/1

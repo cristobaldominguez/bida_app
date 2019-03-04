@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   before_action :set_variables, only: [:new, :create, :edit, :update]
-  before_action :set_responsibles, only: [:index, :edit]
+  before_action :set_responsibles, only: [:index, :edit, :new]
   load_and_authorize_resource
 
   # GET /tasks
