@@ -133,6 +133,15 @@ ActiveRecord::Schema.define(version: 2019_03_01_181252) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "flows", force: :cascade do |t|
+    t.float "value"
+    t.boolean "active", default: true
+    t.bigint "plant_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["plant_id"], name: "index_flows_on_plant_id"
+  end
+
   create_table "fluents", force: :cascade do |t|
     t.bigint "inspection_id"
     t.bigint "output_id"
@@ -534,6 +543,7 @@ ActiveRecord::Schema.define(version: 2019_03_01_181252) do
   add_foreign_key "bounds", "standards"
   add_foreign_key "companies", "industries"
   add_foreign_key "countries", "metrics"
+  add_foreign_key "flows", "plants"
   add_foreign_key "fluents", "colors"
   add_foreign_key "fluents", "inspections"
   add_foreign_key "fluents", "odors"
