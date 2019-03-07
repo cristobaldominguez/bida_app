@@ -24,7 +24,7 @@ class Ability
     if user.admin?
       can :manage, :all
     elsif user.operations_manager?
-      can :manage, [Alert, Support, Inspection, Logbook, Sampling, SamplingList]
+      can :manage, [Alert, Support, Inspection, Logbook, Sampling, SamplingList, Report]
       can %i[read create update], User
     elsif user.operator?
       can %i[read update], Logbook

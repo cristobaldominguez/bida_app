@@ -208,9 +208,10 @@ class PlantsController < ApplicationController
   def plant_params
     params.require(:plant).permit(
       :name, :code, :company_id, :address01, :address02, :state, :zip, :phone, :flow_design, :startup_date,
-      :country_id, :discharge_point_id, :contact_id, :bf_contact_id, :cover, :discharge_permit, standards_attributes: [:id, :option_id,
-        :plant_id, :isRange, :enabled, bounds_attributes: [:id, :standard_id, :outlet_id, :from, :to]],
-      system_size: [], sampling_lists_attributes: [:id, :access_id, :frecuency_id, :per_cycle],
-      log_standards_attributes: [:id, :task_id, :plant_id, :active, :responsible, :cycle, :frecuency_id ])
+      :system_purpose, :report_preface, :country_id, :discharge_point_id, :contact_id, :bf_contact_id, :cover,
+      :discharge_permit, system_size: [], standards_attributes: [:id, :option_id, :plant_id, :isRange, :enabled,
+        bounds_attributes: [:id, :standard_id, :outlet_id, :from, :to]], sampling_lists_attributes: [:id, :access_id,
+        :frecuency_id, :per_cycle], log_standards_attributes: [:id, :task_id, :plant_id, :active, :responsible,
+        :cycle, :frecuency_id ])
   end
 end

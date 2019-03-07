@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_01_181252) do
+ActiveRecord::Schema.define(version: 2019_03_07_135812) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -354,6 +354,8 @@ ActiveRecord::Schema.define(version: 2019_03_01_181252) do
     t.string "system_size"
     t.bigint "bf_contact_id"
     t.bigint "contact_id"
+    t.string "system_purpose"
+    t.string "report_preface"
     t.index ["bf_contact_id"], name: "index_plants_on_bf_contact_id"
     t.index ["company_id"], name: "index_plants_on_company_id"
     t.index ["contact_id"], name: "index_plants_on_contact_id"
@@ -376,6 +378,19 @@ ActiveRecord::Schema.define(version: 2019_03_01_181252) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "reports", force: :cascade do |t|
+    t.bigint "plant_id"
+    t.integer "state", default: 0
+    t.string "system_purpose"
+    t.string "report_preface"
+    t.string "flow_design"
+    t.string "system_size"
+    t.boolean "active", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["plant_id"], name: "index_reports_on_plant_id"
   end
 
   create_table "sampling_lists", force: :cascade do |t|
@@ -574,6 +589,7 @@ ActiveRecord::Schema.define(version: 2019_03_01_181252) do
   add_foreign_key "plants", "companies"
   add_foreign_key "plants", "countries"
   add_foreign_key "plants", "discharge_points"
+  add_foreign_key "reports", "plants"
   add_foreign_key "sampling_lists", "accesses"
   add_foreign_key "sampling_lists", "frecuencies"
   add_foreign_key "sampling_lists", "plants"

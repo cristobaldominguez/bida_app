@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   before_action :configure_permitted_parameters, if: :devise_controller?
-  before_action :set_user_plants, :set_plant, :set_logbook_path, :set_samplings_lists
+  before_action :set_user_plants, :set_plant, :set_logbook_path, :set_samplings_lists, :set_latest_report
 
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to pages_no_permission_path, notice: exception.message
@@ -21,6 +21,11 @@ class ApplicationController < ActionController::Base
   def set_user_plants
     @user_plants = current_user.plants unless current_user.nil?
     flash.now[:alert] = 'This user has no associated Plants.' if (@user_plants.nil? || @user_plants.empty?) && user_signed_in?
+  end
+
+  def set_latest_report
+    report = Report.active.created_between(Date.today.at_beginning_of_month.beginning_of_day, Time.now)
+    @latest_report = report.first || nil
   end
 
   def set_logbook_path

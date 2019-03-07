@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     resources :inspections
     resources :alerts
     resources :flows
+    resources :reports
     resources :supports do
       collection do
         get 'custom'

@@ -1,0 +1,47 @@
+<%= form_with(model: report, url: [@plant, report], local: true) do |form| %>
+  <% if report.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(report.errors.count, "error") %> prohibited this report from being saved:</h2>
+
+      <ul>
+      <% report.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :state %>
+    <%= form.collection_select(:state, @state, :first, :first, {prompt: 'Select a State'})  %>
+  </div>
+
+  <div class="field">
+    <%= form.label 'Flow Design:' %>
+    <%= report.flow_design %>
+  </div>
+
+  <div class="field">
+    <%= form.label 'System Size:' %>
+    <%= report.system_size.sum %> <%= @plant.metrics.volume.pluralize(report.system_size.sum) %>
+  </div>
+
+  <div class="field">
+    <%= form.label 'Start Up Date:' %>
+    <%= @plant.startup_date %>
+  </div>
+
+  <div class="field">
+    <%= form.label 'System Purpose:' %>
+    <%= report.system_purpose %>
+  </div>
+
+  <div class="field">
+    <%= form.label 'Report Preface:' %>
+    <%= report.report_preface %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

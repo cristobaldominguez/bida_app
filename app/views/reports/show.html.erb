@@ -1,0 +1,32 @@
+<h1>Report</h1>
+<h5><%= @report.created_at.strftime("%B, %Y") %></h5>
+<br />
+
+<p>
+  <strong>State:</strong>
+  <%= @report.state %>
+</p>
+
+<p>
+  <strong>System purpose:</strong>
+  <%= @report.system_purpose %>
+</p>
+
+<p>
+  <strong>Report preface:</strong>
+  <%= @report.report_preface %>
+</p>
+
+<p>
+  <strong>Flow design:</strong>
+  <%= @report.flow_design %>
+</p>
+
+<p>
+  <strong>System size:</strong>
+  <%= @report.system_size.sum %> <%= @plant.metrics.volume.pluralize(@report.system_size.sum) %>
+</p>
+
+<% if can? :edit, Report %>
+<%= link_to 'Edit', edit_plant_report_path(@plant, @report) %>
+<% end %>

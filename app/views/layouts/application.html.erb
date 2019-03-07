@@ -124,17 +124,23 @@
             </div>
           </li>
           <% end %>
-          <%# if can? :read, Report %>
+          <% if can? :read, Report %>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Reports
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Latest Reports</a>
-              <a class="dropdown-item" href="#">Reports History</a>
+              <% if can? :update, Report %>
+              <% if @latest_report.present? %>
+              <%= link_to 'Latest Report', plant_report_path(@plant, @latest_report), class: 'dropdown-item' %>
+              <% else %>
+              <%= link_to 'Latest Report', new_plant_report_path(@plant), class: 'dropdown-item' %>
+              <% end %>
+              <% end %>
+              <%= link_to 'Reports History', plant_reports_path(@plant), class: 'dropdown-item' %>
             </div>
           </li>
-          <%# end %>
+          <% end %>
           <% end %>
           <% if can? :read, User %>
           <li class="nav-item dropdown">

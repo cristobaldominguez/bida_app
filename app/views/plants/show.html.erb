@@ -51,7 +51,7 @@
 
 <p>
   <strong>System Size:</strong>
-  <%= @plant.system_size.sum %> <%= @plant.system_size.sum > 1 ? @plant.metrics.volume.pluralize : @plant.metrics.volume %>
+  <%= @plant.system_size.sum %> <%= @plant.metrics.volume.pluralize(@plant.system_size.sum) %>
 </p>
 
 <p>
@@ -67,6 +67,16 @@
   <% end %>
 </p>
 <% end %>
+
+<p>
+  <strong>System Purpose:</strong>
+  <%= @plant.system_purpose %>
+</p>
+
+<p>
+  <strong>Report Preface:</strong>
+  <%= @plant.report_preface %>
+</p>
 
 <h2 class="cell_division">Standards</h2>
 

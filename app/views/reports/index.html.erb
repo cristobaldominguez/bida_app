@@ -1,0 +1,27 @@
+<h1>Reports</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>State</th>
+      <th>Date</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @reports.each do |report| %>
+      <tr>
+        <td><%= report.state %></td>
+        <td><%= report.created_at.strftime("%B, %Y") %></td>
+        <td><%= link_to 'Show', plant_report_url(@plant, report) %></td>
+        <td><%= link_to 'Edit', edit_plant_report_path(@plant, report) %></td>
+        <td><%= link_to 'Destroy', plant_report_path(@plant, report), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% if (@latest_report.nil?) && (can? :create, Report)  %>
+<%= link_to 'New Report', new_plant_report_path(@plant) %>
+<% end %>

@@ -12,6 +12,7 @@ class Plant < ApplicationRecord
   has_many :logbooks
 
   has_many :flows, dependent: :destroy
+  has_many :reports, dependent: :destroy
 
   belongs_to :contact, class_name: 'User'
   belongs_to :bf_contact, class_name: 'User'
