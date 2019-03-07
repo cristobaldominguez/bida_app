@@ -49,6 +49,9 @@ gem 'cancancan', '~> 2.0'
 # Image Processing
 gem 'image_processing', '~> 1.2'
 
+# Group records by date
+gem 'groupdate'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'bullet'
