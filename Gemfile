@@ -49,6 +49,9 @@ gem 'cancancan', '~> 2.0'
 # Image Processing
 gem 'image_processing', '~> 1.2'
 
+# Display charts
+gem 'chartkick'
+
 # Group records by date
 gem 'groupdate'
 
