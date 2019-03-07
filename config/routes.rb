@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :tasks
   resources :bounds
   resources :standards
+  resources :charts
   resources :companies do
     resources :plants, only: %i[new create update destroy]
   end

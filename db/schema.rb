@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_07_135812) do
+ActiveRecord::Schema.define(version: 2019_03_07_190106) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -85,6 +85,14 @@ ActiveRecord::Schema.define(version: 2019_03_07_135812) do
     t.datetime "updated_at", null: false
     t.index ["outlet_id"], name: "index_bounds_on_outlet_id"
     t.index ["standard_id"], name: "index_bounds_on_standard_id"
+  end
+
+  create_table "charts", force: :cascade do |t|
+    t.string "name"
+    t.integer "shape"
+    t.boolean "active", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "collection_bins", force: :cascade do |t|

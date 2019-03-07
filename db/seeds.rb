@@ -318,5 +318,20 @@ if Rails.env == 'development'
     metric_type.metrics.create!(length: metric[:length], volume: metric[:volume], area: metric[:area], mass: metric[:mass], temperature: metric[:temperature])
   end
 
+  # Charts
+  puts 'Adding Charts'
+  Chart.destroy_all
+  charts = [
+    { name: 'Monthly Flow', shape: 'column' },
+    { name: 'Daily Flow', shape: 'bar' },
+    { name: 'Monthly Water Analysis Samples', shape: 'datatable' },
+    { name: 'Treated Water', shape: 'datatable' },
+    { name: '12 Month Water Analysis Data', shape: 'datatable' },
+    { name: 'Lifetime Water Analysis Overview', shape: 'datatable' }
+  ]
+  charts.each do |chart|
+    Chart.create!(name: chart[:name], shape: chart[:shape])
+  end
+
   puts '----------- Seeds Added! -----------'
 end
