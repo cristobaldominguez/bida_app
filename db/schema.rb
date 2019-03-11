@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_07_190106) do
+ActiveRecord::Schema.define(version: 2019_03_08_170523) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -170,6 +170,17 @@ ActiveRecord::Schema.define(version: 2019_03_07_190106) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "graph_standards", force: :cascade do |t|
+    t.bigint "plant_id"
+    t.bigint "chart_id"
+    t.boolean "active"
+    t.boolean "show"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chart_id"], name: "index_graph_standards_on_chart_id"
+    t.index ["plant_id"], name: "index_graph_standards_on_plant_id"
   end
 
   create_table "incident_types", force: :cascade do |t|
@@ -571,6 +582,8 @@ ActiveRecord::Schema.define(version: 2019_03_07_190106) do
   add_foreign_key "fluents", "inspections"
   add_foreign_key "fluents", "odors"
   add_foreign_key "fluents", "outputs"
+  add_foreign_key "graph_standards", "charts"
+  add_foreign_key "graph_standards", "plants"
   add_foreign_key "inspections", "bed_compactions"
   add_foreign_key "inspections", "collection_bins"
   add_foreign_key "inspections", "flies"

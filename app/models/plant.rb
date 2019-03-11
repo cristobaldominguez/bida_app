@@ -13,6 +13,7 @@ class Plant < ApplicationRecord
 
   has_many :flows, dependent: :destroy
   has_many :reports, dependent: :destroy
+  has_many :graph_standards, dependent: :destroy
 
   belongs_to :contact, class_name: 'User'
   belongs_to :bf_contact, class_name: 'User'

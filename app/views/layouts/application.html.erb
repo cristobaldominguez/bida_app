@@ -44,16 +44,31 @@
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Plants
             </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <% if can? :read, Plant %>
+              <% @user_plants.each do |plant| %>
+              <li class="dropdown-submenu">
+              <%= link_to plant.name, plant_path(plant), class: 'dropdown-item dropdown-toggle' %>
+                <ul class="dropdown-menu">
+                  <li><%= link_to 'View', plant_path(plant), class: 'dropdown-item' %></li>
+                  <% if can? :create, Alert %>
+                  <div class="dropdown-divider"></div>
+                  <li><%#= link_to 'Graphs', edit_plant_graph_standard_path(plant), class: 'dropdown-item' %></li>
+                  <% end %>
+                </ul>
+              </li>
+              <% end %>
+              <% else %>
               <% @user_plants.each do |plant| %>
               <%= link_to plant.name, plant_path(plant), class: 'dropdown-item' %>
+              <% end %>
               <% end %>
               <% if (@plant.present? || (@company && @company.persisted? )) && (can? :create, Plant) %>
               <div class="dropdown-divider"></div>
               <% @company_id = @company || @plant.company %>
               <%= link_to 'New Plant', new_company_plant_path(@company_id), class: 'dropdown-item' %>
               <% end %>
-            </div>
+            </ul>
           </li>
           <% end %>
 
