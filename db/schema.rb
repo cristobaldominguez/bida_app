@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_08_170523) do
+ActiveRecord::Schema.define(version: 2019_03_11_152103) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -375,11 +375,17 @@ ActiveRecord::Schema.define(version: 2019_03_08_170523) do
     t.bigint "contact_id"
     t.string "system_purpose"
     t.string "report_preface"
+    t.bigint "logbook_bf_responsible_id"
+    t.bigint "logbook_bf_supervisor_id"
+    t.bigint "logbook_company_responsible_id"
     t.index ["bf_contact_id"], name: "index_plants_on_bf_contact_id"
     t.index ["company_id"], name: "index_plants_on_company_id"
     t.index ["contact_id"], name: "index_plants_on_contact_id"
     t.index ["country_id"], name: "index_plants_on_country_id"
     t.index ["discharge_point_id"], name: "index_plants_on_discharge_point_id"
+    t.index ["logbook_bf_responsible_id"], name: "index_plants_on_logbook_bf_responsible_id"
+    t.index ["logbook_bf_supervisor_id"], name: "index_plants_on_logbook_bf_supervisor_id"
+    t.index ["logbook_company_responsible_id"], name: "index_plants_on_logbook_company_responsible_id"
   end
 
   create_table "plants_users", id: false, force: :cascade do |t|

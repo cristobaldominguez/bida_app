@@ -147,6 +147,21 @@
 </table>
 
 <p>
+  <strong>Logbook BF Responsible:</strong>
+  <%= @plant.logbook_bf_responsible&.full_name %>
+</p>
+
+<p>
+  <strong>Logbook BF Supervisor:</strong>
+  <%= @plant.logbook_bf_supervisor&.full_name %>
+</p>
+
+<p>
+  <strong>Logbook Company Responsible:</strong>
+  <%= @plant.logbook_company_responsible&.full_name %>
+</p>
+
+<p>
   <strong>Startup date:</strong>
   <%= @plant.startup_date %>
 </p>

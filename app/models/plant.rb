@@ -15,6 +15,10 @@ class Plant < ApplicationRecord
   has_many :reports, dependent: :destroy
   has_many :graph_standards, dependent: :destroy
 
+  belongs_to :logbook_bf_responsible, class_name: 'User'
+  belongs_to :logbook_bf_supervisor, class_name: 'User'
+  belongs_to :logbook_company_responsible, class_name: 'User'
+
   belongs_to :contact, class_name: 'User'
   belongs_to :bf_contact, class_name: 'User'
 

@@ -211,6 +211,21 @@
   </table>
 
   <div class="field">
+    <%= form.label 'Logbook BF Responsible' %>
+    <%= form.collection_select(:logbook_bf_responsible_id, @users, :id, :full_name, {prompt: 'Select a Logbook BF Responsible'})  %>
+  </div>
+
+  <div class="field">
+    <%= form.label 'Logbook BF Supervisor' %>
+    <%= form.collection_select(:logbook_bf_supervisor_id, @users, :id, :full_name, {prompt: 'Select a Logbook BF Supervisor'})  %>
+  </div>
+
+  <div class="field">
+    <%= form.label 'Logbook Company Responsible' %>
+    <%= form.collection_select(:logbook_company_responsible_id, @users, :id, :full_name, {prompt: 'Select a Logbook Company Responsible'})  %>
+  </div>
+
+  <div class="field">
     <%= form.label :startup_date %>
     <%= form.date_select :startup_date %>
   </div>
