@@ -151,8 +151,33 @@ button, input[type="submit"], input[type="reset"] {
     }
   }
 
-  .dropdown-divider {
-    border-top: 1px solid var(--dropdown-divider-color);
+  .dropdown- {
+
+    &divider {
+      border-top: 1px solid var(--dropdown-divider-color);
+    }
+
+    &options {
+      font-size: 0.8rem;
+      text-align: center;
+      color: var(--dropdown-divider-color);
+
+      &:after {
+        content: '';
+        border-bottom: 1px solid var(--dropdown-divider-color);
+        width: 100%;
+        display: block;
+        position: relative;
+        bottom: .55rem;
+      }
+
+      span {
+        background-color: hsl(var(--bg-hue), var(--bg-sat), var(--bg-lig));
+        padding: 0 7px;
+        position: relative;
+        z-index: 1;
+      }
+    }
   }
 }
 
