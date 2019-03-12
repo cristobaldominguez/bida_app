@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  report: one
+  graph_standard: one
+  active: false
+  comment: MyText
+
+two:
+  report: two
+  graph_standard: two
+  active: false
+  comment: MyText

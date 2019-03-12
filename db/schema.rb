@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_11_152103) do
+ActiveRecord::Schema.define(version: 2019_03_12_223624) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -181,6 +181,17 @@ ActiveRecord::Schema.define(version: 2019_03_11_152103) do
     t.datetime "updated_at", null: false
     t.index ["chart_id"], name: "index_graph_standards_on_chart_id"
     t.index ["plant_id"], name: "index_graph_standards_on_plant_id"
+  end
+
+  create_table "graphs", force: :cascade do |t|
+    t.bigint "report_id"
+    t.bigint "graph_standard_id"
+    t.boolean "active", default: true
+    t.text "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["graph_standard_id"], name: "index_graphs_on_graph_standard_id"
+    t.index ["report_id"], name: "index_graphs_on_report_id"
   end
 
   create_table "incident_types", force: :cascade do |t|
@@ -590,6 +601,8 @@ ActiveRecord::Schema.define(version: 2019_03_11_152103) do
   add_foreign_key "fluents", "outputs"
   add_foreign_key "graph_standards", "charts"
   add_foreign_key "graph_standards", "plants"
+  add_foreign_key "graphs", "graph_standards"
+  add_foreign_key "graphs", "reports"
   add_foreign_key "inspections", "bed_compactions"
   add_foreign_key "inspections", "collection_bins"
   add_foreign_key "inspections", "flies"

@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Report:</strong>
+  <%= @graph.report %>
+</p>
+
+<p>
+  <strong>Graph standard:</strong>
+  <%= @graph.graph_standard %>
+</p>
+
+<p>
+  <strong>Active:</strong>
+  <%= @graph.active %>
+</p>
+
+<p>
+  <strong>Comment:</strong>
+  <%= @graph.comment %>
+</p>
+
+<%= link_to 'Edit', edit_graph_path(@graph) %> |
+<%= link_to 'Back', graphs_path %>

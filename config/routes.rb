@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     resources :inspections
     resources :alerts
     resources :flows
+    resources :graphs
     resources :reports
     resources :graph_standards
     resources :supports do
