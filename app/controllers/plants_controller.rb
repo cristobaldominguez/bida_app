@@ -22,6 +22,7 @@ class PlantsController < ApplicationController
     @standards = @plant.standards.includes(:option, :bounds)
     @sampling_lists = @plant.sampling_lists.includes(:access, samplings: :standard).group_by(&:access_id).map { |_, k| k.max_by(&:created_at) }
     @log_standards = @plant.log_standards.includes(:frecuency, task: :log_type).order('log_types.id')
+    @graph_standards = @plant.graph_standards.includes(:chart)
 
     @system_size = @plant.system_size.sum
     @volume_metric = @system_size > 1 ? @plant.country.metric.volume.pluralize : @plant.country.metric.volume
@@ -64,6 +65,13 @@ class PlantsController < ApplicationController
     tasks.each do |task|
       @plant.log_standards.build(task: task, frecuency_id: task[:frecuency_id], cycle: task[:cycle], responsible: task[:responsible])
     end
+
+    charts = Chart.all
+    charts.each do |chart|
+      @plant.graph_standards.build(chart: chart)
+    end
+
+    @graph_standards = @plant.graph_standards
   end
 
   # POST companies/:company_id/plants
@@ -118,6 +126,7 @@ class PlantsController < ApplicationController
 
     build_samplings(sampling_lists, standards)
     @samplings = sampling_lists.group_by(&:access_id).map { |_, k| k.max_by(&:created_at) }
+    @graph_standards = @plant.graph_standards.includes(:chart)
   end
 
   # PATCH/PUT companies/:company_id/plants/1
@@ -213,6 +222,6 @@ class PlantsController < ApplicationController
       system_size: [], standards_attributes: [:id, :option_id, :plant_id, :isRange, :enabled,
         bounds_attributes: [:id, :standard_id, :outlet_id, :from, :to]], sampling_lists_attributes: [:id, :access_id,
         :frecuency_id, :per_cycle], log_standards_attributes: [:id, :task_id, :plant_id, :active, :responsible,
-        :cycle, :frecuency_id ])
+        :cycle, :frecuency_id ], graph_standards_attributes: [:id, :show, :chart_id])
   end
 end

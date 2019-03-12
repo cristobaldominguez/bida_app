@@ -175,8 +175,8 @@ ActiveRecord::Schema.define(version: 2019_03_11_152103) do
   create_table "graph_standards", force: :cascade do |t|
     t.bigint "plant_id"
     t.bigint "chart_id"
-    t.boolean "active"
-    t.boolean "show"
+    t.boolean "active", default: true
+    t.boolean "show", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["chart_id"], name: "index_graph_standards_on_chart_id"

@@ -161,6 +161,16 @@
   <%= @plant.logbook_company_responsible&.full_name %>
 </p>
 
+<h3>Graphs</h3>
+<ul>
+  <% @graph_standards.each do |graph| %>
+  <li>
+    <input type="checkbox" name="active" value="Boat" <%= 'checked' if graph.show %> disabled>
+    <%= graph.chart.name %>
+  </li>
+  <% end %>
+</ul>
+
 <p>
   <strong>Startup date:</strong>
   <%= @plant.startup_date %>
