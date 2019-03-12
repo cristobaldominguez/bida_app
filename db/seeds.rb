@@ -8,7 +8,7 @@ if Rails.env == 'development'
   # Users
   puts 'Adding Users'
   User.destroy_all
-  roles = [:client, :operator, :operations_manager, :bf_viewer, :administrative]
+  roles = [:no_role, :admin, :client, :operator, :operations_manager, :viewer]
   users = [{ name: 'Cristóbal', lastname: 'Domínguez', email: 'cris@me.com', password: '123123', role: :admin },
            { name: 'Matías', lastname: 'Sjogren', email: 'matias@bf.com', password: '123123', role: :admin },
            { name: 'Ida', lastname: 'Hoffman', email: 'ida.hoffman87@example.com', password: '123123', role: roles.sample },
@@ -21,15 +21,40 @@ if Rails.env == 'development'
            { name: 'Jane', lastname: 'Hansen', email: 'jane.hansen@example.com', password: '123123', role: roles.sample },
            { name: 'Leonard', lastname: 'Crawford', email: 'leonard.crawford@example.com', password: '123123', role: roles.sample }]
   users.each do |user|
-    User.create!(name: user[:name], lastname: user[:lastname], email: user[:email], password: user[:password], role: user[:role])
+    u = User.create!(name: user[:name], lastname: user[:lastname], email: user[:email], password: user[:password], role: user[:role])
+    puts "- #{u.full_name} was added"
+  end
+
+  # Metric Types
+  puts 'Adding Metric Types'
+  MetricType.destroy_all
+  metric_types = ['Imperial', 'Metric']
+  metric_types.each do |metric_type|
+    MetricType.create!(option: metric_type)
+  end
+
+  # Metrics
+  puts 'Adding Metrics'
+  Metric.destroy_all
+  metric_types = MetricType.all
+  metrics_final = []
+  metrics = { Imperial: { length: 'Feet', volume: 'Gallon', area: 'Square Foot', mass: 'Pounds', temperature: 'Fahrenheit' },
+              Metric: { length: 'Meters', volume: 'Liter', area: 'Square Meter', mass: 'Kilogram', temperature: 'Celsius' } }
+  metrics.each do |k, metric|
+    metric_type = metric_types.find_by(option: k.to_s)
+    metrics_final << metric_type.metrics.create!(length: metric[:length], volume: metric[:volume], area: metric[:area], mass: metric[:mass], temperature: metric[:temperature])
   end
 
   # Countries
   puts 'Adding Countries'
   Country.destroy_all
-  countries = ['Australia', 'Chile', 'United States', 'New Zealand', 'Peru']
-  countries.sort { |a, b| a <=> b }.each do |country|
-    Country.create!(name: country)
+  countries = [{ name: 'Australia', metric: metrics_final.first },
+               { name: 'Chile', metric: metrics_final.first },
+               { name: 'United States', metric: metrics_final.second },
+               { name: 'New Zealand', metric: metrics_final.first },
+               { name: 'Peru', metric: metrics_final.first }]
+  countries.each do |country|
+    Country.create!(name: country[:name], metric: country[:metric])
   end
 
   # Industries
@@ -297,25 +322,6 @@ if Rails.env == 'development'
                  frecuency_id: task[:frecuency_id],
                  cycle: task[:cycle],
                  responsible: task[:responsible])
-  end
-
-  # Metric Types
-  puts 'Adding Metric Types'
-  MetricType.destroy_all
-  metric_types = ['Imperial', 'Metric']
-  metric_types.each do |metric_type|
-    MetricType.create!(option: metric_type)
-  end
-
-  # Metrics
-  puts 'Adding Metrics'
-  Metric.destroy_all
-  metric_types = MetricType.all
-  metrics = { Imperial: { length: 'Feet', volume: 'Gallon', area: 'Square Foot', mass: 'Pounds', temperature: 'Fahrenheit' },
-              Metric: { length: 'Meters', volume: 'Liter', area: 'Square Meter', mass: 'Kilogram', temperature: 'Celsius' } }
-  metrics.each do |k, metric|
-    metric_type = metric_types.find_by(option: k.to_s)
-    metric_type.metrics.create!(length: metric[:length], volume: metric[:volume], area: metric[:area], mass: metric[:mass], temperature: metric[:temperature])
   end
 
   # Charts
