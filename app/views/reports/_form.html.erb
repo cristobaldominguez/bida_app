@@ -41,7 +41,37 @@
     <%= report.report_preface %>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+  <h3>Graphs</h3>
+  <ul>
+  <% @graphs.each do |graph| %>
+  <li>
+    <% current_chart = graph.graph_standard.chart %>
+    <h4><%= current_chart.name %></h4>
+    <% if current_chart.line? %>
+      <%#= line_chart %>
+    <% elsif current_chart.pie? %>
+      <%#= pie_chart %>
+    <% elsif current_chart.column? %>
+      <%#= column_chart  %>
+    <% elsif current_chart.bar? %>
+    <%#= bar_chart %>
+    <% elsif current_chart.area? %>
+    <%#= area_chart %>
+    <% elsif current_chart.scatter? %>
+    <%#= scatter_chart %>
+    <% elsif current_chart.geo? %>
+    <%#= geo_chart %>
+    <% elsif current_chart.timeline? %>
+    <%#= timeline %>
+    <% elsif current_chart.datatable? %>
+    
+    <% end %>
+  </li>
+  <% end %>
+  </ul>
+
+<div class="actions">
+  <%= form.submit %>
+</div>
+
 <% end %>

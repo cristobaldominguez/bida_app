@@ -21,10 +21,19 @@ class ReportsController < ApplicationController
     @report.report_preface = @plant.report_preface
     @report.flow_design = "#{@plant.flow_design} #{@plant.country.metric.volume.pluralize(@plant.flow_design)} Per Day"
     @report.system_size = @plant.system_size
+
+    @plant.graph_standards.each do |gs|
+      @report.graphs.build(graph_standard: gs)
+    end
+
+    @graphs = @report.graphs
   end
 
   # GET /reports/1/edit
-  def edit; end
+  def edit
+    @graphs = @report.graphs
+    # raise
+  end
 
   # POST /reports
   # POST /reports.json
