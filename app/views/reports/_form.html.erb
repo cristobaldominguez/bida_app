@@ -28,7 +28,7 @@
 
   <div class="field">
     <%= form.label 'Start Up Date:' %>
-    <%= @plant.startup_date %>
+    <%= @plant.startup_date.strftime("%B #{@plant.startup_date.day.ordinalize}, %Y") %>
   </div>
 
   <div class="field">
