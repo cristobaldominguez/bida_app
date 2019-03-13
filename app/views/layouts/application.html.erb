@@ -24,7 +24,7 @@
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <% if @user_plants.present? %>
+          <%# if @user_plants.present? %>
           <% if can? :read, Company %>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -38,7 +38,7 @@
               <% end %>
             </div>
           </li>
-          <% end %>
+          <%# end %>
 
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -52,7 +52,8 @@
                 <ul class="dropdown-menu">
                   <li><%= link_to 'View', plant_path(plant), class: 'dropdown-item' %></li>
                   <% if can? :create, Alert %>
-                  <div class="dropdown-options"><span>Options</span></div>
+                  <div class="dropdown-divider"></div>
+                  <!-- <div class="dropdown-options"><span>Options</span></div> -->
                   <li><%#= link_to 'Graphs', edit_plant_graph_standard_path(plant), class: 'dropdown-item' %></li>
                   <% end %>
                 </ul>
