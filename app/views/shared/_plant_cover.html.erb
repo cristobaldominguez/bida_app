@@ -1,0 +1,5 @@
+<% if plant.cover.attached? %>
+<p>
+  <%= image_tag plant.cover.variant(resize: '2280'), class: 'img-fluid' %>
+</p>
+<% end %>
