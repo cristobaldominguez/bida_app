@@ -2,6 +2,7 @@ body {
   background-color: var(--bg);
   color: var(--text);
   margin: 0;
+  margin-bottom: 100px;
   font-family: verdana, arial, helvetica, sans-serif;
   font-size: 13px;
   line-height: 18px;
@@ -188,7 +189,7 @@ button, input[type="submit"], input[type="reset"] {
     transform: rotate(-90deg);
     position: absolute;
     right: 6px;
-    top: .8em;
+    top: 1.4em;
   }
 
   .dropdown-menu {
