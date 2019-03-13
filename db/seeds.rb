@@ -37,22 +37,22 @@ if Rails.env == 'development'
   puts 'Adding Metrics'
   Metric.destroy_all
   metric_types = MetricType.all
-  metrics_final = []
+  metrics_final = {}
   metrics = { Imperial: { length: 'Feet', volume: 'Gallon', area: 'Square Foot', mass: 'Pounds', temperature: 'Fahrenheit' },
               Metric: { length: 'Meters', volume: 'Liter', area: 'Square Meter', mass: 'Kilogram', temperature: 'Celsius' } }
   metrics.each do |k, metric|
     metric_type = metric_types.find_by(option: k.to_s)
-    metrics_final << metric_type.metrics.create!(length: metric[:length], volume: metric[:volume], area: metric[:area], mass: metric[:mass], temperature: metric[:temperature])
+    metrics_final[k.to_sym] = metric_type.metrics.create!(length: metric[:length], volume: metric[:volume], area: metric[:area], mass: metric[:mass], temperature: metric[:temperature])
   end
 
   # Countries
   puts 'Adding Countries'
   Country.destroy_all
-  countries = [{ name: 'Australia', metric: metrics_final.first },
-               { name: 'Chile', metric: metrics_final.first },
-               { name: 'United States', metric: metrics_final.second },
-               { name: 'New Zealand', metric: metrics_final.first },
-               { name: 'Peru', metric: metrics_final.first }]
+  countries = [{ name: 'Australia', metric: metrics_final[:Metric] },
+               { name: 'Chile', metric: metrics_final[:Metric] },
+               { name: 'United States', metric: metrics_final[:Imperial] },
+               { name: 'New Zealand', metric: metrics_final[:Metric] },
+               { name: 'Peru', metric: metrics_final[:Metric] }]
   countries.each do |country|
     Country.create!(name: country[:name], metric: country[:metric])
   end
