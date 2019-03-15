@@ -62,13 +62,12 @@ class GraphsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_graph
-      @graph = Graph.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def graph_params
-      params.require(:graph).permit(:report_id, :graph_standard_id, :active, :comment)
-    end
+  def set_graph
+    @graph = Graph.find(params[:id])
+  end
+
+  def graph_params
+    params.require(:graph).permit(:report_id, :graph_standard_id, :active, :comment)
+  end
 end
