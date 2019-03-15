@@ -142,9 +142,10 @@ ActiveRecord::Schema.define(version: 2019_03_12_223624) do
   end
 
   create_table "flows", force: :cascade do |t|
-    t.float "value"
     t.boolean "active", default: true
     t.bigint "plant_id"
+    t.float "value", default: 0.0
+    t.date "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["plant_id"], name: "index_flows_on_plant_id"
