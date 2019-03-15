@@ -78,6 +78,8 @@ class PlantsController < ApplicationController
   # POST companies/:company_id/plants.json
   def create
     @plant = @company.plants.build(plant_params)
+    @plant.system_size = params[:plant][:system_size].split(' ').map(&:to_i)
+
     accesses = Access.all
     samplings_names = {}
 
