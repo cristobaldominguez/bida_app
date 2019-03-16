@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  plant: one
+  date: 2019-03-15
+
+two:
+  plant: two
+  date: 2019-03-15

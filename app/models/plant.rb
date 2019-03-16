@@ -12,6 +12,7 @@ class Plant < ApplicationRecord
   has_many :logbooks
 
   has_many :flows, dependent: :destroy
+  has_many :flow_reports, dependent: :destroy
   has_many :reports, dependent: :destroy
   has_many :graph_standards, dependent: :destroy
 

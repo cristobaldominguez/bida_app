@@ -1,0 +1,25 @@
+<p>
+  <strong>Date:</strong>
+  <%= @flow_report.date.strftime("%B, %Y") %>
+</p>
+
+<h3>Flows</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% day = 0 %>
+    <% @flows.each do |flow| %>
+    <tr>
+      <td><strong><%= '0' if day < 9 %><%= day +=1 %>:</strong></td>
+      <td><%= flow.value || '0.0' %> -> <%= flow.date %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Edit', edit_plant_flow_report_path(@plant, @flow_report) %>

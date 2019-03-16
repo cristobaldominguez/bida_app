@@ -17,6 +17,11 @@ Rails.application.routes.draw do
     resources :inspections
     resources :alerts
     resources :flows
+    resources :flow_reports do
+      collection do
+        get 'custom'
+      end
+    end
     resources :graphs
     resources :reports
     resources :graph_standards

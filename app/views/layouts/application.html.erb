@@ -52,10 +52,10 @@
               <%= link_to plant.name, plant_path(plant), class: 'dropdown-item dropdown-toggle' %>
                 <ul class="dropdown-menu">
                   <li><%= link_to 'View', plant_path(plant), class: 'dropdown-item' %></li>
+                  <li><%= link_to 'Flow Report', plant_flow_reports_path(plant), class: 'dropdown-item' %></li>
                   <% if can? :create, Alert %>
-                  <div class="dropdown-divider"></div>
-                  <!-- <div class="dropdown-options"><span>Options</span></div> -->
-                  <li><%#= link_to 'Graphs', edit_plant_graph_standard_path(plant), class: 'dropdown-item' %></li>
+                  <div class="dropdown-options"><span>Options</span></div>
+                  <li><%= link_to 'Graphs', edit_plant_graph_standard_path(plant, plant.graph_standards.first), class: 'dropdown-item' %></li>
                   <% end %>
                 </ul>
               </li>

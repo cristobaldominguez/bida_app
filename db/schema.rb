@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_12_223624) do
+ActiveRecord::Schema.define(version: 2019_03_15_142529) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -141,6 +141,15 @@ ActiveRecord::Schema.define(version: 2019_03_12_223624) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "flow_reports", force: :cascade do |t|
+    t.bigint "plant_id"
+    t.date "date"
+    t.boolean "active", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["plant_id"], name: "index_flow_reports_on_plant_id"
+  end
+
   create_table "flows", force: :cascade do |t|
     t.boolean "active", default: true
     t.bigint "plant_id"
@@ -148,6 +157,8 @@ ActiveRecord::Schema.define(version: 2019_03_12_223624) do
     t.date "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "flow_report_id"
+    t.index ["flow_report_id"], name: "index_flows_on_flow_report_id"
     t.index ["plant_id"], name: "index_flows_on_plant_id"
   end
 
@@ -595,6 +606,8 @@ ActiveRecord::Schema.define(version: 2019_03_12_223624) do
   add_foreign_key "bounds", "standards"
   add_foreign_key "companies", "industries"
   add_foreign_key "countries", "metrics"
+  add_foreign_key "flow_reports", "plants"
+  add_foreign_key "flows", "flow_reports"
   add_foreign_key "flows", "plants"
   add_foreign_key "fluents", "colors"
   add_foreign_key "fluents", "inspections"
