@@ -9,8 +9,9 @@ class PlantsController < ApplicationController
   # GET companies/:company_id/plants
   # GET companies/:company_id/plants.json
   def index
-    @plants = Company.find(params[:company_id]).plants.active
-    @company = Company.find(params[:company_id])
+    # @plants = Company.find(params[:company_id]).plants.active
+    # @company = Company.find(params[:company_id])
+    @plants = current_user.plants.active
   end
 
   # GET companies/:company_id/plants/1

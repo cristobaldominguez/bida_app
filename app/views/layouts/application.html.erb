@@ -65,6 +65,7 @@
               <%= link_to plant.name, plant_path(plant), class: 'dropdown-item' %>
               <% end %>
               <% end %>
+              <%= link_to 'All Plants', plants_path, class: 'dropdown-item' %>
               <% if (@plant.present? || (@company && @company.persisted? )) && (can? :create, Plant) %>
               <div class="dropdown-divider"></div>
               <% @company_id = @company || @plant.company %>
