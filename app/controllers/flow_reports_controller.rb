@@ -23,7 +23,9 @@ class FlowReportsController < ApplicationController
   end
 
   # GET /plants/1/flow_reports/1/edit
-  def edit; end
+  def edit
+    @flow_reports = FlowReport.find(params[:id]).flows.order(:id)
+  end
 
   # POST /plants/1/flow_reports
   # POST /plants/1/flow_reports.json
@@ -54,7 +56,7 @@ class FlowReportsController < ApplicationController
     end
     respond_to do |format|
       if @flow_report.update(flow_report_params)
-        format.html { redirect_to @flow_report, notice: 'Flow report was successfully updated.' }
+        format.html { redirect_to plant_flow_reports_path(@plant, @flow_report), notice: 'Flow report was successfully updated.' }
         format.json { render :show, status: :ok, location: @flow_report }
       else
         format.html { render :edit }
