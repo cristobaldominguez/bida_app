@@ -40,7 +40,7 @@
           <% elsif ['inches', 'pH record', 'PSI', '% of bed', 'COD Record'].include?(input_type) %>
           <%= log.number_field :value %>
           <% elsif input_type == 'date' %>
-          <%= log.date_field :value, min: @today %>
+          <%= log.text_field :value, class: 'datepicker' %>
           <% elsif input_type == 'boolean' %>
           <%= log.collection_radio_buttons(:value, [[1, 'Yes'],[0, 'No']], :first, :second) %>
           <% elsif input_type == 'Low/Medium/High Density' %>
