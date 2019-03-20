@@ -37,7 +37,7 @@ class LogbooksController < ApplicationController
 
     respond_to do |format|
       if @logbook.save
-        format.html { redirect_to plant_path(@logbook.plant), notice: 'Logbook was successfully created.' }
+        format.html { redirect_to edit_plant_logbook_path(@plant, @logbook), notice: 'Logbook was successfully created.' }
         format.json { render :show, status: :created, location: @logbook }
       else
         format.html { render :new }
@@ -77,7 +77,7 @@ class LogbooksController < ApplicationController
 
     respond_to do |format|
       if @logbook.update(logbook_params)
-        format.html { redirect_to edit_logbook_path(@logbook), notice: 'Logbook was successfully updated.' }
+        format.html { redirect_to edit_plant_logbook_path(@plant, @logbook), notice: 'Logbook was successfully updated.' }
         format.json { render :show, status: :ok, location: @logbook }
       else
         format.html { render :edit }
