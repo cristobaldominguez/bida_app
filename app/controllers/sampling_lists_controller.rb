@@ -55,7 +55,8 @@ class SamplingListsController < ApplicationController
   # DELETE /sampling_lists/1
   # DELETE /sampling_lists/1.json
   def destroy
-    @sampling_list.destroy
+    @sampling_list.active = false
+    @sampling_list.save
     respond_to do |format|
       format.html { redirect_to sampling_lists_url, notice: 'Sampling list was successfully destroyed.' }
       format.json { head :no_content }

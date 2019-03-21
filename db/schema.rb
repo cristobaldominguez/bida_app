@@ -448,6 +448,7 @@ ActiveRecord::Schema.define(version: 2019_03_15_142529) do
     t.integer "per_cycle"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "active", default: true
     t.index ["access_id"], name: "index_sampling_lists_on_access_id"
     t.index ["frecuency_id"], name: "index_sampling_lists_on_frecuency_id"
     t.index ["plant_id"], name: "index_sampling_lists_on_plant_id"
