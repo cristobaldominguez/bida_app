@@ -4,12 +4,14 @@ class SamplingListsController < ApplicationController
   # GET /sampling_lists
   # GET /sampling_lists.json
   def index
-    @sampling_lists = SamplingList.all
+    @sampling_lists = SamplingList.all.includes(:access, :frecuency).sort_by(&:created_at)
   end
 
   # GET /sampling_lists/1
   # GET /sampling_lists/1.json
-  def show; end
+  def show
+    @samplings = @sampling_list.samplings
+  end
 
   # GET /sampling_lists/new
   def new
@@ -29,7 +31,7 @@ class SamplingListsController < ApplicationController
 
     respond_to do |format|
       if @sampling_list.save
-        format.html { redirect_to @sampling_list, notice: 'Sampling list was successfully created.' }
+        format.html { redirect_to edit_plant_sampling_list_path(@plant, @sampling_list), notice: 'Sampling list was successfully created.' }
         format.json { render :show, status: :created, location: @sampling_list }
       else
         format.html { render :new }
@@ -43,7 +45,7 @@ class SamplingListsController < ApplicationController
   def update
     respond_to do |format|
       if @sampling_list.update(sampling_list_params)
-        format.html { redirect_to @sampling_list, notice: 'Sampling list was successfully updated.' }
+        format.html { redirect_to edit_plant_sampling_list_path(@plant, @sampling_list), notice: 'Sampling list was successfully updated.' }
         format.json { render :show, status: :ok, location: @sampling_list }
       else
         format.html { render :edit }

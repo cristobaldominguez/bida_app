@@ -1,22 +1,41 @@
 <p>
   <strong>Plant:</strong>
-  <%= @sampling_list.plant %>
+  <%= @sampling_list.created_at.strftime('%B, %Y') %>
 </p>
 
 <p>
   <strong>Access:</strong>
-  <%= @sampling_list.access %>
+  <%= @sampling_list.access.name %>
 </p>
 
 <p>
   <strong>Frecuency:</strong>
-  <%= @sampling_list.frecuency %>
+  <%= @sampling_list.frecuency.name %>
 </p>
 
 <p>
   <strong>Per cycle:</strong>
   <%= @sampling_list.per_cycle %>
 </p>
+
+<table class="table table-striped table-dark">
+  <thead>
+    <tr>
+      <th scope="col">Date</th>
+      <th scope="col">In</th>
+      <th scope="col">Out</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @samplings.each do |sampling| %>
+    <tr>
+      <th scope="row"><%= sampling.updated_at.strftime('%m/%d/%y') %></th>
+      <td><%= sampling.value_in %></td>
+      <td><%= sampling.value_out %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
 
 <% if can? :edit, SamplingList %>
 <%= link_to 'Edit', edit_plant_sampling_list_path(@plant, @sampling_list) %>

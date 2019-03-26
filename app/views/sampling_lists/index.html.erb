@@ -14,18 +14,18 @@
   <tbody>
     <% @sampling_lists.each do |sampling_list| %>
       <tr>
-        <td><%= sampling_list.plant %></td>
-        <td><%= sampling_list.access %></td>
-        <td><%= sampling_list.frecuency %></td>
+        <td><%= sampling_list.created_at.strftime('%B, %Y') %></td>
+        <td><%= sampling_list.access.name %></td>
+        <td><%= sampling_list.frecuency.name %></td>
         <td><%= sampling_list.per_cycle %></td>
-        <td><% if can? :read, SamplingList %><%= link_to 'Show', sampling_list %><% end %></td>
-        <td><% if can? :edit, SamplingList %><%= link_to 'Edit', edit_sampling_list_path(sampling_list) %><% end %></td>
-        <td><% if can? :destroy, SamplingList %><%= link_to 'Destroy', sampling_list, method: :delete, data: { confirm: 'Are you sure?' } %><% end %></td>
+        <td><% if can? :read, SamplingList %><%= link_to 'Show', plant_sampling_list_path(@plant, sampling_list) %><% end %></td>
+        <td><% if can? :edit, SamplingList %><%= link_to 'Edit', edit_plant_sampling_list_path(@plant, sampling_list) %><% end %></td>
+        <td><% if can? :destroy, SamplingList %><%= link_to 'Destroy', plant_sampling_list_path(@plant, sampling_list), method: :delete, data: { confirm: 'Are you sure?' } %><% end %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <% if can? :create, SamplingList %>
-<%= link_to 'New Sampling List', new_sampling_list_path %>
+<%= link_to 'New Sampling List', new_plant_sampling_list_path(@plant) %>
 <% end %>
