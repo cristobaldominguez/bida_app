@@ -1,3 +1,9 @@
+<% if @plant.cover.attached? %>
+<p>
+  <%= image_tag @plant.cover.variant(resize: '2280'), class: 'img-fluid' %>
+</p>
+<% end %>
+
 <p>
   <strong>Name:</strong>
   <%= @plant.name %>
@@ -45,12 +51,31 @@
 
 <p>
   <strong>System Size:</strong>
-  <%= @plant.system_size.sum %> <%= @plant.system_size.sum > 1 ? @plant.metrics.volume.pluralize : @plant.metrics.volume %>
+  <%= @plant.system_size.sum %> <%= @plant.metrics.volume.pluralize(@plant.system_size.sum) %>
 </p>
 
 <p>
   <strong>Flow design:</strong>
   <%= @plant.flow_design %> <%= @plant.flow_design > 1 ? @plant.metrics.volume.pluralize : @plant.metrics.volume %> per day.
+</p>
+
+<% if @plant.discharge_permit.attached? %>
+<p>
+  <strong>Discharge Permit:</strong>
+  <%= link_to rails_blob_path(@plant.discharge_permit, disposition: :attachment), class: 'text-icon' do %>
+  <%= render 'shared/icons/document' %> <%= @plant.discharge_permit.filename %>
+  <% end %>
+</p>
+<% end %>
+
+<p>
+  <strong>System Purpose:</strong>
+  <%= @plant.system_purpose %>
+</p>
+
+<p>
+  <strong>Report Preface:</strong>
+  <%= @plant.report_preface %>
 </p>
 
 <h2 class="cell_division">Standards</h2>
@@ -82,15 +107,17 @@
   </table>
 </div>
 
-<% @sampling_lists.each do |sampling_list| %>
-<div class="field">
-  <h3><%= sampling_list.access.name %> Samplings</h3>
-  <ul>
-  <% sampling_list.samplings.each do |sampling| %>
-    <li><input type="checkbox" name="standards[<%= sampling.standard.option.name %>]" value="1" checked disabled> <%= sampling.standard.option.name %></li>
-  <% end %>
-  </ul>
-</div>
+<% @samplings.each do |all_samplings| %>
+<% all_samplings.each do |key, samplings| %>
+  <div class="field">
+    <h3><%= key %> Samplings</h3>
+    <ul>
+    <% samplings.each do |sampling| %>
+      <li><input type="checkbox" name="standards[<%= sampling.standard.option.name %>]" value="1" checked disabled> <%= sampling.standard.option.name %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
 <% end %>
 
 <h2 class="cell_division">Logbook</h2>
@@ -120,6 +147,31 @@
     <% end %>
   </tbody>
 </table>
+
+<p>
+  <strong>Logbook BF Responsible:</strong>
+  <%= @plant.logbook_bf_responsible&.full_name %>
+</p>
+
+<p>
+  <strong>Logbook BF Supervisor:</strong>
+  <%= @plant.logbook_bf_supervisor&.full_name %>
+</p>
+
+<p>
+  <strong>Logbook Company Responsible:</strong>
+  <%= @plant.logbook_company_responsible&.full_name %>
+</p>
+
+<h3>Graphs</h3>
+<ul>
+  <% @graph_standards.each do |graph| %>
+  <li>
+    <input type="checkbox" name="active" value="Boat" <%= 'checked' if graph.show %> disabled>
+    <%= graph.chart.name %>
+  </li>
+  <% end %>
+</ul>
 
 <p>
   <strong>Startup date:</strong>

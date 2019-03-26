@@ -17,6 +17,8 @@
 //= require jquery-3.2.1.min
 //= require popper
 //= require bootstrap-material-design
+//= require chartkick
+//= require pikaday
 //= require_tree .
 
 $(document).ready(function() { $('body').bootstrapMaterialDesign(); });

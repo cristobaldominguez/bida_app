@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @chart.name %>
+</p>
+
+<p>
+  <strong>Shape:</strong>
+  <%= @chart.shape %>
+</p>
+
+<% if can? :edit, Chart %>
+<%= link_to 'Edit', edit_chart_path(@chart) %>
+<% end %>

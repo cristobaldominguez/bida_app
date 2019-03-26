@@ -1,0 +1,92 @@
+<%= form_with(model: report, url: [@plant, report], local: true) do |form| %>
+  <% if report.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(report.errors.count, "error") %> prohibited this report from being saved:</h2>
+
+      <ul>
+      <% report.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :date %>
+    <%= form.date_select :date, order: [:month, :year], end_year: Date.current.year %>
+  </div>
+
+  <div class="field">
+    <%= form.label :state %>
+    <%= form.collection_select(:state, @state, :first, :first, {prompt: 'Select a State'})  %>
+  </div>
+
+  <div class="field">
+    <%= form.label 'Flow Design:' %>
+    <%= report.flow_design %>
+  </div>
+
+  <div class="field">
+    <%= form.label 'System Size:' %>
+    <%= report.system_size.sum %> <%= @plant.metrics.volume.pluralize(report.system_size.sum) %>
+  </div>
+
+  <div class="field">
+    <%= form.label 'Start Up Date:' %>
+    <%= @plant.startup_date.strftime("%B #{@plant.startup_date.day.ordinalize}, %Y") %>
+  </div>
+
+  <div class="field">
+    <%= form.label 'System Purpose:' %>
+    <%= report.system_purpose %>
+  </div>
+
+  <div class="field">
+    <%= form.label 'Report Preface:' %>
+    <%= report.report_preface %>
+  </div>
+
+  <h3>Graphs</h3>
+  <ul>
+  <% @graphs.each do |graph| %>
+  <li>
+    <% current_chart = graph.graph_standard.chart %>
+    <h4><%= current_chart.name %></h4>
+    <% if current_chart.line? %>
+      <%#= line_chart %>
+    <% elsif current_chart.pie? %>
+      <%#= pie_chart %>
+    <% elsif current_chart.column? %>
+      <%= column_chart @monthly_flow, label: @plant.metrics.volume.pluralize(report.system_size.sum) %>
+    <% elsif current_chart.bar? %>
+      <%= bar_chart @daily_flow, height: '800px', label: @plant.metrics.volume.pluralize(report.system_size.sum), max: report.flow_design %>
+    <% elsif current_chart.area? %>
+      <%#= area_chart %>
+    <% elsif current_chart.scatter? %>
+      <%#= scatter_chart %>
+    <% elsif current_chart.geo? %>
+      <%#= geo_chart %>
+    <% elsif current_chart.timeline? %>
+      <%#= timeline %>
+    <% elsif current_chart.datatable? %>
+      <% if current_chart.name == 'Monthly Water Analysis Samples' %>
+        <%= render 'shared/tables/simple', data: @monthly_water %>
+      <% end %>
+
+      <% if current_chart.name == 'Treated Water' %>
+        <%= render 'shared/tables/simple', data: @treated_water %>
+      <% end %>
+
+      <% if current_chart.name == 'Lifetime Water Analysis Overview' %>
+        <%= render 'shared/tables/borders', data: @lifetime_analysis %>
+      <% end %>
+    <% end %>
+  </li>
+  <% end %>
+  </ul>
+
+<div class="actions">
+  <%= form.submit %>
+</div>
+
+<% end %>

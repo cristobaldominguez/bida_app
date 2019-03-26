@@ -9,8 +9,9 @@ class PlantsController < ApplicationController
   # GET companies/:company_id/plants
   # GET companies/:company_id/plants.json
   def index
-    @plants = Company.find(params[:company_id]).plants.active
-    @company = Company.find(params[:company_id])
+    # @plants = Company.find(params[:company_id]).plants.active
+    # @company = Company.find(params[:company_id])
+    @plants = current_user.plants.active
   end
 
   # GET companies/:company_id/plants/1
@@ -20,8 +21,10 @@ class PlantsController < ApplicationController
     @supports = @plant.supports.active
     @inspections = @plant.inspections.active
     @standards = @plant.standards.includes(:option, :bounds)
-    @sampling_lists = @plant.sampling_lists.includes(:access, samplings: :standard)
+    @sampling_lists = @plant.sampling_lists.includes(:access, samplings: :standard).group_by { |k| k.access.name }.map { |_, v| v.max_by(&:created_at) }
+    @samplings = @sampling_lists.map { |sl| { sl.access.name => sl.samplings.group_by { |s| s.standard.option.name }.map { |_, v| v.max_by(&:created_at) } } }
     @log_standards = @plant.log_standards.includes(:frecuency, task: :log_type).order('log_types.id')
+    @graph_standards = @plant.graph_standards.includes(:chart)
 
     @system_size = @plant.system_size.sum
     @volume_metric = @system_size > 1 ? @plant.country.metric.volume.pluralize : @plant.country.metric.volume
@@ -64,12 +67,21 @@ class PlantsController < ApplicationController
     tasks.each do |task|
       @plant.log_standards.build(task: task, frecuency_id: task[:frecuency_id], cycle: task[:cycle], responsible: task[:responsible])
     end
+
+    charts = Chart.all
+    charts.each do |chart|
+      @plant.graph_standards.build(chart: chart)
+    end
+
+    @graph_standards = @plant.graph_standards
   end
 
   # POST companies/:company_id/plants
   # POST companies/:company_id/plants.json
   def create
     @plant = @company.plants.build(plant_params)
+    @plant.system_size = params[:plant][:system_size].split(' ').map(&:to_i)
+
     accesses = Access.all
     samplings_names = {}
 
@@ -93,6 +105,9 @@ class PlantsController < ApplicationController
       log_standard.save
     end
 
+    @plant.cover.attach(params[:plant][:cover])
+    @plant.discharge_permit.attach(params[:plant][:discharge_permit]) if params[:plant][:discharge_permit].present?
+
     respond_to do |format|
       if @plant.save
         format.html { redirect_to @plant, notice: 'Plant was successfully created.' }
@@ -109,10 +124,13 @@ class PlantsController < ApplicationController
     @plant = Plant.find(params[:id])
     @company = @plant.company
     standards = @plant.standards.includes(:option, bounds: :outlet)
-    # sampling_lists = @plant.sampling_lists.includes(:access, :samplings).order(created_at: :desc).limit(2)
+    # sampling_lists = @plant.sampling_lists.includes(:access, :samplings)
     sampling_lists = @plant.sampling_lists
     @log_standards = @plant.log_standards.includes(task: [:log_type]).order('log_types.id')
+
     build_samplings(sampling_lists, standards)
+    @samplings = sampling_lists.group_by(&:access_id).map { |_, k| k.max_by(&:created_at) }
+    @graph_standards = @plant.graph_standards.includes(:chart)
   end
 
   # PATCH/PUT companies/:company_id/plants/1
@@ -134,6 +152,9 @@ class PlantsController < ApplicationController
         end
       end
     end
+
+    @plant.cover.attach(params[:plant][:cover]) if params[:plant][:cover].present?
+    @plant.discharge_permit.attach(params[:plant][:discharge_permit]) if params[:plant][:discharge_permit].present?
 
     respond_to do |format|
       if @plant.update(plant_params)
@@ -200,9 +221,11 @@ class PlantsController < ApplicationController
   def plant_params
     params.require(:plant).permit(
       :name, :code, :company_id, :address01, :address02, :state, :zip, :phone, :flow_design, :startup_date,
-      :country_id, :discharge_point_id, :contact_id, :bf_contact_id, standards_attributes: [:id, :option_id,
-        :plant_id, :isRange, :enabled, bounds_attributes: [:id, :standard_id, :outlet_id, :from, :to]],
-      system_size: [], sampling_lists_attributes: [:id, :access_id, :frecuency_id, :per_cycle],
-      log_standards_attributes: [:id, :task_id, :plant_id, :active, :responsible, :cycle, :frecuency_id ])
+      :system_purpose, :report_preface, :country_id, :discharge_point_id, :contact_id, :bf_contact_id, :cover,
+      :discharge_permit, :logbook_bf_responsible_id, :logbook_bf_supervisor_id, :logbook_company_responsible_id,
+      system_size: [], standards_attributes: [:id, :option_id, :plant_id, :isRange, :enabled,
+        bounds_attributes: [:id, :standard_id, :outlet_id, :from, :to]], sampling_lists_attributes: [:id, :access_id,
+        :frecuency_id, :per_cycle], log_standards_attributes: [:id, :task_id, :plant_id, :active, :responsible,
+        :cycle, :frecuency_id ], graph_standards_attributes: [:id, :show, :chart_id])
   end
 end

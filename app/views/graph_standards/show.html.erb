@@ -1,0 +1,23 @@
+<p>
+  <strong>Plant:</strong>
+  <%= @graph_standard.plant %>
+</p>
+
+<p>
+  <strong>Chart:</strong>
+  <%= @graph_standard.chart %>
+</p>
+
+<p>
+  <strong>Active:</strong>
+  <%= @graph_standard.active %>
+</p>
+
+<p>
+  <strong>Show:</strong>
+  <%= @graph_standard.show %>
+</p>
+
+<% if can? :edit, GraphStandard %>
+<%= link_to 'Edit', edit_plant_graph_standard_path(@graph_standard) %>
+<% end %>

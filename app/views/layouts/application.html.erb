@@ -8,6 +8,7 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag "https://www.gstatic.com/charts/loader.js" %>
   </head>
 
   <% if current_user %>
@@ -24,7 +25,7 @@
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <% if @user_plants.present? %>
+          <%# if @user_plants.present? %>
           <% if can? :read, Company %>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -38,66 +39,85 @@
               <% end %>
             </div>
           </li>
-          <% end %>
+          <%# end %>
+
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Plants
             </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <% if can? :read, Plant %>
+              <% @user_plants.each do |plant| %>
+              <li class="dropdown-submenu">
+              <%= link_to plant.name, plant_path(plant), class: 'dropdown-item dropdown-toggle' %>
+                <ul class="dropdown-menu">
+                  <li><%= link_to 'View', plant_path(plant), class: 'dropdown-item' %></li>
+                  <li><%= link_to 'Flow Report', plant_flow_reports_path(plant), class: 'dropdown-item' %></li>
+                  <% if can? :create, Alert %>
+                  <div class="dropdown-options"><span>Options</span></div>
+                  <li><%= link_to 'Graphs', edit_plant_graph_standard_path(plant, plant.graph_standards.first), class: 'dropdown-item' %></li>
+                  <% end %>
+                </ul>
+              </li>
+              <% end %>
+              <% else %>
               <% @user_plants.each do |plant| %>
               <%= link_to plant.name, plant_path(plant), class: 'dropdown-item' %>
               <% end %>
+              <% end %>
+              <%= link_to 'All Plants', plants_path, class: 'dropdown-item' %>
               <% if (@plant.present? || (@company && @company.persisted? )) && (can? :create, Plant) %>
               <div class="dropdown-divider"></div>
               <% @company_id = @company || @plant.company %>
               <%= link_to 'New Plant', new_company_plant_path(@company_id), class: 'dropdown-item' %>
               <% end %>
-            </div>
+            </ul>
           </li>
           <% end %>
+
           <% if @plant.present? && @plant.persisted? %>
-          <% if can? :read, Alert %>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Alerts
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <%= link_to 'Alert History', plant_alerts_path(@plant), class: 'dropdown-item' %>
-              <% if can? :create, Alert %>
-              <div class="dropdown-divider"></div>
-              <%= link_to 'New Alert', new_plant_alert_path(@plant), class: 'dropdown-item' %>
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tickets</a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <% if can? :read, Alert %>
+              <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Alerts</a>
+                <ul class="dropdown-menu">
+                  <li><%= link_to 'Alert History', plant_alerts_path(@plant), class: 'dropdown-item' %></li>
+                  <% if can? :create, Alert %>
+                  <div class="dropdown-divider"></div>
+                  <li><%= link_to 'New Alert', new_plant_alert_path(@plant), class: 'dropdown-item' %></li>
+                  <% end %>
+                </ul>
+              </li>
               <% end %>
-            </div>
+              <% if can? :read, Support %>
+              <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Supports</a>
+                <ul class="dropdown-menu">
+                  <li><%= link_to 'Support History', plant_supports_path(@plant), class: 'dropdown-item' %></li>
+                  <% if can? :create, Support %>
+                  <div class="dropdown-divider"></div>
+                  <li><%= link_to 'New Support', new_plant_support_path(@plant), class: 'dropdown-item' %></li>
+                  <% end %>
+                </ul>
+              </li>
+              <% end %>
+
+              <% if can? :read, Inspection %>
+              <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Inspections</a>
+                <ul class="dropdown-menu">
+                  <li><%= link_to 'Inspection History', plant_inspections_path(@plant), class: 'dropdown-item' %></li>
+                  <% if can? :create, Inspection %>
+                  <div class="dropdown-divider"></div>
+                  <li><%= link_to 'New Inspection', new_plant_inspection_path(@plant), class: 'dropdown-item' %></li>
+                  <% end %>
+                </ul>
+              </li>
+              <% end %>
+            </ul>
           </li>
           <% end %>
-          <% if can? :read, Support %>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Supports
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <%= link_to 'Support History', plant_supports_path(@plant), class: 'dropdown-item' %>
-              <% if can? :create, Support %>
-              <div class="dropdown-divider"></div>
-              <%= link_to 'New Support', new_plant_support_path(@plant), class: 'dropdown-item' %>
-              <% end %>
-            </div>
-          </li>
-          <% end %>
-          <% if can? :read, Inspection %>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Inspections
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <%= link_to 'Inspection History', plant_inspections_path(@plant), class: 'dropdown-item' %>
-              <% if can? :create, Inspection %>
-              <div class="dropdown-divider"></div>
-              <%= link_to 'New Inspection', new_plant_inspection_path(@plant), class: 'dropdown-item' %>
-              <% end %>
-            </div>
-          </li>
-          <% end %>
+
+          <% if @plant.present? && @plant.persisted? %>
           <% if can? :read, Logbook %>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -105,7 +125,7 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <%= link_to 'Logbook', @logbook_path, class: 'dropdown-item' %>
-              <a class="dropdown-item" href="#">Logbooks History</a>
+              <%= link_to 'Logbook History', plant_logbooks_path(@plant), class: 'dropdown-item' %>
             </div>
           </li>
           <% end %>
@@ -117,22 +137,27 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <%= link_to 'Lab', @lab_samplings, class: 'dropdown-item' %>
               <%= link_to 'Internal', @internal_samplings, class: 'dropdown-item' %>
-              <a class="dropdown-item" href="#">Lab History</a>
-              <a class="dropdown-item" href="#">Internal History</a>
+              <%= link_to 'Samplings History', plant_sampling_lists_path(@plant), class: 'dropdown-item' %>
             </div>
           </li>
           <% end %>
-          <%# if can? :read, Report %>
+          <% if can? :read, Report %>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Reports
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Latest Reports</a>
-              <a class="dropdown-item" href="#">Reports History</a>
+              <% if can? :update, Report %>
+              <% if @latest_report.present? %>
+              <%= link_to 'Latest Report', plant_report_path(@plant, @latest_report), class: 'dropdown-item' %>
+              <% else %>
+              <%= link_to 'Latest Report', new_plant_report_path(@plant), class: 'dropdown-item' %>
+              <% end %>
+              <% end %>
+              <%= link_to 'Reports History', plant_reports_path(@plant), class: 'dropdown-item' %>
             </div>
           </li>
-          <%# end %>
+          <% end %>
           <% end %>
           <% if can? :read, User %>
           <li class="nav-item dropdown">
@@ -140,9 +165,9 @@
               Users
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <%= link_to 'All Users', users_path, class: 'nav-link' %>
+              <%= link_to 'All Users', users_path, class: 'dropdown-item' %>
               <div class="dropdown-divider"></div>
-              <%= link_to 'New User', new_user_path, class: 'nav-link' %>
+              <%= link_to 'New User', new_user_path, class: 'dropdown-item' %>
             </div>
           </li>
           <% end %>

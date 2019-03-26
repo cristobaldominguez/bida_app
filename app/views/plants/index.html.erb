@@ -5,18 +5,6 @@
     <tr>
       <th>Name</th>
       <th>Code</th>
-      <th>Company</th>
-      <th>Address01</th>
-      <th>Address02</th>
-      <th>State</th>
-      <th>Zip</th>
-      <th>Phone</th>
-      <th>System Size</th>
-      <th>Discharge Point</th>
-      <th>Flow design</th>
-      <th>Lab number per cycle</th>
-      <th>Internal number per cycle</th>
-      <th>Startup date</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -26,18 +14,6 @@
       <tr>
         <td><%= plant.name %></td>
         <td><%= plant.code %></td>
-        <td><%= plant.company.name %></td>
-        <td><%= plant.address01 %></td>
-        <td><%= plant.address02 %></td>
-        <td><%= plant.state %></td>
-        <td><%= plant.zip %></td>
-        <td><%= plant.phone %></td>
-        <td><%= plant.system_size.sum %></td>
-        <td><%= plant.discharge_point.name %></td>
-        <td><%= plant.flow_design %></td>
-        <td><%= plant.lab_number_per_cycle %></td>
-        <td><%= plant.internal_number_per_cycle %></td>
-        <td><%= plant.startup_date %></td>
         <td><% if can? :read, Plant %><%= link_to 'Show', plant %><% end %></td>
         <td><% if can? :edit, Plant %><%= link_to 'Edit', edit_plant_path(plant) %><% end %></td>
         <td><% if can? :destroy, Plant %><%= link_to 'Destroy', plant, method: :delete, data: { confirm: 'Are you sure?' } %><% end %></td>
@@ -45,7 +21,3 @@
     <% end %>
   </tbody>
 </table>
-
-<% if can? :create, Plant %>
-<%= link_to 'New Plant', new_plant_path %>
-<% end %>

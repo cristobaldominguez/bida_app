@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Charts</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Shape</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @charts.each do |chart| %>
+      <tr>
+        <td><%= chart.name %></td>
+        <td><%= chart.shape %></td>
+        <td><% if can? :read, Graph %><%= link_to 'Show', chart %><% end %></td>
+        <td><% if can? :edit, Graph %><%= link_to 'Edit', edit_chart_path(chart) %><% end %></td>
+        <td><% if can? :destroy, Graph %><%= link_to 'Destroy', chart, method: :delete, data: { confirm: 'Are you sure?' } %><% end %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<% if can? :create, Chart %>
+<%= link_to 'New Chart', new_chart_path %>
+<% end %>

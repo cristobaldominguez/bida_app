@@ -1,0 +1,39 @@
+<table class="table table-bordered">
+  <thead class="thead-dark">
+    <% data[:headers].each_with_index do |headers, index| %>
+    <tr>
+    <% headers.each do |text| %>
+      <% if text == '' && index == 0 %>
+      <th scope="col" rowspan="2"></th>
+      <% elsif index == 0 %>
+      <th scope="col" colspan="3" class="table__text-center"><%= text %></th>
+      <% else %>
+      <th scope="col" class="table__text-center"><%= text %></th>
+      <% end %>
+    <% end %>
+    </tr>
+    <% end %>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">Average</th>
+      <% data[:average].each do |info| %>
+      <% info.each do |key, values| %>
+      <td class="table__text-center"><%= values[:in] %></td>
+      <td class="table__text-center"><%= values[:out] %></td>
+      <td class="table__text-center"><%= values[:removal] %>%</td>
+      <% end %>
+      <% end %>
+    </tr>
+    <tr>
+      <th scope="row">Peak</th>
+      <% data[:peak].each do |info| %>
+      <% info.each do |key, values| %>
+      <td class="table__text-center"><%= values[:in] %></td>
+      <td class="table__text-center"><%= values[:out] %></td>
+      <td class="table__text-center"><%= values[:removal] %>%</td>
+      <% end %>
+      <% end %>
+    </tr>
+  </tbody>
+</table>

@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   resources :tasks
   resources :bounds
   resources :standards
+  resources :charts
+  resources :plants, only: %i[index]
   resources :companies do
     resources :plants, only: %i[new create update destroy]
   end
@@ -14,6 +16,15 @@ Rails.application.routes.draw do
     resources :logbooks
     resources :inspections
     resources :alerts
+    resources :flows
+    resources :flow_reports do
+      collection do
+        get 'custom'
+      end
+    end
+    resources :graphs
+    resources :reports
+    resources :graph_standards
     resources :supports do
       collection do
         get 'custom'

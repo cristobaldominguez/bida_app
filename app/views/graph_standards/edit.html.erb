@@ -1,0 +1,8 @@
+<h1>Editing Graph Standard</h1>
+
+<%= render 'form', graph_standard: @graph_standard %>
+
+
+<% if can? :read, Plant %>
+<%= link_to 'Show', plant_graph_standard_path(@graph_standard) %>
+<% end %>

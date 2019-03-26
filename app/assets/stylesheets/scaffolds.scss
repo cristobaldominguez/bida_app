@@ -2,6 +2,7 @@ body {
   background-color: var(--bg);
   color: var(--text);
   margin: 0;
+  margin-bottom: 100px;
   font-family: verdana, arial, helvetica, sans-serif;
   font-size: 13px;
   line-height: 18px;
@@ -62,6 +63,13 @@ table {
   padding: 2px;
   background-color: red;
   display: table;
+}
+
+.text-icon {
+
+  svg {
+    height: 1.2em;
+  }
 }
 
 #error_explanation {
@@ -144,12 +152,53 @@ button, input[type="submit"], input[type="reset"] {
     }
   }
 
-  .dropdown-divider {
-    border-top: 1px solid var(--dropdown-divider-color);
+  .dropdown- {
+
+    &divider {
+      border-top: 1px solid var(--dropdown-divider-color);
+    }
+
+    &options {
+      font-size: 0.8rem;
+      text-align: center;
+      color: var(--dropdown-divider-color);
+
+      &:after {
+        content: '';
+        border-bottom: 1px solid var(--dropdown-divider-color);
+        width: 100%;
+        display: block;
+        position: relative;
+        bottom: .55rem;
+      }
+
+      span {
+        background-color: hsl(var(--bg-hue), var(--bg-sat), var(--bg-lig));
+        padding: 0 7px;
+        position: relative;
+        z-index: 1;
+      }
+    }
   }
 }
 
+.dropdown-submenu {
+  position: relative;
 
+  a::after {
+    transform: rotate(-90deg);
+    position: absolute;
+    right: 6px;
+    top: 1.4em;
+  }
+
+  .dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-left: .1rem;
+    margin-right: .1rem;
+  }
+}
 
 .field .hide,
 .work_summary--hide {
@@ -324,5 +373,12 @@ form.button_to {
       background-color: var(--links-hover-bg);
       text-decoration: underline;
     }
+  }
+}
+
+.table {
+
+  &__text-center {
+    text-align: center;
   }
 }

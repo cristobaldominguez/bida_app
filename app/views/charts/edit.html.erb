@@ -1,0 +1,7 @@
+<h1>Editing Chart</h1>
+
+<%= render 'form', chart: @chart %>
+
+<% if can? :read, Chart %>
+<%= link_to 'Show', @chart %>
+<% end %>

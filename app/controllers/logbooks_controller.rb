@@ -15,11 +15,10 @@ class LogbooksController < ApplicationController
     @logs = @logbook.logs.includes(log_standard: [:frecuency, task: [:log_type, :input_type]]).order('log_types.id')
   end
 
-  # GET /logbooks/new
+  # GET plants/1/logbooks/new
   def new
     @logbook = Logbook.new
     @logbook.plant = Plant.find(params[:plant_id])
-    @plant = @logbook.plant
     log_standards = @logbook.plant.log_standards.includes(:frecuency, task: [:log_type, :input_type])
 
     log_standards.each do |log_standard|
@@ -37,7 +36,7 @@ class LogbooksController < ApplicationController
 
     respond_to do |format|
       if @logbook.save
-        format.html { redirect_to plant_path(@logbook.plant), notice: 'Logbook was successfully created.' }
+        format.html { redirect_to edit_plant_logbook_path(@plant, @logbook), notice: 'Logbook was successfully created.' }
         format.json { render :show, status: :created, location: @logbook }
       else
         format.html { render :new }
@@ -77,7 +76,7 @@ class LogbooksController < ApplicationController
 
     respond_to do |format|
       if @logbook.update(logbook_params)
-        format.html { redirect_to edit_logbook_path(@logbook), notice: 'Logbook was successfully updated.' }
+        format.html { redirect_to edit_plant_logbook_path(@plant, @logbook), notice: 'Logbook was successfully updated.' }
         format.json { render :show, status: :ok, location: @logbook }
       else
         format.html { render :edit }

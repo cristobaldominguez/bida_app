@@ -1,0 +1,35 @@
+<%= form_with(model: [@plant, flow_report], url: [@plant, flow_report], local: true) do |form| %>
+  <% if flow_report.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(flow_report.errors.count, "error") %> prohibited this flow_report from being saved:</h2>
+
+      <ul>
+      <% flow_report.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :date %>
+    <%= form.date_select :date, order: [:month, :year], end_year: Date.current.year %>
+  </div>
+
+  <h3>Flows</h3>
+  <ul class="flows">
+  <% num = 0 %>
+  <%= form.fields_for :flows, @flow_reports do |flow| %>
+    <li class="flows__flow">
+      <strong><%= '0' if num < 9 %><%= num +=1 %>:</strong>
+      <%= flow.number_field :value, autocomplete: 'off', step: 0.0001 %>
+      <%= flow.hidden_field :date %>
+      <%= flow.hidden_field :id %>
+    </li>
+  <% end %>
+  </ul>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

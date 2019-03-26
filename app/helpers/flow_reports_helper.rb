@@ -1,0 +1,2 @@
+module FlowReportsHelper
+end

@@ -20,6 +20,10 @@ class User < ApplicationRecord
   has_many :on_site_user_inspections, class_name: 'Inspection', foreign_key: 'on_site_user_id'
   has_many :report_technician_inspections, class_name: 'Inspection', foreign_key: 'report_technician_id'
 
+  has_many :logbook_bf_responsible_plants, class_name: 'Plant', foreign_key: 'logbook_bf_responsible_id'
+  has_many :logbook_bf_supervisor_plants, class_name: 'Plant', foreign_key: 'logbook_bf_supervisor_id'
+  has_many :logbook_company_responsible_plants, class_name: 'Plant', foreign_key: 'logbook_company_responsible_id'
+
   has_many :contact_plants, class_name: 'Plant', foreign_key: 'contact_id'
   has_many :bf_contact_plants, class_name: 'Plant', foreign_key: 'bf_contact_id'
 
