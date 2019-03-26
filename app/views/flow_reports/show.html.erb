@@ -1,6 +1,6 @@
 <p>
   <strong>Date:</strong>
-  <%= @flow_report.date.strftime("%B, %Y") %>
+  <%= @flow_report.date.strftime('%B, %Y') %>
 </p>
 
 <h3>Flows</h3>
@@ -13,10 +13,10 @@
   </thead>
   <tbody>
     <% day = 0 %>
-    <% @flows.each do |flow| %>
+    <% @flows.each_with_index do |flow, i| %>
     <tr>
-      <td><strong><%= '0' if day < 9 %><%= day +=1 %>:</strong></td>
-      <td><%= flow.value || '0.0' %> -> <%= flow.date %></td>
+      <td><strong><%= '0' if day < 9 %><%= day += 1 %>:</strong></td>
+      <td><%= flow.value || '0.0' %></td>
     </tr>
     <% end %>
   </tbody>

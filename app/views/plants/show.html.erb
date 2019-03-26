@@ -107,15 +107,17 @@
   </table>
 </div>
 
-<% @sampling_lists.each do |sampling_list| %>
-<div class="field">
-  <h3><%= sampling_list.access.name %> Samplings</h3>
-  <ul>
-  <% sampling_list.samplings.each do |sampling| %>
-    <li><input type="checkbox" name="standards[<%= sampling.standard.option.name %>]" value="1" checked disabled> <%= sampling.standard.option.name %></li>
-  <% end %>
-  </ul>
-</div>
+<% @samplings.each do |all_samplings| %>
+<% all_samplings.each do |key, samplings| %>
+  <div class="field">
+    <h3><%= key %> Samplings</h3>
+    <ul>
+    <% samplings.each do |sampling| %>
+      <li><input type="checkbox" name="standards[<%= sampling.standard.option.name %>]" value="1" checked disabled> <%= sampling.standard.option.name %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
 <% end %>
 
 <h2 class="cell_division">Logbook</h2>

@@ -125,7 +125,7 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <%= link_to 'Logbook', @logbook_path, class: 'dropdown-item' %>
-              <a class="dropdown-item" href="#">Logbooks History</a>
+              <%= link_to 'Logbook History', plant_logbooks_path(@plant), class: 'dropdown-item' %>
             </div>
           </li>
           <% end %>
@@ -137,8 +137,7 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <%= link_to 'Lab', @lab_samplings, class: 'dropdown-item' %>
               <%= link_to 'Internal', @internal_samplings, class: 'dropdown-item' %>
-              <a class="dropdown-item" href="#">Lab History</a>
-              <a class="dropdown-item" href="#">Internal History</a>
+              <%= link_to 'Samplings History', plant_sampling_lists_path(@plant), class: 'dropdown-item' %>
             </div>
           </li>
           <% end %>
