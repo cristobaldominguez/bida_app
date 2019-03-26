@@ -15,11 +15,10 @@ class LogbooksController < ApplicationController
     @logs = @logbook.logs.includes(log_standard: [:frecuency, task: [:log_type, :input_type]]).order('log_types.id')
   end
 
-  # GET /logbooks/new
+  # GET plants/1/logbooks/new
   def new
     @logbook = Logbook.new
     @logbook.plant = Plant.find(params[:plant_id])
-    @plant = @logbook.plant
     log_standards = @logbook.plant.log_standards.includes(:frecuency, task: [:log_type, :input_type])
 
     log_standards.each do |log_standard|

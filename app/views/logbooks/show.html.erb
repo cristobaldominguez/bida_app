@@ -25,7 +25,7 @@
         <% elsif ['inches', 'pH record', 'PSI', '% of bed', 'COD Record'].include?(input_type) %>
         <%= log.value %>
         <% elsif input_type == 'date' %>
-        <%= log.value.to_date %>
+        <%= log.value&.to_date %>
         <% elsif input_type == 'boolean' %>
         <%= log.value == '1' ? 'Yes' : 'No' %>
         <% else %>
@@ -41,5 +41,5 @@
 </table>
 
 <% if can? :edit, Logbook %>
-<%= link_to 'Edit', edit_logbook_path(@logbook) %>
+<%= link_to 'Edit', edit_plant_logbook_path(@plant, @logbook) %>
 <% end %>
