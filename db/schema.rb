@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_15_142529) do
+ActiveRecord::Schema.define(version: 2019_03_21_132352) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -430,12 +430,13 @@ ActiveRecord::Schema.define(version: 2019_03_15_142529) do
 
   create_table "reports", force: :cascade do |t|
     t.bigint "plant_id"
+    t.boolean "active", default: true
     t.integer "state", default: 0
     t.string "system_purpose"
     t.string "report_preface"
     t.string "flow_design"
     t.string "system_size"
-    t.boolean "active", default: true
+    t.date "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["plant_id"], name: "index_reports_on_plant_id"

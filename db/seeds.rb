@@ -341,7 +341,7 @@ if Rails.env == 'development'
 
   # Add Default data
   puts 'Adding Fake Data'
-  data = {
+  flow_history = {
     "_2016": {
       "_08": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 596, 486],
       "_09": [0, 612, 759, 0, 471, 675, 1132, 977, 925, 1008, 860, 960, 250, 0, 269, 278, 0, 0, 559, 1045, 738, 669, 826, 151, 0, 606, 1016, 942, 680, 1043],
@@ -387,7 +387,7 @@ if Rails.env == 'development'
   }
 
   plant_id = Plant.first.id
-  data.each do |data_key, data_value|
+  flow_history.each do |data_key, data_value|
     year = data_key.to_s.delete!('_').to_i
     data_value.each do |hash_key, hash_value|
       month = hash_key.to_s.delete!('_').to_i
@@ -397,6 +397,37 @@ if Rails.env == 'development'
       end
     end
   end
+
+  Sampling.destroy_all
+  SamplingList.destroy_all
+  plant = Plant.first
+  accesses = Access.all
+  standards_arr = plant.standards.select(&:enabled)
+
+  accesses.each do |access|
+    (2016..2019).each do |year|
+      (1..12).each do |month|
+        sampling_list = SamplingList.create!(plant: plant,
+                                             access: access,
+                                             frecuency_id: 3,
+                                             per_cycle: 1,
+                                             created_at: "#{year}-#{month}-1 08:00:00",
+                                             updated_at: "#{year}-#{month}-1 08:00:00")
+        total_days_month = Date.new(year, month, 1).end_of_month.day
+        (1..total_days_month).each do |day|
+          standards_arr.each do |st|
+            sampling_list.samplings.create!(standard: st,
+                                            value_in: Random.rand(0...5400),
+                                            value_out: Random.rand(0...100),
+                                            created_at: "#{year}-#{month}-#{day} 08:00:00",
+                                            updated_at: "#{year}-#{month}-#{day} 08:00:00")
+          end
+        end
+      end
+    end
+  end
+
+  puts 'End Fake Data'
 
   puts '----------- Seeds Added! -----------'
 end

@@ -12,6 +12,11 @@
   <% end %>
 
   <div class="field">
+    <%= form.label :date %>
+    <%= form.date_select :date, order: [:month, :year], end_year: Date.current.year %>
+  </div>
+
+  <div class="field">
     <%= form.label :state %>
     <%= form.collection_select(:state, @state, :first, :first, {prompt: 'Select a State'})  %>
   </div>
@@ -52,19 +57,29 @@
     <% elsif current_chart.pie? %>
       <%#= pie_chart %>
     <% elsif current_chart.column? %>
-      <%#= column_chart  %>
+      <%= column_chart @monthly_flow, label: @plant.metrics.volume.pluralize(report.system_size.sum) %>
     <% elsif current_chart.bar? %>
-    <%#= bar_chart %>
+      <%= bar_chart @daily_flow, height: '800px', label: @plant.metrics.volume.pluralize(report.system_size.sum), max: report.flow_design %>
     <% elsif current_chart.area? %>
-    <%#= area_chart %>
+      <%#= area_chart %>
     <% elsif current_chart.scatter? %>
-    <%#= scatter_chart %>
+      <%#= scatter_chart %>
     <% elsif current_chart.geo? %>
-    <%#= geo_chart %>
+      <%#= geo_chart %>
     <% elsif current_chart.timeline? %>
-    <%#= timeline %>
+      <%#= timeline %>
     <% elsif current_chart.datatable? %>
-    
+      <% if current_chart.name == 'Monthly Water Analysis Samples' %>
+        <%= render 'shared/tables/simple', data: @monthly_water %>
+      <% end %>
+
+      <% if current_chart.name == 'Treated Water' %>
+        <%= render 'shared/tables/simple', data: @treated_water %>
+      <% end %>
+
+      <% if current_chart.name == 'Lifetime Water Analysis Overview' %>
+        <%= render 'shared/tables/borders', data: @lifetime_analysis %>
+      <% end %>
     <% end %>
   </li>
   <% end %>

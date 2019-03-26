@@ -1,0 +1,21 @@
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <% data[:headers].each do |header| %>
+      <th scope="col" class="table__text-center"><%= header %></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% data[:data].each do |d| %>
+    <% d.each do |key, value| %>
+    <tr>
+      <th scope="row"><%= key %></th>
+      <% value.each do |val| %>
+      <td class="table__text-center"><%= val %></td>
+      <% end %>
+    </tr>
+    <% end %>
+    <% end %>
+  </tbody>
+</table>
