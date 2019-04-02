@@ -63,6 +63,7 @@ group :development, :test do
 
   # To identify slow endpoints
   gem 'rack-mini-profiler', require: false
+  gem 'rubycritic', require: false
 end
 
 group :development do
