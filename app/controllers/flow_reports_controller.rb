@@ -4,7 +4,7 @@ class FlowReportsController < ApplicationController
   # GET /plants/1/flow_reports
   # GET /plants/1/flow_reports.json
   def index
-    @flow_reports = FlowReport.active.order(date: :desc)
+    @flow_reports = @plant.flow_reports.active.order(date: :desc)
   end
 
   # GET /plants/1/flow_reports/1

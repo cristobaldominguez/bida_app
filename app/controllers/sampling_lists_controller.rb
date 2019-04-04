@@ -4,13 +4,13 @@ class SamplingListsController < ApplicationController
   # GET /sampling_lists
   # GET /sampling_lists.json
   def index
-    @sampling_lists = SamplingList.all.includes(:access, :frecuency).sort_by(&:created_at)
+    @sampling_lists = SamplingList.all.includes(:access, :frecuency).order('created_at DESC')
   end
 
   # GET /sampling_lists/1
   # GET /sampling_lists/1.json
   def show
-    @samplings = @sampling_list.samplings
+    @samplings = @sampling_list.samplings.includes(standard: :option)
   end
 
   # GET /sampling_lists/new

@@ -4,7 +4,7 @@ class GraphStandardsController < ApplicationController
   # GET /plants/:plant_id/graph_standards
   # GET /plants/:plant_id/graph_standards.json
   def index
-    @graph_standards = GraphStandard.all
+    @graph_standards = @plant.graph_standards.includes(:chart)
   end
 
   # GET /plants/:plant_id/graph_standards/1
@@ -13,7 +13,7 @@ class GraphStandardsController < ApplicationController
 
   # GET /graph_standards/new
   def new
-    @graph_standard = GraphStandard.new
+    @graph_standard = @plant.graph_standards.new
   end
 
   # GET /graph_standards/1/edit
