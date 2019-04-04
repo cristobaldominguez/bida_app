@@ -11,6 +11,11 @@
     </div>
   <% end %>
 
+  <div class="field">
+    <%= form.label 'Grab Date' %>
+    <%= form.date_select :date, order: [:month, :day, :year], end_year: Date.current.year, value: "1984-05-12" %>
+  </div>
+
   <table>
     <tbody>
       <tr>

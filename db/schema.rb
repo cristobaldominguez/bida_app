@@ -446,6 +446,7 @@ ActiveRecord::Schema.define(version: 2019_03_21_132352) do
     t.bigint "plant_id"
     t.bigint "access_id"
     t.bigint "frecuency_id"
+    t.date "date"
     t.integer "per_cycle"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -457,9 +458,10 @@ ActiveRecord::Schema.define(version: 2019_03_21_132352) do
 
   create_table "samplings", force: :cascade do |t|
     t.bigint "standard_id"
+    t.bigint "sampling_list_id"
     t.float "value_in"
     t.float "value_out"
-    t.bigint "sampling_list_id"
+    t.date "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["sampling_list_id"], name: "index_samplings_on_sampling_list_id"

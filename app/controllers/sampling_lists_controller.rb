@@ -1,4 +1,5 @@
 class SamplingListsController < ApplicationController
+  after_action :assign_date_to_samplings, only: [:create, :update], unless: -> { @sampling_list.nil? }
   load_and_authorize_resource
 
   # GET /sampling_lists
@@ -67,8 +68,15 @@ class SamplingListsController < ApplicationController
 
   private
 
+  def assign_date_to_samplings
+    @sampling_list.samplings.map do |sampling|
+      sampling.date = @sampling_list.date
+      sampling.save
+    end
+  end
+
   # Never trust parameters from the scary internet, only allow the white list through.
   def sampling_list_params
-    params.require(:sampling_list).permit(samplings_attributes: %i[id standard_id value_in value_out sampling_list_id])
+    params.require(:sampling_list).permit(:date, samplings_attributes: %i[id standard_id value_in value_out sampling_list_id])
   end
 end

@@ -4,6 +4,7 @@ class CreateSamplingLists < ActiveRecord::Migration[5.2]
       t.references :plant, foreign_key: true
       t.references :access, foreign_key: true
       t.references :frecuency, foreign_key: true
+      t.date :date
       t.integer :per_cycle
 
       t.timestamps
