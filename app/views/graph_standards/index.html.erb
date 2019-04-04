@@ -5,8 +5,6 @@
     <tr>
       <th>Plant</th>
       <th>Chart</th>
-      <th>Active</th>
-      <th>Show</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -14,13 +12,11 @@
   <tbody>
     <% @graph_standards.each do |graph_standard| %>
       <tr>
-        <td><%= graph_standard.plant %></td>
-        <td><%= graph_standard.chart %></td>
-        <td><%= graph_standard.active %></td>
-        <td><%= graph_standard.show %></td>
-        <td><% if can? :read, GraphStandard %><%= link_to 'Show', graph_standard %><% end %></td>
-        <td><% if can? :edit, GraphStandard %><%= link_to 'Edit', edit_graph_standard_path(graph_standard) %><% end %></td>
-        <td><% if can? :destroy, GraphStandard %><%= link_to 'Destroy', graph_standard, method: :delete, data: { confirm: 'Are you sure?' } %><% end %></td>
+        <td><%= graph_standard.chart.name %></td>
+        <td><%= graph_standard.chart.shape %></td>
+        <td><% if can? :read, GraphStandard %><%= link_to 'Show', plant_graph_standard_path(@plant, graph_standard) %><% end %></td>
+        <td><% if can? :edit, GraphStandard %><%= link_to 'Edit', edit_plant_graph_standard_path(@plant, graph_standard) %><% end %></td>
+        <td><% if can? :destroy, GraphStandard %><%= link_to 'Destroy', plant_graph_standard_path(@plant, graph_standard), method: :delete, data: { confirm: 'Are you sure?' } %><% end %></td>
       </tr>
     <% end %>
   </tbody>
