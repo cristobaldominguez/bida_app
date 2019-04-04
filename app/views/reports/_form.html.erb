@@ -28,7 +28,7 @@
 
   <div class="field">
     <%= form.label 'System Size:' %>
-    <%= report.system_size.sum %> <%= @plant.metrics.volume.pluralize(report.system_size.sum) %>
+    <%= report.system_size.sum %> <%= @plant.metrics.area.pluralize(report.system_size.sum) %>
   </div>
 
   <div class="field">
@@ -57,9 +57,9 @@
     <% elsif current_chart.pie? %>
       <%#= pie_chart %>
     <% elsif current_chart.column? %>
-      <%= column_chart @monthly_flow, label: @plant.metrics.volume.pluralize(report.system_size.sum) %>
+      <%= column_chart @yearly_flow, label: @plant.metrics.volume.pluralize(report.system_size.sum) %>
     <% elsif current_chart.bar? %>
-      <%= bar_chart @daily_flow, height: '800px', label: @plant.metrics.volume.pluralize(report.system_size.sum), max: report.flow_design %>
+      <%= bar_chart @monthly_flow, height: '800px', label: @plant.metrics.volume.pluralize(report.system_size.sum), max: report.flow_design %>
     <% elsif current_chart.area? %>
       <%#= area_chart %>
     <% elsif current_chart.scatter? %>
@@ -70,15 +70,20 @@
       <%#= timeline %>
     <% elsif current_chart.datatable? %>
       <% if current_chart.name == 'Monthly Water Analysis Samples' %>
-        <%= render 'shared/tables/simple', data: @monthly_water %>
+        <%= render 'shared/tables/simple', data: @monthly_water_analysis if @monthly_water_analysis.present? %>
       <% end %>
 
-      <% if current_chart.name == 'Treated Water' %>
-        <%= render 'shared/tables/simple', data: @treated_water %>
+      <% if current_chart.name == 'Treated Water History' %>
+        <%= render 'shared/tables/simple', data: @treated_water if @treated_water.present? %>
       <% end %>
 
       <% if current_chart.name == 'Lifetime Water Analysis Overview' %>
-        <%= render 'shared/tables/borders', data: @lifetime_analysis %>
+        <%= render 'shared/tables/borders', data: @lifetime_analysis if @lifetime_analysis.present? %>
+      <% end %>
+
+      <% if current_chart.name == '12 Month Water Analysis Data' %>
+        <%= render 'shared/tables/striped', data: @year_samplings_analysis if @year_samplings_analysis.present? %>
+        <%= line_chart @year_samplings_grouped_by_option %>
       <% end %>
     <% end %>
   </li>

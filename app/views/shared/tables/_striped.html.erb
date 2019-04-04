@@ -1,0 +1,29 @@
+<table class="table__stripped table table-striped table-bordered">
+  <thead class="thead-dark">
+    <% data[:headers].each_with_index do |headers, index| %>
+    <tr>
+    <% headers.each do |text| %>
+      <% if index == 0 && text != '' %>
+      <th scope="col" colspan="3" class="table__text-center"><%= text %></th>
+      <% else %>
+      <th scope="col" class="table__text-center"><%= text %></th>
+      <% end %>
+    <% end %>
+    </tr>
+    <% end %>
+  </thead>
+  <tbody>
+    <% data[:data].each do |info| %>
+    <% info.each do |key, val| %>
+    <tr>
+      <th scope="row"><%= key %></th>
+      <% val.each do |sampling| %>
+      <td class="table__text-center"><%= sampling[:in] %></td>
+      <td class="table__text-center"><%= sampling[:out] %></td>
+      <td class="table__text-center"><%= sampling[:removal] %></td>
+      <% end %>
+    </tr>
+    <% end %>
+    <% end %>
+  </tbody>
+</table>

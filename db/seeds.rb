@@ -331,7 +331,7 @@ if Rails.env == 'development'
     { name: 'Monthly Flow', shape: 'column' },
     { name: 'Daily Flow', shape: 'bar' },
     { name: 'Monthly Water Analysis Samples', shape: 'datatable' },
-    { name: 'Treated Water', shape: 'datatable' },
+    { name: 'Treated Water History', shape: 'datatable' },
     { name: '12 Month Water Analysis Data', shape: 'datatable' },
     { name: 'Lifetime Water Analysis Overview', shape: 'datatable' }
   ]
@@ -407,21 +407,22 @@ if Rails.env == 'development'
   accesses.each do |access|
     (2016..2019).each do |year|
       (1..12).each do |month|
+        total_days_month = Date.new(year, month, 1).end_of_month.day
+        day = [*1..total_days_month].sample
         sampling_list = SamplingList.create!(plant: plant,
                                              access: access,
                                              frecuency_id: 3,
                                              per_cycle: 1,
+                                             date: Date.new(year, month, day),
                                              created_at: "#{year}-#{month}-1 08:00:00",
                                              updated_at: "#{year}-#{month}-1 08:00:00")
-        total_days_month = Date.new(year, month, 1).end_of_month.day
-        (1..total_days_month).each do |day|
-          standards_arr.each do |st|
-            sampling_list.samplings.create!(standard: st,
-                                            value_in: Random.rand(0...5400),
-                                            value_out: Random.rand(0...100),
-                                            created_at: "#{year}-#{month}-#{day} 08:00:00",
-                                            updated_at: "#{year}-#{month}-#{day} 08:00:00")
-          end
+        standards_arr.each do |st|
+          sampling_list.samplings.create!(standard: st,
+                                          date: Date.new(year, month, day),
+                                          value_in: Random.rand(0...5400),
+                                          value_out: Random.rand(0...500),
+                                          created_at: "#{year}-#{month}-#{day} 08:00:00",
+                                          updated_at: "#{year}-#{month}-#{day} 08:00:00")
         end
       end
     end

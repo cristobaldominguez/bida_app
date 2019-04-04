@@ -4,6 +4,7 @@ class PlantsController < ApplicationController
   before_action :set_discharge_points, :set_countries, only: %i[new edit create update]
   before_action :set_users, :set_frecuencies, only: %i[new edit create update]
   before_action :set_responsibles, only: %i[new edit create update show]
+  after_action :assign_plant_to_current_user, only: :create, unless: -> { @plant.nil? }
   load_and_authorize_resource
 
   # GET companies/:company_id/plants
@@ -216,6 +217,10 @@ class PlantsController < ApplicationController
         sampling_list.samplings.find_or_initialize_by(standard: standard)
       end
     end
+  end
+
+  def assign_plant_to_current_user
+    current_user.plants << @plant
   end
 
   def plant_params

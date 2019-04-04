@@ -60,6 +60,10 @@ group :development, :test do
   gem 'bullet'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'railroady'
+
+  # To identify slow endpoints
+  gem 'rack-mini-profiler', require: false
+  gem 'rubycritic', require: false
 end
 
 group :development do
