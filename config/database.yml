@@ -81,5 +81,5 @@ test:
 production:
   <<: *default
   database: BIDA_App_production
-  username: BIDA_App
-  password: <%= ENV['BIDA_APP_DATABASE_PASSWORD'] %>
+  username: Rails.application.credentials.database[:username]
+  password: Rails.application.credentials.database[:password]

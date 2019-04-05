@@ -13,8 +13,6 @@ require 'capistrano/puma'
 require 'capistrano/puma/workers'
 require 'capistrano/puma/nginx'
 
-require 'capistrano/env_config'
-
 set :rvm_type, :user
 set :rvm_ruby_version, '2.5.3'
 

@@ -81,12 +81,10 @@ group :development do
   # Capistrano and Deploy
   gem 'capistrano', '3.6.1', require: false
   gem 'capistrano-bundler', require: false
-  gem 'capistrano-env_config'
   gem 'capistrano-rails', require: false
   gem 'capistrano-rvm', require: false
   gem 'capistrano-ssh-doctor', require: false
   gem 'capistrano3-puma', require: false
-  gem 'dotenv-rails'
 end
 
 group :test do
