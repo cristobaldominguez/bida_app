@@ -1,5 +1,5 @@
 namespace :setup do
-  desc 'setup: copy config/master.key to shared/config'
+  desc 'Setup: copy config/master.key to shared/config'
   task :upload_master_key do
     on roles(:app) do
       sudo :mkdir, '-pv', shared_path
@@ -22,6 +22,17 @@ namespace :setup do
       within current_path.to_s do
         with rails_env: :production do
           execute :rake, 'db:seed'
+        end
+      end
+    end
+  end
+
+  desc 'Create the database.'
+  task :create_db do
+    on roles(:app) do
+      within current_path.to_s do
+        with rails_env: :production do
+          execute :rake, 'db:create'
         end
       end
     end
