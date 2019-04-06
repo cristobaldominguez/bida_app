@@ -82,8 +82,6 @@ GEM
       sshkit (>= 1.9.0)
     capistrano-bundler (1.5.0)
       capistrano (~> 3.1)
-    capistrano-env_config (0.0.1)
-      capistrano (~> 3.1)
     capistrano-harrow (0.5.3)
     capistrano-rails (1.4.0)
       capistrano (~> 3.1)
@@ -134,10 +132,6 @@ GEM
       railties (>= 4.1.0, < 6.0)
       responders
       warden (~> 1.2.3)
-    dotenv (2.7.2)
-    dotenv-rails (2.7.2)
-      dotenv (= 2.7.2)
-      railties (>= 3.2, < 6.1)
     equalizer (0.0.11)
     erubi (1.7.1)
     erubis (2.7.0)
@@ -339,7 +333,6 @@ DEPENDENCIES
   cancancan (~> 2.0)
   capistrano (= 3.6.1)
   capistrano-bundler
-  capistrano-env_config
   capistrano-rails
   capistrano-rvm
   capistrano-ssh-doctor
@@ -349,7 +342,6 @@ DEPENDENCIES
   chromedriver-helper
   coffee-rails (~> 4.2)
   devise
-  dotenv-rails
   groupdate
   image_processing (~> 1.2)
   jbuilder (~> 2.5)
