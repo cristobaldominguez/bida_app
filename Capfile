@@ -7,6 +7,7 @@ require 'capistrano/deploy'
 require 'capistrano/rvm'
 require 'capistrano/bundler'
 require 'capistrano/rails'
+require 'capistrano/rails/collection'
 require 'capistrano/ssh_doctor'
 
 require 'capistrano/puma'
