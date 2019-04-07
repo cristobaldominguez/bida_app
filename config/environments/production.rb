@@ -54,7 +54,7 @@ Rails.application.configure do
   config.log_level = :debug
 
   # Prepend all log lines with the following tags.
-  config.log_tags = [ :request_id ]
+  config.log_tags = [:request_id]
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
@@ -83,7 +83,7 @@ Rails.application.configure do
   # require 'syslog/logger'
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
 
-  if ENV["RAILS_LOG_TO_STDOUT"].present?
+  if ENV['RAILS_LOG_TO_STDOUT'].present?
     logger           = ActiveSupport::Logger.new(STDOUT)
     logger.formatter = config.log_formatter
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
@@ -93,17 +93,17 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # Devise email service
-  config.action_mailer.default_url_options = { host: '54.191.37.9' }
+  config.action_mailer.default_url_options = { host: Rails.application.credentials.dig(:app, :host) }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     address: 'smtp.gmail.com',
     port: 587,
-    domain: 'biofiltro.com',
+    domain: Rails.application.credentials.dig(:app, :domain),
     authentication: 'plain',
     enable_starttls_auto: true,
     user_name: Rails.application.credentials.dig(:gmail, :username),
     password: Rails.application.credentials.dig(:gmail, :password)
   }
 
-  config.action_mailer.default_url_options = { host: '54.191.37.9' }
+  config.action_mailer.default_url_options = { host: Rails.application.credentials.dig(:app, :host) }
 end
