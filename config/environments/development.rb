@@ -75,11 +75,11 @@ Rails.application.configure do
   config.action_mailer.smtp_settings = {
     address: 'smtp.gmail.com',
     port: 587,
-    domain: 'bida.biofiltro.com',
+    domain: '54.191.37.9',
     authentication: 'plain',
     enable_starttls_auto: true,
-    user_name: Rails.application.credentials.gmail[:username],
-    password: Rails.application.credentials.gmail[:password]
+    user_name: Rails.application.credentials.dig(:gmail, :username),
+    password: Rails.application.credentials.dig(:gmail, :password)
   }
 
   config.action_mailer.default_url_options = { host: 'localhost:3000' }
