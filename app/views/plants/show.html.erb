@@ -62,7 +62,7 @@
 <% if @plant.discharge_permit.attached? %>
 <p>
   <strong>Discharge Permit:</strong>
-  <%= link_to rails_blob_path(@plant.discharge_permit, disposition: :attachment), class: 'text-icon' do %>
+  <%= link_to @plant.discharge_permit, class: 'text-icon', download: true do %>
   <%= render 'shared/icons/document' %> <%= @plant.discharge_permit.filename %>
   <% end %>
 </p>
