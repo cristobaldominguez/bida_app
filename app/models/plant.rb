@@ -37,4 +37,8 @@ class Plant < ApplicationRecord
   def metrics
     country.metric
   end
+
+  def cover_hero
+    cover.variant(resize: '2280')
+  end
 end
