@@ -7,7 +7,6 @@
       <th>Lastname</th>
       <th>Email</th>
       <th>Role</th>
-      <th>Plants</th>
       <th colspan="4"></th>
     </tr>
   </thead>
@@ -19,7 +18,6 @@
         <td><%= user.lastname %></td>
         <td><%= user.email %></td>
         <td><%= user.role.humanize %></td>
-        <td><%= user.plants.map { |p| p.name }.join(', ') %></td>
         <td><% if can? :read, User %><%= link_to 'Show', user %><% end %></td>
         <td><% if can? :edit, User %><%= link_to 'Edit', edit_user_path(user) %><% end %></td>
         <td><% if can? :destroy, User %><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %><% end %></td>
