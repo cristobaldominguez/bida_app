@@ -48,9 +48,10 @@
 
   <h3>Graphs</h3>
   <ul>
-  <% @graphs.each do |graph| %>
-  <li>
-    <% current_chart = graph.graph_standard.chart %>
+    <%= form.fields_for :graphs, @graphs do |graph| %>
+    <li>
+    <%= graph.hidden_field :graph_standard_id %>
+    <% current_chart = graph.object.graph_standard.chart %>
     <h4><%= current_chart.name %></h4>
     <% if current_chart.line? %>
       <%#= line_chart %>
@@ -86,8 +87,13 @@
         <%= line_chart @year_samplings_grouped_by_option %>
       <% end %>
     <% end %>
-  </li>
-  <% end %>
+
+      <div class="fieldset">
+        <%= form.label :comment %>
+        <%= graph.text_area :comment %>
+      </div>
+    </li>
+    <% end %>
   </ul>
 
 <div class="actions">

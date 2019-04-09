@@ -1,8 +1,7 @@
 class ReportsController < ApplicationController
-  before_action :set_report, only: [:show, :edit, :update, :destroy]
-  before_action :set_state, only: [:new, :create, :edit, :update]
-  before_action :set_plant, only: [:index, :show, :new, :create, :edit, :update]
-  # before_action :set_graphs_data, only: [:new, :edit, :show]
+  before_action :set_report, only: %i[show edit update destroy]
+  before_action :set_state, only: %i[new create edit update]
+  before_action :set_plant, only: %i[index show new create edit update]
 
   # GET /reports
   # GET /reports.json
@@ -12,7 +11,10 @@ class ReportsController < ApplicationController
 
   # GET /reports/1
   # GET /reports/1.json
-  def show; end
+  def show
+    set_graphs_data(@report)
+    @graphs = @report.graphs.includes(graph_standard: :chart)
+  end
 
   # GET /reports/new
   def new
@@ -36,6 +38,7 @@ class ReportsController < ApplicationController
   # GET /reports/1/edit
   def edit
     @graphs = @report.graphs
+    set_graphs_data(@report)
   end
 
   # POST /reports
@@ -64,7 +67,7 @@ class ReportsController < ApplicationController
   def update
     respond_to do |format|
       if @report.update(report_params)
-        format.html { redirect_to @report, notice: 'Report was successfully updated.' }
+        format.html { redirect_to plant_report_path(@plant, @report), notice: 'Report was successfully updated.' }
         format.json { render :show, status: :ok, location: @report }
       else
         format.html { render :edit }
@@ -80,7 +83,7 @@ class ReportsController < ApplicationController
     @report.save
 
     respond_to do |format|
-      format.html { redirect_to reports_url, notice: 'Report was successfully destroyed.' }
+      format.html { redirect_to plant_reports_path(@report.plant), notice: 'Report was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -216,6 +219,6 @@ class ReportsController < ApplicationController
   end
 
   def report_params
-    params.require(:report).permit(:plant_id, :state)
+    params.require(:report).permit(:plant_id, :state, :date, graphs_attributes: %i[id comment graph_standard_id])
   end
 end
