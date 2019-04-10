@@ -60,9 +60,7 @@ class AlertsController < ApplicationController
   # DELETE /alerts/1
   # DELETE /alerts/1.json
   def destroy
-    @alert.active = false
-    @alert.save
-
+    @alert.inactive!
     respond_to do |format|
       format.html { redirect_to plant_alerts_path(@plant), notice: 'Alert was successfully destroyed.' }
       format.json { head :no_content }

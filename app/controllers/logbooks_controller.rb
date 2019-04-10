@@ -88,8 +88,7 @@ class LogbooksController < ApplicationController
   # DELETE /logbooks/1
   # DELETE /logbooks/1.json
   def destroy
-    @logbook.active = false
-    @logbook.save
+    @logbook.inactive!
     respond_to do |format|
       format.html { redirect_to logbooks_url, notice: 'Logbook was successfully destroyed.' }
       format.json { head :no_content }

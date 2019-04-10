@@ -53,9 +53,7 @@ class ChartsController < ApplicationController
   # DELETE /charts/1
   # DELETE /charts/1.json
   def destroy
-    @chart.active = false
-    @chart.save
-
+    @chart.inactive!
     respond_to do |format|
       format.html { redirect_to charts_url, notice: 'Chart was successfully destroyed.' }
       format.json { head :no_content }

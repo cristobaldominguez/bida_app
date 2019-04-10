@@ -52,8 +52,7 @@ class FlowsController < ApplicationController
   # DELETE plants/:plant_id/flows/1
   # DELETE plants/:plant_id/flows/1.json
   def destroy
-    @flow.active = false
-    @flow.save
+    @flow.inactive!
     respond_to do |format|
       format.html { redirect_to flows_url, notice: 'Flow was successfully destroyed.' }
       format.json { head :no_content }

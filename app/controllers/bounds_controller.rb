@@ -54,8 +54,7 @@ class BoundsController < ApplicationController
   # DELETE /bounds/1
   # DELETE /bounds/1.json
   def destroy
-    @bound.active = false
-    @bound.save
+    @bound.inactive!
     respond_to do |format|
       format.html { redirect_to bounds_url, notice: 'Bound was successfully destroyed.' }
       format.json { head :no_content }

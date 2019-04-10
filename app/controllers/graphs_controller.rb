@@ -54,7 +54,7 @@ class GraphsController < ApplicationController
   # DELETE /graphs/1
   # DELETE /graphs/1.json
   def destroy
-    @graph.destroy
+    @graph.inactive!
     respond_to do |format|
       format.html { redirect_to graphs_url, notice: 'Graph was successfully destroyed.' }
       format.json { head :no_content }

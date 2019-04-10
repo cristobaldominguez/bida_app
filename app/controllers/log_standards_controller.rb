@@ -52,8 +52,7 @@ class LogStandardsController < ApplicationController
   # DELETE /log_standards/1
   # DELETE /log_standards/1.json
   def destroy
-    @log_standard.active = false
-    @log_standard.save
+    @log_standard.inactive!
     respond_to do |format|
       format.html { redirect_to log_standards_url, notice: 'Log standard was successfully destroyed.' }
       format.json { head :no_content }

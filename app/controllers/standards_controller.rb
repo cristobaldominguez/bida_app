@@ -54,7 +54,7 @@ class StandardsController < ApplicationController
   # DELETE /standards/1
   # DELETE /standards/1.json
   def destroy
-    @standard.destroy
+    @standard.inactive!
     respond_to do |format|
       format.html { redirect_to standards_url, notice: 'Standard was successfully destroyed.' }
       format.json { head :no_content }

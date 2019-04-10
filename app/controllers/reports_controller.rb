@@ -79,9 +79,7 @@ class ReportsController < ApplicationController
   # DELETE /reports/1
   # DELETE /reports/1.json
   def destroy
-    @report.active = false
-    @report.save
-
+    @report.inactive!
     respond_to do |format|
       format.html { redirect_to plant_reports_path(@report.plant), notice: 'Report was successfully destroyed.' }
       format.json { head :no_content }

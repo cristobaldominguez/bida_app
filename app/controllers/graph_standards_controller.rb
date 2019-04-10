@@ -52,9 +52,7 @@ class GraphStandardsController < ApplicationController
   # DELETE /plants/:plant_id/graph_standards/1
   # DELETE /plants/:plant_id/graph_standards/1.json
   def destroy
-    @graph_standard.active = false
-    @graph_standard.save
-
+    @graph_standard.inactive!
     respond_to do |format|
       format.html { redirect_to graph_standards_url, notice: 'Graph standard was successfully destroyed.' }
       format.json { head :no_content }

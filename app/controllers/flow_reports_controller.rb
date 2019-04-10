@@ -68,8 +68,7 @@ class FlowReportsController < ApplicationController
   # DELETE /plants/1/flow_reports/1
   # DELETE /plants/1/flow_reports/1.json
   def destroy
-    @flow_report.active = false
-    @flow_report.save
+    @flow_report.inactive!
     respond_to do |format|
       format.html { redirect_to flow_reports_url, notice: 'Flow report was successfully destroyed.' }
       format.json { head :no_content }

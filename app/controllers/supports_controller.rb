@@ -60,9 +60,7 @@ class SupportsController < ApplicationController
   # DELETE /supports/1
   # DELETE /supports/1.json
   def destroy
-    @support.active = false
-    @support.save
-
+    @support.inactive!
     respond_to do |format|
       format.html { redirect_to plant_supports_path(@plant), notice: 'Support was successfully destroyed.' }
       format.json { head :no_content }

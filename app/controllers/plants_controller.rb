@@ -171,8 +171,7 @@ class PlantsController < ApplicationController
   # DELETE companies/:company_id/plants/1
   # DELETE companies/:company_id/plants/1.json
   def destroy
-    @plant.active = false
-    @plant.save
+    @plant.inactive!
     respond_to do |format|
       format.html { redirect_to company_path(@company), notice: 'Plant was successfully destroyed.' }
       format.json { head :no_content }

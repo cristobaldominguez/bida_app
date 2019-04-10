@@ -60,8 +60,7 @@ class InspectionsController < ApplicationController
   # DELETE /inspections/1
   # DELETE /inspections/1.json
   def destroy
-    @inspection.active = false
-    @inspection.save
+    @inspection.inactive!
     respond_to do |format|
       format.html { redirect_to plant_inspections_path(@plant), notice: 'Inspection was successfully destroyed.' }
       format.json { head :no_content }
