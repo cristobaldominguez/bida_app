@@ -312,16 +312,26 @@ span.size__delete {
   }
 }
 
+.work_summaries {
+  padding-left: 0;
+}
 
 .work_summary {
   list-style: none;
   position: relative;
+  border: 1px solid red;
+  padding: 5px;
+  margin: 10px 0;
+
+  &.work_summary__button {
+    border: none;
+  }
 
   &__delete_div {
     position: absolute;
-    right: 0;
+    right: 10px;
     text-align: right;
-    top: 0;
+    top: 10px;
   }
 
   &__delete {
