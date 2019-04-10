@@ -2,4 +2,6 @@
 
 <%= render 'form', flow_report: @flow_report %>
 
+<% if can? :read, FlowReport %>
 <%= link_to 'Show', plant_flow_report_path(@plant, @flow_report) %>
+<% end %>

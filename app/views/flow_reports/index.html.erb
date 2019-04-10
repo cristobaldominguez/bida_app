@@ -12,14 +12,14 @@
     <% @flow_reports.each do |flow_report| %>
       <tr>
         <td><%= flow_report.date.strftime("%B, %Y") %></td>
-        <td><%= link_to 'Show', plant_flow_report_path(@plant, flow_report) %></td>
-        <td><%= link_to 'Edit', edit_plant_flow_report_path(@plant, flow_report) %></td>
-        <td><%= link_to 'Destroy', plant_flow_report_path(@plant, flow_report), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><% if can? :read, FlowReport %><%= link_to 'Show', plant_flow_report_path(@plant, flow_report) %><% end %></td>
+        <td><% if can? :edit, FlowReport %><%= link_to 'Edit', edit_plant_flow_report_path(@plant, flow_report) %><% end %></td>
+        <td><% if can? :destroy, FlowReport %><%= link_to 'Destroy', plant_flow_report_path(@plant, flow_report), method: :delete, data: { confirm: 'Are you sure?' } %><% end %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
-
+<% if can? :create, FlowReport %>
 <%= link_to 'New Flow Report', new_plant_flow_report_path %>
+<% end %>
