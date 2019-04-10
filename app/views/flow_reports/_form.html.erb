@@ -16,7 +16,7 @@
     <%= form.date_select :date, order: [:month, :year], end_year: Date.current.year %>
   </div>
 
-  <h3>Flows</h3>
+  <h3>Flows (<%= @plant.metrics.volume.pluralize(10) %>)</h3>
   <ul class="flows">
   <% num = 0 %>
   <%= form.fields_for :flows, @flow_reports do |flow| %>
