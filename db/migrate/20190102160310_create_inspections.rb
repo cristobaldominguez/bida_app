@@ -5,13 +5,6 @@ class CreateInspections < ActiveRecord::Migration[5.2]
       t.references :user, foreign_key: true
       t.references :plant, foreign_key: true
       t.boolean :on_site_client
-      t.float :cod
-      t.float :ec
-      t.float :bod
-      t.float :tss
-      t.float :tn
-      t.float :tp
-      t.text :sample_comments
       t.references :screen, foreign_key: true
       t.references :collection_bin, foreign_key: true
       t.text :screen_comments

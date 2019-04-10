@@ -101,12 +101,11 @@ class InspectionsController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   # :inspection_id, :worms_color_id, :color_description, :worms_activity_id, :activity_description, :worms_density_id
   def inspection_params
-    params.require(:inspection).permit(:active, :user_id, :plant_id, :cod, :ec, :bod, :on_site_client,
-      :on_site_user_id, :report_technician_id, :tss, :tn, :tp, :sample_comments, :screen_id,
-      :collection_bin_id, :screen_comments, :noise_id, :pumps_noise_description, :pumps_psi, :sprinklers_pressure_id,
-      :sprinklers_head_id, :piping_id, :pumps_comments, :system_surface_id, :bed_compaction_id, :ponding_id,
-      :bida_comments, :odor_id, :plant_odor_description, :birds, :fly_id, :summary_comments,
-      :worms_color_id, :worms_color_description, :worms_activity_id, :worms_activity_description, :worms_density_id,
-      fluents_attributes: [:output_id, :ph, :color_id, :color_description, :odor_id, :odor_description])
+    params.require(:inspection).permit(:active, :user_id, :plant_id, :on_site_client, :on_site_user_id, :report_technician_id,
+      :screen_id, :collection_bin_id, :screen_comments, :noise_id, :pumps_noise_description, :pumps_psi, :sprinklers_pressure_id,
+      :sprinklers_head_id, :piping_id, :pumps_comments, :system_surface_id, :bed_compaction_id, :ponding_id, :bida_comments,:odor_id,
+      :plant_odor_description, :birds, :fly_id, :summary_comments, :worms_color_id, :worms_color_description, :worms_activity_id,
+      :worms_activity_description, :worms_density_id,
+      fluents_attributes: %i[output_id ph color_id color_description odor_id odor_description cod ec bod tss tn tp sample_comments])
   end
 end
