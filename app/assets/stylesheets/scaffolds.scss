@@ -341,6 +341,10 @@ span.size__delete {
     display: inline-block;
     color: white;
     text-decoration: none;
+
+    &:visited {
+      color: white;
+    }
   }
 }
 
