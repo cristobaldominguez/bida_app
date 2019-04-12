@@ -138,8 +138,9 @@ class LogbooksController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def logbook_params
-    params.require(:logbook).permit(:id, :plant_id, logs_attributes: [:id, :logbook, :active, :value,
-      log_standard_attributes: [:id, :frecuency_id, :active, :responsible, :cycle,
-        task_attributes: [:id, :log_type_id, :input_type_id, :frecuency_id, :cycle, :responsible, :active, :name]]])
+    params.require(:logbook).permit(:id, :plant_id, logs_attributes: [:id, :logbook, :active, :value, :document,
+                                    log_standard_attributes: [:id, :frecuency_id, :active, :responsible, :cycle,
+                                    task_attributes: [:id, :log_type_id, :input_type_id, :frecuency_id, :cycle,
+                                    :responsible, :active, :name]]])
   end
 end

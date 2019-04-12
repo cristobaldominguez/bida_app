@@ -28,6 +28,10 @@
         <%= log.value&.to_date %>
         <% elsif input_type == 'boolean' %>
         <%= log.value == '1' ? 'Yes' : 'No' %>
+        <% elsif input_type == 'file' %>
+        <%= link_to log.document, class: 'text-icon', download: true do %>
+        <%= render 'shared/icons/document' %> <%= log.document.filename %>
+        <% end %>
         <% else %>
         <%= log.value %>
         <% end %>

@@ -275,7 +275,7 @@ end
 # Input Types
 puts 'Adding Input Types'
 InputType.destroy_all
-input_types = ['checkbox', 'inches', 'pH record', 'date', 'PSI', 'boolean', '% of bed', 'Low/Medium/High Density', 'COD Record', 'Low/Medium/Strong Odor']
+input_types = ['checkbox', 'inches', 'pH record', 'date', 'PSI', 'boolean', '% of bed', 'Low/Medium/High Density', 'COD Record', 'Low/Medium/Strong Odor', 'file']
 input_types.each do |input_type|
   InputType.create!(option: input_type)
 end
@@ -309,7 +309,7 @@ tasks = [{ name: 'Check correct operation', comment: '1 wash cycle', log_type_id
          { name: 'Water lab sample BOD/TSS', comment: '1st week of the month', log_type_id: 7, input_type_id: 4, frecuency_id: 3, cycle: 1, responsible: 1 },
          { name: 'Water internal sample COD', comment: '', log_type_id: 7, input_type_id: 9, frecuency_id: 3, cycle: 2, responsible: 1 },
          { name: 'Smell treated water', comment: '', log_type_id: 7, input_type_id: 10, frecuency_id: 2, cycle: 1, responsible: 1 },
-         { name: 'Upload picture: BioFiltro USA -> Active Accounts -> Fetzer -> Logbook', comment: '', log_type_id: 8, input_type_id: 1, frecuency_id: 2, cycle: 1, responsible: 1 }]
+         { name: 'Upload document', comment: '', log_type_id: 8, input_type_id: 11, frecuency_id: 2, cycle: 1, responsible: 1 }]
 tasks.each do |task|
   Task.create!(name: task[:name],
                comment: task[:comment],

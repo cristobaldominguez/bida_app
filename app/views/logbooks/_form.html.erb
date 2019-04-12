@@ -47,6 +47,8 @@
           <%= log.collection_select(:value, [['Low', 'Low'],['Medium','Medium'],['High Density','High Density']], :first, :second, {prompt: 'Select an Alternative'})  %>
           <% elsif input_type == 'Low/Medium/Strong Odor' %>
           <%= log.collection_select(:value, [['Low', 'Low'],['Medium','Medium'],['Strong Odor','Strong Odor']], :first, :second, {prompt: 'Select an Alternative'})  %>
+          <% elsif input_type == 'file' %>
+          <%= log.file_field :document %>
           <% end %>
         </td>
         <td><%= log.object.log_standard.cycle %></td>
