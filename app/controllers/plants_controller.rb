@@ -66,7 +66,7 @@ class PlantsController < ApplicationController
     end
 
     tasks.each do |task|
-      @plant.log_standards.build(task: task, frecuency_id: task[:frecuency_id], cycle: task[:cycle], responsible: task[:responsible])
+      @plant.log_standards.build(task: task, comment: task[:comment], frecuency_id: task[:frecuency_id], cycle: task[:cycle], responsible: task[:responsible])
     end
 
     charts = Chart.all
@@ -230,6 +230,6 @@ class PlantsController < ApplicationController
       system_size: [], standards_attributes: [:id, :option_id, :plant_id, :isRange, :enabled,
         bounds_attributes: [:id, :standard_id, :outlet_id, :from, :to]], sampling_lists_attributes: [:id, :access_id,
         :frecuency_id, :per_cycle], log_standards_attributes: [:id, :task_id, :plant_id, :active, :responsible,
-        :cycle, :frecuency_id ], graph_standards_attributes: [:id, :show, :chart_id])
+        :cycle, :frecuency_id, :comment], graph_standards_attributes: [:id, :show, :chart_id])
   end
 end

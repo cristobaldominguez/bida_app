@@ -8,6 +8,7 @@ class CreateTasks < ActiveRecord::Migration[5.2]
       t.integer :responsible, default: 0
       t.boolean :active, default: true
       t.string :name, null: false
+      t.string :comment
 
       t.timestamps
     end

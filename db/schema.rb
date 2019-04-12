@@ -291,6 +291,7 @@ ActiveRecord::Schema.define(version: 2019_03_21_132352) do
     t.boolean "active", default: true
     t.integer "responsible", default: 0
     t.integer "cycle", null: false
+    t.string "comment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["frecuency_id"], name: "index_log_standards_on_frecuency_id"
@@ -540,6 +541,7 @@ ActiveRecord::Schema.define(version: 2019_03_21_132352) do
     t.integer "responsible", default: 0
     t.boolean "active", default: true
     t.string "name", null: false
+    t.string "comment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["frecuency_id"], name: "index_tasks_on_frecuency_id"

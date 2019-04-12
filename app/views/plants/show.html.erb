@@ -139,7 +139,7 @@
       <% current_id = log.task.log_type.id %>
     <tr>
       <td><input type="checkbox" name="active" value="Boat" <%= 'checked' if log.active %> disabled></td>
-      <td><%= log.task.name %></td>
+      <td><%= log.task.name %> <%= "(#{log.comment})" if log.comment != '' %></td>
       <td><%= log.frecuency.name %></td>
       <td><%= log.cycle %></td>
       <td><%= @responsibles[log.responsible][1] %></td>

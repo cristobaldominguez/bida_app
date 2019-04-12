@@ -186,6 +186,7 @@
       <tr>
         <th>Active</th>
         <th>Task</th>
+        <th>Comment</th>
         <th>Frecuency</th>
         <th>Cycle</th>
         <th>Responsible</th>
@@ -195,13 +196,14 @@
     <%= form.fields_for :log_standards, @log_standards do |log| %>
     <!-- n+1 -->
       <% if current_id != log.object.task.log_type.id %>
-      <tr><td colspan="5" class="cell_division"><%= log.object.task.log_type.name %></td></tr>
+      <tr><td colspan="6" class="cell_division"><%= log.object.task.log_type.name %></td></tr>
       <% end %>
       <% current_id = log.object.task.log_type.id %>
       <tr>
         <%= log.hidden_field :id %>
         <td><%= log.check_box :active %></td>
         <td><%= log.object.task.name %><%= log.hidden_field :task_id %></td>
+        <td><%= log.text_field :comment %></td>
         <td><%= log.collection_select(:frecuency_id, @frecuencies, :id, :name, {prompt: 'Select a Frecuency'})  %></td>
         <td><%= log.number_field :cycle, placeholder: '1' %></td>
         <td><%= log.collection_select(:responsible, @responsibles, :first, :second, {prompt: 'Select a Responsible'} )  %></td>

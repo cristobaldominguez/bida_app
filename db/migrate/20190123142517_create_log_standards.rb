@@ -7,6 +7,7 @@ class CreateLogStandards < ActiveRecord::Migration[5.2]
       t.boolean :active, default: true
       t.integer :responsible, default: 0
       t.integer :cycle, null: false
+      t.string :comment
 
       t.timestamps
     end

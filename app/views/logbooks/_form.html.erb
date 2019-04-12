@@ -31,7 +31,7 @@
       <% end %>
       <% current_id = log_standard.object.task.log_type.id %>
       <tr>
-        <td><%= log_standard.object.task.name %></td>
+        <td><%= log_standard.object.task.name %><%= " (#{log_standard.object.comment})" if log_standard.object.comment != '' %></td>
         <td>
           <% input_type = log_standard.object.task.input_type.option %>
           <%= input.hidden_field :option, value: input_type %>

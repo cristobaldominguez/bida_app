@@ -60,7 +60,7 @@ class ApplicationController < ActionController::Base
 
   def generate_new_sampling_lists(target)
     sampling_target = target == 'Lab' ? @plant.sampling_lists.lab : @plant.sampling_lists.internal
-    plant_samplings = sampling_target.includes(:access, :samplings)
+    plant_samplings = sampling_target.includes(:samplings)
     sampling_list = plant_samplings.max_by(&:created_at)
 
     new_sl = SamplingList.create(plant_id: sampling_list.plant_id,
