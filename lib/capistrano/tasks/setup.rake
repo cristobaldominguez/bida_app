@@ -16,6 +16,14 @@ namespace :setup do
     end
   end
 
+  desc 'Upload seed file.'
+  task :upload_seed do
+    on roles(:app) do
+      execute "mkdir -p #{current_path}"
+      upload! StringIO.new(File.read('db/seeds.rb')), "#{current_path}/db/seeds.rb"
+    end
+  end
+
   desc 'Seed the database.'
   task :seed do
     on roles(:app) do
