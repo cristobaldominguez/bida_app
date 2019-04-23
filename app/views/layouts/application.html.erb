@@ -46,25 +46,10 @@
               Plants
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <% if can? :read, Plant %>
-              <% @user_plants.each do |plant| %>
-              <li class="dropdown-submenu">
-              <%= link_to plant.name, plant_path(plant), class: 'dropdown-item dropdown-toggle' %>
-                <ul class="dropdown-menu">
-                  <li><%= link_to 'View', plant_path(plant), class: 'dropdown-item' %></li>
-                  <li><%= link_to 'Flow Report', plant_flow_reports_path(plant), class: 'dropdown-item' %></li>
-                  <% if can? :create, Alert %>
-                  <div class="dropdown-options"><span>Options</span></div>
-                  <li><%= link_to 'Graphs', edit_plant_graph_standard_path(plant, plant.graph_standards.first), class: 'dropdown-item' %></li>
-                  <% end %>
-                </ul>
-              </li>
-              <% end %>
-              <% else %>
               <% @user_plants.each do |plant| %>
               <%= link_to plant.name, plant_path(plant), class: 'dropdown-item' %>
               <% end %>
-              <% end %>
+
               <%= link_to 'All Plants', plants_path, class: 'dropdown-item' %>
               <% if (@plant.present? || (@company && @company.persisted? )) && (can? :create, Plant) %>
               <div class="dropdown-divider"></div>
@@ -90,6 +75,7 @@
                 </ul>
               </li>
               <% end %>
+
               <% if can? :read, Support %>
               <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Supports</a>
                 <ul class="dropdown-menu">
@@ -129,6 +115,27 @@
             </div>
           </li>
           <% end %>
+          <% if can? :read, FlowReport %>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Flows
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <% if @latest_flow_report.present? %>
+              <%= link_to 'Current Flow', plant_flow_report_path(@plant, @latest_flow_report), class: 'dropdown-item' %>
+              <% else %>
+              <% if can? :create, FlowReport %>
+              <%= link_to 'New Flows', new_plant_flow_report_path(@plant), class: 'dropdown-item' %>
+              <% end %>
+              <% end %>
+              <%= link_to 'Flow History', plant_flow_reports_path(@plant), class: 'dropdown-item' %>
+              <% if can? :create, FlowReport %>
+              <div class="dropdown-divider"></div>
+              <%= link_to 'New Flows', new_plant_flow_report_path(@plant), class: 'dropdown-item' %>
+              <% end %>
+            </div>
+          </li>
+          <% end %>
           <% if can? :read, Sampling %>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -144,7 +151,7 @@
           <% if can? :read, Report %>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Reports
+              Graph Reports
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <% if can? :update, Report %>
