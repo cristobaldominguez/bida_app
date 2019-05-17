@@ -13,7 +13,7 @@
   &__form-content {
     -webkit-border-radius: 10px 10px 10px 10px;
     border-radius: 10px 10px 10px 10px;
-    background: var(--login-form-bg);
+    background: var(--card-bg);
     padding: 30px;
     width: 90%;
     max-width: 450px;
@@ -43,7 +43,7 @@
 
   /* FORM TYPOGRAPHY*/
   input[type=button], input[type=submit], input[type=reset]  {
-    background-color: var(--bf-cyan);
+    background-color: var(--blue);
     border: none;
     color: white;
     padding: 15px 80px;
@@ -79,9 +79,9 @@
   input[type=text],
   input[type=email],
   input[type=password] {
-    background-color: var(--input-bg);
-    border: var(--input-border);
-    color: var(--input-text);
+    background: transparent;
+    border: 1px solid var(--input-border);
+    color: var(--input-font);
     padding: 15px;
     text-align: center;
     text-decoration: none;
@@ -112,7 +112,22 @@
   }
 
   label {
-    color: var(--links);
+    color: var(--input-label-text);
+    display: block;
+    font-weight: 300;
+  }
+
+  .bmd-form-group {
+    display: block;
+    padding: 0 0 1rem;
+  }
+
+  .fourth {
+    margin: 0 0 1rem;
+
+    label {
+      display: inline;
+    }
   }
 
   /* ANIMATIONS */
