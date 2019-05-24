@@ -1,0 +1,21 @@
+<section class="elements_list">
+  <% if defined? title %>
+  <header class="table_header">
+    <h6 class="table_header__title"><%= title %></h6>
+  </header>
+  <% end %>
+  <main class="table_main">
+    <table class="table_main__table">
+      <thead class="table_main__thead">
+        <tr class="table_main__thead-row">
+          <% headers.each do |header| %>
+          <th class="table_main__table-header"><%= header %></th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <%= yield %>
+      </tbody>
+    </table>
+  </main>
+</section>

@@ -1,0 +1,11 @@
+<% alt_btn = alt ? "--#{alt}" : '' %>
+
+<div class="option-button<%= alt_btn %>">
+  <a href="#" class="option-button__link"><span class="option-button__text">Options</span></a>
+  <div class="option-button__options">
+    <ul class="option-button__options-list">
+      <%= yield %>
+    </ul>
+    <div class="unclick--general-options"></div>
+  </div>
+</div>

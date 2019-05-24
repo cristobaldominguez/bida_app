@@ -1,0 +1,18 @@
+<div class="toast--<%= color %>">
+  <div class="toast__icon">
+    <% if type == 'Alert' %>
+    <%= render 'shared/notifications/alert-icon' %>
+    <% elsif type == 'Notice' %>
+    <%= render 'shared/notifications/info-icon' %>
+    <% else %>
+    <%= render 'shared/notifications/check-icon' %>
+    <% end %>
+  </div>
+  <div class="toast__content">
+    <p class="toast__type"><%= type %></p>
+    <p class="toast__message"><%= text %></p>
+  </div>
+  <div class="toast__close">
+    <%= render 'shared/notifications/close-icon' %>
+  </div>
+</div>
