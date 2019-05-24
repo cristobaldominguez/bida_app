@@ -1,0 +1,42 @@
+/* <!---------- Mid Tablets ----------> */
+@media all and (min-width: 768px) {
+
+	.main_footer__container {
+		flex-direction: row;
+	}
+
+	.flags {
+		flex-direction: column;
+		margin: 0;
+	}
+
+	.main_footer .main_footer__left {
+		align-items: flex-start;
+	}
+
+	.option-button {
+
+		&__link {
+			padding: 20px 36px;
+		}
+
+		&__text {
+			width: 100px;
+		}
+
+		&__options--open {
+			top: 68px;
+			width: 189px;
+		}
+	}
+}
+
+/* <!---- Portrait Orientation ----> */
+@media all and (min-width: 768px) and (max-width: 992px) and (orientation:portrait) {
+
+}
+
+/* <!---- Landscape Orientation ----> */
+@media all and (min-width: 768px) and (max-width: 992px) and (orientation:landscape) {
+
+}

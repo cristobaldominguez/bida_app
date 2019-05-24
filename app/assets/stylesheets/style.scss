@@ -1,0 +1,29 @@
+/*!
+ * Main Style
+ * @version 1.0
+ * @Since 1.0
+ * @author Cristóbal Domínguez
+ */
+
+@import "lib/bootstrap-material-design.min.scss";
+
+@import "lib/variables";
+@import "lib/mixins";
+
+@import "lib/fonts";
+@import "lib/fontello";
+
+@import "lib/utilities";
+
+@import "lib/toast-notifications";
+
+@import "lib/common";
+@import "lib/login";
+@import "lib/ui-color";
+@import "lib/retina";
+@import "lib/pagination";
+@import "lib/screen-lg";
+@import "lib/screen-md";
+@import "lib/screen-sm";
+@import "lib/screen-xs";
+@import "lib/screen-xxs";

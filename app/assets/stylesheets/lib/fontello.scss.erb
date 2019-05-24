@@ -1,0 +1,51 @@
+@font-face {
+  font-family: 'fontello';
+  src: url(<%= asset_path('fontello.eot?39690423') %>);
+  src: url(<%= asset_path('fontello.eot?39690423#iefix') %>) format('embedded-opentype'),
+       url(<%= asset_path('fontello.woff2?39690423') %>) format('woff2'),
+       url(<%= asset_path('fontello.woff?39690423') %>) format('woff'),
+       url(<%= asset_path('fontello.ttf?39690423') %>) format('truetype'),
+       url(<%= asset_path('fontello.svg?39690423#fontello') %>) format('svg');
+
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+  font-family: 'fontello';
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: .2em;
+  text-align: center;
+
+  /* For safety - reset parent styles, that can break glyph codes*/
+  font-variant: normal;
+  text-transform: none;
+
+  /* fix buttons height, for twitter bootstrap */
+  line-height: 1em;
+
+  /* Animation center compensation - margins should be symmetric */
+  /* remove if not needed */
+  margin-left: .2em;
+
+  /* Font smoothing. That was taken from TWBS */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon {
+  &-envelope:before { content: '\e800'; }
+  &-user:before { content: '\e801'; }
+  &-hamburger:before { content: '\e802'; }
+  &-sun:before { content: '\e803'; }
+  &-moon:before { content: '\e804'; }
+  &-chevron:before { content: '\e805'; }
+  &-options:before { content: '\e806'; }
+}

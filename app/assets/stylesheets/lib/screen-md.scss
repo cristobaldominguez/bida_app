@@ -1,0 +1,29 @@
+/* <!---------- Big Tablets ----------> */
+@media all and (min-width: 992px) {
+
+	.main_nav__hamburger {
+		// display: none;
+	}
+
+	.main_nav__list {
+		// display: flex;
+	}
+
+	.mobile_nav {
+		// display: none;
+	}
+
+	.desktop_nav {
+		display: flex;
+	}
+}
+
+/* <!---- Portrait Orientation ----> */
+@media all and (min-width: 992px) and (max-width: 1200px) and (orientation:portrait) {
+
+}
+
+/* <!---- Landscape Orientation ----> */
+@media all and (min-width: 992px) and (max-width: 1200px) and (orientation:landscape) {
+
+}

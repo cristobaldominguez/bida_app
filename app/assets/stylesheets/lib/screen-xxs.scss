@@ -1,0 +1,17 @@
+/* <!---------- Small Phones ----------> */
+@media all and (max-width: 480px) {
+
+	.flags {
+		    justify-content: center;
+	}
+}
+
+/* <!---- Portrait Orientation ----> */
+@media all and (min-width: 480px) and (orientation:portrait) {
+
+}
+
+/* <!---- Landscape Orientation ----> */
+@media all and (min-width: 480px) and (orientation:landscape) {
+
+}

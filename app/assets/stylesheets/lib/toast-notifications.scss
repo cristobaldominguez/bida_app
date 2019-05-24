@@ -1,0 +1,131 @@
+.toast {
+  background-color: var(--toast-notification-bg);
+  border-radius: 4px;
+  box-shadow: 1px 7px 14px -5px rgba(0,0,0,0.2);
+  display: flex;
+  margin: 10px 0;
+  max-width: 500px;
+  opacity: .75;
+  padding: 1em 0;
+  position: relative;
+  transition: opacity .5s;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &__container {
+    display: table-cell;
+    font-family: 'Raleway', sans-serif;
+    position: fixed;
+    vertical-align: middle;
+    width: 100%;
+    z-index: 10;
+  }
+
+  &__cell {
+    display: inline-block;
+    float: right;
+    margin-right: 1em;
+  }
+
+  &__svg {
+    border-radius: 50%;
+    fill: var(--toast-notification-bg);
+    height: 35px;
+    padding: 7px;
+    width: 35px;
+  }
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+  }
+
+  &__icon {
+    align-items: center;
+    display: flex;
+    flex-grow: 0;
+    justify-content: center;
+    min-width: 80px;
+  }
+
+  &__type {
+    color: var(--toast-notification-title);
+    font-weight: 700;
+    margin: {
+      top: 0;
+      bottom: 4px;
+    }
+  }
+
+  &__message {
+    color: var(--toast-notification-text);
+    margin: {
+      bottom: 0;
+    }
+  }
+
+  &__content {
+    // padding-left: 70px;
+    // padding-right: 60px;
+    flex-grow: 1;
+  }
+
+  &__close {
+    align-items: center;
+    display: flex;
+    flex-grow: 0;
+    justify-content: center;
+    min-width: 60px;
+
+    &-svg {
+      cursor: pointer;
+      fill: var(--toast-notification-close);
+      height: 10px;
+      width: 10px;
+    }
+  }
+
+  &--green {
+    @extend .toast;
+
+    .toast__svg {
+      background-color: var(--green);
+    }
+
+    &:before {
+      background-color: var(--green);
+    }
+  }
+
+  &--blue {
+    @extend .toast;
+
+    .toast__svg {
+      background-color: var(--blue);
+    }
+
+    &:before {
+      background-color: var(--blue);
+    }
+  }
+
+  &--red {
+    @extend .toast;
+
+    .toast__svg {
+      background-color: var(--red);
+    }
+
+    &:before {
+      background-color: var(--red);
+    }
+  }
+}
