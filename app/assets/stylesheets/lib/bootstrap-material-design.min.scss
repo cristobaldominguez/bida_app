@@ -76,9 +76,9 @@ body {
     font-family: Roboto, Helvetica, Arial, sans-serif;
     font-size: 1rem;
     line-height: 1.5;
-    color: #212529;
+    // color: #212529;
     text-align: left;
-    background-color: #fafafa
+    // background-color: #fafafa
 }
 
 [tabindex="-1"]:focus {
@@ -182,14 +182,14 @@ sup {
 }
 
 a {
-    color: #009688;
+    // color: #009688;
     text-decoration: none;
     background-color: transparent;
     -webkit-text-decoration-skip: objects
 }
 
 a:hover {
-    color: #004a43;
+    // color: #004a43;
     text-decoration: underline
 }
 
