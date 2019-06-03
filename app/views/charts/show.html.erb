@@ -1,3 +1,11 @@
+<% if can? :edit, Chart %>
+  <%= render 'shared/buttons/option_button', alt: 'header' do %>
+    <li class="option-button__option"><%= link_to 'Edit', edit_chart_path(@chart), class: 'option-button__option-link' %></li>
+  <% end %>
+<% end %>
+
+<h2 class="main__title">Chart</h2>
+
 <p>
   <strong>Name:</strong>
   <%= @chart.name %>
@@ -7,7 +15,3 @@
   <strong>Shape:</strong>
   <%= @chart.shape %>
 </p>
-
-<% if can? :edit, Chart %>
-<%= link_to 'Edit', edit_chart_path(@chart) %>
-<% end %>

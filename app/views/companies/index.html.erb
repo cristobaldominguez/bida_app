@@ -1,29 +1,31 @@
-<h1>Companies</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Taxid</th>
-      <th>Industry</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @companies.each do |company| %>
-      <tr>
-        <td><%= company.name %></td>
-        <td><%= company.taxid %></td>
-        <td><%= company.industry.name %></td>
-        <td><% if can? :read, Company %><%= link_to 'Show', company %><% end %></td>
-        <td><% if can? :edit, Company %><%= link_to 'Edit', edit_company_path(company) %><% end %></td>
-        <td><% if can? :destroy, Company %><%= link_to 'Destroy', company, method: :delete, data: { confirm: 'Are you sure?' } %><% end %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
 <% if can? :create, Company %>
-<%= link_to 'New Company', new_company_path %>
+  <%= render 'shared/buttons/option_button', alt: 'header' do %>
+    <li class="option-button__option"><%= link_to 'New Company', new_company_path, class: 'option-button__option-link' %></li>
+  <% end %>
+<% end %>
+<h2 class="main__title">Companies</h2>
+
+<%= render 'shared/tables/elements_list', headers: %w(Name Taxid Industry Options), title: 'Your Companies' do %>
+<% @companies.each do |company| %>
+<tr class="table_main__table-row">
+  <td class="table_main__table-data--left-text"><%= link_to company.name, company, class: 'table_main__link-show' %></td>
+  <td class="table_main__table-data"><%= company.taxid %></td>
+  <td class="table_main__table-data"><%= company.industry.name %></td>
+  <td class="table_main__table-data--options">
+    <a href="#" class="table_main__link--options"></a>
+    <div class="options_menu">
+      <ul class="options_menu__list">
+        <% if can? :read, Company %><li class="options_menu__item"><%= link_to 'show', company, class: 'options_menu__link' %></li><% end %>
+        <% if can? :edit, Company %><li class="options_menu__item"><%= link_to 'edit', edit_company_path(company), class: 'options_menu__link' %></li><% end %>
+        <% if can? :destroy, Company %><li class="options_menu__item"><%= link_to 'destroy', company, method: :delete, data: { confirm: 'Are you sure?' }, class: 'options_menu__link' %></li><% end %>
+        <% if can? :create, Plant %>
+        <li class="options_menu__separator"></li>
+        <li class="options_menu__item"><%= link_to 'new plant', new_company_plant_path(company), class: 'options_menu__link' %></li>
+        <% end %>
+      </ul>
+      <div class="unclick"></div>
+    </div>
+  </td>
+</tr>
+<% end %>
 <% end %>

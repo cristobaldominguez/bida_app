@@ -1,4 +1,9 @@
-<h1>Support <%= @support.number %></h1>
+<% if can? :edit, Support %>
+  <%= render 'shared/buttons/option_button', alt: 'header' do %>
+    <li class="option-button__option"><%= link_to 'Edit', edit_plant_support_path(@plant, @support), class: 'option-button__option-link' %></li>
+  <% end %>
+<% end %>
+<h2 class="main__title">Support <%= @support.number %></h2>
 
 <p>
   <strong>Atention:</strong>
@@ -43,7 +48,3 @@
   </li>
 <% end %>
 </ul>
-
-<% if can? :edit, Support %>
-<%= link_to 'Edit', edit_plant_support_path(@support) %>
-<% end %>

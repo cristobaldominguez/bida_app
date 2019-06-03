@@ -65,6 +65,26 @@ class UsersController < ApplicationController
     end
   end
 
+  def uicolor
+    if current_user.dark?
+      current_user.light!
+      @user_ui = {
+        color: 'light',
+        icon: 'moon'
+      }
+    else
+      current_user.dark!
+      @user_ui = {
+        color: 'dark',
+        icon: 'sun'
+      }
+    end
+
+    respond_to do |format|
+      format.json { render json: @user_ui }
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

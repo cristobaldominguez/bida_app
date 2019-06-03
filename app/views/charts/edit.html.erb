@@ -1,7 +1,9 @@
-<h1>Editing Chart</h1>
+<% if can? :read, Chart %>
+  <%= render 'shared/buttons/option_button', alt: 'header' do %>
+    <li class="option-button__option"><%= link_to 'Show', @chart, class: 'option-button__option-link' %></li>
+  <% end %>
+<% end %>
+
+<h2 class="main__title">Editing Chart</h2>
 
 <%= render 'form', chart: @chart %>
-
-<% if can? :read, Chart %>
-<%= link_to 'Show', @chart %>
-<% end %>

@@ -1,25 +1,25 @@
-<h1>Alerts</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Incident</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @alerts.each do |alert| %>
-      <tr>
-        <td><%= alert.title %></td>
-        <td><% if can? :read, Alert %><%= link_to 'Show', plant_alert_path(@plant, alert) %><% end %></td>
-        <td><% if can? :edit, Alert %><%= link_to 'Edit', edit_plant_alert_path(@plant, alert) %><% end %></td>
-        <td><% if can? :destroy, Alert %><%= link_to 'Destroy', [@plant, alert], method: :delete, data: { confirm: 'Are you sure?' } %><% end %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
 <% if can? :create, Alert %>
-<%= link_to 'New Alert', new_plant_alert_path(@plant) %>
+  <%= render 'shared/buttons/option_button', alt: 'header' do %>
+    <li class="option-button__option"><%= link_to 'New Alert', new_plant_alert_path(@plant), class: 'option-button__option-link' %></li>
+  <% end %>
+<% end %>
+<h2 class="main__title">Alerts</h2>
+
+<%= render 'shared/tables/elements_list', headers: %w(Incident Options), title: 'All Alerts' do %>
+<% @alerts.each do |alert| %>
+  <tr class="table_main__table-row">
+    <td class="table_main__table-data--left-text"><%= link_to alert.title, plant_alert_path(@plant, alert), class: 'table_main__link-show' %></td>
+    <td class="table_main__table-data--options">
+      <a href="#" class="table_main__link--options"></a>
+      <div class="options_menu">
+        <ul class="options_menu__list">
+          <% if can? :read, Alert %><li class="options_menu__item"><%= link_to 'Show', plant_alert_path(@plant, alert), class: 'options_menu__link' %></li><% end %>
+          <% if can? :edit, Alert %><li class="options_menu__item"><%= link_to 'Edit', edit_plant_alert_path(@plant, alert), class: 'options_menu__link' %></li><% end %>
+          <% if can? :destroy, Alert %><li class="options_menu__item"><%= link_to 'Destroy', [@plant, alert], class: 'options_menu__link', method: :delete, data: { confirm: 'Are you sure?' } %></li><% end %>
+        </ul>
+        <div class="unclick"></div>
+      </div>
+
+  </tr>
+<% end %>
 <% end %>

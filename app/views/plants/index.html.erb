@@ -1,23 +1,22 @@
-<h1>Plants</h1>
+<h2 class="main__title">Plants</h2>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Code</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @plants.each do |plant| %>
-      <tr>
-        <td><%= plant.name %></td>
-        <td><%= plant.code %></td>
-        <td><% if can? :read, Plant %><%= link_to 'Show', plant %><% end %></td>
-        <td><% if can? :edit, Plant %><%= link_to 'Edit', edit_plant_path(plant) %><% end %></td>
-        <td><% if can? :destroy, Plant %><%= link_to 'Destroy', plant, method: :delete, data: { confirm: 'Are you sure?' } %><% end %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<% if @plants.present? %>
+<%= render 'shared/tables/elements_list', headers: ['Name', 'Code', 'Options'], title: 'My Plants' do %>
+<% @plants.each do |plant| %>
+  <tr class="table_main__table-row">
+    <td class="table_main__table-data--left-text"><%= link_to plant.name, plant, class: 'table_main__link-show' %></td>
+    <td class="table_main__table-data"><%= plant.code %></td>
+    <td class="table_main__table-data--options">
+      <a href="#" class="table_main__link--options"></a>
+      <div class="options_menu">
+        <ul class="options_menu__list">
+          <% if can? :read, Plant %><li class="options_menu__item"><%= link_to 'Show', plant, class: 'options_menu__link' %></li><% end %>
+          <% if can? :edit, Plant %><li class="options_menu__item"><%= link_to 'Edit', edit_plant_path(plant), class: 'options_menu__link' %></li><% end %>
+          <% if can? :destroy, Plant %><li class="options_menu__item"><%= link_to 'Destroy', plant, class: 'options_menu__link', method: :delete, data: { confirm: 'Are you sure?' } %></li><% end %>
+        </ul>
+        <div class="unclick"></div>
+      </div>
+  </tr>
+<% end %>
+<% end %>
+<% end %>

@@ -56,7 +56,7 @@
     <%= form.text_field :mobile %>
   </div>
 
-  <div class="field">
+  <div class="field no-border">
     <%= form.label :role %>
     <%= form.collection_select(:role, @roles, :first, :second) %>
   </div>
@@ -74,12 +74,12 @@
     <% end %>
   </ul>
 
-  <div class="field">
+  <div class="field no-border">
     <%= form.label :interface_color %>
     <%= form.collection_select(:interface_color, @interface_colors, :first, :second) %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit class: 'action-btn' %>
   </div>
 <% end %>

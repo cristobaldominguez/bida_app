@@ -1,6 +1,9 @@
-<h1>Editing Flow</h1>
+<% if can? :read, Flow %>
+  <%= render 'shared/buttons/option_button', alt: 'header' do %>
+    <li class="option-button__option"><%= link_to 'Show', @flow, class: 'option-button__option-link' %></li>
+  <% end %>
+<% end %>
+
+<h2 class="main__title">Editing Flow</h2>
 
 <%= render 'form', flow: @flow %>
-
-<%= link_to 'Show', @flow %> |
-<%= link_to 'Back', flows_path %>

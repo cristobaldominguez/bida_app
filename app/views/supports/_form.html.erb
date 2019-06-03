@@ -20,12 +20,12 @@
     </ul>
   </div>
 
-  <div class="field">
+  <div class="field no-border date">
     <%= form.label :start_date %>
     <%= form.date_select :start_date %>
   </div>
 
-  <div class="field">
+  <div class="field no-border date">
     <%= form.label :end_date %>
     <%= form.date_select :end_date %>
   </div>
@@ -35,12 +35,12 @@
     <%= form.label :client_onsite %>
   </div>
 
-  <div class="field">
+  <div class="field no-border">
     <%= form.label :name_client_onsite %>
     <%= form.collection_select(:client_id, @support.plant.users, :id, :full_name, {prompt: 'Select a Client'})  %>
   </div>
 
-  <div class="field">
+  <div class="field no-border">
     <%= form.label :bf_technician %>
     <%= form.collection_select(:bf_technician_id, @support.plant.users, :id, :full_name, {prompt: 'Select a Technician'})  %>
   </div>
@@ -52,9 +52,8 @@
 
     <li class="work_summary" data-id="<%= ws.object.id %>">
       <div class="work_summary__delete_div">
-        <%= link_to 'x', ws.object.persisted? ? work_summary_path(ws.object.id) : '#', class: 'work_summary__delete', remote: ws.object.persisted?, method: :delete %>
+        <a href="#" class="work_summary__delete">x</a>
       </div>
-      <%= ws.hidden_field :_destroy %>
       <div class="field">
         <%= ws.label :description %>
         <%= ws.text_field :description %>
@@ -74,13 +73,17 @@
 
   </ul>
 
-  <div class="work_summary work_summary__button">
+  <div class="work_summary__button">
     <div class="system_size__bottom">
-      <%= link_to '+', custom_plant_supports_path(support.plant), remote: true, class: 'system_size__plus'  %>
+      <%= link_to '+',
+          custom_plant_supports_path(support.plant),
+          remote: true,
+          class: 'work_summary__plus'
+      %>
     </div>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit class: 'action-btn' %>
   </div>
 <% end %>

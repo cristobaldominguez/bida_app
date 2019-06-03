@@ -1,4 +1,4 @@
-<%= form_with(model: inspection, url:[@plant, inspection], local: true) do |form| %>
+<%= form_with model: inspection, url:[@plant, inspection], local: true, builder: BFFormBuilder do |form| %>
   <% if inspection.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(inspection.errors.count, "error") %> prohibited this inspection from being saved:</h2>
@@ -13,17 +13,17 @@
 
   <h2 class="cell_division">General Info</h2>
 
-  <div class="field">
+  <div class="field no-border">
     <%= form.label :on_site_client %>
     <%= form.select(:on_site_client, @on_site_client, {prompt: 'Select an Option'})  %>
   </div>
 
-  <div class="field description <%= 'show' if inspection.on_site_client %>">
+  <div class="field description <%= 'show' if inspection.on_site_client %> no-border">
     <%= form.label 'Onsite Client' %>
     <%= form.collection_select(:on_site_user_id, @users, :id, :full_name, {prompt: 'Select a Client'})  %>
   </div>
 
-  <div class="field">
+  <div class="field no-border">
     <%= form.label 'Report Technician *' %>
     <%= form.collection_select(:report_technician_id, @users, :id, :full_name, {prompt: 'Select a Technician'})  %>
   </div>
@@ -34,11 +34,11 @@
     <h3><%= fluent.hidden_field :output_id, value: fluent.object.output.id %><%= fluent.object.output.name %></h3>
 
     <div class="field">
-      <%= fluent.label "#{fluent.object.output.name} Sampling pH" %>
-      <%= fluent.text_field :ph %>
+      <%= fluent.label "#{fluent.object.output.name} Sampling" %>
+      <%= fluent.value_field :ph, 'pH' %>
     </div>
 
-    <div class="field">
+    <div class="field no-border">
       <%= fluent.label "#{fluent.object.output.name} Sampling Color" %>
       <%= fluent.collection_select(:color_id, @colors, :id, :option, {prompt: 'Select a Color'})  %>
     </div>
@@ -48,7 +48,7 @@
       <%= fluent.text_area :color_description %>
     </div>
 
-    <div class="field">
+    <div class="field no-border">
       <%= fluent.label "#{fluent.object.output.name} Sampling Odor" %>
       <%= fluent.collection_select(:odor_id, @odors, :id, :option, {prompt: 'Select an Odor'})  %>
     </div>
@@ -60,32 +60,32 @@
 
     <div class="field">
       <%= form.label :cod %>
-      <%= form.text_field :cod %> mg/l
+      <%= form.value_field :cod, 'mg/L' %>
     </div>
 
     <div class="field">
       <%= form.label :ec %>
-      <%= form.text_field :ec %> µS/cm
+      <%= form.value_field :ec, 'µS/cm' %>
     </div>
 
     <div class="field">
       <%= form.label :bod %>
-      <%= form.text_field :bod %> mg/l
+      <%= form.value_field :bod, 'mg/L' %>
     </div>
 
     <div class="field">
       <%= form.label :tss %>
-      <%= form.text_field :tss %> mg/l
+      <%= form.value_field :tss, 'mg/L' %>
     </div>
 
     <div class="field">
       <%= form.label :tn %>
-      <%= form.text_field :tn %> mg/l
+      <%= form.value_field :tn, 'mg/L' %>
     </div>
 
     <div class="field">
       <%= form.label :tp %>
-      <%= form.text_field :tp %> mg/l
+      <%= form.value_field :tp, 'mg/L' %>
     </div>
 
     <div class="field">
@@ -96,12 +96,12 @@
 
   <h2 class="cell_division">Primary Screen</h2>
 
-  <div class="field">
+  <div class="field no-border">
     <%= form.label :screen_id %>
     <%= form.collection_select(:screen_id, @screens, :id, :option, {prompt: 'Select a Screen'})  %>
   </div>
 
-  <div class="field">
+  <div class="field no-border">
     <%= form.label :collection_bin_id %>
     <%= form.collection_select(:collection_bin_id, @collectionbins, :id, :option, {prompt: 'Select a Collection Bin'})  %>
   </div>
@@ -113,7 +113,7 @@
 
   <h2 class="cell_division">Pumps and Irrigation System</h2>
 
-  <div class="field">
+  <div class="field no-border">
     <%= form.label 'Pumps noise' %>
     <%= form.collection_select(:noise_id, @noises, :id, :option, {prompt: 'Select a Noise'})  %>
   </div>
@@ -124,21 +124,21 @@
   </div>
 
   <div class="field">
-    <%= form.label 'Pumps Pressure (PSI)' %>
-    <%= form.text_field :pumps_psi %>
+    <%= form.label 'Pumps Pressure' %>
+    <%= form.value_field :pumps_psi, 'PSI' %>
   </div>
 
-  <div class="field">
+  <div class="field no-border">
     <%= form.label :sprinklers_pressure_id %>
     <%= form.collection_select(:sprinklers_pressure_id, @sprinklers_pressures, :id, :option, {prompt: 'Select the Sprinkler\'s Pressure'})  %>
   </div>
 
-  <div class="field">
+  <div class="field no-border">
     <%= form.label :sprinklers_head_id %>
     <%= form.collection_select(:sprinklers_head_id, @sprinklers_heads, :id, :option, {prompt: 'Select the Sprinkler\'s Head'})  %>
   </div>
 
-  <div class="field">
+  <div class="field no-border">
     <%= form.label :piping_id %>
     <%= form.collection_select(:piping_id, @pipings, :id, :option, {prompt: 'Select a Pipe State'})  %>
   </div>
@@ -150,12 +150,12 @@
 
   <h2 class="cell_division">BIDA System</h2>
 
-  <div class="field">
+  <div class="field no-border">
     <%= form.label :system_surface_id %>
     <%= form.collection_select(:system_surface_id, @system_surfaces, :id, :option, {prompt: 'Select a System Surface'})  %>
   </div>
 
-  <div class="field">
+  <div class="field no-border">
     <%= form.label :worms_color_id %>
     <%= form.collection_select(:worms_color_id, @worms_color, :id, :option, {prompt: 'Select a Worms Color'})  %>
   </div>
@@ -165,7 +165,7 @@
     <%= form.text_area :worms_color_description %>
   </div>
 
-  <div class="field">
+  <div class="field no-border">
     <%= form.label :worms_activity_id %>
     <%= form.collection_select(:worms_activity_id, @worms_activity, :id, :option, {prompt: 'Select a Worms Activity'})  %>
   </div>
@@ -175,17 +175,17 @@
     <%= form.text_area :worms_activity_description %>
   </div>
 
-  <div class="field">
+  <div class="field no-border">
     <%= form.label :worms_density_id %>
     <%= form.collection_select(:worms_density_id, @worms_density, :id, :option, {prompt: 'Select a Worms Density'})  %>
   </div>
 
-  <div class="field">
+  <div class="field no-border">
     <%= form.label :bed_compaction_id %>
     <%= form.collection_select(:bed_compaction_id, @bed_compactions, :id, :option, {prompt: 'Select a Bed Compaction'})  %>
   </div>
 
-  <div class="field">
+  <div class="field no-border">
     <%= form.label :ponding_id %>
     <%= form.collection_select(:ponding_id, @pondings, :id, :option, {prompt: 'Select a Ponding'})  %>
   </div>
@@ -197,7 +197,7 @@
 
   <h2 class="cell_division">General</h2>
 
-  <div class="field">
+  <div class="field no-border">
     <%= form.label :odor_id %>
     <%= form.collection_select(:odor_id, @odors, :id, :option, {prompt: 'Select an Odor'})  %>
   </div>
@@ -207,12 +207,12 @@
     <%= form.text_area :plant_odor_description %>
   </div>
 
-  <div class="field">
+  <div class="field no-border">
     <%= form.label :birds %>
     <%= form.select(:birds, @birds, {prompt: 'Select an Option'})  %>
   </div>
 
-  <div class="field">
+  <div class="field no-border">
     <%= form.label 'Flies' %>
     <%= form.collection_select(:fly_id, @flies, :id, :option, {prompt: 'Select an Option'})  %>
   </div>
@@ -225,6 +225,6 @@
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit class: 'action-btn' %>
   </div>
 <% end %>

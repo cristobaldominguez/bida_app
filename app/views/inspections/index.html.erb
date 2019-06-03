@@ -1,25 +1,25 @@
-<h1>Inspections</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Inspection Number</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @inspections.each do |inspection| %>
-      <tr>
-        <td>#<%= inspection.id %></td>
-        <td><% if can? :read, Inspection %><%= link_to 'Show', plant_inspection_path(@plant, inspection) %><% end %></td>
-        <td><% if can? :edit, Inspection %><%= link_to 'Edit', edit_plant_inspection_path(@plant, inspection) %><% end %></td>
-        <td><% if can? :destroy, Inspection %><%= link_to 'Destroy', plant_inspection_path(@plant, inspection), method: :delete, data: { confirm: 'Are you sure?' } %><% end %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
 <% if can? :create, Inspection %>
-<%= link_to 'New Inspection', new_plant_inspection_path(@plant) %>
+  <%= render 'shared/buttons/option_button', alt: 'header' do %>
+    <li class="option-button__option"><%= link_to 'New Inspection', new_plant_inspection_path(@plant), class: 'option-button__option-link' %></li>
+  <% end %>
+<% end %>
+<h2 class="main__title">Inspections</h2>
+
+
+<%= render 'shared/tables/elements_list', headers: ['Inspection Number', 'Options'], title: 'All Inspection Tickets' do %>
+<% @inspections.each do |inspection| %>
+  <tr class="table_main__table-row">
+    <td class="table_main__table-data--left-text"><%= link_to "##{inspection.id}", plant_inspection_path(@plant, inspection), class: 'table_main__link-show' %></td>
+    <td class="table_main__table-data--options">
+      <a href="#" class="table_main__link--options"></a>
+      <div class="options_menu">
+        <ul class="options_menu__list">
+          <% if can? :read, Inspection %><li class="options_menu__item"><%= link_to 'Show', plant_inspection_path(@plant, inspection), class: 'options_menu__link' %></li><% end %>
+          <% if can? :edit, Inspection %><li class="options_menu__item"><%= link_to 'Edit', edit_plant_inspection_path(@plant, inspection), class: 'options_menu__link' %></li><% end %>
+          <% if can? :destroy, Inspection %><li class="options_menu__item"><%= link_to 'Destroy', plant_inspection_path(@plant, inspection), class: 'options_menu__link', method: :delete, data: { confirm: 'Are you sure?' } %></li><% end %>
+        </ul>
+        <div class="unclick"></div>
+      </div>
+  </tr>
+<% end %>
 <% end %>

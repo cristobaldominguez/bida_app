@@ -11,7 +11,7 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="field date">
     <%= form.label :date %>
     <%= form.date_select :date, order: [:month, :year], end_year: Date.current.year %>
   </div>
@@ -97,7 +97,7 @@
   </ul>
 
 <div class="actions">
-  <%= form.submit %>
+  <%= form.submit class: 'action-btn' %>
 </div>
 
 <% end %>

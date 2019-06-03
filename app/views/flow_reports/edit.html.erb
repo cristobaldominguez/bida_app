@@ -1,7 +1,9 @@
-<h1>Editing Flow Report</h1>
+<% if can? :read, FlowReport %>
+  <%= render 'shared/buttons/option_button', alt: 'header' do %>
+    <li class="option-button__option"><%= link_to 'Show', plant_flow_report_path(@plant, @flow_report), class: 'option-button__option-link' %></li>
+  <% end %>
+<% end %>
+
+<h2 class="main__title">Editing Flow Report</h2>
 
 <%= render 'form', flow_report: @flow_report %>
-
-<% if can? :read, FlowReport %>
-<%= link_to 'Show', plant_flow_report_path(@plant, @flow_report) %>
-<% end %>

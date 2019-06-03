@@ -1,7 +1,9 @@
-<h1>Editing Standard</h1>
+<% if can? :read, Standard %>
+  <%= render 'shared/buttons/option_button', alt: 'header' do %>
+    <li class="option-button__option"><%= link_to 'Show', @standard, class: 'option-button__option-link' %></li>
+  <% end %>
+<% end %>
+
+<h2 class="main__title">Editing Standard</h2>
 
 <%= render 'form', standard: @standard %>
-
-<% if can? :read, Standard %>
-<%= link_to 'Show', @standard %>
-<% end %>

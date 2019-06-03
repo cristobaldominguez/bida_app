@@ -2,211 +2,147 @@
 <html>
   <head>
     <title>BIDAApp</title>
-    <meta name="viewport" content="initial-scale = 1.0, maximum-scale = 1.0" />
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="icon" type="image/png" sizes="32x32" href="<%= asset_path 'head/favicon-32x32.png' -%>">
+    <link rel="icon" type="image/png" sizes="16x16" href="<%= asset_path 'head/favicon-16x16.png' -%>">
+    <link rel="shortcut icon" href="<%= asset_path 'head/favicon.ico' -%>" />
+    <link rel="mask-icon" href="<%= asset_path 'head/worm.svg' -%>" sizes="any" color="#f6c5b4">
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag "https://www.gstatic.com/charts/loader.js" %>
+    <%= javascript_include_tag 'https://www.gstatic.com/charts/loader.js' %>
+
+    <%= render 'shared/layout/svg_sprites' %>
+
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
   </head>
 
   <% if current_user %>
-  <body class="<%= current_user.os? ? '' : current_user.interface_color + '_interface' %>">
+  <body class="<%= current_user.interface_color + '-ui' %>" data-action="<%= params[:action] %>" data-controller="<%= params[:controller] %>">
   <% else %>
-  <body>
+  <body class="light-ui" data-action="<%= params[:action] %>" data-controller="<%= params[:controller] %>">
   <% end %>
 
-    <nav class="navbar navbar-expand-lg fixed-top">
-      <a class="navbar-brand" href="/">BIDA App</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+    <%= render 'shared/layout/notifications' %>
 
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <%# if @user_plants.present? %>
-          <% if can? :read, Company %>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Companies
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <%= link_to 'All Companies', companies_path, class: 'dropdown-item' %>
-              <% if can? :create, Company %>
-              <div class="dropdown-divider"></div>
-              <%= link_to 'New Company', new_company_path, class: 'dropdown-item' %>
-              <% end %>
-            </div>
-          </li>
-          <%# end %>
+    <header class="main_header">
+      <div class="main_header__upper">
 
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Plants
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <% @user_plants.each do |plant| %>
-              <%= link_to plant.name, plant_path(plant), class: 'dropdown-item' %>
-              <% end %>
+        <% if user_signed_in? %>
+        <nav class="main_nav">
+          <a href="#" class="main_nav__hamburger">
+            <i class="icon-hamburger"></i>
+          </a>
+          <ul class="main_nav__list">
+            <li class="main_nav__item"><a class="main_nav__link--active" href="#">companies</a></li>
+            <li class="main_nav__item"><a class="main_nav__link" href="#">plant</a></li>
+            <li class="main_nav__item"><a class="main_nav__link" href="#">users</a></li>
+          </ul>
+        </nav>
+        <% end %>
 
-              <%= link_to 'All Plants', plants_path, class: 'dropdown-item' %>
-              <% if (@plant.present? || (@company && @company.persisted? )) && (can? :create, Plant) %>
-              <div class="dropdown-divider"></div>
-              <% @company_id = @company || @plant.company %>
-              <%= link_to 'New Plant', new_company_plant_path(@company_id), class: 'dropdown-item' %>
-              <% end %>
-            </ul>
-          </li>
-          <% end %>
+        <h1 class="header_logo">
+          <a class="header_logo__link" href="/"><svg class="header_logo__svg"><use xlink:href="#logo"></use><svg></a>
+        </h1>
 
-          <% if @plant.present? && @plant.persisted? %>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tickets</a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <% if can? :read, Alert %>
-              <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Alerts</a>
-                <ul class="dropdown-menu">
-                  <li><%= link_to 'Alert History', plant_alerts_path(@plant), class: 'dropdown-item' %></li>
-                  <% if can? :create, Alert %>
-                  <div class="dropdown-divider"></div>
-                  <li><%= link_to 'New Alert', new_plant_alert_path(@plant), class: 'dropdown-item' %></li>
-                  <% end %>
+        <% if user_signed_in? %>
+        <nav class="user_options">
+          <ul class="user_options__list">
+            <li class="user_options__item--ui">
+              <a class="user_options__link--<%= current_user.interface_color %>-ui" href="#">
+                <% if current_user.dark? %>
+                <i class="icon-sun"></i>
+                <% else %>
+                <i class="icon-moon"></i>
+                <% end %>
+              </a>
+            </li>
+            <li class="user_options__item">
+              <a class="user_options__link--users" href="#">
+                <i class="icon-user"></i>
+              </a>
+              <div class="options_menu">
+                <ul class="options_menu__list">
+                  <li class="options_menu__item"><%= link_to 'edit profile', edit_user_path(current_user.id), class: 'options_menu__link' %></li>
+                  <li class="options_menu__item"><%= link_to "change your password", edit_user_registration_path, class: 'options_menu__link' %></li>
+                  <li class="options_menu__separator"></li>
+                  <li class="options_menu__item"><%= link_to "logout", destroy_user_session_path, method: :delete, class: 'options_menu__link'  %></li>
                 </ul>
-              </li>
-              <% end %>
-
-              <% if can? :read, Support %>
-              <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Supports</a>
-                <ul class="dropdown-menu">
-                  <li><%= link_to 'Support History', plant_supports_path(@plant), class: 'dropdown-item' %></li>
-                  <% if can? :create, Support %>
-                  <div class="dropdown-divider"></div>
-                  <li><%= link_to 'New Support', new_plant_support_path(@plant), class: 'dropdown-item' %></li>
-                  <% end %>
-                </ul>
-              </li>
-              <% end %>
-
-              <% if can? :read, Inspection %>
-              <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Inspections</a>
-                <ul class="dropdown-menu">
-                  <li><%= link_to 'Inspection History', plant_inspections_path(@plant), class: 'dropdown-item' %></li>
-                  <% if can? :create, Inspection %>
-                  <div class="dropdown-divider"></div>
-                  <li><%= link_to 'New Inspection', new_plant_inspection_path(@plant), class: 'dropdown-item' %></li>
-                  <% end %>
-                </ul>
-              </li>
-              <% end %>
-            </ul>
-          </li>
-          <% end %>
-
-          <% if @plant.present? && @plant.persisted? %>
-          <% if can? :read, Logbook %>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Logbooks
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <%= link_to 'Logbook', @logbook_path, class: 'dropdown-item' %>
-              <%= link_to 'Logbook History', plant_logbooks_path(@plant), class: 'dropdown-item' %>
-            </div>
-          </li>
-          <% end %>
-          <% if can? :read, FlowReport %>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Flows
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <% if @latest_flow_report.present? %>
-              <%= link_to 'Current Flow', plant_flow_report_path(@plant, @latest_flow_report), class: 'dropdown-item' %>
-              <% else %>
-              <% if can? :create, FlowReport %>
-              <%= link_to 'New Flows', new_plant_flow_report_path(@plant), class: 'dropdown-item' %>
-              <% end %>
-              <% end %>
-              <%= link_to 'Flow History', plant_flow_reports_path(@plant), class: 'dropdown-item' %>
-              <% if can? :create, FlowReport %>
-              <div class="dropdown-divider"></div>
-              <%= link_to 'New Flows', new_plant_flow_report_path(@plant), class: 'dropdown-item' %>
-              <% end %>
-            </div>
-          </li>
-          <% end %>
-          <% if can? :read, Sampling %>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Samplings
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <%= link_to 'Lab', @lab_samplings, class: 'dropdown-item' %>
-              <%= link_to 'Internal', @internal_samplings, class: 'dropdown-item' %>
-              <%= link_to 'Samplings History', plant_sampling_lists_path(@plant), class: 'dropdown-item' %>
-            </div>
-          </li>
-          <% end %>
-          <% if can? :read, Report %>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Graph Reports
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <% if can? :update, Report %>
-              <% if @latest_report.present? %>
-              <%= link_to 'Latest Report', plant_report_path(@plant, @latest_report), class: 'dropdown-item' %>
-              <% else %>
-              <%= link_to 'Latest Report', new_plant_report_path(@plant), class: 'dropdown-item' %>
-              <% end %>
-              <% end %>
-              <%= link_to 'Reports History', plant_reports_path(@plant), class: 'dropdown-item' %>
-            </div>
-          </li>
-          <% end %>
-          <% end %>
-          <% if can? :read, User %>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Users
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <%= link_to 'All Users', users_path, class: 'dropdown-item' %>
-              <div class="dropdown-divider"></div>
-              <%= link_to 'New User', new_user_path, class: 'dropdown-item' %>
-            </div>
-          </li>
-          <% end %>
-        </ul>
-        <ul class="navbar-nav">
-          <% if user_signed_in? %>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <%= current_user.full_name %>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-              <%= link_to 'Edit profile', edit_user_path(current_user.id), class: 'dropdown-item' %>
-              <%= link_to "Change your password", edit_user_registration_path, class: 'dropdown-item' %>
-              <div class="dropdown-divider"></div>
-              <%= link_to "Logout", destroy_user_session_path, method: :delete, class: 'dropdown-item'  %>
-            </div>
-          </li>
-          <% end %>
-        </ul>
+                <div class="unclick--user"></div>
+              </div>
+            </li>
+          </ul>
+        </nav>
+        <% end %>
       </div>
-    </nav>
 
-    <div class="container main">
-    <% if notice %>
-      <p class="alert alert-success"><%= notice %></p>
-    <% end %>
-    <% if alert %>
-      <p class="alert alert-danger"><%= alert %></p>
-    <% end %>
+      <div class="main_header__lower">
+        <%= render 'shared/layout/mobile_nav' %>
+        <nav class="desktop_nav"></nav>
+      </div>
+    </header>
+    <main class="main__container">
+      <%= yield %>
+    </main>
+    <footer class="main_footer">
+      <div class="main_footer__container">
+        <section class="main_footer__left">
+          <div class="company">
+            <h2 class="company__logo"><svg class="footer_logo__svg"><use xlink:href="#bf-logo"></use><svg></h2>
+            <p class="company__text">BioFiltro is an international wastewater treatment company with a patented filtration system
+            that naturally removes up to 99% of contaminants in 4 hours.</p>
+          </div>
 
-    <%= yield %>
-
-  </div>
+          <div class="contact">
+            <div class="contact__ico">
+              <i class="icon-envelope"></i>
+            </div>
+            <div class="contact__info">
+              <p class="contact__title">Email</p>
+              <p class="contact__content"><a href="mailto:info@biofiltro.com" class="contact__link">info@biofiltro.com</a></p>
+            </div>
+          </div>
+        </section>
+        <section class="main_footer__right">
+          <ul class="flags">
+            <li class="flag__item">
+              <div class="flag__img"><svg class="flag__svg"><use xlink:href="#flag-chile"></use><svg></div>
+              <div class="flag__data">
+                <p class="flag__title">Chile</p>
+                <p class="flag__phone"><a href="tel:+56232243648" class="flag__link">+56 2 3224 3648</a></p>
+              </div>
+            </li>
+            <li class="flag__item">
+              <div class="flag__img"><svg class="flag__svg"><use xlink:href="#flag-usa"></use><svg></div>
+              <div class="flag__data">
+                <p class="flag__title">Headquarters</p>
+                <p class="flag__phone"><a href="tel:+5592784542" class="flag__link">+559 278 4542</a></p>
+              </div>
+            </li>
+            <li class="flag__item">
+              <div class="flag__img"><svg class="flag__svg"><use xlink:href="#flag-new-zealand"></use><svg></div>
+              <div class="flag__data">
+                <p class="flag__title">New Zealand</p>
+                <p class="flag__phone"><a href="tel:+64075756270" class="flag__link">+64 07 575 6270</a></p>
+              </div>
+            </li>
+            <li class="flag__item">
+              <div class="flag__img"><svg class="flag__svg"><use xlink:href="#flag-peru"></use><svg></div>
+              <div class="flag__data">
+                <p class="flag__title">Peru</p>
+                <p class="flag__phone"><a href="tel:+51944579292" class="flag__link">+51 944579292</a></p>
+              </div>
+            </li>
+          </ul>
+        </section>
+      </div>
+      <div class="container">
+        <section class="legal">
+          <p class="legal__text">&copy;2019 BIOFILTRO, INC. All Rights Reserved. </p>
+        </section>
+      </div>
+    </footer>
   </body>
 </html>

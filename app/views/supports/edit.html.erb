@@ -1,7 +1,9 @@
-<h1>Editing Support <%= @support.number %></h1>
+<% if can? :read, Support %>
+  <%= render 'shared/buttons/option_button', alt: 'header' do %>
+    <li class="option-button__option"><%= link_to 'Show', edit_plant_support_path(@plant, @support), class: 'option-button__option-link' %></li>
+  <% end %>
+<% end %>
+
+<h2 class="main__title">Editing Support <%= @support.number %></h2>
 
 <%= render 'form', support: @support %>
-
-<% if can? :read, Support %>
-<%= link_to 'Show', edit_plant_support_path(@plant, @support) %>
-<% end %>

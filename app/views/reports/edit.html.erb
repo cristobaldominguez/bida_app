@@ -1,11 +1,13 @@
+<% if can? :read, Report %>
+  <%= render 'shared/buttons/option_button', alt: 'header' do %>
+    <li class="option-button__option"><%= link_to 'Show', plant_report_path(@plant, @report), class: 'option-button__option-link' %></li>
+  <% end %>
+<% end %>
+
+<h2 class="main__title">Editing Report</h2>
+
 <%= render 'shared/plant_cover', plant: @report.plant %>
 
-<h1>Editing Report</h1>
 <h5><%= @report.date.strftime("%B, %Y") %></h5>
-<br />
 
 <%= render 'form', report: @report %>
-
-<% if can? :read, Report %>
-<%= link_to 'Show', plant_report_path(@plant, @report) %>
-<% end %>

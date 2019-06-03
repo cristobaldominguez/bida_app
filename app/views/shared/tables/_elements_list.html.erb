@@ -9,7 +9,11 @@
       <thead class="table_main__thead">
         <tr class="table_main__thead-row">
           <% headers.each do |header| %>
+          <% if header.kind_of?(Array) %>
+          <th class="table_main__table-header--<%= header[1] %>"><%= header[0] %></th>
+          <% else %>
           <th class="table_main__table-header"><%= header %></th>
+          <% end %>
           <% end %>
         </tr>
       </thead>

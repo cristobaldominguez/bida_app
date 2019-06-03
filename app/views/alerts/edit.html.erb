@@ -1,7 +1,9 @@
-<h1>Editing Alert <%= @alert.title %></h1>
+<% if can? :read, Alert %>
+  <%= render 'shared/buttons/option_button', alt: 'header' do %>
+    <li class="option-button__option"><%= link_to 'Show', plant_alert_path(@plant, @alert), class: 'option-button__option-link' %></li>
+  <% end %>
+<% end %>
+
+<h2 class="main__title">Editing Alert <%= @alert.title %></h2>
 
 <%= render 'form', alert: @alert %>
-
-<% if can? :read, Alert %>
-<%= link_to 'Show', plant_alert_path(@plant, @alert) %>
-<% end %>

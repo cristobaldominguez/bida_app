@@ -1,0 +1,11 @@
+<div class="toast__container">
+  <div class="toast__cell">
+    <% if notice %>
+    <%= render 'shared/notifications/notification', color: 'blue', type: 'Notice', text: notice %>
+    <% end %>
+
+    <% if alert %>
+    <%= render 'shared/notifications/notification', color: 'red', type: 'Alert', text: alert %>
+    <% end %>
+  </div>
+</div>

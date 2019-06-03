@@ -1,3 +1,11 @@
+<% if can? :edit, Bound %>
+  <%= render 'shared/buttons/option_button', alt: 'header' do %>
+    <li class="option-button__option"><%= link_to 'Edit', edit_bound_path(@bound), class: 'option-button__option-link' %></li>
+  <% end %>
+<% end %>
+
+<h2 class="main__title">Bound</h2>
+
 <p>
   <strong>Standard:</strong>
   <%= @bound.standard %>
@@ -22,7 +30,3 @@
   <strong>Active:</strong>
   <%= @bound.active %>
 </p>
-
-<% if can? :edit, Bound %>
-<%= link_to 'Edit', edit_bound_path(@bound) %>
-<% end %>

@@ -1,7 +1,7 @@
 document.addEventListener('turbolinks:load', function() {
   const UIColor = (() => {
 
-    const state = {}
+    // const state = {}
 
     // DomCache
     const uicolor_btn = $('.user_options__link--light-ui, .user_options__link--dark-ui')
@@ -10,31 +10,39 @@ document.addEventListener('turbolinks:load', function() {
     uicolor_btn.on('click', click)
 
     // Functions
-    function init() {}
+    // function init() {}
 
     function click(e) {
       e.preventDefault()
-      const target = $(e.target)
-      const target_text = target.attr('class').split('-')[2]
+      APICall()
+    }
 
-      let inverse_color = 'light'
-      let inverse_icon = 'moon'
+    function APICall() {
+      $.ajax({
+        url: '/users/uicolor',
+        type: 'POST',
+        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))}
+      })
+      .done(function(data) {
+        console.log(data)
+        onChange(data)
+      })
+      .fail(function(error) {
+        console.log(error);
+      })
+    }
 
-      if (target_text == 'light') {
-        inverse_color = 'dark'
-        inverse_icon = 'sun'
-      }
-
-      $('body').removeAttr('class').addClass(`${inverse_color}-ui`)
-      target.removeAttr('class').addClass(`user_options__link--${inverse_color}-ui`)
-      target.children('i').attr('class', `icon-${inverse_icon}`)
+    function onChange({color, icon}) {
+      $('body').removeAttr('class').addClass(`${color}-ui`)
+      $('li.user_options__item--ui a').removeAttr('class').addClass(`user_options__link--${color}-ui`)
+      $('li.user_options__item--ui a i').attr('class', `icon-${icon}`)
     }
 
     // API
     return {
-        init, state
+      // init, state
     }
   })()
 
-  UIColor.init()
+  // UIColor.init()
 })

@@ -20,17 +20,17 @@
     </ul>
   </div>
 
-  <div class="field">
+  <div class="field no-border">
     <%= form.label :incident_type_id %>
     <%= form.collection_select :incident_type_id, @incidents, :id, :name, {prompt: 'Select a Incident Type'} %>
   </div>
 
-  <div class="field">
+  <div class="field no-border">
     <%= form.label :status_id %>
     <%= form.collection_select :status_id, @statuses, :id, :name, {prompt: 'Select a Status'} %>
   </div>
 
-  <div class="field">
+  <div class="field no-border">
     <%= form.label 'Solution Priority' %>
     <%= form.collection_select :priority_id, @priorities, :id, :name, {prompt: 'Select a Priority'} %>
   </div>
@@ -55,7 +55,7 @@
     <%= form.text_area :incident_resolution %>
   </div>
 
-  <div class="field">
+  <div class="field date no-border">
     <%= form.label :solution_target_date %>
     <%= form.date_select :solution_target_date %>
   </div>
@@ -66,6 +66,6 @@
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit class: 'action-btn' %>
   </div>
 <% end %>

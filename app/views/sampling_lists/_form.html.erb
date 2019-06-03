@@ -11,7 +11,7 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="field date">
     <%= form.label 'Grab Date' %>
     <%= form.date_select :date, order: [:month, :day, :year], end_year: Date.current.year, value: "1984-05-12" %>
   </div>
@@ -35,6 +35,6 @@
   </table>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit class: 'action-btn' %>
   </div>
 <% end %>

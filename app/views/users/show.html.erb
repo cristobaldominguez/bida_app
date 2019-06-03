@@ -1,55 +1,61 @@
-<p>
-  <strong>Name:</strong>
-  <%= @user.name %>
-</p>
+<% if can? :edit, User %>
+  <%= render 'shared/buttons/option_button', alt: 'header' do %>
+    <li class="option-button__option"><%= link_to 'Edit', edit_user_path(@user), class: 'option-button__option-link' %></li>
+  <% end %>
+<% end %>
 
-<p>
-  <strong>Lastname:</strong>
-  <%= @user.lastname %>
-</p>
+<h2 class="main__titles"><%= @user.full_name %></h2>
+<h3 class="main__subtitle">User</h3>
 
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
 
-<p>
-  <strong>Address01:</strong>
-  <%= @user.address01 %>
-</p>
+<div class="view_info">
+  <p class="view_info__data"><%= @user.name %></p>
+  <p class="view_info__title">Name</p>
+</div>
 
-<p>
-  <strong>Address02:</strong>
-  <%= @user.address02 %>
-</p>
+<div class="view_info">
+  <p class="view_info__data"><%= @user.lastname %></p>
+  <p class="view_info__title">Lastname</p>
+</div>
 
-<p>
-  <strong>Phone:</strong>
-  <%= @user.phone %>
-</p>
+<div class="view_info">
+  <p class="view_info__data"><%= @user.email %></p>
+  <p class="view_info__title">Email</p>
+</div>
 
-<p>
-  <strong>Mobile:</strong>
-  <%= @user.mobile %>
-</p>
+<div class="view_info">
+  <% if @user.address02.present? %>
+  <p class="view_info__data--two-lines"><%= @user.address01 %></p>
+  <p class="view_info__data"><%= @user.address02 %></p>
+  <% else %>
+  <p class="view_info__data"><%= @user.address01 %></p>
+  <% end %>
+  <p class="view_info__title">Address</p>
+</div>
 
-<p>
-  <strong>Role:</strong>
-  <%= @user.role.humanize %>
-</p>
+<div class="view_info">
+  <p class="view_info__data"><%= @user.phone %></p>
+  <p class="view_info__title">Phone</p>
+</div>
 
-<p>
-  <strong>Interface Color:</strong>
-  <%= @user.interface_color %>
-</p>
+<div class="view_info">
+  <p class="view_info__data"><%= @user.mobile %></p>
+  <p class="view_info__title">Mobile</p>
+</div>
+
+<div class="view_info">
+  <p class="view_info__data"><%= @user.role.humanize %></p>
+  <p class="view_info__title">Role</p>
+</div>
+
+<div class="view_info">
+  <p class="view_info__data"><%= @user.interface_color %></p>
+  <p class="view_info__title">Interface Color</p>
+</div>
 
 <p><strong>Plants:</strong></p>
 <ul>
   <% @user.plants.each do |plant| %>
-    <li><%= plant.name %></li>
+    <li><%= link_to plant.name, plant %></li>
   <% end %>
 </ul>
-
-<% if can? :edit, User %>
-<%= link_to 'Edit', edit_user_path(@user) %>
-<% end %>

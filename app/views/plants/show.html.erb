@@ -4,79 +4,104 @@
 </p>
 <% end %>
 
-<p>
-  <strong>Name:</strong>
-  <%= @plant.name %>
-</p>
 
-<p>
-  <strong>Code:</strong>
-  <%= @plant.code %>
-</p>
-
-<p>
-  <strong>Address01:</strong>
-  <%= @plant.address01 %>
-</p>
-
-<p>
-  <strong>Address02:</strong>
-  <%= @plant.address02 %>
-</p>
-
-<p>
-  <strong>State:</strong>
-  <%= @plant.state %>
-</p>
-
-<p>
-  <strong>Zip:</strong>
-  <%= @plant.zip %>
-</p>
-
-<p>
-  <strong>Country:</strong>
-  <%= @plant.country.name %>
-</p>
-
-<p>
-  <strong>Phone:</strong>
-  <%= @plant.phone %>
-</p>
-
-<p>
-  <strong>Phone:</strong>
-  <%= @plant.discharge_point.name %>
-</p>
-
-<p>
-  <strong>System Size:</strong>
-  <%= @plant.system_size.sum %> <%= @plant.metrics.area.pluralize(@plant.system_size.sum) %>
-</p>
-
-<p>
-  <strong>Flow design:</strong>
-  <%= @plant.flow_design %> <%= @plant.flow_design > 1 ? @plant.metrics.volume.pluralize : @plant.metrics.volume %> per day.
-</p>
-
-<% if @plant.discharge_permit.attached? %>
-<p>
-  <strong>Discharge Permit:</strong>
-  <%= link_to @plant.discharge_permit, class: 'text-icon', download: true do %>
-  <%= render 'shared/icons/document' %> <%= @plant.discharge_permit.filename %>
+<% if can? :edit, Plant %>
+  <%= render 'shared/buttons/option_button', alt: 'header' do %>
+    <li class="option-button__option"><%= link_to 'Edit', edit_plant_path(@plant), class: 'option-button__option-link' %></li>
   <% end %>
-</p>
 <% end %>
 
-<p>
-  <strong>System Purpose:</strong>
-  <%= @plant.system_purpose %>
-</p>
+<h2 class="main__titles"><%= @plant.name %></h2>
+<h3 class="main__subtitle">Plant</h3>
 
-<p>
-  <strong>Report Preface:</strong>
-  <%= @plant.report_preface %>
-</p>
+<div class="view_info">
+  <p class="view_info__data"><%= @plant.code %></p>
+  <p class="view_info__title">Code</p>
+</div>
+
+<div class="view_info">
+  <% if @plant.address02.present? %>
+  <p class="view_info__data--two-lines"><%= @plant.address01 %></p>
+  <p class="view_info__data"><%= @plant.address02 %></p>
+  <% else %>
+  <p class="view_info__data"><%= @plant.address01 %></p>
+  <% end %>
+  <p class="view_info__title">Address</p>
+</div>
+
+<div class="view_info">
+  <p class="view_info__data"><%= @plant.state %></p>
+  <p class="view_info__title">State</p>
+</div>
+
+<div class="view_info">
+  <p class="view_info__data"><%= @plant.zip %></p>
+  <p class="view_info__title">Zip</p>
+</div>
+
+<div class="view_info">
+  <p class="view_info__data"><%= @plant.country.name %></p>
+  <p class="view_info__title">Country</p>
+</div>
+
+<div class="view_info">
+  <p class="view_info__data"><%= @plant.phone %></p>
+  <p class="view_info__title">Phone</p>
+</div>
+
+<div class="view_info">
+  <p class="view_info__data"><%= @plant.startup_date %></p>
+  <p class="view_info__title">Startup Date</p>
+</div>
+
+<div class="view_info">
+  <p class="view_info__data"><%= @plant.contact&.full_name %></p>
+  <p class="view_info__title">Company Contact</p>
+</div>
+
+<div class="view_info">
+  <p class="view_info__data"><%= @plant.bf_contact&.full_name %></p>
+  <p class="view_info__title">BioFiltro Contact</p>
+</div>
+
+<div class="view_info">
+  <p class="view_info__data"><%= @plant.discharge_point.name %></p>
+  <p class="view_info__title">Discharge Point</p>
+</div>
+
+<div class="view_info">
+  <p class="view_info__data"><%= @plant.system_size.sum %> <%= @plant.metrics.area.pluralize(@plant.system_size.sum) %></p>
+  <p class="view_info__title">System Size</p>
+</div>
+
+<div class="view_info">
+  <p class="view_info__data"><%= @plant.flow_design %> <%= @plant.flow_design > 1 ? @plant.metrics.volume.pluralize : @plant.metrics.volume %> per day.</p>
+  <p class="view_info__title">Flow Design</p>
+</div>
+
+<% if @plant.discharge_permit.attached? %>
+<div class="view_info">
+  <p class="view_info__data">
+    <%= link_to @plant.discharge_permit, class: 'text-icon', download: true do %>
+    <%= render 'shared/icons/document' %>
+      <%= @plant.discharge_permit.filename %>
+    <% end %>
+  </p>
+  <p class="view_info__title">Discharge Permit</p>
+</div>
+<% end %>
+
+<div class="view_info">
+  <p class="view_info__data"><%= @plant.system_purpose %></p>
+  <p class="view_info__title">System Purpose</p>
+</div>
+
+<div class="view_info">
+  <p class="view_info__data"><%= @plant.report_preface %></p>
+  <p class="view_info__title">Report Preface</p>
+</div>
+
+<div class="space"></div>
 
 <h2 class="cell_division">Standards</h2>
 
@@ -148,20 +173,20 @@
   </tbody>
 </table>
 
-<p>
-  <strong>Logbook BF Responsible:</strong>
-  <%= @plant.logbook_bf_responsible&.full_name %>
-</p>
+<div class="view_info">
+  <p class="view_info__data"><%= @plant.logbook_bf_responsible&.full_name %></p>
+  <p class="view_info__title">Logbook BioFiltro Responsible</p>
+</div>
 
-<p>
-  <strong>Logbook BF Supervisor:</strong>
-  <%= @plant.logbook_bf_supervisor&.full_name %>
-</p>
+<div class="view_info">
+  <p class="view_info__data"><%= @plant.logbook_bf_supervisor&.full_name %></p>
+  <p class="view_info__title">Logbook BioFiltro Supervisor</p>
+</div>
 
-<p>
-  <strong>Logbook Company Responsible:</strong>
-  <%= @plant.logbook_company_responsible&.full_name %>
-</p>
+<div class="view_info">
+  <p class="view_info__data"><%= @plant.logbook_company_responsible&.full_name %></p>
+  <p class="view_info__title">Logbook Company Responsible</p>
+</div>
 
 <h3>Graphs</h3>
 <ul>
@@ -172,22 +197,3 @@
   </li>
   <% end %>
 </ul>
-
-<p>
-  <strong>Startup date:</strong>
-  <%= @plant.startup_date %>
-</p>
-
-<p>
-  <strong>Company Contact:</strong>
-  <%= @plant.contact&.full_name %>
-</p>
-
-<p>
-  <strong>BF Contact:</strong>
-  <%= @plant.bf_contact&.full_name %>
-</p>
-
-<% if can? :edit, Plant %>
-<%= link_to 'Edit', edit_plant_path(@plant) %>
-<% end %>

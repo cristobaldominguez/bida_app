@@ -1,6 +1,9 @@
-<h1>Editing Graph</h1>
+<% if can? :read, Graph %>
+  <%= render 'shared/buttons/option_button', alt: 'header' do %>
+    <li class="option-button__option"><%= link_to 'Show', @graph, class: 'option-button__option-link' %></li>
+  <% end %>
+<% end %>
+
+<h2 class="main__title">Editing Graph</h2>
 
 <%= render 'form', graph: @graph %>
-
-<%= link_to 'Show', @graph %> |
-<%= link_to 'Back', graphs_path %>

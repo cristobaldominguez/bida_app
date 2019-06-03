@@ -1,7 +1,9 @@
-<h1>Editing Logbook</h1>
+<% if can? :read, Logbook %>
+  <%= render 'shared/buttons/option_button', alt: 'header' do %>
+    <li class="option-button__option"><%= link_to 'Show', [@plant, @logbook], class: 'option-button__option-link' %></li>
+  <% end %>
+<% end %>
+
+<h2 class="main__title">Editing Logbook</h2>
 
 <%= render 'form', logbook: @logbook %>
-
-<% if can? :read, Logbook %>
-<%= link_to 'Show', [@plant, @logbook] %>
-<% end %>

@@ -16,6 +16,21 @@
 	.desktop_nav {
 		display: flex;
 	}
+
+	.work_summaries {
+		display: flex;
+		justify-content: center;
+		flex-wrap: wrap;
+	}
+
+	.work_summary {
+		flex-basis: 32%;
+		flex-shrink: 1;
+	}
+
+	.table_main__table-data--options {
+		width: 200px;
+	}
 }
 
 /* <!---- Portrait Orientation ----> */

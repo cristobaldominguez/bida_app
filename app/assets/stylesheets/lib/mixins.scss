@@ -1,16 +1,28 @@
 @mixin ul {
   margin: 0;
   padding: 0;
-  // padding: {
-  // 	top: 0;
-  // 	bottom: 0;
-  // 	left: 0;
-  // 	right: 0;
-  // }
 }
 
 @mixin icon-block {
 	display: block;
 	height: 1.5em;
 	width: 1.5em;
+}
+
+@mixin inputs {
+  -webkit-appearance: none;
+  background: transparent;
+  border: 1px solid var(--input-border);
+  border-radius: var(--border-radius);
+  color: var(--input-font);
+  padding: 0.5rem;
+  width: 100%;
+}
+
+@mixin border-radius($rounded: var(--border-radius)) {
+	-webkit-border-radius: $rounded;
+	-moz-radius: $rounded;
+	-ms-border-radius: $rounded;
+	-o-border-radius: $rounded;
+	border-radius: $rounded;
 }

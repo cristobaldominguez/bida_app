@@ -1,7 +1,9 @@
-<h1>Editing Plant</h1>
+<% if can? :read, Plant %>
+  <%= render 'shared/buttons/option_button', alt: 'header' do %>
+    <li class="option-button__option"><%= link_to 'Show', plant_path, class: 'option-button__option-link' %></li>
+  <% end %>
+<% end %>
+
+<h2 class="main__title">Editing Plant</h2>
 
 <%= render 'form', plant: @plant %>
-
-<% if can? :read, Plant %>
-<%= link_to 'Show', plant_path %>
-<% end %>

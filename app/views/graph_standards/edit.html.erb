@@ -1,8 +1,9 @@
-<h1>Editing Graph Standard</h1>
+<% if can? :read, GraphStandard %>
+  <%= render 'shared/buttons/option_button', alt: 'header' do %>
+    <li class="option-button__option"><%= link_to 'Show', plant_graph_standard_path(@graph_standard), class: 'option-button__option-link' %></li>
+  <% end %>
+<% end %>
+
+<h2 class="main__title">Editing Graph Standard</h2>
 
 <%= render 'form', graph_standard: @graph_standard %>
-
-
-<% if can? :read, Plant %>
-<%= link_to 'Show', plant_graph_standard_path(@graph_standard) %>
-<% end %>

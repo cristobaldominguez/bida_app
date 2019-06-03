@@ -29,6 +29,11 @@
 			width: 189px;
 		}
 	}
+
+	.elements_list .table_main__table-header--email,
+	.elements_list .table_main__table-data--email {
+		display: table-cell;
+	}
 }
 
 /* <!---- Portrait Orientation ----> */

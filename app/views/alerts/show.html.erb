@@ -1,4 +1,14 @@
-<h1>Alert <%= @alert.title %></h1>
+<% if can? :edit, Alert %>
+  <%= render 'shared/buttons/option_button', alt: 'header' do %>
+    <li class="option-button__option"><%= link_to 'Edit', edit_plant_alert_path(@plant, @alert), class: 'option-button__option-link' %></li>
+    <% if can? :destroy, Alert %>
+    <li class="option-button__separator"></li>
+    <li class="option-button__option"><%= link_to 'Destroy', plant_alert_path(@plant, @alert), method: :delete, data: { confirm: 'Are you sure?' }, class: 'option-button__option-link' %></li>
+    <% end %>
+  <% end %>
+<% end %>
+
+<h2 class="main__title">Alert <%= @alert.title %></h2>
 
 <p>
   <strong>Atention:</strong>
@@ -53,7 +63,3 @@
   <strong>Technician hours required:</strong>
   <%= @alert.technician_hours_required %>
 </p>
-
-<% if can? :edit, Alert %>
-<%= link_to 'Edit', edit_plant_alert_path(@plant, @alert) %>
-<% end %>

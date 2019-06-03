@@ -1,0 +1,112 @@
+<nav class="mobile_nav">
+  <ul class="mobile_nav__list">
+    <% if can? :read, Company %>
+    <li class="mobile_nav__item"><a class="mobile_nav__link" href="#">companies</a>
+      <ul class="mobile_nav__submenu-list">
+        <li class="mobile_nav__subitem"><%= link_to 'all companies', companies_path, class: 'mobile_nav__sublink' %></li>
+        <% if can? :create, Company %>
+        <li class="mobile_nav__subitem"><%= link_to 'new company', new_company_path, class: 'mobile_nav__sublink' %></li>
+        <% end %>
+      </ul>
+    </li>
+    <% end %>
+    <% if @plant.present? && @plant.persisted? %>
+    <% if can? :read, Plant %>
+    <li class="mobile_nav__item"><a class="mobile_nav__link--active" href="#">plant</a>
+      <ul class="mobile_nav__submenu-list">
+        <li class="mobile_nav__subitem"><a href="#" class="mobile_nav__sublink">tickets</a>
+          <ul class="mobile_nav__submenu-list">
+
+            <% if can? :read, Alert %>
+            <li class="mobile_nav__subitem"><a href="#" class="mobile_nav__sublink">alerts</a>
+              <ul class="mobile_nav__submenu-list">
+                <li class="mobile_nav__subitem"><%= link_to 'alert history', plant_alerts_path(@plant), class: 'mobile_nav__sublink' %></li>
+                <% if can? :create, Alert %>
+                <li class="mobile_nav__subitem"><%= link_to 'new alert', new_plant_alert_path(@plant), class: 'mobile_nav__sublink' %></li>
+                <% end %>
+              </ul>
+            </li>
+            <% end %>
+            <% if can? :read, Support %>
+            <li class="mobile_nav__subitem"><a href="#" class="mobile_nav__sublink">supports</a>
+              <ul class="mobile_nav__submenu-list">
+                <li class="mobile_nav__subitem"><%= link_to 'support history', plant_supports_path(@plant), class: 'mobile_nav__sublink' %></li>
+                <% if can? :create, Support %>
+                <li class="mobile_nav__subitem"><%= link_to 'new support', new_plant_support_path(@plant), class: 'mobile_nav__sublink' %></li>
+                <% end %>
+              </ul>
+            </li>
+            <% end %>
+            <% if can? :read, Inspection %>
+            <li class="mobile_nav__subitem"><a href="#" class="mobile_nav__sublink">inspections</a>
+              <ul class="mobile_nav__submenu-list">
+                <li class="mobile_nav__subitem"><%= link_to 'inspection history', plant_inspections_path(@plant), class: 'mobile_nav__sublink' %></li>
+                <% if can? :create, Inspection %>
+                <li class="mobile_nav__subitem"><%= link_to 'new inspection', new_plant_inspection_path(@plant), class: 'mobile_nav__sublink' %></li>
+                <% end %>
+              </ul>
+            </li>
+            <% end %>
+          </ul>
+        </li>
+        <% if can? :read, Logbook %>
+        <li class="mobile_nav__subitem"><a href="#" class="mobile_nav__sublink">logbooks</a>
+          <ul class="mobile_nav__submenu-list">
+            <li class="mobile_nav__subitem"><%= link_to 'logbook', @logbook_path, class: 'mobile_nav__sublink' %></li>
+            <li class="mobile_nav__subitem"><%= link_to 'logbook history', plant_logbooks_path(@plant), class: 'mobile_nav__sublink' %></li>
+          </ul>
+        </li>
+        <% end %>
+        <% if can? :read, FlowReport %>
+        <li class="mobile_nav__subitem"><a href="#" class="mobile_nav__sublink--active">flows</a>
+          <ul class="mobile_nav__submenu-list">
+            <% if @latest_flow_report.present? %>
+            <li class="mobile_nav__subitem"><%= link_to 'current flow', plant_flow_report_path(@plant, @latest_flow_report), class: 'mobile_nav__sublink' %></li>
+            <% else %>
+            <% if can? :create, FlowReport %>
+            <li class="mobile_nav__subitem"><%= link_to 'new flow', new_plant_flow_report_path(@plant), class: 'mobile_nav__sublink' %></li>
+            <% end %>
+            <% end %>
+            <li class="mobile_nav__subitem"><%= link_to 'flow history', plant_flow_reports_path(@plant), class: 'mobile_nav__sublink' %></li>
+          </ul>
+        </li>
+        <% end %>
+        <% if can? :read, Sampling %>
+        <li class="mobile_nav__subitem"><a href="#" class="mobile_nav__sublink">samplings</a>
+          <ul class="mobile_nav__submenu-list">
+            <li class="mobile_nav__subitem"><%= link_to 'lab', @lab_samplings, class: 'mobile_nav__sublink' %></li>
+            <li class="mobile_nav__subitem"><%= link_to 'internal', @internal_samplings, class: 'mobile_nav__sublink' %></li>
+            <li class="mobile_nav__subitem"><%= link_to 'samplings history', plant_sampling_lists_path(@plant), class: 'mobile_nav__sublink' %></li>
+          </ul>
+        </li>
+        <% end %>
+        <% if can? :read, Report %>
+        <li class="mobile_nav__subitem"><a href="#" class="mobile_nav__sublink">graph reports</a>
+          <ul class="mobile_nav__submenu-list">
+            <% if can? :update, Report %>
+            <% if @latest_report.present? %>
+            <li class="mobile_nav__subitem"><%= link_to 'latest report', plant_report_path(@plant, @latest_report), class: 'mobile_nav__sublink' %></li>
+            <% else %>
+            <li class="mobile_nav__subitem"><%= link_to 'latest report', new_plant_report_path(@plant), class: 'mobile_nav__sublink' %></li>
+            <% end %>
+            <% end %>
+            <li class="mobile_nav__subitem"><%= link_to 'reports history', plant_reports_path(@plant), class: 'mobile_nav__sublink' %></li>
+          </ul>
+        </li>
+        <% end %>
+      </ul>
+    </li>
+    <% end %>
+    <% end %>
+    <% if can? :read, User %>
+    <li class="mobile_nav__item"><a class="mobile_nav__link" href="#">users</a>
+      <ul class="mobile_nav__submenu-list">
+        <li class="mobile_nav__subitem"><%= link_to 'all users', users_path, class: 'mobile_nav__sublink' %></li>
+        <% if can? :create, User %>
+        <li class="mobile_nav__subitem"><%= link_to 'new user', new_user_path, class: 'mobile_nav__sublink' %></li>
+        <% end %>
+      </ul>
+    </li>
+    <% end %>
+  </ul>
+</nav>

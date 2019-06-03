@@ -1,17 +1,22 @@
 :root {
+	--black: rgb(0,0,0);
+	--gray4: rgb(12,12,12);
 	--gray10: rgb(26,26,26);
+	--gray12: rgb(33,33,33);
 	--gray15: rgb(38,38,38);
 	--gray20: rgb(51,51,51);
 	--gray30: rgb(77,77,77);
 	--gray40: rgb(102,102,102);
 	--gray50: rgb(128,128,128);
 	--gray60: rgb(153,153,153);
+	--gray62: rgb(160,160,160);
 	--gray70: rgb(179,179,179);
 	--gray80: rgb(204,204,204);
 	--gray85: rgb(217,217,217);
 	--gray90: rgb(229,229,229);
 	--gray92: rgb(237,237,237);
 	--gray94: rgb(240,240,240);
+	--gray95: rgb(242,242,242);
 	--gray96: rgb(245,245,245);
 	--gray98: rgb(250,250,250);
 	--white: rgb(255,255,255);
@@ -23,7 +28,6 @@
 	--green: rgb(80,209,102);
 	--purple: rgb(85,83,206);
 
-
   --bf-cyan: #70caf2;
   --bf-blue: #333366;
   --bf-gray: #615e66;
@@ -31,25 +35,24 @@
   --bf-dark-blue: #193661;
 
 	--border-radius: 5px;
-
 }
-
-
 
 .light-ui {
 	--text: var(--gray40);
-	--header-icon-gray: #666666;
-	--body-color: #fafafa;
-	--header-color: rgb(255,255,255);
-	--logo-text: #000;
+	--header-icon-gray: var(--gray40);
+	--body-color: var(--gray98);
+	--header-color: var(--white);
+	--logo-text: var(--black);
 	--menu-text: var(--gray70);
 	--menu-text-active: var(--gray40);
 	--color-line: var(--gray96);
+	--color-line-stronger: var(--gray80);
 
 	/* forms */
 	--input-border: var(--gray85);
-	--input-font: var(--gray60);
-	--input-label-text: var(--gray50);
+	--input-font: var(--gray15);
+	--input-label-text: var(--gray40);
+	--field-value-bg: var(--gray95);
 
 	/* General Styles */
 	--card-bg: var(--white);
@@ -88,18 +91,20 @@
 
 .dark-ui {
 	--text: var(--gray92);
-	--header-icon-gray: #a0a0a0;
-	--body-color: #0c0c0c;
-	--header-color: rgb(33,33,33);
-	--logo-text: #fff;
+	--header-icon-gray: var(--gray62);
+	--body-color: var(--gray4);
+	--header-color: var(--gray12);
+	--logo-text: var(--white);
 	--menu-text: var(--gray60);
 	--menu-text-active: var(--gray96);
 	--color-line: var(--gray20);
+	--color-line-stronger: var(--gray30);
 
 	/* forms */
 	--input-border: var(--gray30);
 	--input-font: var(--gray96);
-	--input-label-text: var(--gray98);
+	--input-label-text: var(--gray60);
+	--field-value-bg: var(--gray15);
 
 	/* General Styles */
 	--card-bg: var(--gray10);
@@ -114,9 +119,9 @@
 	--toast-notification-close: var(--gray90);
 
 	/* BioFiltro */
-	--bf-logo-light-blue: #fff;
-  --bf-logo-dark-blue: #fff;
-  --bf-logo-gray: #fff;
+	--bf-logo-light-blue: var(--white);
+  --bf-logo-dark-blue: var(--white);
+  --bf-logo-gray: var(--white);
 
 	/* Options Btn */
 	--options-btn-text: var(--gray98);

@@ -1,32 +1,31 @@
-<h1>Users</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Lastname</th>
-      <th>Email</th>
-      <th>Role</th>
-      <th colspan="4"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @users.each do |user| %>
-      <tr>
-        <td><%= user.name %></td>
-        <td><%= user.lastname %></td>
-        <td><%= user.email %></td>
-        <td><%= user.role.humanize %></td>
-        <td><% if can? :read, User %><%= link_to 'Show', user %><% end %></td>
-        <td><% if can? :edit, User %><%= link_to 'Edit', edit_user_path(user) %><% end %></td>
-        <td><% if can? :destroy, User %><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %><% end %></td>
-        <td><% if !user.confirmed? %><%= button_to 'Resend Confirmation', user_confirmation_path, params: { user: {email: user.email} }, method: :post, remote: true  %><% end %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
 <% if can? :create, User %>
-<%= link_to 'New User', new_user_path %>
+  <%= render 'shared/buttons/option_button', alt: 'header' do %>
+    <li class="option-button__option"><%= link_to 'New User', new_user_path, class: 'option-button__option-link' %></li>
+  <% end %>
+<% end %>
+
+<h2 class="main__title">Users</h2>
+
+<%= render 'shared/tables/elements_list', headers: ['', 'Name', 'Lastname', ['Email', 'email'], 'Role', 'Options'], title: 'Your Companies' do %>
+<% @users.each do |user| %>
+<tr class="table_main__table-row">
+  <td class="table_main__table-data--confirmation"><span class="<%= user.confirmed? ? 'table_main__user-confirmed' : 'table_main__user-unconfirmed' %>"></span></td>
+  <td class="table_main__table-data--left-text"><%= user.name %></td>
+  <td class="table_main__table-data"><%= user.lastname %></td>
+  <td class="table_main__table-data--email"><%= user.email %></td>
+  <td class="table_main__table-data"><%= user.role.humanize %></td>
+  <td class="table_main__table-data--options">
+    <a href="#" class="table_main__link--options"></a>
+    <div class="options_menu">
+      <ul class="options_menu__list">
+        <% if can? :read, User %><li class="options_menu__item"><%= link_to 'Show', user, class: 'options_menu__link' %></li><% end %>
+        <% if can? :edit, User %><li class="options_menu__item"><%= link_to 'Edit', edit_user_path(user), class: 'options_menu__link' %></li><% end %>
+        <% if can? :destroy, User %><li class="options_menu__item"><%= link_to 'Destroy', user, class: 'options_menu__link', method: :delete, data: { confirm: 'Are you sure?' } %></li><% end %>
+        <% if !user.confirmed? %><li class="options_menu__item"><%= button_to 'Resend Confirmation', user_confirmation_path, params: { user: {email: user.email} }, method: :post, remote: true, class: 'options_menu__link' %></li><% end %>
+      </ul>
+      <div class="unclick"></div>
+    </div>
+  </td>
+</tr>
+<% end %>
 <% end %>

@@ -1,7 +1,9 @@
-<h1>Editing Log Standard</h1>
+<% if can? :read, LogStandard %>
+  <%= render 'shared/buttons/option_button', alt: 'header' do %>
+    <li class="option-button__option"><%= link_to 'Show', @log_standard, class: 'option-button__option-link' %></li>
+  <% end %>
+<% end %>
+
+<h2 class="main__title">Editing Log Standard</h2>
 
 <%= render 'form', log_standard: @log_standard %>
-
-<% if can? :read, LogStandard %>
-<%= link_to 'Show', @log_standard %>
-<% end %>

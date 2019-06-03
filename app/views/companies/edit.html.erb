@@ -1,7 +1,9 @@
-<h1>Editing Company</h1>
+<% if can? :read, Company %>
+  <%= render 'shared/buttons/option_button', alt: 'header' do %>
+    <li class="option-button__option"><%= link_to 'Show', @company, class: 'option-button__option-link' %></li>
+  <% end %>
+<% end %>
+
+<h2 class="main__title">Editing Company</h2>
 
 <%= render 'form', company: @company %>
-
-<% if can? :read, Company %>
-<%= link_to 'Show', @company %>
-<% end %>

@@ -6,7 +6,7 @@ document.addEventListener('turbolinks:load', function() {
     //State
     const state = {
       sizes: [],
-      current_module: 0
+      current_module: 1
     }
 
     // CacheDom
@@ -23,9 +23,9 @@ document.addEventListener('turbolinks:load', function() {
 
     }, false);
 
-    document.addEventListener('click', function (event) {
+    document.addEventListener('click', function(event) {
 
-      if (event.target.matches('span.size__delete')) {
+      if (event.target.matches('.system_size__delete')) {
         const sizes = document.querySelector('.system_size__elements')
         const elem = event.target.parentNode.parentNode
         sizes.removeChild(elem)
@@ -37,8 +37,7 @@ document.addEventListener('turbolinks:load', function() {
 
     }, false);
 
-    function eventBinding() {
-    }
+    function eventBinding() {}
 
     // Functions
     function init() {
@@ -59,6 +58,8 @@ document.addEventListener('turbolinks:load', function() {
         }
       })
       state.current_module = state.sizes.length || 1
+
+      console.log(state)
     }
 
     function echo_sizes() {
@@ -67,6 +68,8 @@ document.addEventListener('turbolinks:load', function() {
 
       const input_val = document.querySelector('#plant_system_size_total')
       input_val.value = state.sizes.reduce((acc, num) => acc + num)
+
+      console.log(state)
     }
 
     function add_size(e) {
@@ -89,12 +92,15 @@ document.addEventListener('turbolinks:load', function() {
       _size__number.appendChild(_size__number_text)
       _h3.appendChild(_size__number)
 
-      // span.delete
-      const _delete = document.createElement('span')
-      _delete.className = 'size__delete'
-      const _delete_text = document.createTextNode('Delete')
-      _delete.appendChild(_delete_text)
-      _h3.appendChild(_delete)
+      // div.delete
+      const _delete_div = document.createElement('div')
+      _delete_div.className = 'system_size__delete_div'
+      const _delete_link = document.createElement('a')
+      _delete_link.className = 'system_size__delete'
+      const _delete_text = document.createTextNode('x')
+      _delete_link.appendChild(_delete_text)
+      _delete_div.appendChild(_delete_link)
+      mainNode.appendChild(_delete_div)
 
       // input.size__input
       const _input = document.createElement('input')
@@ -109,13 +115,15 @@ document.addEventListener('turbolinks:load', function() {
       mainNode.appendChild(_h3)
       mainNode.appendChild(_input)
       size.appendChild(mainNode)
+
+      console.log(state)
     }
 
     function reset_numbers() {
-      const sizes = document.querySelectorAll('.system_size__size')
+      const sizes = document.querySelectorAll('.size__number')
       sizes.forEach(function(val, index) {
         const number = ++index
-        val.firstElementChild.firstElementChild.innerText = number
+        val.innerText = number
       })
     }
 

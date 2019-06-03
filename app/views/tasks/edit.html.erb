@@ -1,7 +1,9 @@
-<h1>Editing Task</h1>
+<% if can? :read, Task %>
+  <%= render 'shared/buttons/option_button', alt: 'header' do %>
+    <li class="option-button__option"><%= link_to 'Show', @task, class: 'option-button__option-link' %></li>
+  <% end %>
+<% end %>
+
+<h2 class="main__title">Editing Task</h2>
 
 <%= render 'form', task: @task %>
-
-<% if can? :read, Task %>
-<%= link_to 'Show', @task %>
-<% end %>

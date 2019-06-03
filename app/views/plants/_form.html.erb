@@ -1,4 +1,4 @@
-<%= form_with(model: plant, url: [@company, plant], local: true, multiple: true) do |form| %>
+<%= form_with(model: plant, url: [@company, plant], local: true, multiple: true, builder: BFFormBuilder) do |form| %>
   <% if plant.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(plant.errors.count, "error") %> prohibited this plant from being saved:</h2>
@@ -52,7 +52,7 @@
     <%= form.text_field :zip %>
   </div>
 
-  <div class="field">
+  <div class="field no-border">
     <%= form.label :country_id %>
     <%= form.collection_select(:country_id, @countries, :id, :name, {prompt: 'Select a Country'})  %>
   </div>
@@ -81,10 +81,11 @@
 
   <div class="field">
     <%= form.label :flow_design %>
-    <%= form.text_field :flow_design %>
+    <%= form.value_field :flow_design, "m&sup3;" %>
+
   </div>
 
-  <div class="field">
+  <div class="field no-border">
     <%= form.label :discharge_point_id %>
     <%= form.collection_select(:discharge_point_id, @points, :id, :name, {prompt: 'Select a Discharge Point'})  %>
   </div>
@@ -101,11 +102,11 @@
 
   <div class="field">
     <h3>Standards</h3>
-    <table>
+    <table class="table-standards">
       <tr>
         <th>Active</th>
         <th>Name</th>
-        <th>Is Range</th>
+        <th class="col_span__range">Is Range</th>
         <th colspan="2">In</th>
         <th colspan="2">Out</th>
       </tr>
@@ -116,7 +117,7 @@
           <%= standard.label standard.object.option.name %>
           <%= standard.hidden_field :option_id, value: standard.object.option.id %>
         </td>
-        <td><%= standard.check_box :isRange, class: 'check' %></td>
+        <td class="col_span__range"><%= standard.check_box :isRange, class: 'check' %></td>
         <%= standard.fields_for :bounds do |bound| %>
         <% if standard.object.isRange %>
         <td class="col_span">
@@ -127,9 +128,9 @@
           <%= bound.text_field :from, placeholder: 'Number', class: "responsive #{bound.object.outlet.name.parameterize.underscore}_from" %>
         </td>
         <% if standard.object.isRange %>
-        <td class="hidden">
+        <td class="col_span__option">
         <% else %>
-        <td class="hidden hide">
+        <td class="col_span__option--hidden">
         <% end %>
           <%= bound.hidden_field :outlet_id, value: bound.object.outlet.id %>
           <%= bound.text_field :to, placeholder: 'Number', class: "responsive #{bound.object.outlet.name.parameterize.underscore}_to" %>
@@ -169,7 +170,7 @@
         <% end %>
       </ul>
 
-      <div class="field">
+      <div class="field no-border">
         <%= form.label :frecuency_id %>
         <%= sampling_list.collection_select(:frecuency_id, @frecuencies, :id, :name, {prompt: 'Select a Frecuency'})  %>
       </div>
@@ -181,7 +182,7 @@
     </div>
     <% end %>
 
-  <table>
+  <table class="">
     <tbody>
       <tr>
         <th>Active</th>
@@ -212,17 +213,17 @@
     </tbody>
   </table>
 
-  <div class="field">
+  <div class="field  no-border">
     <%= form.label 'Logbook BF Responsible' %>
     <%= form.collection_select(:logbook_bf_responsible_id, @users, :id, :full_name, {prompt: 'Select a Logbook BF Responsible'})  %>
   </div>
 
-  <div class="field">
+  <div class="field  no-border">
     <%= form.label 'Logbook BF Supervisor' %>
     <%= form.collection_select(:logbook_bf_supervisor_id, @users, :id, :full_name, {prompt: 'Select a Logbook BF Supervisor'})  %>
   </div>
 
-  <div class="field">
+  <div class="field  no-border">
     <%= form.label 'Logbook Company Responsible' %>
     <%= form.collection_select(:logbook_company_responsible_id, @users, :id, :full_name, {prompt: 'Select a Logbook Company Responsible'})  %>
   </div>
@@ -235,23 +236,23 @@
   <% end %>
   <% end %>
   </ul>
-  
-  <div class="field">
+
+  <div class="field no-border date">
     <%= form.label :startup_date %>
     <%= form.date_select :startup_date %>
   </div>
 
-  <div class="field">
+  <div class="field no-border">
     <%= form.label 'Plant Contact' %>
     <%= form.collection_select(:contact_id, @users, :id, :full_name, {prompt: 'Select a Company Contact'})  %>
   </div>
 
-  <div class="field">
+  <div class="field no-border">
     <%= form.label 'BF Contact' %>
     <%= form.collection_select(:bf_contact_id, @users, :id, :full_name, {prompt: 'Select a Company Contact'})  %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit class: 'action-btn' %>
   </div>
 <% end %>

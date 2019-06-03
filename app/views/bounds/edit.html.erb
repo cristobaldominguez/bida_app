@@ -1,7 +1,9 @@
-<h1>Editing Bound</h1>
+<% if can? :read, Bound %>
+  <%= render 'shared/buttons/option_button', alt: 'header' do %>
+    <li class="option-button__option"><%= link_to 'Show', @bound, class: 'option-button__option-link' %></li>
+  <% end %>
+<% end %>
+
+<h2 class="main__title">Editing Bound</h2>
 
 <%= render 'form', bound: @bound %>
-
-<% if can? :read, Bound %>
-<%= link_to 'Show', @bound %>
-<% end %>

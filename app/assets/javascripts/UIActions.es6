@@ -8,6 +8,7 @@ document.addEventListener('turbolinks:load', function() {
     const general_option_btn = $('.option-button__link')
     const element_option_btn = $('.table_main__link--options')
     const toast_notification = $('.toast__close')
+    const toast_notices = $('.toast--blue')
 
     // EventBinding
     general_option_btn.on('click', general_option_btn_click)
@@ -16,9 +17,28 @@ document.addEventListener('turbolinks:load', function() {
     body.on('click', '.unclick--general-options', unclick_general_options)
     body.on('click', '.unclick', unclick_specific_options)
 
+    if (!is_empty(toast_notices)) {
+      toast_notices.each(function(index) {
+        $(toast_notices[index]).delay(5000).fadeOut('slow', function() {
+          $(this).remove()
+        })
+      })
+    }
 
     // Functions
     function init() {}
+
+    function is_empty(obj) {
+        for(var key in obj) {
+            if(obj.hasOwnProperty(key))
+                return false
+        }
+        return true
+    }
+
+    function onEmptyLink(e) {
+      e.preventDefault()
+    }
 
     function general_option_btn_click(e) {
       e.preventDefault()
