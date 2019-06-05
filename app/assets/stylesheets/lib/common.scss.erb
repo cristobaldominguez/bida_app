@@ -732,6 +732,10 @@ a:visited {
 			left: 0;
 		}
 	}
+
+	&__division {
+
+	}
 }
 
 .elements_list {
@@ -1166,6 +1170,64 @@ a:visited {
 		& ~ & {
 			margin: 0;
 		}
+
+		&-description {
+			margin-bottom: 0;
+		}
+	}
+
+	&__element {
+		@extend .view_info__data;
+		list-style: none;
+
+		&:before {
+			content: '\00BB';
+			position: relative;
+			right: .75em;
+		}
+
+		&s {
+
+		}
+	}
+
+	&__work_summaries {
+		@extend .work_summaries;
+		margin: {
+			top: 0;
+			right: 0;
+			bottom: 1em;
+			left: 0;
+		}
+	}
+
+	&__work_summary {
+		@extend .work_summary;
+		padding: .5rem;
+	}
+
+	&__ws_hours,
+	&__ws_materials,
+	&__ws_description {
+		@extend .view_info__data;
+		margin: 0;
+	}
+
+	&__ws_description {}
+	&__ws_hours {}
+	&__ws_materials {}
+
+	&__ws_title {
+		@extend .view_info__title;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	&__value-type {
+		font-weight: lighter;
+		font-size: 0.75em;
 	}
 }
 
@@ -1193,5 +1255,35 @@ a:visited {
 	&__range {
 		text-align: center;
 		width: 85px;
+	}
+}
+
+.graph {
+	list-style: none;
+	margin: 2rem 0;
+
+	&s {
+		margin: 0;
+		padding: 0;
+	}
+
+	&__title {
+		margin-bottom: 1rem;
+	}
+
+	&__comment {
+		margin-top: 1rem;
+	}
+
+	&__text_area {
+		@include inputs;
+		// width: 100%;
+	}
+}
+
+[data-action="show"] {
+
+	.graph__text_area {
+		border: none;
 	}
 }

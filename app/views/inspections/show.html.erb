@@ -1,195 +1,216 @@
-<h2 class="cell_division">General Info</h2>
-
-<p>
-  <strong>Client OnSite:</strong>
-  <% if (@inspection.on_site_client) %>
-  <%= @inspection.on_site_user.full_name %>
-  <% else %>
-  <%= @inspection.on_site_client %>
+<% if can? :edit, Inspection %>
+  <%= render 'shared/buttons/option_button', alt: 'header' do %>
+    <li class="option-button__option"><%= link_to 'Edit', edit_plant_inspection_path(@plant, @inspection), class: 'option-button__option-link' %></li>
+    <% if can? :create, Inspection %>
+    <li class="option-button__separator"></li>
+    <li class="option-button__option"><%= link_to 'New', new_plant_inspection_path(@plant, @inspection), class: 'option-button__option-link' %></li>
+    <% if can? :destroy, Inspection %><li class="option-button__option"><%= link_to 'Destroy', plant_inspection_path(@plant, @inspection), class: 'option-button__option-link', method: :delete, data: { confirm: 'Are you sure?' } %></li><% end %>
+    <% end %>
   <% end %>
-</p>
+<% end %>
 
-<p>
-  <strong>Report Technician:</strong>
-  <%= @inspection.report_technician.full_name %>
-</p>
+<h2 class="main__title">Inspection #<%= @inspection.id %></h2>
 
-<h2 class="cell_division">Water Quality</h2>
+<h2 class="main__division">General Info</h2>
 
-<% @inspection.fluents.each do |fluent|%>
-<div class="fluent <%= fluent.output.name.parameterize.underscore %>">
+<div class="view_info">
+  <% if (@inspection.on_site_client) %>
+  <p class="view_info__data"><%= @inspection.on_site_user.full_name %></p>
+  <% else %>
+  <p class="view_info__data"><%= @inspection.on_site_client %></p>
+  <% end %>
+  <p class="view_info__title">Client OnSite</p>
+</div>
+
+<div class="view_info">
+  <p class="view_info__data"><%= @inspection.report_technician.full_name %></p>
+  <p class="view_info__title">Report Technician</p>
+</div>
+
+<h2 class="main__division">Water Quality</h2>
+
+<% @fluents.each do |fluent|%>
+<div class="fluent__<%= fluent.output.name.parameterize.underscore %>">
   <h4><%= fluent.output.name %></h4>
 
-  <p>
-    <strong>pH:</strong>
-    <%= fluent.ph %>
-  </p>
+  <div class="view_info">
+    <p class="view_info__data"><%= fluent.ph %></p>
+    <p class="view_info__title">pH</p>
+  </div>
 
-  <p>
-    <strong>Color:</strong>
-    <%= fluent.color.option %>
-  </p>
+  <div class="view_info">
+    <p class="view_info__data"><%= fluent.color.option %></p>
+    <% if fluent.color_description.present? %>
+    <p class="view_info__data-description"><%= fluent.color_description %></p>
+    <% end %>
+    <p class="view_info__title">Color</p>
+  </div>
 
-  <% if fluent.color_description != '' %>
-  <p>
-    <strong>Color Description:</strong>
-    <%= fluent.color_description %>
-  </p>
+  <div class="view_info">
+    <p class="view_info__data"><%= fluent.odor.option %></p>
+    <% if fluent.odor_description.present? %>
+    <p class="view_info__data-description"><%= fluent.odor_description %></p>
+    <% end %>
+    <p class="view_info__title">Odor</p>
+  </div>
+
+  <% if fluent.cod.present? %>
+  <div class="view_info">
+    <p class="view_info__data"><%= fluent.cod %> <span class="view_info__value-type">mg/L</span></p>
+    <p class="view_info__title">COD</p>
+  </div>
   <% end %>
 
-  <p>
-    <strong>Odor:</strong>
-    <%= fluent.odor.option %>
-  </p>
+  <% if fluent.ec.present? %>
+  <div class="view_info">
+    <p class="view_info__data"><%= fluent.ec %> <span class="view_info__value-type">µS/cm</span></p>
+    <p class="view_info__title">EC</p>
+  </div>
+  <% end %>
 
-  <% if fluent.odor_description != '' %>
+  <% if fluent.bod.present? %>
+  <div class="view_info">
+    <p class="view_info__data"><%= fluent.bod %> <span class="view_info__value-type">mg/L</span></p>
+    <p class="view_info__title">BOD</p>
+  </div>
+  <% end %>
+
+  <% if fluent.tss.present? %>
+    <div class="view_info">
+      <p class="view_info__data"><%= fluent.tss %> <span class="view_info__value-type">mg/L</span></p>
+      <p class="view_info__title">TSS</p>
+    </div>
+  <% end %>
+
+  <% if fluent.tn.present? %>
+  <div class="view_info">
+    <p class="view_info__data"><%= fluent.tn %> <span class="view_info__value-type">mg/L</span></p>
+    <p class="view_info__title">TN</p>
+  </div>
+  <% end %>
+
+  <% if fluent.tp.present? %>
+  <div class="view_info">
+    <p class="view_info__data"><%= fluent.tp %> <span class="view_info__value-type">mg/L</span></p>
+    <p class="view_info__title">TP</p>
+  </div>
+  <% end %>
+
+  <% if fluent.sample_comments.present? %>
   <p>
-    <strong>Color Description:</strong>
-    <%= fluent.odor_description %>
+    <strong>Sample comments:</strong>
+    <%= fluent.sample_comments %>
   </p>
   <% end %>
 </div>
 <% end %>
-<p>
-  <strong>Cod:</strong>
-  <%= @inspection.cod %>
-</p>
 
-<p>
-  <strong>Ec:</strong>
-  <%= @inspection.ec %>
-</p>
+<h2 class="main__division">Primary Screen</h2>
 
-<p>
-  <strong>Bod:</strong>
-  <%= @inspection.bod %>
-</p>
+<div class="view_info">
+  <p class="view_info__data"><%= @inspection.screen.option %></p>
+  <p class="view_info__title">Screen</p>
+</div>
 
-<p>
-  <strong>Tss:</strong>
-  <%= @inspection.tss %>
-</p>
+<div class="view_info">
+  <p class="view_info__data"><%= @inspection.collection_bin.option %></p>
+  <p class="view_info__title">Collection Bin</p>
+</div>
 
-<p>
-  <strong>Tn:</strong>
-  <%= @inspection.tn %>
-</p>
+<div class="view_info">
+  <p class="view_info__data"><%= @inspection.screen_comments %></p>
+  <p class="view_info__title">Screen Comments</p>
+</div>
 
-<p>
-  <strong>Tp:</strong>
-  <%= @inspection.tp %>
-</p>
+<!--
+<div class="view_info">
+  <p class="view_info__data"></p>
+  <p class="view_info__title"></p>
+</div>
+ -->
 
-<p>
-  <strong>Sample comments:</strong>
-  <%= @inspection.sample_comments %>
-</p>
+<h2 class="main__division">Pumps and Irrigation System</h2>
 
-<h2 class="cell_division">Primary Screen</h2>
+<div class="view_info">
+  <p class="view_info__data"><%= @inspection.noise.option %></p>
+  <% if @inspection.pumps_noise_description.present? %>
+  <p class="view_info__data-description"><%= @inspection.pumps_noise_description %></p>
+  <% end %>
+  <p class="view_info__title">Pumps Noise</p>
+</div>
 
-<p>
-  <strong>Screen:</strong>
-  <%= @inspection.screen.option %>
-</p>
+<div class="view_info">
+  <p class="view_info__data"><%= @inspection.pumps_psi %></p>
+  <p class="view_info__title">Pumps PSI</p>
+</div>
 
-<p>
-  <strong>Collection Bin:</strong>
-  <%= @inspection.collection_bin.option %>
-</p>
+<div class="view_info">
+  <p class="view_info__data"><%= @inspection.sprinklers_pressure.option %></p>
+  <p class="view_info__title">Sprinklers Pressure</p>
+</div>
 
-<p>
-  <strong>Screen comments:</strong>
-  <%= @inspection.screen_comments %>
-</p>
+<div class="view_info">
+  <p class="view_info__data"><%= @inspection.sprinklers_head.option %></p>
+  <p class="view_info__title">Sprinklers Head</p>
+</div>
 
-<h2 class="cell_division">Pumps and Irrigation System</h2>
+<div class="view_info">
+  <p class="view_info__data"><%= @inspection.piping.option %></p>
+  <p class="view_info__title">Piping</p>
+</div>
 
-<p>
-  <strong>Pumps Noise:</strong>
-  <%= @inspection.noise.option %>
-</p>
+<div class="view_info">
+  <p class="view_info__data"><%= @inspection.pumps_comments %></p>
+  <p class="view_info__title">Pumps Comments</p>
+</div>
 
-<p>
-  <strong>Pumps noise description:</strong>
-  <%= @inspection.pumps_noise_description %>
-</p>
+<h2 class="main__division">BIDA System</h2>
 
-<p>
-  <strong>Pumps psi:</strong>
-  <%= @inspection.pumps_psi %>
-</p>
+<div class="view_info">
+  <p class="view_info__data"><%= @inspection.system_surface.option %></p>
+  <p class="view_info__title">System Surface</p>
+</div>
 
-<p>
-  <strong>Sprinklers pressure:</strong>
-  <%= @inspection.sprinklers_pressure.option %>
-</p>
+<div class="view_info">
+  <p class="view_info__data"><%= @inspection.bed_compaction.option %></p>
+  <p class="view_info__title">Bed Compaction</p>
+</div>
 
-<p>
-  <strong>Sprinklers head:</strong>
-  <%= @inspection.sprinklers_head.option %>
-</p>
+<div class="view_info">
+  <p class="view_info__data"><%= @inspection.ponding.option %></p>
+  <p class="view_info__title">Ponding</p>
+</div>
 
-<p>
-  <strong>Piping:</strong>
-  <%= @inspection.piping.option %>
-</p>
-
-<p>
-  <strong>Pumps comments:</strong>
-  <%= @inspection.pumps_comments %>
-</p>
-
-<h2 class="cell_division">BIDA System</h2>
-
-<p>
-  <strong>System surface:</strong>
-  <%= @inspection.system_surface.option %>
-</p>
-
-<p>
-  <strong>Bed compaction:</strong>
-  <%= @inspection.bed_compaction.option %>
-</p>
-
-<p>
-  <strong>Ponding:</strong>
-  <%= @inspection.ponding.option %>
-</p>
-
-<p>
-  <strong>Bida comments:</strong>
-  <%= @inspection.bida_comments %>
-</p>
-
-<h2 class="cell_division">General</h2>
-
-<p>
-  <strong>Odor:</strong>
-  <%= @inspection.odor.option %>
-</p>
-
-<p>
-  <strong>Plant odor description:</strong>
-  <%= @inspection.plant_odor_description %>
-</p>
-
-<p>
-  <strong>Birds:</strong>
-  <%= @inspection.birds ? 'Yes' : 'No' %>
-</p>
-
-<p>
-  <strong>Fly:</strong>
-  <%= @inspection.fly.option %>
-</p>
-
-<h2 class="cell_division">Summary/Recommendations</h2>
-
-<p>
-  <strong>Summary comments:</strong>
-  <%= @inspection.summary_comments %>
-</p>
-
-<% if can? :edit, Inspection %>
-<%= link_to 'Edit', edit_plant_inspection_path(@plant, @inspection) %>
+<% if @inspection.bida_comments.present? %>
+<div class="view_info">
+  <p class="view_info__data"><%= @inspection.bida_comments %></p>
+  <p class="view_info__title">Bida Comments</p>
+</div>
 <% end %>
+
+<h2 class="main__division">General</h2>
+
+<div class="view_info">
+  <p class="view_info__data"><%= @inspection.odor.option %></p>
+  <% if @inspection.plant_odor_description.present? %>
+  <p class="view_info__data-description"><%= @inspection.plant_odor_description %></p>
+  <% end %>
+  <p class="view_info__title">Odor</p>
+</div>
+
+<div class="view_info">
+  <p class="view_info__data"><%= @inspection.birds ? 'Yes' : 'No' %></p>
+  <p class="view_info__title">Birds</p>
+</div>
+
+<div class="view_info">
+  <p class="view_info__data"><%= @inspection.fly.option %></p>
+  <p class="view_info__title">Fly</p>
+</div>
+
+<h2 class="main__division">Summary/Recommendations</h2>
+
+<div class="view_info">
+  <p class="view_info__data"><%= @inspection.summary_comments %></p>
+  <p class="view_info__title">Summary Comments</p>
+</div>

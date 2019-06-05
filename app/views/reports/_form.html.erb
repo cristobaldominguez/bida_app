@@ -47,12 +47,12 @@
   </div>
 
   <h3>Graphs</h3>
-  <ul>
+  <ul class="graphs">
     <%= form.fields_for :graphs, @graphs do |graph| %>
-    <li>
+    <li class="graph">
     <%= graph.hidden_field :graph_standard_id %>
     <% current_chart = graph.object.graph_standard.chart %>
-    <h4><%= current_chart.name %></h4>
+    <h4 class="graph__title"><%= current_chart.name %></h4>
     <% if current_chart.line? %>
       <%#= line_chart %>
     <% elsif current_chart.pie? %>
@@ -88,9 +88,8 @@
       <% end %>
     <% end %>
 
-      <div class="fieldset">
-        <%= form.label :comment %>
-        <%= graph.text_area :comment %>
+      <div class="fieldset graph__comment">
+        <%= graph.text_area :comment, class: 'graph__text_area' %>
       </div>
     </li>
     <% end %>

@@ -10,56 +10,59 @@
 
 <h2 class="main__title">Alert <%= @alert.title %></h2>
 
-<p>
-  <strong>Atention:</strong>
-  <ul>
+<div class="view_info">
+  <ul class="view_info__elements">
     <% @alert.users.each do |user| %>
-    <li><%= user.full_name %></li>
+    <li class="view_info__element"><%= user.full_name %></li>
     <% end %>
-</ul>
-</p>
+  </ul>
+  <p class="view_info__title">Atention</p>
+</div>
 
-<p>
-  <strong>Incident Type:</strong>
-  <%= @alert.incident_type.name %>
-</p>
+<div class="view_info">
+  <p class="view_info__data"><%= @alert.incident_type.name %></p>
+  <p class="view_info__title">Incident Type</p>
+</div>
 
-<p>
-  <strong>Status:</strong>
-  <%= @alert.status.name %>
-</p>
+<div class="view_info">
+  <p class="view_info__data"><%= @alert.status.name %></p>
+  <p class="view_info__title">Status</p>
+</div>
 
-<p>
-  <strong>Solution Priority:</strong>
-  <%= @alert.priority.name %>
-</p>
+<div class="view_info">
+  <p class="view_info__data"><%= @alert.priority.name %></p>
+  <p class="view_info__title">Solution Priority</p>
+</div>
 
-<p>
-  <strong>Incident description:</strong>
-  <%= @alert.incident_description %>
-</p>
+<div class="view_info">
+  <p class="view_info__data"><%= @alert.incident_description %></p>
+  <p class="view_info__title">Incident description</p>
+</div>
 
-<p>
-  <strong>Negative impact:</strong>
-  <%= @alert.negative_impact %>
-</p>
+<div class="view_info">
+  <p class="view_info__data"><%= @alert.negative_impact %></p>
+  <p class="view_info__title">Negative impact</p>
+</div>
 
-<p>
-  <strong>Solution:</strong>
-  <%= @alert.solution %>
-</p>
+<div class="view_info">
+  <p class="view_info__data"><%= @alert.solution %></p>
+  <p class="view_info__title">Solution</p>
+</div>
 
-<p>
-  <strong>Incident resolution:</strong>
-  <%= @alert.incident_resolution %>
-</p>
+<% if @alert.incident_resolution.present? %>
+<div class="view_info">
+  <p class="view_info__data"><%= @alert.incident_resolution %></p>
+  <p class="view_info__title">Incident resolution</p>
+</div>
+<% end %>
 
-<p>
-  <strong>Solution target date:</strong>
-  <%= @alert.solution_target_date %>
-</p>
+<div class="view_info">
+  <p class="view_info__data"><%= @alert.solution_target_date %></p>
+  <p class="view_info__title">Solution target date</p>
+</div>
 
-<p>
-  <strong>Technician hours required:</strong>
-  <%= @alert.technician_hours_required %>
-</p>
+
+<div class="view_info">
+  <p class="view_info__data"><%= @alert.technician_hours_required %></p>
+  <p class="view_info__title">Technician hours required</p>
+</div>

@@ -5,46 +5,52 @@
 <% end %>
 <h2 class="main__title">Support <%= @support.number %></h2>
 
-<p>
-  <strong>Atention:</strong>
-  <ul>
+<div class="view_info">
+  <ul class="view_info__elements">
     <% @support.users.each do |user| %>
-    <li><%= user.full_name %></li>
+    <li class="view_info__element"><%= user.full_name %></li>
     <% end %>
-</ul>
-</p>
+  </ul>
+  <p class="view_info__title">Atention</p>
+</div>
 
-<p>
-  <strong>Start date:</strong>
-  <%= @support.start_date %>
-</p>
+<div class="view_info">
+  <p class="view_info__data"><%= @support.start_date %></p>
+  <p class="view_info__title">Start date</p>
+</div>
 
-<p>
-  <strong>End date:</strong>
-  <%= @support.end_date %>
-</p>
+<div class="view_info">
+  <p class="view_info__data"><%= @support.end_date %></p>
+  <p class="view_info__title">End date</p>
+</div>
 
-<p>
-  <strong>Client onsite:</strong>
-  <%= @support.client_onsite ? 'Yes' : 'No' %>
-</p>
+<div class="view_info">
+  <p class="view_info__data"><%= @support.client_onsite ? 'Yes' : 'No' %></p>
+  <p class="view_info__title">Client onsite</p>
+</div>
 
-<p>
-  <strong>Name client onsite:</strong>
-  <%= @support.client.full_name %>
-</p>
+<div class="view_info">
+  <p class="view_info__data"><%= @support.client.full_name %></p>
+  <p class="view_info__title">Name Client onsite</p>
+</div>
 
-<p>
-  <strong>Name BF Technician:</strong>
-  <%= @support.bf_technician.full_name %>
-</p>
+<div class="view_info">
+  <p class="view_info__data"><%= @support.bf_technician.full_name %></p>
+  <p class="view_info__title">Name BioFiltro Technician</p>
+</div>
 
-<ul>
-<% @support.work_summaries.each do |work_summary| %>
-  <li>
-    <p>Description: <%= work_summary.description %></p>
-    <p>Hours: <%= work_summary.hours %></p>
-    <p>Materials: <%= work_summary.materials %></p>
-  </li>
-<% end %>
-</ul>
+<div class="view_info">
+  <ul class="view_info__work_summaries">
+    <% @support.work_summaries.each do |work_summary| %>
+    <li class="view_info__work_summary">
+      <p class="view_info__ws_description"><%= work_summary.description %></p>
+      <p class="view_info__ws_title">Description</p>
+      <p class="view_info__ws_hours"><%= pluralize(work_summary.hours, 'hour') %></p>
+      <p class="view_info__ws_title">Hours</p>
+      <p class="view_info__ws_materials"><%= work_summary.materials %></p>
+      <p class="view_info__ws_title">Materials</p>
+    </li>
+    <% end %>
+  </ul>
+  <p class="view_info__title">Summaries</p>
+</div>

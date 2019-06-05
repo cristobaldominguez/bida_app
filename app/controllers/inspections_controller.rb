@@ -12,7 +12,9 @@ class InspectionsController < ApplicationController
 
   # GET /inspections/1
   # GET /inspections/1.json
-  def show; end
+  def show
+    @fluents = @inspection.fluents.includes(:output, :color, :odor).order(:output_id)
+  end
 
   # GET /inspections/new
   def new
@@ -105,6 +107,6 @@ class InspectionsController < ApplicationController
       :sprinklers_head_id, :piping_id, :pumps_comments, :system_surface_id, :bed_compaction_id, :ponding_id, :bida_comments,:odor_id,
       :plant_odor_description, :birds, :fly_id, :summary_comments, :worms_color_id, :worms_color_description, :worms_activity_id,
       :worms_activity_description, :worms_density_id,
-      fluents_attributes: %i[output_id ph color_id color_description odor_id odor_description cod ec bod tss tn tp sample_comments])
+      fluents_attributes: %i[id output_id ph color_id color_description odor_id odor_description cod ec bod tss tn tp sample_comments])
   end
 end

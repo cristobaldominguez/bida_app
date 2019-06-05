@@ -1,8 +1,13 @@
 <%= render 'shared/plant_cover', plant: @report.plant %>
 
-<h1>Report</h1>
-<h5><%= @report.date.strftime("%B, %Y") %></h5>
-<br />
+<% if can? :edit, Report %>
+<%= render 'shared/buttons/option_button', alt: 'header' do %>
+<li class="option-button__option"><%= link_to 'Edit', edit_plant_report_path(@plant, @report), class: 'option-button__option-link' %></li>
+<% end %>
+<% end %>
+
+<h2 class="main__titles">Report</h2>
+<h3 class="main__subtitle"><%= @report.date.strftime("%B, %Y") %></h3>
 
 <p>
   <strong>State:</strong>
@@ -29,9 +34,9 @@
   <%= @report.system_size.sum %> <%= @plant.metrics.volume.pluralize(@report.system_size.sum) %>
 </p>
 
-<ul>
+<ul class="graphs">
   <% @graphs.each do |graph| %>
-  <li>
+  <li class="graph">
     <% current_chart = graph.graph_standard.chart %>
     <h4><%= current_chart.name %></h4>
 
@@ -49,11 +54,7 @@
     <%= render 'shared/tables/striped', data: @year_samplings_analysis if @year_samplings_analysis.present? %>
     <%= line_chart @year_samplings_grouped_by_option %>
     <% end %>
-    <%= graph.comment %>
+    <p class="graph__text_area"><%= graph.comment %></p>
   </li>
   <% end %>
 </ul>
-
-<% if can? :edit, Report %>
-<%= link_to 'Edit', edit_plant_report_path(@plant, @report) %>
-<% end %>
