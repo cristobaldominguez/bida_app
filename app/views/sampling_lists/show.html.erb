@@ -1,44 +1,38 @@
-<p>
-  <strong>Plant:</strong>
-  <%= @sampling_list.created_at.strftime('%B, %Y') %>
-</p>
-
-<p>
-  <strong>Access:</strong>
-  <%= @sampling_list.access.name %>
-</p>
-
-<p>
-  <strong>Frecuency:</strong>
-  <%= @sampling_list.frecuency.name %>
-</p>
-
-<p>
-  <strong>Per cycle:</strong>
-  <%= @sampling_list.per_cycle %>
-</p>
-
-<table class="table table-striped table-dark">
-  <thead>
-    <tr>
-      <th scope="col"></th>
-      <th scope="col">In</th>
-      <th scope="col">Out</th>
-      <th scope="col">Date Added</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @samplings.each do |sampling| %>
-    <tr>
-      <th><%= sampling.standard.option.name %></th>
-      <td><%= sampling.value_in %></td>
-      <td><%= sampling.value_out %></td>
-      <td scope="row"><%= sampling.updated_at.strftime('%m/%d/%y') %></td>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
-
 <% if can? :edit, SamplingList %>
-<%= link_to 'Edit', edit_plant_sampling_list_path(@plant, @sampling_list) %>
+  <%= render 'shared/buttons/option_button', alt: 'header' do %>
+    <li class="option-button__option"><%= link_to 'Edit', edit_plant_sampling_list_path(@plant, @sampling_list), class: 'option-button__option-link' %></li>
+  <% end %>
+<% end %>
+
+<h2 class="main__title">Flows</h2>
+
+<div class="view_info">
+  <p class="view_info__data"><%= @sampling_list.created_at.strftime('%B, %Y') %></p>
+  <p class="view_info__title">Plant</p>
+</div>
+
+<div class="view_info">
+  <p class="view_info__data"><%= @sampling_list.access.name %></p>
+  <p class="view_info__title">Access</p>
+</div>
+
+<div class="view_info">
+  <p class="view_info__data"><%= @sampling_list.frecuency.name %></p>
+  <p class="view_info__title">Frecuency</p>
+</div>
+
+<div class="view_info">
+  <p class="view_info__data"><%= @sampling_list.per_cycle %></p>
+  <p class="view_info__title">Per Cycle</p>
+</div>
+
+<%= render 'shared/tables/elements_list', headers: ['', 'In', 'Out', 'Date Added'] do %>
+  <% @samplings.each do |sampling| %>
+  <tr class="table_main__table-row--stripped">
+    <td class="table_main__table-data--left-text"><%= sampling.standard.option.name %></td>
+    <td class="table_main__table-data"><%= sampling.value_in %></td>
+    <td class="table_main__table-data"><%= sampling.value_out %></td>
+    <td class="table_main__table-data"><%= sampling.updated_at.strftime('%m/%d/%y') %></td>
+  </tr>
+  <% end %>
 <% end %>

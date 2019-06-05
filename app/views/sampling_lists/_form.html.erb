@@ -16,23 +16,16 @@
     <%= form.date_select :date, order: [:month, :day, :year], end_year: Date.current.year, value: "1984-05-12" %>
   </div>
 
-  <table>
-    <tbody>
-      <tr>
-        <th>Name</th>
-        <th>In (mg/l)</th>
-        <th>Out (mg/l)</th>
-      </tr>
-      <%= form.fields_for :samplings, @samplings do |sampling| %>
-      <tr>
-        <%= sampling.hidden_field :id %>
-        <td><%= sampling.object.standard.option.name %></td>
-        <td><%= sampling.number_field :value_in %></td>
-        <td><%= sampling.number_field :value_out %></td>
-      </tr>
-      <% end %>
-    </tbody>
-  </table>
+  <%= render 'shared/tables/elements_list', headers: ['Name', 'In (mg/l)', 'Out (mg/l)'] do %>
+    <%= form.fields_for :samplings, @samplings do |sampling| %>
+    <tr class="table_main__table-row--stripped">
+      <%= sampling.hidden_field :id %>
+      <td class="table_main__table-data--left-text"><%= sampling.object.standard.option.name %></td>
+      <td class="table_main__table-data--padding"><%= sampling.number_field :value_in, class: 'table_main__input' %></td>
+      <td class="table_main__table-data--padding"><%= sampling.number_field :value_out, class: 'table_main__input' %></td>
+    </tr>
+    <% end %>
+  <% end %>
 
   <div class="actions">
     <%= form.submit class: 'action-btn' %>

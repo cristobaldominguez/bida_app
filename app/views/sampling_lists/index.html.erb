@@ -1,8 +1,8 @@
 <h2 class="main__title">Sampling Lists</h2>
 
-<% if @flow_reports.present? %>
+<% if @sampling_lists.present? %>
 <%= render 'shared/tables/elements_list', headers: ['Plant', 'Access', 'Frecuency', 'Per Cycle', 'Options'] do %>
-<% @flow_reports.each do |flow_report| %>
+<% @sampling_lists.each do |sampling_list| %>
   <tr class="table_main__table-row">
     <td class="table_main__table-data--left-text"><%= sampling_list.created_at.strftime('%B, %Y') %></td>
     <td class="table_main__table-data"><%= sampling_list.access.name %></td>

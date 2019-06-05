@@ -88,6 +88,7 @@ a:visited {
 		display: block;
 		height: 6em;
 		margin: 0 auto;
+		text-decoration: none;
 		width: 13.5em;
 
 		&:hover {
@@ -808,6 +809,13 @@ a:visited {
 					@extend .table_main__table-data;
 					display: none;
 				}
+
+				&--padding {
+					padding: {
+						right: 1em;
+						left: 1em;
+					}
+				}
 			}
 
 			&-row {
@@ -816,6 +824,10 @@ a:visited {
 
 				&:last-child {
 					border: none;
+				}
+
+				&--stripped {
+					@extend .table_main__table-row;
 				}
 			}
 		}
@@ -862,6 +874,12 @@ a:visited {
 					text-decoration: none;
 				}
 			}
+		}
+
+		&__input {
+			@include inputs;
+			background: transparent;
+			color: var(--text);
 		}
 
 		.options_menu {
@@ -1021,6 +1039,7 @@ a:visited {
 
 .actions {
 	text-align: center;
+	margin: 3rem;
 
 	.action-btn {
 		background-color: var(--blue);
