@@ -1,25 +1,22 @@
-<p>
-  <strong>Date:</strong>
-  <%= @flow_report.date.strftime('%B, %Y') %>
-</p>
+<% if can? :edit, FlowReport %>
+  <%= render 'shared/buttons/option_button', alt: 'header' do %>
+    <li class="option-button__option"><%= link_to 'Edit', edit_plant_flow_report_path(@plant, @flow_report), class: 'option-button__option-link' %></li>
+  <% end %>
+<% end %>
 
-<h3>Flows</h3>
-<table>
-  <thead>
-    <tr>
-      <th>Date</th>
-      <th>Value (<%= @plant.metrics.volume.pluralize(10) %>)</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% day = 0 %>
-    <% @flows.each_with_index do |flow, i| %>
-    <tr>
-      <td><strong><%= '0' if day < 9 %><%= day += 1 %>:</strong></td>
-      <td><%= flow.value || '0.0' %></td>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
+<h2 class="main__titles">Flows</h2>
+<h3 class="main__subtitle"><%= @flow_report.date.strftime('%B, %Y') %></h3>
 
-<%= link_to 'Edit', edit_plant_flow_report_path(@plant, @flow_report) %>
+<ul class="flows">
+  <% day = 0 %>
+  <li class="flow__li">
+    <strong>Date</strong>
+    Value (<%= @plant.metrics.volume.pluralize(10) %>)
+  </li>
+  <% @flows.each_with_index do |flow, i| %>
+  <li class="flow__li">
+    <strong><%= '0' if day < 9 %><%= day += 1 %>:</strong>
+    <input type="number" value="<%= flow.value || '0.0' %>" class="flow__li-input">
+  </li>
+  <% end %>
+</ul>

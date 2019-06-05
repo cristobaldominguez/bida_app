@@ -16,13 +16,16 @@
     <%= form.date_select :date, order: [:month, :year], end_year: Date.current.year %>
   </div>
 
-  <h3>Flows (<%= @plant.metrics.volume.pluralize(10) %>)</h3>
   <ul class="flows">
   <% num = 0 %>
+  <li class="flow__li">
+    <strong>Date</strong>
+    Value (<%= @plant.metrics.volume.pluralize(10) %>)
+  </li>
   <%= form.fields_for :flows, @flow_reports do |flow| %>
-    <li class="flows__flow">
+    <li class="flow__li">
       <strong><%= '0' if num < 9 %><%= num +=1 %>:</strong>
-      <%= flow.number_field :value, autocomplete: 'off', step: 0.0001 %>
+      <%= flow.number_field :value, autocomplete: 'off', step: 0.0001, class: 'flow__li-input' %>
       <%= flow.hidden_field :date %>
       <%= flow.hidden_field :id %>
     </li>
