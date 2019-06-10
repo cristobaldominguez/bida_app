@@ -28,6 +28,7 @@ class SupportsController < ApplicationController
   def create
     respond_to do |format|
       if @support.save
+        @support.send_notifications!
         format.html { redirect_to plant_supports_path(@plant), notice: 'Support was successfully created.' }
         format.json { render :show, status: :created, location: @support }
       else

@@ -13,6 +13,13 @@ class Support < ApplicationRecord
     reject_if: proc { |att| att['description'].blank? && att['hours'].blank? },
     allow_destroy: true
 
+  def send_notifications!
+    users = user_ids.map { |i| User.find(i) }
+    users.each do |user|
+      NotificationMailer.support_notification(user, self).deliver_later
+    end
+  end
+
   def number
     "Ticket ##{1000 + id}"
   end

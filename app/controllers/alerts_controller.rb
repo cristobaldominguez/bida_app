@@ -27,6 +27,7 @@ class AlertsController < ApplicationController
   def create
     respond_to do |format|
       if @alert.save
+        @alert.send_notifications!
         format.html { redirect_to plant_path(@alert.plant), notice: 'Alert was successfully created.' }
         format.json { render :show, status: :created, location: @alert }
       else

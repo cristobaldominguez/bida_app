@@ -8,6 +8,13 @@ class Alert < ApplicationRecord
 
   has_and_belongs_to_many :users
 
+  def send_notifications!
+    users = user_ids.map { |i| User.find(i) }
+    users.each do |user|
+      NotificationMailer.alert_notification(user, self).deliver_later
+    end
+  end
+
   def title
     "##{id} #{incident_type.name}"
   end
