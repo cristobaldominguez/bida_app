@@ -6,6 +6,5 @@ class BFFormBuilder < ActionView::Helpers::FormBuilder
       @template.text_field(@object_name, method, objectify_options(options)) +
       @template.content_tag(:span, value.html_safe, class: 'field__value-span')
     end
-
   end
 end

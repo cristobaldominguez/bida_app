@@ -41,7 +41,7 @@
   </div>
 
   <div class="field no-border">
-    <%= form.label :bf_technician %>
+    <%= form.label :bf_technician, 'BioFiltro Technician' %>
     <%= form.collection_select(:bf_technician_id, @support.plant.users, :id, :full_name, {prompt: 'Select a Technician'})  %>
   </div>
 

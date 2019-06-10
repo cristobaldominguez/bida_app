@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.active.sort_by_id
+    @users = User.sort_by_id
   end
 
   # GET /users/1

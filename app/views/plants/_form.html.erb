@@ -62,6 +62,21 @@
     <%= form.text_field :phone %>
   </div>
 
+  <div class="field no-border date">
+    <%= form.label :startup_date %>
+    <%= form.date_select :startup_date %>
+  </div>
+
+  <div class="field no-border">
+    <%= form.label 'Plant Contact' %>
+    <%= form.collection_select(:contact_id, @users, :id, :full_name, {prompt: 'Select a Company Contact'})  %>
+  </div>
+
+  <div class="field no-border">
+    <%= form.label 'BioFiltro Contact' %>
+    <%= form.collection_select(:bf_contact_id, @users, :id, :full_name, {prompt: 'Select a BioFiltro Contact'})  %>
+  </div>
+
   <div class="field">
     <%= form.label :system_size %>
 
@@ -236,21 +251,6 @@
   <% end %>
   <% end %>
   </ul>
-
-  <div class="field no-border date">
-    <%= form.label :startup_date %>
-    <%= form.date_select :startup_date %>
-  </div>
-
-  <div class="field no-border">
-    <%= form.label 'Plant Contact' %>
-    <%= form.collection_select(:contact_id, @users, :id, :full_name, {prompt: 'Select a Company Contact'})  %>
-  </div>
-
-  <div class="field no-border">
-    <%= form.label 'BF Contact' %>
-    <%= form.collection_select(:bf_contact_id, @users, :id, :full_name, {prompt: 'Select a Company Contact'})  %>
-  </div>
 
   <div class="actions">
     <%= form.submit class: 'action-btn' %>

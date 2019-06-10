@@ -898,9 +898,14 @@ a:visited {
 			height: .5em;
 			width: .5em;
 
-			&-unconfirmed {
+			&-disabled {
 				@extend .table_main__user;
 				background-color: var(--red);
+			}
+
+			&-unconfirmed {
+				@extend .table_main__user;
+				background-color: var(--yellow);
 			}
 
 			&-confirmed {
@@ -1012,30 +1017,6 @@ a:visited {
 		display: block;
 	}
 }
-
-// body[data-controller="devise/sessions"] {
-//
-// 	.field {
-//
-// 		.bmd-form-group {
-// 			border: none;
-// 			padding: 0;
-//
-// 			input[type="password"] {
-// 				border: 1px solid var(--input-border);
-// 				border-radius: var(--border-radius);
-// 				box-shadow: none;
-// 				color: var(--input-font);
-// 				padding: 15px;
-// 				text-align: center;
-// 				display: inline-block;
-// 				font-size: 16px;
-// 				margin: 5px;
-// 				width: 85%;
-// 			}
-// 		}
-// 	}
-// }
 
 .actions {
 	text-align: center;
@@ -1184,6 +1165,10 @@ a:visited {
 			margin: {
 				top: 15px;
 			}
+		}
+
+		a {
+			color: var(--text);
 		}
 
 		& ~ & {

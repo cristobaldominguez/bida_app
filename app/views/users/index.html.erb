@@ -9,7 +9,7 @@
 <%= render 'shared/tables/elements_list', headers: ['', 'Name', 'Lastname', ['Email', 'email'], 'Role', 'Options'], title: 'Your Companies' do %>
 <% @users.each do |user| %>
 <tr class="table_main__table-row">
-  <td class="table_main__table-data--confirmation"><span class="<%= user.confirmed? ? 'table_main__user-confirmed' : 'table_main__user-unconfirmed' %>"></span></td>
+  <td class="table_main__table-data--confirmation"><%= status_icon(user).html_safe %></td>
   <td class="table_main__table-data--left-text"><%= user.name %></td>
   <td class="table_main__table-data"><%= user.lastname %></td>
   <td class="table_main__table-data--email"><%= user.email %></td>
@@ -20,8 +20,10 @@
       <ul class="options_menu__list">
         <% if can? :read, User %><li class="options_menu__item"><%= link_to 'Show', user, class: 'options_menu__link' %></li><% end %>
         <% if can? :edit, User %><li class="options_menu__item"><%= link_to 'Edit', edit_user_path(user), class: 'options_menu__link' %></li><% end %>
+        <% if user.active? %>
         <% if can? :destroy, User %><li class="options_menu__item"><%= link_to 'Destroy', user, class: 'options_menu__link', method: :delete, data: { confirm: 'Are you sure?' } %></li><% end %>
         <% if !user.confirmed? %><li class="options_menu__item"><%= button_to 'Resend Confirmation', user_confirmation_path, params: { user: {email: user.email} }, method: :post, remote: true, class: 'options_menu__link' %></li><% end %>
+        <% end %>
       </ul>
       <div class="unclick"></div>
     </div>
