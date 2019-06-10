@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   before_action :set_plants, only: [:create, :update]
   before_action :grouped_plants, :set_roles, :set_interface_colors, only: [:edit, :new, :create, :update]
   authorize_resource
+  skip_authorize_resource only: :uicolor
 
   # GET /users
   # GET /users.json
