@@ -31,7 +31,7 @@ class Ability
       can %i[read update], Logbook
     elsif user.client?
       can %i[read update], Logbook
-      can :read, [Report, Alert, Support, Inspection]
+      can :read, [Report, Alert, Support, Inspection, Plant]
     elsif user.viewer?
       can :read, :all
     end
