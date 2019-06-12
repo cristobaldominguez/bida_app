@@ -14,8 +14,9 @@
 //= require activestorage
 //= require turbolinks
 //= require PubSub
-//= require jquery-3.2.1.min
+//= require jquery-3.4.1
 //= require popper
 //= require chartkick
 //= require pikaday
+//= require bootstrap-modals
 //= require_tree .

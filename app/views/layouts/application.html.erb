@@ -138,11 +138,15 @@
           </ul>
         </section>
       </div>
+
       <div class="container">
         <section class="legal">
           <p class="legal__text">&copy;2019 BIOFILTRO, INC. All Rights Reserved. </p>
         </section>
       </div>
     </footer>
+    <%= render 'shared/modal', id: 'plant_logbook', title: 'Modal Title', large: true do %>
+    <h2>Here's to the crazy ones. The misfits. The rebels. The troublemakers.</h2>
+    <% end %>
   </body>
-</html>
+  </html>

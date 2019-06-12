@@ -35,6 +35,8 @@
   --bf-dark-blue: #193661;
 
 	--border-radius: 5px;
+
+	--black-transparent-75: rgba(0,0,0.75)
 }
 
 .light-ui {
@@ -88,6 +90,11 @@
 	--table_main-header: var(--gray40);
 	--table_main-data: var(--gray40);
 	--table-main-stripped: var(--gray98);
+
+	/* Modal */
+	--modal-bg: var(--gray94);
+	--modal-backdrop: rgba(255,255,255,.5);
+	--modal-close-bg: var(--gray96);
 }
 
 .dark-ui {
@@ -141,4 +148,9 @@
 	--table_main-header: var(--white);
 	--table_main-data: var(--gray92);
 	--table-main-stripped: var(--gray10);
+
+	/* Modal */
+	--modal-bg: var(--gray10);
+	--modal-backdrop: rgba(0,0,0,.5);
+	--modal-close-bg: var(--gray4);
 }
