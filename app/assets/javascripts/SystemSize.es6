@@ -58,8 +58,6 @@ document.addEventListener('turbolinks:load', function() {
         }
       })
       state.current_module = state.sizes.length || 1
-
-      console.log(state)
     }
 
     function echo_sizes() {
