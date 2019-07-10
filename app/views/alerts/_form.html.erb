@@ -32,7 +32,7 @@
 
   <div class="field no-border">
     <%= form.label 'Solution Priority' %>
-    <%= form.collection_select :priority_id, @priorities, :id, :name, {prompt: 'Select a Priority'} %>
+    <%= form.collection_select :priority_id, @priorities, :id, :name, {prompt: 'Select a Priority'}, class:'describe' %>
   </div>
 
   <div class="field">

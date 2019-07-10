@@ -15,7 +15,7 @@
 
   <div class="field no-border">
     <%= form.label :on_site_client %>
-    <%= form.select(:on_site_client, @on_site_client, {prompt: 'Select an Option'})  %>
+    <%= form.select(:on_site_client, @on_site_client, {prompt: 'Select an Option'}, class:'describe')  %>
   </div>
 
   <div class="field description <%= 'show' if inspection.on_site_client %> no-border">
@@ -25,7 +25,7 @@
 
   <div class="field no-border">
     <%= form.label 'Report Technician *' %>
-    <%= form.collection_select(:report_technician_id, @users, :id, :full_name, {prompt: 'Select a Technician'})  %>
+    <%= form.collection_select(:report_technician_id, @users, :id, :full_name, {prompt: 'Select a Technician'}) %>
   </div>
 
   <h2 class="cell_division">Water Quality</h2>
@@ -40,7 +40,7 @@
 
     <div class="field no-border">
       <%= fluent.label "#{fluent.object.output.name} Sampling Color" %>
-      <%= fluent.collection_select(:color_id, @colors, :id, :option, {prompt: 'Select a Color'})  %>
+      <%= fluent.collection_select(:color_id, @colors, :id, :option, {prompt: 'Select a Color'}, class:'describe') %>
     </div>
 
     <div class="field description">
@@ -50,7 +50,7 @@
 
     <div class="field no-border">
       <%= fluent.label "#{fluent.object.output.name} Sampling Odor" %>
-      <%= fluent.collection_select(:odor_id, @odors, :id, :option, {prompt: 'Select an Odor'})  %>
+      <%= fluent.collection_select(:odor_id, @odors, :id, :option, {prompt: 'Select an Odor'}, class:'describe')  %>
     </div>
 
     <div class="field description">
@@ -115,7 +115,7 @@
 
   <div class="field no-border">
     <%= form.label 'Pumps noise' %>
-    <%= form.collection_select(:noise_id, @noises, :id, :option, {prompt: 'Select a Noise'})  %>
+    <%= form.collection_select(:noise_id, @noises, :id, :option, {prompt: 'Select a Noise'}, class:'describe') %>
   </div>
 
   <div class="field description">
@@ -157,7 +157,7 @@
 
   <div class="field no-border">
     <%= form.label :worms_color_id %>
-    <%= form.collection_select(:worms_color_id, @worms_color, :id, :option, {prompt: 'Select a Worms Color'})  %>
+    <%= form.collection_select(:worms_color_id, @worms_color, :id, :option, {prompt: 'Select a Worms Color'}, class:'describe') %>
   </div>
 
   <div class="field description">
@@ -167,7 +167,7 @@
 
   <div class="field no-border">
     <%= form.label :worms_activity_id %>
-    <%= form.collection_select(:worms_activity_id, @worms_activity, :id, :option, {prompt: 'Select a Worms Activity'})  %>
+    <%= form.collection_select(:worms_activity_id, @worms_activity, :id, :option, {prompt: 'Select a Worms Activity'}, class:'describe') %>
   </div>
 
   <div class="field description">

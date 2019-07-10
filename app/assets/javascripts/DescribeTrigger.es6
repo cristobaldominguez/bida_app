@@ -3,7 +3,7 @@ document.addEventListener('turbolinks:load', function() {
     const state = {}
 
     // CacheDom
-    const selects = document.querySelectorAll('select')
+    const selects = document.querySelectorAll('select.describe')
 
     // Bind Events
     selects.forEach(function(select){
