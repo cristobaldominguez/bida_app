@@ -1,0 +1,19 @@
+<%
+  block_class = block_class || 'select_month'
+  data_week = data_week || ''
+  week_days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+  day_th = ['st', 'nd', 'rd', 'th']
+%>
+<ul class="<%= block_class %>__week">
+  <% week_days.each_with_index do |day, index|
+      day_short = day[0..2]
+      rest = day[3..-1]
+    %>
+    <li class="<%= block_class %>__day">
+      <a href="#" class="<%= block_class %>__day-link" <%= data_week.present? ? "data-week=#{data_week}" : '' %> data-day="<%= day_short.downcase %>" <%= data_week.present? ? "data-num=#{((data_week - 1) * 7) + (index + 1)}" : '' %>>
+          <%= data_week.present? ? data_week : '' %><%= day_th[data_week.to_i - 1] if data_week.present? %> <%= day_short %>
+          <span class="d-lg-inline"><%= rest %></span>
+      </a>
+    </li>
+  <% end %>
+</ul>

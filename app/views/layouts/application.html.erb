@@ -145,8 +145,10 @@
         </section>
       </div>
     </footer>
-    <%= render 'shared/modal', id: 'plant_logbook', title: 'Modal Title', large: true do %>
-    <h2>Here's to the crazy ones. The misfits. The rebels. The troublemakers.</h2>
+
+    <% if (params[:controller] == 'plants') && (['create', 'edit'].include? params[:action]) %>
+      <%= render 'shared/modal/logbook' %>
     <% end %>
+
   </body>
   </html>

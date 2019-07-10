@@ -197,36 +197,32 @@
     </div>
     <% end %>
 
-  <table class="">
-    <tbody>
-      <tr>
-        <th>Active</th>
-        <th>Task</th>
-        <th>Comment</th>
-        <th>Frecuency</th>
-        <th>Cycle</th>
-        <th>Responsible</th>
-      </tr>
-
-    <% current_id = 0 %>
-    <%= form.fields_for :log_standards, @log_standards do |log| %>
-    <!-- n+1 -->
-      <% if current_id != log.object.task.log_type.id %>
-      <tr><td colspan="6" class="cell_division"><%= log.object.task.log_type.name %></td></tr>
-      <% end %>
-      <% current_id = log.object.task.log_type.id %>
-      <tr>
+    <%= render 'shared/tables/elements_list', headers: %w(Active Task Options), title: 'Logbook' do %>
+      <%= form.fields_for :log_standards, @log_standards do |log| %>
+      <tr class="table_main__table-row">
         <%= log.hidden_field :id %>
-        <td><%= log.check_box :active %></td>
-        <td><%= log.object.task.name %><%= log.hidden_field :task_id %></td>
-        <td><%= log.text_field :comment %></td>
-        <td><%= log.collection_select(:frecuency_id, @frecuencies, :id, :name, {prompt: 'Select a Frecuency'})  %></td>
-        <td><%= log.number_field :cycle, placeholder: '1' %></td>
-        <td><%= log.collection_select(:responsible, @responsibles, :first, :second, {prompt: 'Select a Responsible'} )  %></td>
+        <td class="table_main__table-data--left-text"><%= log.check_box :active %></td>
+        <td class="table_main__table-data--left-text">
+          <span class="name"><%= log.object.task.name %><%= log.hidden_field :task_id %></span>
+          <%= log.hidden_field :comment, class: 'comment' %>
+          <%= log.hidden_field :frecuency_id, class: 'frecuency' %>
+          <%= log.hidden_field :cycle, class: 'cycle' %>
+          <%= log.hidden_field :responsible, class: 'responsible' %>
+        </td>
+        <td class="table_main__table-data--options">
+          <a href="#" class="table_main__link--options"></a>
+          <div class="options_menu">
+            <ul class="options_menu__list">
+              <% if can? :read, Task %><li class="options_menu__item"><%= link_to 'show', '#', class: 'options_menu__link--modal-show' %></li><% end %>
+              <% if can? :edit, Task %><li class="options_menu__item"><%= link_to 'edit', '#', class: 'options_menu__link--modal-edit' %></li><% end %>
+              <% if can? :destroy, Task %><li class="options_menu__item"><%= link_to 'destroy', '#', class: 'options_menu__link--modal-destroy' %></li><% end %>
+            </ul>
+            <div class="unclick"></div>
+          </div>
+        </td>
       </tr>
+      <% end %>
     <% end %>
-    </tbody>
-  </table>
 
   <div class="field  no-border">
     <%= form.label 'Logbook BF Responsible' %>

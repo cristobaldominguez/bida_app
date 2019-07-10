@@ -1,0 +1,107 @@
+<%= render 'shared/modal/standard', id: 'plant_logbook', title: 'Logbook Task', large: true, button_next: 'next' do %>
+  <div class="svg_img">
+    <%= render 'shared/modal/2-steps', className: 'svg_img__2-steps--1' %>
+  </div>
+  <h2>Task</h2>
+  <div class="steps">
+    <div class="steps__trail">
+
+      <!-- Start Steps -->
+      <div class="step-1">
+        <div class="field">
+          <label for="task_name">Name</label>
+          <input type="text" value="" name="name" id="task_name" data-required="true" data-error="Name is required">
+        </div>
+        <div class="field">
+          <label for="task_comment">Comment</label>
+          <input type="text" value="" name="comment" id="task_comment">
+        </div>
+        <div class="field no-border">
+          <label for="task_responsible">Responsible</label>
+          <%= collection_select(:responsible, :responsible_id, @responsibles, :first, :second, {prompt: 'Select a Responsible'}, data: {required: true, error: 'Responsible is required'}) %>
+        </div>
+      </div>
+
+      <div class="step-2">
+
+        <div class="field">
+          <label for="season">Affected by Season?</label>
+          <%= collection_select(:season, :modal_season, @seasons, :first, :second, {prompt: 'Select an option'}, data: {required: true, error: 'Season is required'}) %>
+        </div>
+
+        <div class="field no-border">
+          <label for="task_frecuency">Frecuency</label>
+          <%= collection_select(:frecuency, :frecuency_id, @log_frecuency, :first, :second, {prompt: 'Select a Frecuency'}, data: {required: true, error: 'Frecuency is required'}) %>
+        </div>
+
+        <div class="select_week" id="weekly">
+          <p class="select_week__label">Select the days of the week</p>
+          <%= render 'shared/modal/week', block_class: 'select_week' %>
+        </div>
+
+        <div class="select_month" id="every_2_weeks">
+          <p class="select_month__label">Select the day and the week</p>
+          <ul class="select_month__month">
+            <li class="select_month__week-item">
+              <%= render 'shared/modal/week', data_week: 1 %>
+            </li>
+            <li class="select_month__week-item">
+              <%= render 'shared/modal/week', data_week: 2 %>
+            </li>
+          </ul>
+        </div>
+
+        <div class="select_month" id="monthly">
+          <p class="select_month__label">Select the day and the week</p>
+          <ul class="select_month__month">
+            <li class="select_month__week-item">
+              <%= render 'shared/modal/week', data_week: 1 %>
+            </li>
+            <li class="select_month__week-item">
+              <%= render 'shared/modal/week', data_week: 2 %>
+            </li>
+            <li class="select_month__week-item">
+              <%= render 'shared/modal/week', data_week: 3 %>
+            </li>
+            <li class="select_month__week-item">
+              <%= render 'shared/modal/week', data_week: 4 %>
+            </li>
+          </ul>
+        </div>
+
+        <div class="select_month" id="every_x_months">
+          <p class="select_month__label">Select month, day and week</p>
+          <ul class="select_months">
+            <li class="select_months__month"><a href="#" class="select_months__month-link" data-month="1">Jan<span class="d-lg-inline">uary</span></a></li>
+            <li class="select_months__month"><a href="#" class="select_months__month-link" data-month="2">Feb<span class="d-lg-inline">ruary</span></a></li>
+            <li class="select_months__month"><a href="#" class="select_months__month-link" data-month="3">Mar<span class="d-lg-inline">ch</span></a></li>
+            <li class="select_months__month"><a href="#" class="select_months__month-link" data-month="4">Apr<span class="d-lg-inline">il</span></a></li>
+            <li class="select_months__month"><a href="#" class="select_months__month-link" data-month="5">May<span class="d-lg-inline"></span></a></li>
+            <li class="select_months__month"><a href="#" class="select_months__month-link" data-month="6">Jun<span class="d-lg-inline">e</span></a></li>
+            <li class="select_months__month"><a href="#" class="select_months__month-link" data-month="7">Jul<span class="d-lg-inline">y</span></a></li>
+            <li class="select_months__month"><a href="#" class="select_months__month-link" data-month="8">Aug<span class="d-lg-inline">ust</span></a></li>
+            <li class="select_months__month"><a href="#" class="select_months__month-link" data-month="9">Sep<span class="d-lg-inline">tember</span></a></li>
+            <li class="select_months__month"><a href="#" class="select_months__month-link" data-month="10">Oct<span class="d-lg-inline">ober</span></a></li>
+            <li class="select_months__month"><a href="#" class="select_months__month-link" data-month="11">Nov<span class="d-lg-inline">ember</span></a></li>
+            <li class="select_months__month"><a href="#" class="select_months__month-link" data-month="12">Dec<span class="d-lg-inline">ember</span></a></li>
+          </ul>
+          <ul class="select_month__month">
+            <li class="select_month__week-item">
+              <%= render 'shared/modal/week', data_week: 1 %>
+            </li>
+            <li class="select_month__week-item">
+              <%= render 'shared/modal/week', data_week: 2 %>
+            </li>
+            <li class="select_month__week-item">
+              <%= render 'shared/modal/week', data_week: 3 %>
+            </li>
+            <li class="select_month__week-item">
+              <%= render 'shared/modal/week', data_week: 4 %>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- End Steps -->
+      </div>
+  </div>
+<% end %>

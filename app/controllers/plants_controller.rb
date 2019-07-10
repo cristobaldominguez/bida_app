@@ -3,7 +3,7 @@ class PlantsController < ApplicationController
   before_action :set_companies, only: :index
   before_action :set_discharge_points, :set_countries, only: %i[new edit create update]
   before_action :set_users, :set_frecuencies, only: %i[new edit create update]
-  before_action :set_responsibles, only: %i[new edit create update show]
+  before_action :set_responsibles, :set_season, :set_log_frecuency, only: %i[new edit create update show]
   after_action :assign_plant_to_current_user, only: :create, unless: -> { @plant.nil? }
   load_and_authorize_resource
 
@@ -229,6 +229,14 @@ class PlantsController < ApplicationController
 
   def assign_plant_to_current_user
     current_user.plants << @plant
+  end
+
+  def set_season
+    @seasons = Task.seasons.map { |season, _| [season, "#{'Yes, ' unless season == 'no'}#{season.to_s.capitalize}#{' it' unless season == 'no'}"] }
+  end
+
+  def set_log_frecuency
+    @log_frecuency = Task.frecuencies.map { |frecuency| [frecuency.second, frecuency.first.humanize] }
   end
 
   def plant_params

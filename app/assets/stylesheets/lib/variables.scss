@@ -28,6 +28,7 @@
 	--green: rgb(80,209,102);
 	--purple: rgb(85,83,206);
 	--dark-green: rgb(40,104,50);
+	--dark-blue: rgb(13,34,51);
 
   --bf-cyan: #70caf2;
   --bf-blue: #333366;
@@ -37,7 +38,11 @@
 
 	--border-radius: 5px;
 
-	--black-transparent-75: rgba(0,0,0.75)
+	--white-a50: rgba(255,255,255,.5);
+	--black-transparent-75: rgba(0,0,0.75);
+
+	--steps-mask-height: 0;
+	--steps-trail-position: 0;
 }
 
 .light-ui {
@@ -96,6 +101,8 @@
 	--modal-bg: var(--gray94);
 	--modal-backdrop: rgba(255,255,255,.5);
 	--modal-close-bg: var(--gray96);
+	--modal-disabled-btn: var(--gray70);
+
 	/* High Season */
 	--high-season: var(--green);
 	--high-season-text: var(--white);
@@ -165,6 +172,8 @@
 	--modal-bg: var(--gray10);
 	--modal-backdrop: rgba(0,0,0,.5);
 	--modal-close-bg: var(--gray4);
+	--modal-disabled-btn: var(--white-a50);
+
 	/* High Season */
 	--high-season: var(--dark-green);
 	--high-season-text: var(--black);

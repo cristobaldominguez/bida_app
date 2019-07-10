@@ -26,3 +26,15 @@
 	-o-border-radius: $rounded;
 	border-radius: $rounded;
 }
+
+@mixin day-selected() {
+  align-items: center;
+  background: var(--blue);
+  color: var(--modal-bg);
+  display: flex;
+  height: inherit;
+  justify-content: center;
+  flex-basis: 100%;
+  text-decoration: none;
+  width: inherit;
+}

@@ -1,3 +1,5 @@
+<% button_prev = button_prev || 'Previous' %>
+<% button_next = button_next || 'Save changes' %>
 <% large = large || '' %>
 <% small = small || '' %>
 
@@ -13,8 +15,10 @@
         <%= yield %>
       </div>
       <div class="modal-footer">
+        <button type="button" class="modal-footer__prev-btn"><%= button_prev %></button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="modal-footer__next-btn"><%= button_next %></button>
+        <button type="button" class="modal-footer__save-btn" style="display: none;">Save</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
