@@ -1,36 +1,31 @@
-<h1>Tasks</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Frecuency</th>
-      <th>Cycle</th>
-      <th>Responsible</th>
-      <th>Input Type</th>
-      <th colspan="2"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @tasks.keys.size.times do |i| %>
-    <% i += 1 %>
-      <tr><td colspan="7" class="cell_division"><%= @log_types.find(i).name %></td></tr>
-    <% @tasks[i].each do |task| %>
-      <tr>
-        <td><%= task.name %></td>
-        <td><%= task.frecuency.name %></td>
-        <td><%= task.cycle %></td>
-        <td><%= @responsibles[task.responsible][1] %></td>
-        <td><%= task.input_type.option %></td>
-        <td><% if can? :edit, Standard %><%= link_to 'Edit', edit_task_path(task) %><% end %></td>
-        <td><% if can? :destroy, Standard %><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %><% end %></td>
-      </tr>
-    <% end %>
-    <% end %>
-  </tbody>
-</table>
-
 <% if can? :create, Task %>
-<%= link_to 'New Task', new_task_path %>
+  <%= render 'shared/buttons/option_button', alt: 'header' do %>
+    <li class="option-button__option"><%= link_to 'New Task', new_task_path, class: 'option-button__option-link' %></li>
+  <% end %>
+<% end %>
+
+<h2 class="main__title">Tasks</h2>
+
+<%= render 'shared/tables/elements_list', headers: ['Name', 'Cycle', 'Input Type', 'Responsible', 'Options'], title: 'Your Companies' do %>
+<% @tasks.keys.size.times do |i| %>
+<% i += 1 %>
+<% @tasks[i].each do |task| %>
+<tr class="table_main__table-row">
+  <td class="table_main__table-data--left-text"><%= task.name %></td>
+  <td class="table_main__table-data"><%= task.cycle %></td>
+  <td class="table_main__table-data"><%= task.input_type.option %></td>
+  <td class="table_main__table-data"><%= @responsibles[task.responsible][1] %></td>
+  <td class="table_main__table-data--options">
+    <a href="#" class="table_main__link--options"></a>
+    <div class="options_menu">
+      <ul class="options_menu__list">
+        <% if can? :read, Task %><li class="options_menu__item"><%= link_to 'Show', task, class: 'options_menu__link' %></li><% end %>
+        <% if can? :edit, Task %><li class="options_menu__item"><%= link_to 'Edit', edit_task_path(task), class: 'options_menu__link' %></li><% end %>
+        <% if can? :destroy, Task %><li class="options_menu__item"><%= link_to 'Destroy', task, class: 'options_menu__link', method: :delete, data: { confirm: 'Are you sure?' } %></li><% end %>
+      <div class="unclick"></div>
+    </div>
+  </td>
+</tr>
+<% end %>
+<% end %>
 <% end %>
