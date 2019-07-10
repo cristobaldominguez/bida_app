@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_21_132352) do
+ActiveRecord::Schema.define(version: 2019_06_27_142144) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -402,6 +402,7 @@ ActiveRecord::Schema.define(version: 2019_03_21_132352) do
     t.bigint "logbook_bf_responsible_id"
     t.bigint "logbook_bf_supervisor_id"
     t.bigint "logbook_company_responsible_id"
+    t.boolean "high_season", default: false
     t.index ["bf_contact_id"], name: "index_plants_on_bf_contact_id"
     t.index ["company_id"], name: "index_plants_on_company_id"
     t.index ["contact_id"], name: "index_plants_on_contact_id"

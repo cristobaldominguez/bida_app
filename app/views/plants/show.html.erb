@@ -106,6 +106,18 @@
 
 <div class="space"></div>
 
+<div class="highseason <%= @plant.high_season ? 'active' : '' %>">
+
+  <h2 class="cell_division">High Season</h2>
+
+  <label class="switch">
+    <input type="checkbox" <%= @plant.high_season ? 'checked' : '' %> class="highseason__input">
+    <span class="slider round"></span>
+  </label>
+</div>
+
+<div class="space"></div>
+
 <h2 class="cell_division">Standards</h2>
 
 <div class="field standards">

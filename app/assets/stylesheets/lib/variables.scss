@@ -27,6 +27,7 @@
 	--blue: rgb(24,117,240);
 	--green: rgb(80,209,102);
 	--purple: rgb(85,83,206);
+	--dark-green: rgb(40,104,50);
 
   --bf-cyan: #70caf2;
   --bf-blue: #333366;
@@ -95,6 +96,17 @@
 	--modal-bg: var(--gray94);
 	--modal-backdrop: rgba(255,255,255,.5);
 	--modal-close-bg: var(--gray96);
+	/* High Season */
+	--high-season: var(--green);
+	--high-season-text: var(--white);
+	--high-season-input-bg: var(--gray80);
+
+	.main_header--high-season {
+		--header-icon-gray: var(--black);
+		--menu-text: var(--black);
+		--blue: var(--white);
+	}
+
 }
 
 .dark-ui {
@@ -153,4 +165,15 @@
 	--modal-bg: var(--gray10);
 	--modal-backdrop: rgba(0,0,0,.5);
 	--modal-close-bg: var(--gray4);
+	/* High Season */
+	--high-season: var(--dark-green);
+	--high-season-text: var(--black);
+	--high-season-input-bg: var(--gray20);
+
+	.main_header--high-season {
+		--header-icon-gray: var(--white);
+		--menu-text: var(--white);
+		--blue: var(--black);
+	}
+
 }

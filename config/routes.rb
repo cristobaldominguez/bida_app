@@ -30,6 +30,9 @@ Rails.application.routes.draw do
         get 'custom'
       end
     end
+    member do
+      post 'highseason'
+    end
   end
 
   resources :work_summaries, only: :destroy

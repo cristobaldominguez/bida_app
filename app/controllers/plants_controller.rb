@@ -178,6 +178,15 @@ class PlantsController < ApplicationController
     end
   end
 
+  def highseason
+    high_season = params[:state] == 'true'
+    @plant.high_season = high_season
+    @plant.save
+    respond_to do |format|
+      format.json { render json: { className: high_season } }
+    end
+  end
+
   private
 
   def set_company

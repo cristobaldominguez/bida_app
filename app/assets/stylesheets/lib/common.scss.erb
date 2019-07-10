@@ -18,6 +18,11 @@ a:visited {
 	font-size: 10px;
 	padding: 0 2em;
 
+	&--high-season {
+		@extend .main_header;
+		background: var(--high-season);
+	}
+
 	&__upper {
 		align-items: center;
 		display: flex;
@@ -1016,6 +1021,12 @@ a:visited {
 	&.show {
 		display: block;
 	}
+
+	&.season {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
 }
 
 .actions {
@@ -1320,3 +1331,26 @@ a:visited {
 		}
 	}
 }
+.highseason {
+	align-items: center;
+	border: 1px solid var(--color-line-stronger);
+	border-radius: var(--border-radius);
+	display: flex;
+	justify-content: space-between;
+	padding: 1em;
+	transition: background-color .5s ease-in-out, color .5s ease-in;
+
+	&.active {
+		background: var(--green);
+		border: 1px solid var(--dark-green);
+
+		.cell_division {
+			color: var(--high-season-text);
+		}
+	}
+
+	.cell_division {
+		margin: 0;
+	}
+}
+
