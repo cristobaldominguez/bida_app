@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  log_standard: one
+  frecuency: 1
+  cycle: MyString
+
+two:
+  log_standard: two
+  frecuency: 1
+  cycle: MyString

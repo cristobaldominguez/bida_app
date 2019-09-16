@@ -10,15 +10,15 @@
       <div class="step-1">
         <div class="field">
           <label for="task_name">Name</label>
-          <input type="text" value="" name="name" id="task_name" data-required="true" data-error="Name is required">
+          <input type="text" value="" name="name" id="task_name" data-required="true" data-error="Name is required" data-target="name">
         </div>
         <div class="field">
           <label for="task_comment">Comment</label>
-          <input type="text" value="" name="comment" id="task_comment">
+          <input type="text" value="" name="comment" id="task_comment" data-target="comment">
         </div>
         <div class="field no-border">
           <label for="task_responsible">Responsible</label>
-          <%= collection_select(:responsible, :responsible_id, @responsibles, :first, :second, {prompt: 'Select a Responsible'}, data: {required: true, error: 'Responsible is required'}) %>
+          <%= collection_select(:responsible, :responsible_id, @responsibles, :first, :second, {prompt: 'Select a Responsible'}, data: {required: true, error: 'Responsible is required', target: 'responsible'}) %>
         </div>
       </div>
 
@@ -26,17 +26,17 @@
 
         <div class="field">
           <label for="season">Affected by Season?</label>
-          <%= collection_select(:season, :modal_season, @seasons, :first, :second, {prompt: 'Select an option'}, data: {required: true, error: 'Season is required'}) %>
+          <%= collection_select(:season, :modal_season, @seasons, :first, :second, {prompt: 'Select an option'}, data: {required: true, error: 'Season is required', target: 'season'}) %>
         </div>
 
         <div class="field no-border">
           <label for="task_frecuency">Frecuency</label>
-          <%= collection_select(:frecuency, :frecuency_id, @log_frecuency, :first, :second, {prompt: 'Select a Frecuency'}, data: {required: true, error: 'Frecuency is required'}) %>
+          <%= collection_select(:frecuency, :frecuency_id, @log_frecuency, :first, :second, {prompt: 'Select a Frecuency'}, data: {required: true, error: 'Frecuency is required', target: 'frecuency'}) %>
         </div>
 
         <div class="select_week" id="weekly">
           <p class="select_week__label">Select the days of the week</p>
-          <%= render 'shared/modal/week', block_class: 'select_week' %>
+          <%= render 'shared/modal/week', block_class: 'select_week', data_week: 1 %>
         </div>
 
         <div class="select_month" id="every_2_weeks">

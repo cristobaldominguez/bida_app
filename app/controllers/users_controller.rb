@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :set_plants, only: [:create, :update]
+  before_action :set_employees, only: [:new, :create, :edit, :update]
   before_action :grouped_plants, :set_roles, :set_interface_colors, only: [:edit, :new, :create, :update]
   authorize_resource
   skip_authorize_resource only: :uicolor
@@ -43,7 +44,7 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-    @user.plants = params[:user][:plant_ids].reject(&:blank?).map { |e| @plants.find(e) }
+    @user.plants = params[:user][:plant_ids].reject(&:blank?).map { |e| @plants.find(e) } if params[:user][:plant_ids]
 
     respond_to do |format|
       if @user.update(user_params)
@@ -105,13 +106,18 @@ class UsersController < ApplicationController
     @roles = User.roles.map { |role, _| [role, role.to_s.humanize] }
   end
 
+  def set_employees
+    @employees = User.employees.map { |employee| [employee.first, employee.first.humanize] }
+  end
+
   def set_interface_colors
     @interface_colors = User.interface_colors.map { |color, _| [color, color.to_s.humanize] }
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
-    params.require(:user).permit(:name, :lastname, :email, :active, :address01, :address02, :phone,
-                                 :interface_color, :mobile, :plants, :role, :password, :password_confirmation)
+    params.require(:user).permit(:name, :lastname, :email, :active, :address01, :address02,
+                                 :phone, :interface_color, :mobile, :plants, :role,
+                                 :password, :password_confirmation, :employee)
   end
 end

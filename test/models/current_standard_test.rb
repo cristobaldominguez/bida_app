@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class InputTypeTest < ActiveSupport::TestCase
+class CurrentLogStandardTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

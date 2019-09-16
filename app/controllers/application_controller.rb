@@ -10,8 +10,8 @@ class ApplicationController < ActionController::Base
   protected
 
   def set_samplings_lists
-    @lab_samplings = check_sampling_link(@plant, 'Lab')
-    @internal_samplings = check_sampling_link(@plant, 'Internal')
+    # @lab_samplings = check_sampling_link(@plant, 'Lab')
+    # @internal_samplings = check_sampling_link(@plant, 'Internal')
   end
 
   def set_plant
@@ -52,14 +52,12 @@ class ApplicationController < ActionController::Base
     return nil if plant.nil?
 
     sampling_target = target == 'Lab' ? plant.sampling_lists.lab : plant.sampling_lists.internal
-    frecuency_name = sampling_target.last.frecuency.name
-    sampling_cycle = sampling_target.last.per_cycle
+    frecuency_name = sampling_target.first.frecuency.name
+    sampling_cycle = sampling_target.first.per_cycle
     start_date = def_start_date(frecuency_name)
 
     sampling_lists = sampling_target.select { |elem| elem.created_at.to_date.between?(start_date, current_date) }
-    sampling_list = generate_new_sampling_lists(target) if sampling_lists.size < sampling_cycle
-
-    sampling_param = sampling_list.blank? ? sampling_target.last : sampling_list
+    sampling_param = sampling_lists.size < sampling_cycle ? generate_new_sampling_lists(target) : sampling_target.last
     edit_plant_sampling_list_path(@plant, sampling_param)
   end
 
@@ -67,8 +65,10 @@ class ApplicationController < ActionController::Base
     sampling_target = target == 'Lab' ? @plant.sampling_lists.lab : @plant.sampling_lists.internal
     plant_samplings = sampling_target.includes(:samplings)
     sampling_list = plant_samplings.max_by(&:created_at)
+    date = Date.today
 
     new_sl = SamplingList.create(plant_id: sampling_list.plant_id,
+                                 date: Date.new(date.year, date.month, 1),
                                  access_id: sampling_list.access_id,
                                  frecuency_id: sampling_list.frecuency_id,
                                  per_cycle: sampling_list.per_cycle)

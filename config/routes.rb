@@ -7,9 +7,9 @@ Rails.application.routes.draw do
   resources :bounds
   resources :standards
   resources :charts
-  resources :plants, only: %i[index]
+  # resources :plants, only: %i[index]
   resources :companies do
-    resources :plants, only: %i[new create update destroy]
+    resources :plants, only: %i[index new create update destroy]
   end
   resources :plants, path_prefix: '/companies/:company_id', except: %i[new create update destroy] do
     resources :sampling_lists

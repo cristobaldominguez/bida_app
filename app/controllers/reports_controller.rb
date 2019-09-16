@@ -105,7 +105,7 @@ class ReportsController < ApplicationController
     report_date = report.date
     start_date = report_date.beginning_of_month
     end_date = report_date.end_of_month
-    minimum_liquid_required = 0.05 * @plant.flow_design
+    minimum_liquid_required = (0.05 * @plant.flow_design).to_i
     outputs = %w[In Out]
 
     # Database info
@@ -114,7 +114,7 @@ class ReportsController < ApplicationController
     flows_year = flows_history.select { |flow| flow.date > start_date - 11.months && flow.date < end_date }
     flows_month = flows_history.select { |flow| flow.date >= start_date && flow.date <= end_date }
 
-    treated_water_history = flows_history.reject { |flow| flow.date > end_date || flow.value < minimum_liquid_required }.group_by_month(&:date)
+    treated_water_history = flows_history.reject { |flow| flow.value.nil? || flow.date > end_date || flow.value < minimum_liquid_required }.group_by_month(&:date)
     sampling_lists_history = @plant.sampling_lists.includes(samplings: [standard: :option]).created_before(end_date)
     sampling_lists_labs = sampling_lists_history.lab
 

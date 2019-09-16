@@ -11,56 +11,71 @@
     </div>
   <% end %>
 
-  <table class="form_logs">
-    <tbody>
-      <tr>
-        <th>Task</th>
-        <th>Value</th>
-        <th>Cycle</th>
-        <th>Frecuency</th>
-        <th>Responsible</th>
-      </tr>
 
-      <% current_id = 0 %>
-      <%= form.fields_for :logs, @logs do |log| %>
-      <%= log.fields_for :log_standard do |log_standard| %>
-      <%= log_standard.fields_for :task do |task| %>
-      <%= task.fields_for :input_type do |input| %>
-      <% if current_id != log_standard.object.task.log_type.id %>
-      <tr class="no_background"><td colspan="5" class="cell_division"><%= log_standard.object.task.log_type.name %></td></tr>
-      <% end %>
-      <% current_id = log_standard.object.task.log_type.id %>
-      <tr>
-        <td><%= log_standard.object.task.name %><%= " (#{log_standard.object.comment})" if log_standard.object.comment != '' %></td>
-        <td>
-          <% input_type = log_standard.object.task.input_type.option %>
-          <%= input.hidden_field :option, value: input_type %>
-          <% if input_type == 'checkbox' %>
-          <%= log.check_box :value, class: 'check' %>
-          <% elsif ['inches', 'pH record', 'PSI', '% of bed', 'COD Record'].include?(input_type) %>
-          <%= log.number_field :value %>
-          <% elsif input_type == 'date' %>
-          <%= log.text_field :value, class: 'datepicker' %>
-          <% elsif input_type == 'boolean' %>
-          <%= log.collection_radio_buttons(:value, [[1, 'Yes'],[0, 'No']], :first, :second) %>
-          <% elsif input_type == 'Low/Medium/High Density' %>
-          <%= log.collection_select(:value, [['Low', 'Low'],['Medium','Medium'],['High Density','High Density']], :first, :second, {prompt: 'Select an Alternative'})  %>
-          <% elsif input_type == 'Low/Medium/Strong Odor' %>
-          <%= log.collection_select(:value, [['Low', 'Low'],['Medium','Medium'],['Strong Odor','Strong Odor']], :first, :second, {prompt: 'Select an Alternative'})  %>
-          <% elsif input_type == 'file' %>
-          <%= log.file_field :document %>
-          <% end %>
-        </td>
-        <td><%= log.object.log_standard.cycle %></td>
-        <td><%= log.object.log_standard.frecuency.name %></td>
-        <td><%= log.object.log_standard.responsible == 1 ? 'BioFiltro' : logbook.plant.company.name %></td>
-      </tr>
-      <% end %>
-      <% end %>
-      <% end %>
-      <% end %>
-    </tbody>
-  </table>
+  <% date = nil %>
+
+  <%= render 'shared/tables/elements_list', headers: %w(Task Value) do %>
+    <%= form.fields_for :logs, @filtered_logs do |log| %>
+    <%= log.fields_for :current_log_standard do |current_log_standard| %>
+    <%= current_log_standard.fields_for :log_standard do |log_standard| %>
+    <%= log_standard.fields_for :task do |task| %>
+    <% if date.nil? || log.object.date != date %>
+    <tr class="table_main__table-row--no-height">
+      <td colspan="2" class="table_main__table-data--date">
+        <% if log.object.date == @current_date %>
+        Today
+        <% else %>
+        <%= log.object.date.to_s(:long_ordinal) %>
+        <% end %>
+      </td>
+    </tr>
+    <% end %>
+    <% date = log.object.date %>
+    <tr class="table_main__table-row">
+      <td class="table_main__table-data--left-text">
+        <%= log_standard.object.task.name %>
+        <% if log_standard.object.comment != '' %>
+        <span class="table_main__table-data-span"><%= log_standard.object.comment %><span>
+        <% end %>
+      </td>
+      <td class="table_main__table-data">
+        <%= log.hidden_field :id %>
+        <%= log.hidden_field :date %>
+        <%= current_log_standard.hidden_field :plant_id %>
+        <%= current_log_standard.hidden_field :frecuency %>
+        <%= current_log_standard.hidden_field :cycle %>
+        <%= log_standard.hidden_field :plant_id %>
+        <%= log_standard.hidden_field :name %>
+        <%= log_standard.hidden_field :task_id %>
+        <%= log_standard.hidden_field :season %>
+        <%= log_standard.hidden_field :responsible %>
+        <%= log_standard.hidden_field :comment %>
+        <%= task.hidden_field :id %>
+        <% input_type = task.object.input_type %>
+        <%#= input.hidden_field :option, value: input_type %>
+        <% if input_type == 'checkbox' %>
+        <%= log.check_box :value, { class: 'check' }, '1', '' %>
+        <!-- <input class="check" type="checkbox" value="1" name="logbook[logs_attributes][0][value]" id="logbook_logs_attributes_0_value"> -->
+        <% elsif ['inches', 'pH record', 'PSI', '% of bed', 'COD Record'].include?(input_type) %>
+        <%= log.number_field :value %>
+        <% elsif input_type == 'date' %>
+        <%= log.text_field :value, class: 'datepicker' %>
+        <% elsif input_type == 'boolean' %>
+        <%= log.collection_radio_buttons(:value, [['Yes', 'Yes'],['No', 'No']], :first, :second) %>
+        <% elsif input_type == 'Low/Medium/High Density' %>
+        <%= log.collection_select(:value, [['Low', 'Low'],['Medium','Medium'],['High Density','High Density']], :first, :second, {prompt: 'Select an Alternative'})  %>
+        <% elsif input_type == 'Low/Medium/Strong Odor' %>
+        <%= log.collection_select(:value, [['Low', 'Low'],['Medium','Medium'],['Strong Odor','Strong Odor']], :first, :second, {prompt: 'Select an Alternative'})  %>
+        <% elsif input_type == 'file' %>
+        <%= log.file_field :document %>
+        <% end %>
+      </td>
+    </tr>
+    <% end %>
+    <% end %>
+    <% end %>
+    <% end %>
+  <% end %>
 
   <div class="actions">
     <%= form.submit class: 'action-btn' %>

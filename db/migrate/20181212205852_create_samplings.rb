@@ -3,8 +3,8 @@ class CreateSamplings < ActiveRecord::Migration[5.2]
     create_table :samplings do |t|
       t.references :standard, foreign_key: true
       t.references :sampling_list, foreign_key: true
-      t.float :value_in
-      t.float :value_out
+      t.integer :value_in
+      t.integer :value_out
       t.date :date
 
       t.timestamps

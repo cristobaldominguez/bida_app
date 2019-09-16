@@ -4,8 +4,9 @@ puts '----------- Adding Seeds! -----------'
 puts 'Adding Users'
 User.destroy_all
 roles = %i[no_role admin client operator operations_manager viewer]
-users = [{ name: 'Cristóbal', lastname: 'Domínguez', email: 'cris@me.com', password: '123123', role: :admin },
-         { name: 'Matías', lastname: 'Sjogren', email: 'matias@bf.com', password: '123123', role: :admin },
+users = [{ name: 'Cristóbal', lastname: 'Domínguez', email: 'cristobald@me.com', password: 'golden', role: :admin },
+         { name: 'Matías', lastname: 'Sjogren', email: 'msjogren@bf.com', password: '123123', role: :admin },
+         { name: 'Ricardo', lastname: 'Aburto', email: 'raburto@bf.com', password: '123123', role: :admin },
          { name: 'Ida', lastname: 'Hoffman', email: 'ida.hoffman87@example.com', password: '123123', role: roles.sample },
          { name: 'Ellen', lastname: 'Sanders', email: 'ellen.sanders@example.com', password: '123123', role: roles.sample },
          { name: 'Lester', lastname: 'Murray', email: 'lester.murray@example.com', password: '123123', role: roles.sample },
@@ -56,7 +57,7 @@ end
 puts 'Adding Industries'
 Industry.destroy_all
 industries = ['Beverage', 'Brewery', 'Dairy', 'Domestic Sewage', 'Energy', 'Food Processor',
-              'Goverment', 'Grower', 'Milk Processor', 'Municipality', 'Real State',
+              'Government', 'Grower', 'Milk Processor', 'Municipality', 'Real State',
               'Real State/Households/Hotels', 'Seafood Processor', 'Slaughterhouse',
               'University', 'Waste Management', 'Winery', 'WWT Provider']
 industries.sort { |a, b| a <=> b }.each do |industry|
@@ -257,66 +258,43 @@ outputs.each do |output|
   Output.create!(name: output)
 end
 
-# Log Types
-puts 'Adding Log Types'
-LogType.destroy_all
-log_types = ['1) Solid Separation',
-             '2) pH Adjustement',
-             '3) EQ tank',
-             '4) Piping',
-             '5) BIDA',
-             '6) Telemetry',
-             '7) Water Quality',
-             '8) Upload Logbook to Dropbox']
-log_types.each do |category|
-  LogType.create!(name: category)
-end
-
-# Input Types
-puts 'Adding Input Types'
-InputType.destroy_all
-input_types = ['checkbox', 'inches', 'pH record', 'date', 'PSI', 'boolean', '% of bed', 'Low/Medium/High Density', 'COD Record', 'Low/Medium/Strong Odor', 'file']
-input_types.each do |input_type|
-  InputType.create!(option: input_type)
-end
-
 # Tasks
 puts 'Adding Tasks'
+# enum frecuency: %w[daily weekly every_2_weeks monthly every_x_months]
 Task.destroy_all
-tasks = [{ name: 'Check correct operation', comment: '1 wash cycle', log_type_id: 1, input_type_id: 1, frecuency_id: 1, cycle: 1, responsible: 0 },
-         { name: 'Clean screen and water jets of rotary screen', comment: '', log_type_id: 1, input_type_id: 1, frecuency_id: 2, cycle: 1, responsible: 1 },
-         { name: 'Remove solids from container bin', comment: '', log_type_id: 1, input_type_id: 1, frecuency_id: 2, cycle: 1, responsible: 0 },
-         { name: 'Check solids level on settling tanks', comment: 'notify supervisor when more 1 ft', log_type_id: 1, input_type_id: 2, frecuency_id: 2, cycle: 1, responsible: 1 },
-         { name: 'Check pH chemical tank level', comment: 'notify Supervisor when is 40% and 20% level', log_type_id: 2, input_type_id: 1, frecuency_id: 1, cycle: 1, responsible: 1 },
-         { name: 'Check pH onsite equipment', comment: 'If pH is < 5.5 or > 8.5 call Supervisor', log_type_id: 2, input_type_id: 3, frecuency_id: 2, cycle: 1, responsible: 1 },
-         { name: 'Check in/out of EQ tank for leaks or blocks', comment: '', log_type_id: 3, input_type_id: 1, frecuency_id: 2, cycle: 1, responsible: 1 },
-         { name: 'Check all pumps for leaks and noise', comment: '', log_type_id: 3, input_type_id: 1, frecuency_id: 2, cycle: 1, responsible: 1 },
-         { name: 'Pump maintenance', comment: 'open, clean and replace seals', log_type_id: 3, input_type_id: 4, frecuency_id: 4, cycle: 1, responsible: 1 },
-         { name: 'Check solids level', comment: 'notify supervisor when more 1 ft', log_type_id: 3, input_type_id: 2, frecuency_id: 2, cycle: 1, responsible: 1 },
-         { name: 'Revise irrigation', comment: 'ensure adequate pressure and dispersal - notify BF Supervisor if any problem', log_type_id: 4, input_type_id: 1, frecuency_id: 1, cycle: 1, responsible: 1 },
-         { name: 'Check main irrigation pipe pressure', comment: 'range 14-20', log_type_id: 4, input_type_id: 5, frecuency_id: 2, cycle: 1, responsible: 1 },
-         { name: 'Check flies and add flies control product if neccesary', comment: 'X gallons/day', log_type_id: 5, input_type_id: 6, frecuency_id: 1, cycle: 1, responsible: 1 },
-         { name: 'Add bacteria to EQ tank', comment: '0.5 pounds', log_type_id: 5, input_type_id: 1, frecuency_id: 2, cycle: 1, responsible: 1 },
-         { name: 'Till puddles', comment: '', log_type_id: 5, input_type_id: 6, frecuency_id: 1, cycle: 1, responsible: 1 },
-         { name: 'Unclog sprinklers head', comment: '', log_type_id: 5, input_type_id: 1, frecuency_id: 2, cycle: 1, responsible: 1 },
-         { name: 'Till the complete bed', comment: 'out of season - Sunday in preference', log_type_id: 5, input_type_id: 7, frecuency_id: 3, cycle: 1, responsible: 1 },
-         { name: 'Till the complete bed', comment: 'in season - Sunday in preference', log_type_id: 5, input_type_id: 7, frecuency_id: 3, cycle: 3, responsible: 1 },
-         { name: 'Check worms density', comment: '1 sample every 5,000 sqf', log_type_id: 5, input_type_id: 8, frecuency_id: 3, cycle: 1, responsible: 1 },
-         { name: 'Clean effluent sieve box', comment: '', log_type_id: 5, input_type_id: 1, frecuency_id: 2, cycle: 2, responsible: 1 },
-         { name: 'Validate pH sensor record onsite with paper/equipment', comment: '', log_type_id: 6, input_type_id: 3, frecuency_id: 2, cycle: 1, responsible: 1 },
-         { name: 'Calibrate Sensors', comment: '', log_type_id: 6, input_type_id: 1, frecuency_id: 3, cycle: 2, responsible: 1 },
-         { name: 'Replace Sensor', comment: '', log_type_id: 6, input_type_id: 1, frecuency_id: 4, cycle: 2, responsible: 1 },
-         { name: 'Water lab sample BOD/TSS', comment: '1st week of the month', log_type_id: 7, input_type_id: 4, frecuency_id: 3, cycle: 1, responsible: 1 },
-         { name: 'Water internal sample COD', comment: '', log_type_id: 7, input_type_id: 9, frecuency_id: 3, cycle: 2, responsible: 1 },
-         { name: 'Smell treated water', comment: '', log_type_id: 7, input_type_id: 10, frecuency_id: 2, cycle: 1, responsible: 1 },
-         { name: 'Upload document', comment: '', log_type_id: 8, input_type_id: 11, frecuency_id: 2, cycle: 1, responsible: 1 }]
+tasks = [{ name: 'Check correct operation', comment: '1 wash cycle', input_type: 0, frecuency: 0, cycle: '', responsible: 0 },
+         { name: 'Clean screen and water jets of rotary screen', comment: '', input_type: 0, frecuency: 0, cycle: '', responsible: 1 },
+         { name: 'Remove solids from container bin', comment: '', input_type: 0, frecuency: 1, cycle: '{"months":[],"days":[{"day":"wed","week":1,"num":3}]}', responsible: 0 },
+         { name: 'Check solids level on settling tanks', comment: 'notify supervisor when more 1 ft', input_type: 1, frecuency: 1, cycle: '{"months":[],"days":[{"day":"tue","week":1,"num":2},{"day":"thu","week":1,"num":4}]}', responsible: 1 },
+         { name: 'Check pH chemical tank level', comment: 'notify Supervisor when is 40% and 20% level', input_type: 0, frecuency: 0, cycle: '', responsible: 1 },
+         { name: 'Check pH onsite equipment', comment: 'If pH is < 5.5 or > 8.5 call Supervisor', input_type: 2, frecuency: 1, cycle: '{"months":[],"days":[{"day":"mon","week":1,"num":1}]}', responsible: 1 },
+         { name: 'Check in/out of EQ tank for leaks or blocks', comment: '', input_type: 0, frecuency: 1, cycle: '{"months":[],"days":[{"day":"fri","week":1,"num":5}]}', responsible: 1 },
+         { name: 'Check all pumps for leaks and noise', comment: '', input_type: 0, frecuency: 1, cycle: '{"months":[],"days":[{"day":"tue","week":1,"num":2}]}', responsible: 1 },
+         { name: 'Pump maintenance', comment: 'open, clean and replace seals', input_type: 3, frecuency: 4, cycle: '{"months":[{"month":3},{"month":9}],"days":[{"day":"wed","week":2,"num":10}]}', responsible: 1 },
+         { name: 'Check solids level', comment: 'notify supervisor when more 1 ft', input_type: 1, frecuency: 1, cycle: '{"months":[],"days":[{"day":"thu","num":4}]}', responsible: 1 },
+         { name: 'Revise irrigation', comment: 'ensure adequate pressure and dispersal - notify BF Supervisor if any problem', input_type: 0, frecuency: 0, cycle: '', responsible: 1 },
+         { name: 'Check main irrigation pipe pressure', comment: 'range 14-20', input_type: 4, frecuency: 1, cycle: '{"months":[],"days":[{"day":"thu","num":4},{"day":"mon","num":1},{"day":"wed","num":3},{"day":"fri","num":5}]}', responsible: 1 },
+         { name: 'Check flies and add flies control product if necessary', comment: 'X gallons/day', input_type: 5, frecuency: 1, cycle: '{"months":[],"days":[{"day":"mon","week":1,"num":1}]}', responsible: 1 },
+         { name: 'Add bacteria to EQ tank', comment: '0.5 pounds', input_type: 0, frecuency: 1, cycle: '{"months":[],"days":[{"day":"wed","week":1,"num":3}]}', responsible: 1 },
+         { name: 'Till puddles', comment: '', input_type: 5, frecuency: 0, cycle: '', responsible: 1 },
+         { name: 'Unclog sprinklers head', comment: '', input_type: 0, frecuency: 0, cycle: '', responsible: 1 },
+         { name: 'Till the complete bed', comment: 'out of season - Sunday in preference', input_type: 6, frecuency: 3, cycle: '{"months":[],"days":[{"day":"thu","week":1,"num":4}]}', responsible: 1, season: 2 },
+         { name: 'Till the complete bed', comment: 'in season - Sunday in preference', input_type: 6, frecuency: 1, cycle: '{"months":[],"days":[{"day":"thu","week":1,"num":4}]}', responsible: 1, season: 1 },
+         { name: 'Check worms density', comment: '1 sample every 5,000 sqf', input_type: 7, frecuency: 3, cycle: '{"months":[],"days":[{"day":"fri","week":2,"num":12}]}', responsible: 1 },
+         { name: 'Clean effluent sieve box', comment: '', input_type: 0, frecuency: 2, cycle: '{"months":[],"days":[{"day":"tue","week":1,"num":2},{"day":"fri","week":2,"num":12}]}', responsible: 1 },
+         { name: 'Validate pH sensor record onsite with paper/equipment', comment: '', input_type: 2, frecuency: 1, cycle: '{"months":[],"days":[{"day":"mon","week":1,"num":1}]}', responsible: 1 },
+         { name: 'Calibrate Sensors', comment: '', input_type: 0, frecuency: 2, cycle: '{"months":[],"days":[{"day":"wed","week":1,"num":3}]}', responsible: 1 },
+         { name: 'Replace Sensor', comment: '', input_type: 0, frecuency: 4, cycle: '{"months":[{"month":3},{"month":9}],"days":[{"day":"mon","week":1,"num":1}]}', responsible: 1 },
+         { name: 'Water lab sample BOD/TSS', comment: '1st week of the month', input_type: 3, frecuency: 3, cycle: '{"months":[],"days":[{"day":"mon","week":1,"num":1}]}', responsible: 1 },
+         { name: 'Water internal sample COD', comment: '', input_type: 8, frecuency: 3, cycle: '{"months":[],"days":[{"day":"thu","week":1,"num":4},{"day":"thu","week":3,"num":18}]}', responsible: 1 },
+         { name: 'Smell treated water', comment: '', input_type: 9, frecuency: 1, cycle: '{"months":[],"days":[{"day":"fri","week":1,"num":5}]}', responsible: 1 }]
 tasks.each do |task|
   Task.create!(name: task[:name],
-               comment: task[:comment],
-               log_type_id: task[:log_type_id],
-               input_type_id: task[:input_type_id],
-               frecuency_id: task[:frecuency_id],
                cycle: task[:cycle],
+               season: task[:season] || 0,
+               comment: task[:comment],
+               frecuency: task[:frecuency],
+               input_type: task[:input_type],
                responsible: task[:responsible])
 end
 
@@ -335,12 +313,12 @@ charts.each do |chart|
   Chart.create!(name: chart[:name], shape: chart[:shape])
 end
 
-# # Add Default data
-# puts 'Adding Fake Data'
+
+# # Add Plants Flows
+# puts 'Adding First Plant Flows'
 # flow_history = {
 #   "_2016": {
-#     "_08": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 596, 486],
-#     "_09": [0, 612, 759, 0, 471, 675, 1132, 977, 925, 1008, 860, 960, 250, 0, 269, 278, 0, 0, 559, 1045, 738, 669, 826, 151, 0, 606, 1016, 942, 680, 1043],
+#     "_09": [nil, 612, 759, nil, 471, 675, 1132, 977, 925, 1008, 860, 960, 250, nil, 269, 278, nil, nil, 559, 1045, 738, 669, 826, 151, nil, 606, 1016, 942, 680, 1043],
 #     "_10": [996, 667, 590, 837, 1053, 1040, 1022, 734, 612, 1040, 795, 978, 1005, 118, 1021, 993, 406, 581, 680, 0, 473, 757, 984, 849, 677, 517, 967, 795, 393, 619, 551],
 #     "_11": [1144, 401, 0, 213, 483, 1, 167, 125, 382, 498, 668, 249, 0, 1, 188, 2, 153, 105, 706, 3, 358, 437, 885, 314, 3, 149, 23, 206, 332, 278],
 #     "_12": [577, 308, 2, 1, 208, 1, 1, 306, 1, 628, 1, 400, 315, 4, 1117, 228, 1, 4, 2, 449, 2, 11, 239, 1, 1, 2, 1, 68, 1, 1, 1]
@@ -360,70 +338,105 @@ end
 #     "_12": [364, 260, 0, 0, 0, 0, 0, 129, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 422, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 #   },
 #   "_2018": {
-#     "_01": [0, 139, 230, 6, 397, 0, 1, 1732, 1032, 300, 349, 739, 0, 0.4625, 893.725, 881.125, 800, 734, 157, 139, 0, 134, 681, 729, 1065, 0, 0, 0, 0, 482, 730],
-#     "_02": [352, 150, 1, 0.25, 245.7125, 767.5, 801, 699, 460, 0, 0, 1311, 840, 680, 316, 638, 0, 0, 0, 837, 287, 413, 0, 0, 0, 1057, 1238, 680],
-#     "_03": [1032, 1137, 0, 122, 325, 1276, 172, 1080, 536, 0, 0, 250.125, 479, 304, 360, 811, 0, 0, 1721, 1412, 740, 1212, 417, 0, 0, 1978, 348, 0, 0, 114, 0],
-#     "_04": [0, 239, 168, 189, 147, 433, 302, 0, 434, 0, 0, 187, 0, 0, 0, 637, 466, 0, 435, 0, 1, 0, 0, 1, 0, 130, 167, 0, 0.075, 147],
-#     "_05": [1, 0, 124, 1, 0, 0, 0, 119, 0, 0, 0, 0.075, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 178, 0, 0, 0, 0, 173, 527, 173],
+#     "_01": [0, 139, 230, 6, 397, 0, 1, 1732, 1032, 300, 349, 739, 0, 0, 894, 881, 800, 734, 157, 139, 0, 134, 681, 729, 1065, 0, 0, 0, 0, 482, 730],
+#     "_02": [352, 150, 1, 0, 246, 768, 801, 699, 460, 0, 0, 1311, 840, 680, 316, 638, 0, 0, 0, 837, 287, 413, 0, 0, 0, 1057, 1238, 680],
+#     "_03": [1032, 1137, 0, 122, 325, 1276, 172, 1080, 536, 0, 0, 250, 479, 304, 360, 811, 0, 0, 1721, 1412, 740, 1212, 417, 0, 0, 1978, 348, 0, 0, 114, 0],
+#     "_04": [0, 239, 168, 189, 147, 433, 302, 0, 434, 0, 0, 187, 0, 0, 0, 637, 466, 0, 435, 0, 1, 0, 0, 1, 0, 130, 167, 0, 0, 147],
+#     "_05": [1, 0, 124, 1, 0, 0, 0, 119, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 178, 0, 0, 0, 0, 173, 527, 173],
 #     "_06": [0, 0, 0, 1, 0, 114, 136, 137, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 124, 0, 0],
-#     "_07": [0, 0, 0, 0, 0.2125, 0, 0.2125, 0, 0, 0, 0, 0, 126.8, 0.0625, 0, 0, 0, 188.9, 0, 0, 0, 0, 0, 0, 381.9125, 353.55, 533.675, 0, 0, 460.675, 411.3],
+#     "_07": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 127, 0, 0, 0, 0, 189, 0, 0, 0, 0, 0, 0, 382, 354, 534, 0, 0, 461, 411],
 #     "_08": [598, 575, 0, 0, 0, 655, 170, 910, 915, 519, 0, 0, 1269, 314, 0, 0, 0, 0, 0, 246, 0, 143, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-#     "_09": [0, 0, 0, 0.1, 0.0125, 318.0125, 409.225, 0, 0, 368.3875, 306.7375, 222.6625, 0.4625, 119.575, 0.25, 0, 1078.725, 1066.675, 737.375, 722.2375, 419.1, 1159.025, 846.975, 880.275, 2148.175, 812.55, 798.6, 1183.875, 1625.45, 1276.325],
+#     "_09": [0, 0, 0, 0, 0, 318, 409, 0, 0, 368, 307, 223, 0, 120, 0, 0, 1079, 1067, 737, 722, 419, 1159, 847, 880, 2148, 813, 799, 1184, 1625, 1276],
 #     "_10": [453, 1977, 1694, 620, 1144, 1923, 1151, 1318, 1141, 1212, 690, 945, 995, 620, 1963, 1168, 1897, 1099, 1056, 1658, 1217, 556, 1090, 1319, 1129, 641, 943, 1508, 969, 85, 4],
 #     "_11": [4, 5, 5, 7, 9, 11, 9, 8, 1261, 1820, 734, 968, 339, 1132, 968, 1, 149, 1139, 452, 418, 1198, 171, 211, 987, 183, 785, 455, 615, 1591, 1551],
 #     "_12": [132, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 5, 0, 129, 128, 3, 0, 1467, 530, 0, 0, 0, 121, 7, 1, 0, 0, 0, 0, 1]
 #   },
 #   "_2019": {
-#     "_01": [1, 129, 0, 0, 0, 961, 264, 548, 252, 165, 123, 0, 0, 0, 255.775, 1186.625, 1586, 316, 0, 132, 681, 811, 494, 599, 162, 0, 0, 634, 738, 718, 650],
-#     "_02": [639, 1245, 776, 532, 731, 984, 1411, 1313, 126, 960, 455, 995, 1199, 609, 511, 1226, 382, 614, 380, 634, 1263, 653, 95, 494, 1443, 130, 1333, 153],
-#     "_03": [817, 1107, 1148, 1456, 1457, 533, 615, 84, 1235, 704, 376, 1063, 158, 18, 1453, 1211, 293, 537, 174, 1211, 429, 9, 152, 371, 1437, 928, 447, 341, 606, 1445, 290],
-#     "_04": [743, 646, 1346, 1321, 263, 782, 1006, 1320, 1112, 1184, 321, 432, 843, 912, 682, 1251, 1091, 128, 32, 836, 960, 656, 131, 486, 722, 393, 926, 1004, 865, 499],
-#     "_05": [164, 58, 1214, 881, 568, 261, 670, 428, 583, 254, 470, 754, 675, 824, 316, 1168, 281, 1288, 6, 1105, 325, 687, 943, 1472, 107, 307, 118, 1339, 627, 867, 582]
+#     "_01": [1, 129, 0, 0, 0, 961, 264, 548, 252, 165, 123, 0, 0, 0, 256, 1187, 1586, 316, 0, 132, 681, 811, 494, 599, 162, 0, 0, 634, 738, 718, 650],
+#     "_02": [915, 765, 433, 1114, 651, 663, 713, 734, 138, 1, 811, 950, 2101, 3795, 3533, 4120, 4775, 5278, 3696, 998, 48, 38, 22, 243, 942, 3, 856, 1],
+#     "_03": [277, 1086, 0, 395, 253, 1332, 354, 0, 128, 0, 600, 261, 450, 491, 1, 0, 0, 132, 0, 198, 0, 278, 297, 0, 1, 0, 355, 716, 1, 1, 1],
+#     "_04": [0, 0, 125, 0, 0, 0, 0, 297, 1, 1, 1, 0, 1, 0, 221, 112, 0, 1, 107, 1, 0, 2, 0, 1, 154, 0, 1, 0, 0, 0],
+#     "_05": [0, 0, 0, 0, 0, 124, 0, 33, 0, 1, 0, 0, 0, 0, 293, 702, 687, 185, 462, 1, 278, 129, 197, 0, 0, 0, 0, 367, 557, 69, 263],
+#     "_06": [0, 1, 1, 5, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 111, 0, 159, 1, 0, 0, 0, 0, 0, 45, 0, 1, 0],
+#     "_07": [0, 145, 129, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 464, 0, 0, 216, 465, 409, 633, 602, 102, 0, 475, 541, 239]
 #   }
 # }
-
-# plant_id = Plant.first.id
+#
+# plant = Plant.find_by(name: 'St Helena')
 # flow_history.each do |data_key, data_value|
 #   year = data_key.to_s.delete!('_').to_i
 #   data_value.each do |hash_key, hash_value|
 #     month = hash_key.to_s.delete!('_').to_i
-#     fr = FlowReport.create!(plant_id: plant_id, date: Date.new(year, month, 1))
+#     fr = FlowReport.create!(plant: plant, date: Date.new(year, month, 1))
 #     hash_value.each_with_index do |value_key, i|
-#       fr.flows.create!(plant_id: plant_id, value: value_key, date: Date.new(year, month, (i + 1)))
+#       fr.flows.create!(plant: plant, value: value_key, date: Date.new(year, month, (i + 1)))
 #     end
 #   end
 # end
-
+# puts 'End First Plant Flows'
+#
+#
+# # Add Plants Samplings
+# puts 'Adding First Plant Samplings'
+#
+# st_helena_samplings = [
+#   { BOD: { in: 780, out: 220, date: '2016-09-22' }, TSS: { in: 69, out: 50, date: '2016-09-22' } },
+#   { BOD: { in: 2500, out: 15, date: '2016-10-05' }, TSS: { in: 200, out: 14, date: '2016-10-05' } },
+#   { BOD: { in: 1100, out: 13, date: '2016-11-25' }, TSS: { in: 140, out: 11, date: '2016-11-25' } },
+#   { BOD: { in: 840, out: 3, date: '2016-12-14' }, TSS: { in: 160, out: 6, date: '2016-12-14' } },
+#   { BOD: { in: 95, out: 2, date: '2017-01-03' }, TSS: { in: 96, out: 0, date: '2017-01-03' } },
+#   { BOD: { in: 4200, out: 2, date: '2017-02-01' }, TSS: { in: 180, out: 0, date: '2017-02-01' } },
+#   { BOD: { in: 910, out: 2, date: '2017-03-01' }, TSS: { in: 320, out: 0, date: '2017-03-01' } },
+#   { BOD: { in: 1200, out: 2, date: '2017-04-06' }, TSS: { in: 360, out: 0, date: '2017-04-06' } },
+#   { BOD: { in: 400, out: 1, date: '2017-05-02' }, TSS: { in: 440, out: 0, date: '2017-05-02' } },
+#   { BOD: { in: 910, out: 5, date: '2017-06-07' }, TSS: { in: 510, out: 7, date: '2017-06-07' } },
+#   { BOD: { in: 830, out: 3, date: '2017-07-06' }, TSS: { in: 200, out: 6, date: '2017-07-06' } },
+#   { BOD: { in: 1100, out: 2, date: '2017-08-03' }, TSS: { in: 74, out: 0, date: '2017-08-03' } },
+#   { BOD: { in: 750, out: 4, date: '2017-09-08' }, TSS: { in: 40, out: 6, date: '2017-09-08' } },
+#   { BOD: { in: 1900, out: 6, date: '2017-10-06' }, TSS: { in: 510, out: 6, date: '2017-10-06' } },
+#   { BOD: { in: 4300, out: 180, date: '2017-11-30' }, TSS: { in: 950, out: 24, date: '2017-11-30' } },
+#   { BOD: { in: 1200, out: 18, date: '2017-12-15' }, TSS: { in: 170, out: 5, date: '2017-12-15' } },
+#   { BOD: { in: 3000, out: 280, date: '2018-01-17' }, TSS: { in: 970, out: 9, date: '2018-01-17' } },
+#   { BOD: { in: 1100, out: 23, date: '2018-02-15' }, TSS: { in: 910, out: 12, date: '2018-02-15' } },
+#   { BOD: { in: 5800, out: 230, date: '2018-03-02' }, TSS: { in: 2000, out: 16, date: '2018-03-02' } },
+#   { BOD: { in: 340, out: 39, date: '2018-04-06' }, TSS: { in: 250, out: 350, date: '2018-04-06' } },
+#   { BOD: { in: 1300, out: 6, date: '2018-05-02' }, TSS: { in: 2800, out: 21, date: '2018-05-02' } },
+#   { BOD: { in: 1300, out: 38, date: '2018-06-07' }, TSS: { in: 920, out: 38, date: '2018-06-07' } },
+#   { BOD: { in: 320, out: 64, date: '2018-07-11' }, TSS: { in: 3400, out: 21, date: '2018-07-11' } },
+#   { BOD: { in: 3300, out: 0, date: '2018-08-23' }, TSS: { in: 420, out: 0, date: '2018-08-23' } },
+#   { BOD: { in: 2600, out: 10, date: '2018-09-20' }, TSS: { in: 1000, out: 12, date: '2018-09-20' } },
+#   { BOD: { in: 1800, out: 6, date: '2018-10-11' }, TSS: { in: 1800, out: 8, date: '2018-10-11' } },
+#   { BOD: { in: 7700, out: 2, date: '2018-11-13' }, TSS: { in: 37000, out: 0, date: '2018-11-13' } },
+#   { BOD: { in: 2800, out: 13, date: '2018-12-07' }, TSS: { in: 2700, out: 9, date: '2018-12-07' } },
+#   { BOD: { in: 1900, out: 5, date: '2019-01-10' }, TSS: { in: 8100, out: 6, date: '2019-01-10' } },
+#   { BOD: { in: 1400, out: 5, date: '2019-02-11' }, TSS: { in: 5200, out: 12, date: '2019-02-11' } },
+#   { BOD: { in: 810, out: 12, date: '2019-03-05' }, TSS: { in: 1700, out: 27, date: '2019-03-05' } },
+#   { BOD: { in: 670, out: 6, date: '2019-04-08' }, TSS: { in: 1200, out: 17, date: '2019-04-08' } },
+#   { BOD: { in: 2100, out: 7, date: '2019-05-09' }, TSS: { in: 1100, out: 10, date: '2019-05-09' } },
+#   { BOD: { in: 330, out: 6, date: '2019-06-04' }, TSS: { in: 5900, out: 9, date: '2019-06-04' } },
+#   { BOD: { in: 550, out: 3, date: '2019-07-10' }, TSS: { in: 470, out: 9, date: '2019-07-10' } }
+# ]
+#
 # Sampling.destroy_all
 # SamplingList.destroy_all
-# plant = Plant.first
-# accesses = Access.all
-# standards_arr = plant.standards.select(&:enabled)
-
-# accesses.each do |access|
-#   (2016..2019).each do |year|
-#     (1..12).each do |month|
-#       total_days_month = Date.new(year, month, 1).end_of_month.day
-#       day = [*1..total_days_month].sample
-#       sampling_list = SamplingList.create!(plant: plant,
-#                                            access: access,
-#                                            frecuency_id: 3,
-#                                            per_cycle: 1,
-#                                            date: Date.new(year, month, day),
-#                                            created_at: "#{year}-#{month}-1 08:00:00",
-#                                            updated_at: "#{year}-#{month}-1 08:00:00")
-#       standards_arr.each do |st|
-#         sampling_list.samplings.create!(standard: st,
-#                                         date: Date.new(year, month, day),
-#                                         value_in: Random.rand(0...5400),
-#                                         value_out: Random.rand(0...500),
-#                                         created_at: "#{year}-#{month}-#{day} 08:00:00",
-#                                         updated_at: "#{year}-#{month}-#{day} 08:00:00")
-#       end
-#     end
+# # plant = Plant.find_by(name: 'St Helena')
+# lab_access = Access.find_by(name: 'Lab')
+# monthly_frecuency = Frecuency.find_by(name: 'Monthly')
+#
+# st_helena_samplings.each do |samplings|
+#   d = samplings[samplings.keys.first][:date].split('-').map(&:to_i)
+#   year = d.first
+#   month = d.second
+#   day = d.third
+#   date = Date.new(year, month, day)
+#
+#   sampling_list = SamplingList.create!(plant: plant, access: lab_access, frecuency: monthly_frecuency, per_cycle: 1, date: Date.new(year, month, 1), created_at: "#{year}-#{month}-1 08:00:00", updated_at: "#{year}-#{month}-1 08:00:00")
+#
+#   samplings.keys.each do |key|
+#     standard = plant.standards.select { |s| s.option.name == key.to_s }.first
+#     sampling_list.samplings.create!(standard: standard, date: date, value_in: samplings[key][:in], value_out: samplings[key][:out], created_at: "#{year}-#{month}-#{day} 08:00:00", updated_at: "#{year}-#{month}-#{day} 08:00:00")
 #   end
 # end
-
-# puts 'End Fake Data'
+# puts 'End First Plant Samplings'
 
 puts '----------- Seeds Added! -----------'

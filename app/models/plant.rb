@@ -9,6 +9,7 @@ class Plant < ApplicationRecord
   has_many :inspections, dependent: :destroy
 
   has_many :log_standards
+  has_many :current_log_standards
   has_many :logbooks
 
   has_many :flows, dependent: :destroy
@@ -31,8 +32,10 @@ class Plant < ApplicationRecord
 
   accepts_nested_attributes_for :standards, allow_destroy: true
   accepts_nested_attributes_for :sampling_lists, allow_destroy: true
-  accepts_nested_attributes_for :log_standards, allow_destroy: true
+  accepts_nested_attributes_for :current_log_standards, allow_destroy: true
   accepts_nested_attributes_for :graph_standards, allow_destroy: true
+
+  enum frecuency: %w[daily weekly every_2_weeks monthly every_x_months]
 
   def metrics
     country.metric

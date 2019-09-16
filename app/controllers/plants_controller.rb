@@ -5,6 +5,7 @@ class PlantsController < ApplicationController
   before_action :set_users, :set_frecuencies, only: %i[new edit create update]
   before_action :set_responsibles, :set_season, :set_log_frecuency, only: %i[new edit create update show]
   after_action :assign_plant_to_current_user, only: :create, unless: -> { @plant.nil? }
+  # after_action :generate_month_logs, only: [:create]
   load_and_authorize_resource
 
   # GET companies/:company_id/plants
@@ -24,8 +25,9 @@ class PlantsController < ApplicationController
     @standards = @plant.standards
     @sampling_lists = @plant.sampling_lists.includes(:access, samplings: [standard: %i[option bounds]]).group_by { |k| k.access.name }.map { |_, v| v.max_by(&:created_at) }
     @samplings = @sampling_lists.map { |sl| { sl.access.name => sl.samplings.group_by { |s| s.standard.option.name }.map { |_, v| v.max_by(&:created_at) } } }
-    @log_standards = @plant.log_standards.includes(:frecuency, task: :log_type).order('log_types.id')
+    @log_standards = @plant.log_standards.includes(:frecuency, :task)
     @graph_standards = @plant.graph_standards.includes(:chart)
+    @current_log_standards = @plant.current_log_standards.includes(:log_standard)
 
     @system_size = @plant.system_size.sum
     @volume_metric = @system_size > 1 ? @plant.country.metric.volume.pluralize : @plant.country.metric.volume
@@ -37,13 +39,14 @@ class PlantsController < ApplicationController
     @plant = @company.plants.build
     @is_new = true
 
-    @frecuencies = Frecuency.all
     outlets = Outlet.all
     options = Option.all
     accesses = Access.all
-    tasks = Task.all.order(:id).includes(:log_type)
+    tasks = Task.all.order(:id)
     standards = []
     sampling_lists = []
+    log_standards = []
+    @current_log_standards = []
 
     options.each do |option|
       standards << @plant.standards.build(option: option)
@@ -66,7 +69,18 @@ class PlantsController < ApplicationController
     end
 
     tasks.each do |task|
-      @plant.log_standards.build(task: task, comment: task[:comment], frecuency_id: task[:frecuency_id], cycle: task[:cycle], responsible: task[:responsible])
+      log_standards << @plant.log_standards.build(task: task,
+                                                  name: task[:name],
+                                                  season: task[:season],
+                                                  comment: task[:comment],
+                                                  responsible: task[:responsible])
+    end
+
+    log_standards.each do |log_standard|
+      @current_log_standards << @plant.current_log_standards.build(plant: @plant,
+                                                                   log_standard: log_standard,
+                                                                   frecuency: log_standard.task.frecuency,
+                                                                   cycle: log_standard.task.cycle)
     end
 
     charts = Chart.all
@@ -82,9 +96,12 @@ class PlantsController < ApplicationController
   def create
     @plant = @company.plants.build(plant_params)
     @plant.system_size = params[:plant][:system_size].split(' ').map(&:to_i)
+    @plant.cover.attach(params[:plant][:cover])
+    @plant.discharge_permit.attach(params[:plant][:discharge_permit]) if params[:plant][:discharge_permit].present?
 
     accesses = Access.all
     samplings_names = {}
+    date = Date.today
 
     accesses.each do |access|
       symbol = access.name.convert_as_parameter.to_sym
@@ -94,20 +111,33 @@ class PlantsController < ApplicationController
     @plant.sampling_lists.each do |sampling_list|
       samplings_names[sampling_list.access.name.convert_as_parameter.to_sym].each do |sn|
         standard = @plant.standards.select { |stan| stan.option.name.convert_as_parameter == sn.convert_as_parameter }.first
-        sampling_list.samplings.build(standard: standard)
+        sampling_list.samplings.build(standard: standard, date: date)
         sampling_list.save
       end
     end
 
-    logbook = @plant.logbooks.build
+    @logbook = @plant.logbooks.build
+    @current_date = Date.today
 
-    @plant.log_standards.each do |log_standard|
-      log_standard.logs.build(logbook: logbook)
-      log_standard.save
+    @plant.current_log_standards = []
+    cls_params = params['plant']['current_log_standards_attributes']
+
+    cls_params.each do |cls|
+      ls = cls.second['log_standard_attributes']
+      log_standard = @plant.log_standards.build(name: ls['name'],
+                                                active: ls['active'],
+                                                task_id: ls['task_id'],
+                                                comment: ls['comment'],
+                                                season: ls['season'],
+                                                responsible: ls['responsible'])
+      @plant.current_log_standards.build(log_standard: log_standard, frecuency: cls.second['frecuency'], cycle: cls.second['cycle'])
     end
 
-    @plant.cover.attach(params[:plant][:cover])
-    @plant.discharge_permit.attach(params[:plant][:discharge_permit]) if params[:plant][:discharge_permit].present?
+    # @plant.current_log_standards.each do |cls|
+    #   @logbook.logs.build(current_log_standard: cls, date: @current_date)
+    # end
+
+    @logbook.logs << generate_month_logs(@logbook)
 
     respond_to do |format|
       if @plant.save
@@ -126,8 +156,8 @@ class PlantsController < ApplicationController
     @company = @plant.company
     standards = @plant.standards.includes(:option, bounds: :outlet)
     # sampling_lists = @plant.sampling_lists.includes(:access, :samplings)
-    sampling_lists = @plant.sampling_lists
-    @log_standards = @plant.log_standards.includes(task: [:log_type]).order('log_types.id')
+    sampling_lists = @plant.sampling_lists.includes(:access, :samplings)
+    @current_log_standards = @plant.current_log_standards.includes(:log_standard)
 
     build_samplings(sampling_lists, standards)
     @samplings = sampling_lists.group_by(&:access_id).map { |_, k| k.max_by(&:created_at) }
@@ -236,17 +266,35 @@ class PlantsController < ApplicationController
   end
 
   def set_log_frecuency
-    @log_frecuency = Task.frecuencies.map { |frecuency| [frecuency.second, frecuency.first.humanize] }
+    @log_frecuency = CurrentLogStandard.frecuencies.map { |frecuency| [frecuency.first.parameterize.underscore, frecuency.first.humanize] }
+  end
+
+  def generate_month_logs(logbook)
+    current_date = Date.today
+    days_of_month = current_date.week_split.flatten.reject(&:nil?)
+
+    days_of_month.map { |day| log_creation(logbook, Date.new(current_date.year, current_date.month, day)) }
+  end
+
+  def log_creation(logbook, actual_date)
+    new_logs = @plant.current_log_standards.map do |cls|
+      log = Log.new(logbook: logbook, value: '', date: actual_date, current_log_standard: cls)
+      LogCheck.new(log, actual_date).generate? ? log : nil
+    end
+
+    new_logs.reject(&:nil?)
   end
 
   def plant_params
     params.require(:plant).permit(
-      :name, :code, :company_id, :address01, :address02, :state, :zip, :phone, :flow_design, :startup_date,
-      :system_purpose, :report_preface, :country_id, :discharge_point_id, :contact_id, :bf_contact_id, :cover,
-      :discharge_permit, :logbook_bf_responsible_id, :logbook_bf_supervisor_id, :logbook_company_responsible_id,
-      system_size: [], standards_attributes: [:id, :option_id, :plant_id, :isRange, :enabled,
-        bounds_attributes: [:id, :standard_id, :outlet_id, :from, :to]], sampling_lists_attributes: [:id, :access_id,
-        :frecuency_id, :per_cycle], log_standards_attributes: [:id, :task_id, :plant_id, :active, :responsible,
-        :cycle, :frecuency_id, :comment], graph_standards_attributes: [:id, :show, :chart_id])
+      :name, :code, :company_id, :address01, :address02, :state, :zip, :phone, :flow_design, :startup_date, :system_purpose,
+      :report_preface, :country_id, :discharge_point_id, :contact_id, :bf_contact_id, :cover, :discharge_permit,
+      :logbook_bf_responsible_id, :logbook_bf_supervisor_id, :logbook_company_responsible_id, system_size: [],
+      standards_attributes: [:id, :option_id, :plant_id, :isRange, :enabled,
+        bounds_attributes: [:id, :standard_id, :outlet_id, :from, :to]],
+      sampling_lists_attributes: [:id, :access_id, :frecuency_id, :per_cycle],
+      current_log_standards_attributes: [:id, :cycle, :frecuency, :log_standard_id, :plant_id,
+        log_standard_attributes: [:id, :active, :season, :responsible, :comment, :name, :task_id, :plant_id]],
+      graph_standards_attributes: [:id, :show, :chart_id])
   end
 end

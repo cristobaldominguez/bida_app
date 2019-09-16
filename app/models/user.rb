@@ -32,6 +32,7 @@ class User < ApplicationRecord
 
   enum role: [:no_role, :admin, :client, :operator, :operations_manager, :viewer]
   enum interface_color: [:light, :dark]
+  enum employee: [:company, :biofiltro]
 
   def full_name
     "#{name} #{lastname}"

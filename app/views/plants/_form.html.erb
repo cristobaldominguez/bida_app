@@ -198,16 +198,23 @@
     <% end %>
 
     <%= render 'shared/tables/elements_list', headers: %w(Active Task Options), title: 'Logbook' do %>
-      <%= form.fields_for :log_standards, @log_standards do |log| %>
+      <%= form.fields_for :current_log_standards, @current_log_standards do |current_log| %>
+      <%= current_log.fields_for :log_standard do |log_standard| %>
       <tr class="table_main__table-row">
-        <%= log.hidden_field :id %>
-        <td class="table_main__table-data--left-text"><%= log.check_box :active %></td>
+        <td class="table_main__table-data--left-text"><%= log_standard.check_box :active %></td>
         <td class="table_main__table-data--left-text">
-          <span class="name"><%= log.object.task.name %><%= log.hidden_field :task_id %></span>
-          <%= log.hidden_field :comment, class: 'comment' %>
-          <%= log.hidden_field :frecuency_id, class: 'frecuency' %>
-          <%= log.hidden_field :cycle, class: 'cycle' %>
-          <%= log.hidden_field :responsible, class: 'responsible' %>
+          <span class="span_name"><%= log_standard.object.name %><%= log_standard.hidden_field :task_id %></span>
+          <%= current_log.hidden_field :id %>
+          <%= current_log.hidden_field :plant_id %>
+          <%= current_log.hidden_field :frecuency, class: 'frecuency' %>
+          <%= current_log.hidden_field :cycle, class: 'cycle' %>
+
+          <%= log_standard.hidden_field :id %>
+          <%= log_standard.hidden_field :plant_id %>
+          <%= log_standard.hidden_field :name, class: 'name' %>
+          <%= log_standard.hidden_field :season, class: 'season' %>
+          <%= log_standard.hidden_field :comment, class: 'comment' %>
+          <%= log_standard.hidden_field :responsible, class: 'responsible' %>
         </td>
         <td class="table_main__table-data--options">
           <a href="#" class="table_main__link--options"></a>
@@ -221,6 +228,7 @@
           </div>
         </td>
       </tr>
+      <% end %>
       <% end %>
     <% end %>
 

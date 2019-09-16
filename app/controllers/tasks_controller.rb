@@ -6,9 +6,9 @@ class TasksController < ApplicationController
   # GET /tasks
   # GET /tasks.json
   def index
-    # @tasks = Task.active.sort_by_id
-    @tasks = Task.includes(:log_type).group_by { |task| task.log_type.id }
-    @log_types = LogType.all
+    @tasks = Task.active.sort_by_id
+    # @tasks = Task.includes(:log_type).group_by { |task| task.log_type.id }
+    # @log_types = LogType.all
   end
 
   # GET /tasks/1

@@ -3,7 +3,7 @@ class CreateFlows < ActiveRecord::Migration[5.2]
     create_table :flows do |t|
       t.boolean :active, default: true
       t.references :plant, foreign_key: true
-      t.float :value, default: 0
+      t.integer :value
       t.date :date
 
       t.timestamps

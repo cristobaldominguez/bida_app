@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_27_142144) do
+ActiveRecord::Schema.define(version: 2019_08_13_213656) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -129,6 +129,17 @@ ActiveRecord::Schema.define(version: 2019_06_27_142144) do
     t.index ["metric_id"], name: "index_countries_on_metric_id"
   end
 
+  create_table "current_log_standards", force: :cascade do |t|
+    t.bigint "log_standard_id"
+    t.bigint "plant_id"
+    t.integer "frecuency"
+    t.text "cycle"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["log_standard_id"], name: "index_current_log_standards_on_log_standard_id"
+    t.index ["plant_id"], name: "index_current_log_standards_on_plant_id"
+  end
+
   create_table "discharge_points", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -153,7 +164,7 @@ ActiveRecord::Schema.define(version: 2019_06_27_142144) do
   create_table "flows", force: :cascade do |t|
     t.boolean "active", default: true
     t.bigint "plant_id"
-    t.float "value", default: 0.0
+    t.integer "value"
     t.date "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -225,12 +236,6 @@ ActiveRecord::Schema.define(version: 2019_06_27_142144) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "input_types", force: :cascade do |t|
-    t.string "option", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "inspections", force: :cascade do |t|
     t.boolean "active", default: true
     t.bigint "user_id"
@@ -287,22 +292,15 @@ ActiveRecord::Schema.define(version: 2019_06_27_142144) do
   create_table "log_standards", force: :cascade do |t|
     t.bigint "task_id"
     t.bigint "plant_id"
-    t.bigint "frecuency_id"
     t.boolean "active", default: true
     t.integer "responsible", default: 0
-    t.integer "cycle", null: false
+    t.integer "season", null: false
+    t.string "name", null: false
     t.string "comment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["frecuency_id"], name: "index_log_standards_on_frecuency_id"
     t.index ["plant_id"], name: "index_log_standards_on_plant_id"
     t.index ["task_id"], name: "index_log_standards_on_task_id"
-  end
-
-  create_table "log_types", force: :cascade do |t|
-    t.string "name", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "logbooks", force: :cascade do |t|
@@ -315,12 +313,13 @@ ActiveRecord::Schema.define(version: 2019_06_27_142144) do
 
   create_table "logs", force: :cascade do |t|
     t.bigint "logbook_id"
-    t.bigint "log_standard_id"
     t.boolean "active", default: true
     t.string "value"
+    t.date "date", default: -> { "CURRENT_DATE" }
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["log_standard_id"], name: "index_logs_on_log_standard_id"
+    t.bigint "current_log_standard_id"
+    t.index ["current_log_standard_id"], name: "index_logs_on_current_log_standard_id"
     t.index ["logbook_id"], name: "index_logs_on_logbook_id"
   end
 
@@ -461,8 +460,8 @@ ActiveRecord::Schema.define(version: 2019_06_27_142144) do
   create_table "samplings", force: :cascade do |t|
     t.bigint "standard_id"
     t.bigint "sampling_list_id"
-    t.float "value_in"
-    t.float "value_out"
+    t.integer "value_in"
+    t.integer "value_out"
     t.date "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -535,19 +534,16 @@ ActiveRecord::Schema.define(version: 2019_06_27_142144) do
   end
 
   create_table "tasks", force: :cascade do |t|
-    t.bigint "log_type_id"
-    t.bigint "input_type_id"
-    t.bigint "frecuency_id"
-    t.integer "cycle", default: 1, null: false
+    t.integer "input_type", default: 0
+    t.integer "frecuency", default: 0
+    t.integer "season", default: 0
     t.integer "responsible", default: 0
     t.boolean "active", default: true
     t.string "name", null: false
     t.string "comment"
+    t.string "cycle"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["frecuency_id"], name: "index_tasks_on_frecuency_id"
-    t.index ["input_type_id"], name: "index_tasks_on_input_type_id"
-    t.index ["log_type_id"], name: "index_tasks_on_log_type_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -570,6 +566,7 @@ ActiveRecord::Schema.define(version: 2019_06_27_142144) do
     t.string "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
+    t.integer "employee", default: 0
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -613,6 +610,8 @@ ActiveRecord::Schema.define(version: 2019_06_27_142144) do
   add_foreign_key "bounds", "standards"
   add_foreign_key "companies", "industries"
   add_foreign_key "countries", "metrics"
+  add_foreign_key "current_log_standards", "log_standards"
+  add_foreign_key "current_log_standards", "plants"
   add_foreign_key "flow_reports", "plants"
   add_foreign_key "flows", "flow_reports"
   add_foreign_key "flows", "plants"
@@ -640,11 +639,10 @@ ActiveRecord::Schema.define(version: 2019_06_27_142144) do
   add_foreign_key "inspections", "worms_activities"
   add_foreign_key "inspections", "worms_colors"
   add_foreign_key "inspections", "worms_densities"
-  add_foreign_key "log_standards", "frecuencies"
   add_foreign_key "log_standards", "plants"
   add_foreign_key "log_standards", "tasks"
   add_foreign_key "logbooks", "plants"
-  add_foreign_key "logs", "log_standards"
+  add_foreign_key "logs", "current_log_standards"
   add_foreign_key "logs", "logbooks"
   add_foreign_key "metrics", "metric_types"
   add_foreign_key "plants", "companies"
@@ -660,8 +658,5 @@ ActiveRecord::Schema.define(version: 2019_06_27_142144) do
   add_foreign_key "standards", "plants"
   add_foreign_key "supports", "plants"
   add_foreign_key "supports", "users"
-  add_foreign_key "tasks", "frecuencies"
-  add_foreign_key "tasks", "input_types"
-  add_foreign_key "tasks", "log_types"
   add_foreign_key "work_summaries", "supports"
 end

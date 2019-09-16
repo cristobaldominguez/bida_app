@@ -146,7 +146,7 @@
       </div>
     </footer>
 
-    <% if (params[:controller] == 'plants') && (['create', 'edit'].include? params[:action]) %>
+    <% if (params[:controller] == 'plants') && (['create', 'new', 'edit'].include? params[:action]) %>
       <%= render 'shared/modal/logbook' %>
     <% end %>
 

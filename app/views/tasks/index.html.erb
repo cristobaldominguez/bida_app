@@ -7,13 +7,11 @@
 <h2 class="main__title">Tasks</h2>
 
 <%= render 'shared/tables/elements_list', headers: ['Name', 'Cycle', 'Input Type', 'Responsible', 'Options'], title: 'Your Companies' do %>
-<% @tasks.keys.size.times do |i| %>
-<% i += 1 %>
-<% @tasks[i].each do |task| %>
+<% @tasks.each do |task| %>
 <tr class="table_main__table-row">
   <td class="table_main__table-data--left-text"><%= task.name %></td>
   <td class="table_main__table-data"><%= task.cycle %></td>
-  <td class="table_main__table-data"><%= task.input_type.option %></td>
+  <td class="table_main__table-data"><%= task.input_type %></td>
   <td class="table_main__table-data"><%= @responsibles[task.responsible][1] %></td>
   <td class="table_main__table-data--options">
     <a href="#" class="table_main__link--options"></a>
@@ -26,6 +24,5 @@
     </div>
   </td>
 </tr>
-<% end %>
 <% end %>
 <% end %>

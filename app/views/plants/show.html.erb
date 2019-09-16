@@ -162,31 +162,14 @@
 
 <h2 class="cell_division">Logbook</h2>
 
-<table>
-  <tbody>
-    <tr>
-      <th>Active</th>
-      <th>Task</th>
-      <th>Frecuency</th>
-      <th>Cycle</th>
-      <th>Responsible</th>
-    </tr>
-    <% current_id = 0 %>
-    <% @log_standards.each do |log| %>
-      <% if current_id != log.task.log_type.id %>
-      <tr><td colspan="5" class="cell_division"><%= log.task.log_type.name %></td></tr>
-      <% end %>
-      <% current_id = log.task.log_type.id %>
-    <tr>
-      <td><input type="checkbox" name="active" value="Boat" <%= 'checked' if log.active %> disabled></td>
-      <td><%= log.task.name %> <%= "(#{log.comment})" if log.comment != '' %></td>
-      <td><%= log.frecuency.name %></td>
-      <td><%= log.cycle %></td>
-      <td><%= @responsibles[log.responsible][1] %></td>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
+<%= render 'shared/tables/elements_list', headers: ['Task', 'Responsible'] do %>
+<% @current_log_standards.each do |log| %>
+<tr class="table_main__table-row">
+  <td class="table_main__table-data--left-text"><input type="checkbox" name="active" value="Boat" <%= 'checked' if log.log_standard.active %> disabled> <%= log.log_standard.name %></td>
+  <td class="table_main__table-data"><%= @responsibles[log.log_standard.responsible][1] %></td>
+</tr>
+<% end %>
+<% end %>
 
 <div class="view_info">
   <p class="view_info__data"><%= @plant.logbook_bf_responsible&.full_name %></p>
