@@ -48,33 +48,7 @@
         </h1>
 
         <% if user_signed_in? %>
-        <nav class="user_options">
-          <ul class="user_options__list">
-            <li class="user_options__item--ui">
-              <a class="user_options__link--<%= current_user.interface_color %>-ui" href="#">
-                <% if current_user.dark? %>
-                <i class="icon-sun"></i>
-                <% else %>
-                <i class="icon-moon"></i>
-                <% end %>
-              </a>
-            </li>
-            <li class="user_options__item">
-              <a class="user_options__link--users" href="#">
-                <i class="icon-user"></i>
-              </a>
-              <div class="options_menu">
-                <ul class="options_menu__list">
-                  <li class="options_menu__item"><%= link_to 'edit profile', edit_user_path(current_user.id), class: 'options_menu__link' %></li>
-                  <li class="options_menu__item"><%= link_to "change your password", edit_user_registration_path, class: 'options_menu__link' %></li>
-                  <li class="options_menu__separator"></li>
-                  <li class="options_menu__item"><%= link_to "logout", destroy_user_session_path, method: :delete, class: 'options_menu__link'  %></li>
-                </ul>
-                <div class="unclick--user"></div>
-              </div>
-            </li>
-          </ul>
-        </nav>
+        <%= render 'shared/layout/user_options' %>
         <% end %>
       </div>
 
@@ -89,60 +63,15 @@
     <footer class="main_footer">
       <div class="main_footer__container">
         <section class="main_footer__left">
-          <div class="company">
-            <h2 class="company__logo"><svg class="footer_logo__svg"><use xlink:href="#bf-logo"></use><svg></h2>
-            <p class="company__text">BioFiltro is an international wastewater treatment company with a patented filtration system
-            that naturally removes up to 99% of contaminants in 4 hours.</p>
-          </div>
-
-          <div class="contact">
-            <div class="contact__ico">
-              <i class="icon-envelope"></i>
-            </div>
-            <div class="contact__info">
-              <p class="contact__title">Email</p>
-              <p class="contact__content"><a href="mailto:info@biofiltro.com" class="contact__link">info@biofiltro.com</a></p>
-            </div>
-          </div>
+          <%= render 'shared/footer/company_n_contact' %>
         </section>
         <section class="main_footer__right">
-          <ul class="flags">
-            <li class="flag__item">
-              <div class="flag__img"><svg class="flag__svg"><use xlink:href="#flag-chile"></use><svg></div>
-              <div class="flag__data">
-                <p class="flag__title">Chile</p>
-                <p class="flag__phone"><a href="tel:+56232243648" class="flag__link">+56 2 3224 3648</a></p>
-              </div>
-            </li>
-            <li class="flag__item">
-              <div class="flag__img"><svg class="flag__svg"><use xlink:href="#flag-usa"></use><svg></div>
-              <div class="flag__data">
-                <p class="flag__title">Headquarters</p>
-                <p class="flag__phone"><a href="tel:+5592784542" class="flag__link">+559 278 4542</a></p>
-              </div>
-            </li>
-            <li class="flag__item">
-              <div class="flag__img"><svg class="flag__svg"><use xlink:href="#flag-new-zealand"></use><svg></div>
-              <div class="flag__data">
-                <p class="flag__title">New Zealand</p>
-                <p class="flag__phone"><a href="tel:+64075756270" class="flag__link">+64 07 575 6270</a></p>
-              </div>
-            </li>
-            <li class="flag__item">
-              <div class="flag__img"><svg class="flag__svg"><use xlink:href="#flag-peru"></use><svg></div>
-              <div class="flag__data">
-                <p class="flag__title">Peru</p>
-                <p class="flag__phone"><a href="tel:+51944579292" class="flag__link">+51 944579292</a></p>
-              </div>
-            </li>
-          </ul>
+          <%= render 'shared/footer/flags' %>
         </section>
       </div>
 
       <div class="container">
-        <section class="legal">
-          <p class="legal__text">&copy;2019 BIOFILTRO, INC. All Rights Reserved. </p>
-        </section>
+        <%= render 'shared/footer/legal' %>
       </div>
     </footer>
 

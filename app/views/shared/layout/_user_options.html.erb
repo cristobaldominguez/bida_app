@@ -1,0 +1,27 @@
+<nav class="user_options">
+  <ul class="user_options__list">
+    <li class="user_options__item--ui">
+      <a class="user_options__link--<%= current_user.interface_color %>-ui" href="#">
+        <% if current_user.dark? %>
+        <i class="icon-sun"></i>
+        <% else %>
+        <i class="icon-moon"></i>
+        <% end %>
+      </a>
+    </li>
+    <li class="user_options__item">
+      <a class="user_options__link--users" href="#">
+        <i class="icon-user"></i>
+      </a>
+      <div class="options_menu">
+        <ul class="options_menu__list">
+          <li class="options_menu__item"><%= link_to 'edit profile', edit_user_path(current_user.id), class: 'options_menu__link' %></li>
+          <li class="options_menu__item"><%= link_to "change your password", edit_user_registration_path, class: 'options_menu__link' %></li>
+          <li class="options_menu__separator"></li>
+          <li class="options_menu__item"><%= link_to "logout", destroy_user_session_path, method: :delete, class: 'options_menu__link'  %></li>
+        </ul>
+        <div class="unclick--user"></div>
+      </div>
+    </li>
+  </ul>
+</nav>
