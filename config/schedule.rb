@@ -16,5 +16,10 @@
 # every 4.days do
 #   runner "AnotherModel.prune_old_records"
 # end
-
 # Learn more: http://github.com/javan/whenever
+
+set :output, 'log/cron.log'
+
+every '30 0 1 * *' do
+  runner 'GeneratePlantsLogbooksJob.perform_now'
+end

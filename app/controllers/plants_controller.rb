@@ -5,7 +5,8 @@ class PlantsController < ApplicationController
   before_action :set_users, :set_frecuencies, only: %i[new edit create update]
   before_action :set_responsibles, :set_season, :set_log_frecuency, only: %i[new edit create update show]
   after_action :assign_plant_to_current_user, only: :create, unless: -> { @plant.nil? }
-  # after_action :generate_month_logs, only: [:create]
+  after_action :generate_logbook_logs, only: :create
+
   load_and_authorize_resource
 
   # GET companies/:company_id/plants
@@ -133,12 +134,6 @@ class PlantsController < ApplicationController
       @plant.current_log_standards.build(log_standard: log_standard, frecuency: cls.second['frecuency'], cycle: cls.second['cycle'])
     end
 
-    # @plant.current_log_standards.each do |cls|
-    #   @logbook.logs.build(current_log_standard: cls, date: @current_date)
-    # end
-
-    @logbook.logs << generate_month_logs(@logbook)
-
     respond_to do |format|
       if @plant.save
         format.html { redirect_to @plant, notice: 'Plant was successfully created.' }
@@ -217,6 +212,15 @@ class PlantsController < ApplicationController
     end
   end
 
+  def self.generate_plants_logbooks
+    plants = Plant.all.select(&:active)
+    plants.each do |plant|
+      logbook = plant.logbooks.create
+      # GenerateLogsJob.perform_later(logbook)
+      LogsController.generate_monthly_logs(logbook, Date.today)
+    end
+  end
+
   private
 
   def set_company
@@ -283,6 +287,10 @@ class PlantsController < ApplicationController
     end
 
     new_logs.reject(&:nil?)
+  end
+
+  def generate_logbook_logs
+    GenerateLogsJob.perform_later(@logbook)
   end
 
   def plant_params

@@ -130,6 +130,18 @@ class LogbooksController < ApplicationController
     new_logs.reject(&:nil?)
   end
 
+  def automatic_logbook_generation
+    plants = Plant.all
+    this_month = Date.today.at_beginning_of_month
+
+    last_logbooks = plants.map { |plant| plant.logbooks.last }
+    olders = last_logbooks.select { |logbook| logbook.created_at < this_month }
+    new_logbooks = olders.map { |logbook| Logbook.create(plant_id: logbook.id, created_at: this_month) }
+    new_logbooks.each do |logbook|
+      GenerateLogsJob.perform_later(logbook)
+    end
+  end
+
   def logbook_params
     params.require(:logbook).permit(:id, :plant_id, logs_attributes: [:id, :logbook_id, :active, :value, :document, :date,
                                     current_log_standard_attributes: [:frecuency, :cycle, :plant_id,
