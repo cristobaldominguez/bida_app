@@ -59,6 +59,7 @@ gem 'groupdate'
 gem 'week_of_month'
 
 # Cron Jobs
+gem 'sidekiq'
 gem 'whenever', require: false
 
 group :development, :test do

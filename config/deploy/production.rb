@@ -2,7 +2,17 @@ set :stage, :production
 set :rails_env, :production
 
 server 'bida.biofiltro.com', user: 'ubuntu', roles: %w[web app db], primary: true
-
+require 'sidekiq/capistrano'
+set :sidekiq_role, :sidekiq
+after 'sidekiq:start'
+namespace :sidekiq do
+  task :start do
+    sudo 'service sidekiq start'
+  end
+  task :stop do
+    sudo 'service sidekiq stop'
+  end
+end
 
 
 # server-based syntax
