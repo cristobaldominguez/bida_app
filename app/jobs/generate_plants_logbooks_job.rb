@@ -1,7 +1,11 @@
 class GeneratePlantsLogbooksJob < ApplicationJob
-  queue_as :urgent
+  queue_as :default
 
   def perform
-    PlantsController.generate_plants_logbooks
+    plants = Plant.all.select(&:active)
+    plants.each do |plant|
+      logbook = plant.logbooks.create
+      LogsController.generate_monthly_logs(logbook, Date.today)
+    end
   end
 end
