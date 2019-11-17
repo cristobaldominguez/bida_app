@@ -4,7 +4,7 @@ puts '----------- Adding Seeds! -----------'
 puts 'Adding Users'
 User.destroy_all
 roles = %i[no_role admin client operator operations_manager viewer]
-users = [{ name: 'Cristóbal', lastname: 'Domínguez', email: 'cristobald@me.com', password: 'golden', role: :admin },
+users = [{ name: 'Cristóbal', lastname: 'Domínguez', email: 'cristobal@gmail.com', password: '123123', role: :admin },
          { name: 'Matías', lastname: 'Sjogren', email: 'msjogren@bf.com', password: '123123', role: :admin },
          { name: 'Ricardo', lastname: 'Aburto', email: 'raburto@bf.com', password: '123123', role: :operations_manager },
          { name: 'Francisco', lastname: 'Del Toro', email: 'fdeltoro@bf.com', password: '123123', role: :operator },
