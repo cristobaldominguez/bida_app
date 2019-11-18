@@ -95,14 +95,17 @@ Rails.application.configure do
   # Devise email service
   config.action_mailer.default_url_options = { host: Rails.application.credentials.dig(:app, :host) }
   config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default :charset => 'utf-8'
   config.action_mailer.smtp_settings = {
     address: 'smtp.gmail.com',
     port: 587,
     domain: Rails.application.credentials.dig(:app, :domain),
     authentication: 'plain',
     enable_starttls_auto: true,
-    user_name: Rails.application.credentials.dig(:production, :username),
-    password: Rails.application.credentials.dig(:production, :password)
+    user_name: Rails.application.credentials.dig(:gmail, :username),
+    password: Rails.application.credentials.dig(:gmail, :password)
   }
 
   config.action_mailer.default_url_options = { host: Rails.application.credentials.dig(:app, :host) }
