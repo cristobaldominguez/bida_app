@@ -9,7 +9,7 @@ set :application,               'bida_app'
 set :deploy_to,                 "/home/#{fetch(:user)}/apps/#{fetch(:application)}"
 set :repo_url,                  'git@bitbucket.org:cristobaldominguez/bida_app.git'
 set :keep_releases,             4
-set :ssh_options,               forward_agent: true, user: fetch(:user), keys: %w[~/.ssh/BIDAApp.pem]
+set :ssh_options,               forward_agent: true, user: fetch(:user), keys: %w[~/.ssh/biofiltro.pem]
 set :rails_env,                 :production
 
 ## Linked Files & Directories (Default None):
