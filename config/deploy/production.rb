@@ -1,7 +1,7 @@
 set :stage, :production
 set :rails_env, :production
 
-server 'bida.biofiltro.com', user: 'ubuntu', roles: %w[web app db], primary: true
+server '54.187.251.196', user: 'ubuntu', roles: %w[web app db], primary: true
 
 # server-based syntax
 # ======================
