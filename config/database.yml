@@ -80,7 +80,7 @@ test:
 #
 production:
   <<: *default
-  database: BIDA_App_production
+  database: bida_postgres
   username: <%= Rails.application.credentials.dig(:postgres, :username) %>
   password: <%= Rails.application.credentials.dig(:postgres, :password) %>
   host: <%= Rails.application.credentials.dig(:postgres, :host) %>
