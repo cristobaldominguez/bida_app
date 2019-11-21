@@ -45,4 +45,10 @@ namespace :setup do
       end
     end
   end
+  desc 'Run Sidekiq.'
+  task :restart do
+    on roles(:app) do
+      execute :sudo, :systemctl, :restart, :sidekiq
+    end
+  end
 end
