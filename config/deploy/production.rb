@@ -1,7 +1,7 @@
 set :stage, :production
 set :rails_env, :production
 
-server '54.187.251.196', user: 'ubuntu', roles: %w[web app db], primary: true
+server '34.209.194.109', user: 'ubuntu', roles: %w[web app db], primary: true
 
 # server-based syntax
 # ======================
