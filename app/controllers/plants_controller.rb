@@ -5,7 +5,7 @@ class PlantsController < ApplicationController
   before_action :set_users, :set_frecuencies, only: %i[new edit create update]
   before_action :set_responsibles, :set_season, :set_log_frecuency, only: %i[new edit create update show]
   after_action :assign_plant_to_current_user, only: :create, unless: -> { @plant.nil? }
-  after_action :generate_logbook_logs, only: :create
+  append_after_action :generate_logbook_logs, only: :create
 
   load_and_authorize_resource
 
