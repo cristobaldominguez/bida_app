@@ -5,6 +5,7 @@ require 'capistrano/setup'
 require 'capistrano/deploy'
 
 require 'capistrano/rvm'
+require 'capistrano/sidekiq'
 require 'capistrano/bundler'
 require 'capistrano/rails'
 require 'capistrano/rails/collection'
@@ -14,7 +15,6 @@ require 'capistrano/puma'
 require 'capistrano/puma/workers'
 require 'capistrano/puma/nginx'
 
-require 'capistrano/sidekiq'
 require 'whenever/capistrano'
 
 set :rvm_type, :user
