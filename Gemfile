@@ -86,10 +86,15 @@ group :development do
   gem 'binding_of_caller'
 
   # Capistrano and Deploy
-  gem 'capistrano', '3.6.1', require: false
+  gem 'capistrano', '3.8.2', require: false
   gem 'capistrano-bundler', require: false
+  gem 'capistrano-db-tasks', require: false
+  gem 'capistrano-faster-assets', require: false
+  gem 'capistrano-measure', require: false
   gem 'capistrano-rails', require: false
   gem 'capistrano-rails-collection'
+  gem 'capistrano-rails-console', require: false
+  gem 'capistrano-rails-tail-log', require: false
   gem 'capistrano-rvm', require: false
   gem 'capistrano-sidekiq'
   gem 'capistrano-ssh-doctor', require: false
