@@ -14,6 +14,7 @@ require 'capistrano/puma'
 require 'capistrano/puma/workers'
 require 'capistrano/puma/nginx'
 
+require 'capistrano/sidekiq'
 require 'whenever/capistrano'
 
 set :rvm_type, :user

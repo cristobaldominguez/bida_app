@@ -7,3 +7,4 @@ production:
   - critical
   - default
   - low
+:pidfile: tmp/pids/sidekiq.pid
