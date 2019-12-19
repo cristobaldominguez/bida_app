@@ -17,6 +17,9 @@ require 'capistrano/puma/nginx'
 
 require 'whenever/capistrano'
 
+require 'capistrano/scm/git'
+install_plugin Capistrano::SCM::Git
+
 set :rvm_type, :user
 set :rvm_ruby_version, '2.5.3'
 
