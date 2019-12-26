@@ -64,10 +64,8 @@ document.addEventListener('turbolinks:load', function() {
       const hidden_input = document.querySelector('#plant_system_size')
       hidden_input.value = state.sizes.join(' ')
 
-      const input_val = document.querySelector('#plant_system_size_total')
+      const input_val = document.querySelector('#plant_plant_system_size_total')
       input_val.value = state.sizes.reduce((acc, num) => acc + num)
-
-      console.log(state)
     }
 
     function add_size(e) {
@@ -100,21 +98,31 @@ document.addEventListener('turbolinks:load', function() {
       _delete_div.appendChild(_delete_link)
       mainNode.appendChild(_delete_div)
 
+      // div.field__value
+      const _div_input = document.createElement('div')
+      _div_input.className = 'field__value'
+
       // input.size__input
       const _input = document.createElement('input')
       _input.className = 'size__input'
+      _input.classList.add('field__value-input')
       _input.setAttribute('type', 'text')
       _input.setAttribute('name', 'size__quantity')
       _input.setAttribute('placeholder', '0')
       _input.setAttribute('data-module', 'text')
       _input.dataset.module = `${state.current_module}`
+      _div_input.appendChild(_input)
+
+      // span.field__value-span
+      const value_span = document.createElement('span')
+      value_span.className = 'field__value-span'
+      value_span.innerText = 'm²'
+      _div_input.appendChild(value_span)
 
       // Append nodes
       mainNode.appendChild(_h3)
-      mainNode.appendChild(_input)
+      mainNode.appendChild(_div_input)
       size.appendChild(mainNode)
-
-      console.log(state)
     }
 
     function reset_numbers() {

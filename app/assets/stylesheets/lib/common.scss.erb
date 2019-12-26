@@ -1036,10 +1036,6 @@ a:visited {
 		display: flex;
 		padding: 0;
 
-		&-input {
-			@include border-radius(var(--border-radius) 0 0 var(--border-radius));
-		}
-
 		&-span {
 			align-items: center;
 			background-color: var(--field-value-bg);
@@ -1053,6 +1049,15 @@ a:visited {
 
 		input[type="text"][class$="-input"] {
 			border: none;
+		}
+
+		&-input {
+			@include border-radius(var(--border-radius) 0 0 var(--border-radius));
+			background-color: var(--field-value-bg);
+
+			&.size__input {
+				border: 0;
+			}
 		}
 	}
 
