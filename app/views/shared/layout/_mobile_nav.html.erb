@@ -68,6 +68,9 @@
             <% end %>
             <% end %>
             <li class="mobile_nav__subitem"><%= link_to 'flow history', plant_flow_reports_path(@plant), class: 'mobile_nav__sublink' %></li>
+            <% if can? :create, FlowReport %>
+            <li class="mobile_nav__subitem"><%= link_to 'upload flow from file', flows_plant_imports_path(@plant), class: 'mobile_nav__sublink' %></li>
+            <% end %>
           </ul>
         </li>
         <% end %>

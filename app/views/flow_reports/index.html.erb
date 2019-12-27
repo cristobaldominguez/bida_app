@@ -1,6 +1,7 @@
 <% if can? :create, FlowReport %>
   <%= render 'shared/buttons/option_button', alt: 'header' do %>
     <li class="option-button__option"><%= link_to 'New Flow Report', new_plant_flow_report_path, class: 'option-button__option-link' %></li>
+    <li class="option-button__option"><%= link_to 'Upload from File', flows_plant_imports_path(@plant), class: 'option-button__option-link' %></li>
   <% end %>
 <% end %>
 

@@ -32,6 +32,12 @@ Rails.application.routes.draw do
         get 'custom'
       end
     end
+    resources :imports, only: %i[new create] do
+      collection do
+        get 'flows'
+        post 'flows_create'
+      end
+    end
     member do
       post 'highseason'
     end
