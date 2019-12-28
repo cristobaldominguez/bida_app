@@ -34,7 +34,7 @@ Rails.application.routes.draw do
     end
     resources :imports, only: %i[new create] do
       collection do
-        get 'flows'
+        get  'flows'
         post 'flows_create'
       end
     end

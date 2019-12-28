@@ -15,7 +15,7 @@
   </li>
   <% @flows.each_with_index do |flow, i| %>
   <li class="flow__li">
-    <strong><%= '0' if day < 9 %><%= day += 1 %>:</strong>
+    <strong><%= flow.date.strftime('%d') %>:</strong>
     <input type="number" value="<%= flow.value || '0.0' %>" class="flow__li-input">
   </li>
   <% end %>

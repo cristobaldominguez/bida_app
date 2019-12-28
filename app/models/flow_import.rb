@@ -1,18 +1,20 @@
 class FlowImport < Import
   def load_imported_items
     spreadsheet = open_spreadsheet.sheet('Flow')
-    header = spreadsheet.row(1)
-    flow_report = FlowReport.new(plant_id: plant, date: date)
+    grouped_rows = grouped_rows(spreadsheet)
 
-    (2..spreadsheet.last_row).map do |index|
-      create_row_data(index, spreadsheet, header, flow_report)
-    end
+    flow_reports(grouped_rows, plant)
   end
 
-  def create_row_data(index, spreadsheet, header, flow_report)
-    row_data = spreadsheet.row(index).map { |r| r.instance_of?(String) ? r.strip : r }
-    row_data = row_data.map { |r| r == '-' ? nil : r }
-    current_row = Hash[[header, row_data].transpose]
-    flow_report.flows.build(plant_id: plant, date: current_row['Date'], value: current_row['Value'])
+  def flow_reports(grouped_rows, plant)
+    flow_reports_arr = []
+    grouped_rows.each_with_index do |row, index|
+      flow_reports_arr[index] = FlowReport.new(plant_id: plant, date: row.first.to_date)
+      row.second.map do |data|
+        flow_reports_arr[index].flows.build(plant_id: plant, date: data[:date], value: data[:value])
+      end
+    end
+
+    flow_reports_arr
   end
 end
