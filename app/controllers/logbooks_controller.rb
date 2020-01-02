@@ -63,7 +63,7 @@ class LogbooksController < ApplicationController
 
     lgs = LogbookProcessor.new(logs, cls).valid_logs(current_user)
 
-    @filtered_logs = lgs.sort_by(&:date).reverse
+    @filtered_logs = lgs.select { |log| log.value.blank? }.sort_by(&:date).reverse
   end
 
   # PATCH/PUT /logbooks/1
