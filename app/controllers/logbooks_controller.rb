@@ -58,12 +58,12 @@ class LogbooksController < ApplicationController
   # GET /logbooks/1/edit
   def edit
     @plant = @logbook.plant
-    logs = @logbook.logs.order('date DESC')
+    logs = @logbook.logs.includes(:current_log_standard).order('date DESC')
     cls = @plant.current_log_standards.includes(:log_standard)
 
     lgs = LogbookProcessor.new(logs, cls).valid_logs(current_user)
-
-    @filtered_logs = lgs.select { |log| log.value.blank? }.sort_by(&:date).reverse
+    ordered_logs = lgs.group_by { |log| log.current_log_standard.log_standard.name }
+    @filtered_logs = ordered_logs.map { |block| block.second.max_by(&:date) }.sort_by(&:date).reverse
   end
 
   # PATCH/PUT /logbooks/1
