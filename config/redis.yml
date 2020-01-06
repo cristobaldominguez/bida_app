@@ -5,5 +5,5 @@ test:
   host: 'localhost'
   port: '6379'
 production:
-  host: 'biofiltro-001.t1wqfu.0001.usw2.cache.amazonaws.com'
+  host: 'biofiltro.t1wqfu.ng.0001.usw2.cache.amazonaws.com'
   port: '6379'
