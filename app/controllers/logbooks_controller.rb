@@ -62,7 +62,9 @@ class LogbooksController < ApplicationController
     cls = @plant.current_log_standards.includes(:log_standard)
 
     lgs = LogbookProcessor.new(logs, cls).valid_logs(current_user)
-    ordered_logs = lgs.group_by { |log| log.current_log_standard.log_standard.name }
+
+    empty_logs = lgs.reject { |log| log.value.present? }
+    ordered_logs = empty_logs.group_by { |log| log.current_log_standard.log_standard.name }
     @filtered_logs = ordered_logs.map { |block| block.second.max_by(&:date) }.sort_by(&:date).reverse
   end
 
