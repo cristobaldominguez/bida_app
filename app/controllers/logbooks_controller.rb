@@ -58,7 +58,7 @@ class LogbooksController < ApplicationController
   # GET /logbooks/1/edit
   def edit
     @plant = @logbook.plant
-    logs = @logbook.logs.includes(current_log_standard: [log_standard: [:task]]).order('date DESC')
+    logs = @logbook.logs.order('date DESC')
     cls = @plant.current_log_standards.includes(:log_standard)
 
     lgs = LogbookProcessor.new(logs, cls).valid_logs(current_user)

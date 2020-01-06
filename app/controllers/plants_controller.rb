@@ -212,6 +212,10 @@ class PlantsController < ApplicationController
     end
   end
 
+  def logbook
+    redirect_to edit_plant_logbook_path(@plant, @plant.logbooks.last)
+  end
+
   def self.generate_plants_logbooks
     plants = Plant.all.select(&:active)
     plants.each do |plant|

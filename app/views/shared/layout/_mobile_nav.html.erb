@@ -52,7 +52,7 @@
         <% if can? :read, Logbook %>
         <li class="mobile_nav__subitem"><a href="#" class="mobile_nav__sublink">logbooks</a>
           <ul class="mobile_nav__submenu-list">
-            <li class="mobile_nav__subitem"><%= link_to 'logbook', @logbook_path, class: 'mobile_nav__sublink' %></li>
+            <li class="mobile_nav__subitem"><%= link_to 'logbook', logbook_plant_path(@plant), class: 'mobile_nav__sublink' %></li>
             <li class="mobile_nav__subitem"><%= link_to 'logbook history', plant_logbooks_path(@plant), class: 'mobile_nav__sublink' %></li>
           </ul>
         </li>

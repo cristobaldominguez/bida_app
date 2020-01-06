@@ -40,6 +40,7 @@ Rails.application.routes.draw do
     end
     member do
       post 'highseason'
+      get 'logbook'
     end
   end
 

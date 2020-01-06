@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   before_action :configure_permitted_parameters, if: :devise_controller?
-  before_action :set_user_plants, :set_plant, :set_logbook_path, :set_samplings_lists, :set_latest_report, :set_latest_flow_report
+  before_action :set_user_plants, :set_plant, :set_samplings_lists, :set_latest_report, :set_latest_flow_report
 
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to pages_no_permission_path, notice: exception.message
@@ -31,15 +31,6 @@ class ApplicationController < ActionController::Base
   def set_latest_flow_report
     flow_report = FlowReport.active.created_between(Date.today.at_beginning_of_month.beginning_of_day, Time.now)
     @latest_flow_report = flow_report.first || nil
-  end
-
-  def set_logbook_path
-    return nil unless params[:plant_id].present? || params[:id].present?
-
-    @plant = params[:plant_id].present? ? Plant.find(params[:plant_id]) : params[:controller] == 'plants' && params[:id].present? ? Plant.find(params[:id]) : nil
-    return nil if @plant.nil?
-
-    @logbook_path = @plant.logbooks.last.created_at.month == Date.today.month ? edit_plant_logbook_path(@plant, @plant.logbooks.last) : new_plant_logbook_path(@plant)
   end
 
   def configure_permitted_parameters
