@@ -104,8 +104,8 @@ Rails.application.configure do
     domain: Rails.application.credentials.dig(:app, :domain),
     authentication: 'plain',
     enable_starttls_auto: true,
-    user_name: Rails.application.credentials.dig(:gmail, :username),
-    password: Rails.application.credentials.dig(:gmail, :password)
+    user_name: Rails.application.credentials.dig(:production, :username),
+    password: Rails.application.credentials.dig(:production, :password)
   }
 
   config.action_mailer.default_url_options = { host: Rails.application.credentials.dig(:app, :host) }
