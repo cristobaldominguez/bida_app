@@ -27,6 +27,20 @@
   <p class="view_info__title">Report Technician</p>
 </div>
 
+<div class="view_info">
+  <ul class="view_info__elements">
+    <% @inspection.users.each do |user| %>
+    <li class="view_info__element"><%= user.full_name %></li>
+    <% end %>
+  </ul>
+  <p class="view_info__title">Notify to</p>
+</div>
+
+<div class="view_info">
+  <p class="view_info__data"><%= @inspection.date %></p>
+  <p class="view_info__title">Inspection Date</p>
+</div>
+
 <h2 class="main__division">Water Quality</h2>
 
 <% @fluents.each do |fluent|%>

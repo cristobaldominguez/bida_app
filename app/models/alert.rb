@@ -18,4 +18,8 @@ class Alert < ApplicationRecord
   def title
     "##{id} #{incident_type.name}"
   end
+
+  def subject
+    "##{id}: #{incident_type.name}"
+  end
 end

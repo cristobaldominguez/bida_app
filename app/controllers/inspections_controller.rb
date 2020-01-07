@@ -6,7 +6,7 @@ class InspectionsController < ApplicationController
   # GET /inspections
   # GET /inspections.json
   def index
-    @inspections = Inspection.active
+    @inspections = Inspection.active.order('id DESC')
     @plant = Plant.find(params[:plant_id])
   end
 
@@ -28,7 +28,9 @@ class InspectionsController < ApplicationController
   end
 
   # GET /inspections/1/edit
-  def edit; end
+  def edit
+    @fluents = @inspection.fluents.includes(:output)
+  end
 
   # POST /inspections
   # POST /inspections.json
@@ -36,6 +38,7 @@ class InspectionsController < ApplicationController
 
     respond_to do |format|
       if @inspection.save
+        @inspection.send_notifications!
         format.html { redirect_to plant_inspections_path(@plant), notice: 'Inspection was successfully created.' }
         format.json { render :show, status: :created, location: @inspection }
       else
@@ -102,11 +105,11 @@ class InspectionsController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   # :inspection_id, :worms_color_id, :color_description, :worms_activity_id, :activity_description, :worms_density_id
   def inspection_params
-    params.require(:inspection).permit(:active, :user_id, :plant_id, :on_site_client, :on_site_user_id, :report_technician_id,
+    params.require(:inspection).permit(:active, :date, :user_id, :plant_id, :on_site_client, :on_site_user_id, :report_technician_id,
       :screen_id, :collection_bin_id, :screen_comments, :noise_id, :pumps_noise_description, :pumps_psi, :sprinklers_pressure_id,
       :sprinklers_head_id, :piping_id, :pumps_comments, :system_surface_id, :bed_compaction_id, :ponding_id, :bida_comments,:odor_id,
       :plant_odor_description, :birds, :fly_id, :summary_comments, :worms_color_id, :worms_color_description, :worms_activity_id,
-      :worms_activity_description, :worms_density_id,
+      :worms_activity_description, :worms_density_id, user_ids: [],
       fluents_attributes: %i[id output_id ph color_id color_description odor_id odor_description cod ec bod tss tn tp sample_comments])
   end
 end

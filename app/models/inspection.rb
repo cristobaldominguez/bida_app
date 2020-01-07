@@ -20,4 +20,15 @@ class Inspection < ApplicationRecord
   belongs_to :report_technician, class_name: 'User'
 
   accepts_nested_attributes_for :fluents, allow_destroy: true
+
+  def send_notifications!
+    users = user_ids.map { |i| User.find(i) }
+    users.each do |user|
+      NotificationMailer.inspection_notification(user, self).deliver_later
+    end
+  end
+
+  def title
+    "##{id} #{date}"
+  end
 end

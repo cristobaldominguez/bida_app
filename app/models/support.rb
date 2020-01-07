@@ -10,8 +10,8 @@ class Support < ApplicationRecord
   has_and_belongs_to_many :users
 
   accepts_nested_attributes_for :work_summaries,
-    reject_if: proc { |att| att['description'].blank? && att['hours'].blank? },
-    allow_destroy: true
+                                reject_if: proc { |att| att['description'].blank? && att['hours'].blank? },
+                                allow_destroy: true
 
   def send_notifications!
     users = user_ids.map { |i| User.find(i) }

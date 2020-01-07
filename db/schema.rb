@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_13_213656) do
+ActiveRecord::Schema.define(version: 2020_01_07_001325) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -269,6 +269,7 @@ ActiveRecord::Schema.define(version: 2019_08_13_213656) do
     t.datetime "updated_at", null: false
     t.bigint "on_site_user_id"
     t.bigint "report_technician_id"
+    t.date "date"
     t.index ["bed_compaction_id"], name: "index_inspections_on_bed_compaction_id"
     t.index ["collection_bin_id"], name: "index_inspections_on_collection_bin_id"
     t.index ["fly_id"], name: "index_inspections_on_fly_id"
@@ -287,6 +288,11 @@ ActiveRecord::Schema.define(version: 2019_08_13_213656) do
     t.index ["worms_activity_id"], name: "index_inspections_on_worms_activity_id"
     t.index ["worms_color_id"], name: "index_inspections_on_worms_color_id"
     t.index ["worms_density_id"], name: "index_inspections_on_worms_density_id"
+  end
+
+  create_table "inspections_users", id: false, force: :cascade do |t|
+    t.bigint "inspection_id", null: false
+    t.bigint "user_id", null: false
   end
 
   create_table "log_standards", force: :cascade do |t|

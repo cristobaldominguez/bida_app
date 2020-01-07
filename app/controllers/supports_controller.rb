@@ -5,7 +5,7 @@ class SupportsController < ApplicationController
   # GET /supports
   # GET /supports.json
   def index
-    @supports = Support.active
+    @supports = Support.active.order('id DESC')
     @plant = Plant.find(params[:plant_id])
   end
 

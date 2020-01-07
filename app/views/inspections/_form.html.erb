@@ -28,9 +28,23 @@
     <%= form.collection_select(:report_technician_id, @users, :id, :full_name, {prompt: 'Select a Technician'}) %>
   </div>
 
+  <div class="field">
+    <%= form.label 'Notify to:' %>
+    <ul>
+    <%= form.collection_check_boxes(:user_ids, @plant.users, :id, :full_name) do |user| %>
+      <li><%= user.check_box %> <%= user.label %></li>
+    <% end %>
+    </ul>
+  </div>
+
+  <div class="field no-border date">
+    <%= form.label :Inspection_Date %>
+    <%= form.date_select :date %>
+  </div>
+
   <h2 class="cell_division">Water Quality</h2>
 
-  <%= form.fields_for :fluents do |fluent| %>
+  <%= form.fields_for :fluents, @fluents do |fluent| %>
     <h3><%= fluent.hidden_field :output_id, value: fluent.object.output.id %><%= fluent.object.output.name %></h3>
 
     <div class="field">

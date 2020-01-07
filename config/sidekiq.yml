@@ -7,4 +7,5 @@ production:
   - critical
   - default
   - low
+  - mailers
 :pidfile: tmp/pids/sidekiq.pid

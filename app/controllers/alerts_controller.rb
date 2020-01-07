@@ -6,7 +6,7 @@ class AlertsController < ApplicationController
   # GET /alerts
   # GET /alerts.json
   def index
-    @alerts = Alert.active.includes(:incident_type)
+    @alerts = Alert.active.includes(:incident_type).order('id DESC')
     @plant = Plant.find(params[:plant_id])
   end
 
@@ -28,7 +28,7 @@ class AlertsController < ApplicationController
     respond_to do |format|
       if @alert.save
         @alert.send_notifications!
-        format.html { redirect_to plant_path(@alert.plant), notice: 'Alert was successfully created.' }
+        format.html { redirect_to plant_alerts_path(@alert.plant), notice: 'Alert was successfully created.' }
         format.json { render :show, status: :created, location: @alert }
       else
         format.html { render :new }

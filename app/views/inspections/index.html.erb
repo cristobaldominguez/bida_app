@@ -9,7 +9,7 @@
 <%= render 'shared/tables/elements_list', headers: ['Inspection Number', 'Options'], title: 'All Inspection Tickets' do %>
 <% @inspections.each do |inspection| %>
   <tr class="table_main__table-row">
-    <td class="table_main__table-data--left-text"><%= link_to "##{inspection.id}", plant_inspection_path(@plant, inspection), class: 'table_main__link-show' %></td>
+    <td class="table_main__table-data--left-text"><%= link_to "##{inspection.id} | #{inspection.date}", plant_inspection_path(@plant, inspection), class: 'table_main__link-show' %></td>
     <td class="table_main__table-data--options">
       <a href="#" class="table_main__link--options"></a>
       <div class="options_menu">
