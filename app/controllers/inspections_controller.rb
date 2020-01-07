@@ -6,8 +6,8 @@ class InspectionsController < ApplicationController
   # GET /inspections
   # GET /inspections.json
   def index
-    @inspections = Inspection.active.order('id DESC')
     @plant = Plant.find(params[:plant_id])
+    @inspections = @plant.inspections.active.order('id DESC')
   end
 
   # GET /inspections/1
