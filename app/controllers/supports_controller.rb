@@ -12,7 +12,11 @@ class SupportsController < ApplicationController
   # GET /supports/1
   # GET /supports/1.json
   def show
+    @plant = Plant.find(params[:plant_id])
+    @support = @plant.supports.find(params[:id])
     @support.work_summaries = @support.work_summaries.select(&:active)
+  rescue ActiveRecord::RecordNotFound => _e
+    redirect_to pages_no_permission_path, notice: 'Access not Allowed'
   end
 
   # GET /plants/1/supports/new
@@ -40,8 +44,12 @@ class SupportsController < ApplicationController
 
   # GET /supports/1/edit
   def edit
+    @plant = Plant.find(params[:plant_id])
+    @support = @plant.supports.find(params[:id])
     @support.work_summaries = @support.work_summaries.select(&:active)
     @work_summary = @support.work_summaries.build if @support.work_summaries.empty?
+  rescue ActiveRecord::RecordNotFound => _e
+    redirect_to pages_no_permission_path, notice: 'Access not Allowed'
   end
 
   # PATCH/PUT /plants/1/plants/1/supports/1

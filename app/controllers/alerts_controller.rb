@@ -13,7 +13,10 @@ class AlertsController < ApplicationController
   # GET /alerts/1
   # GET /alerts/1.json
   def show
-    @plant = Alert.find(params[:id]).plant
+    @plant = Plant.find(params[:plant_id])
+    @alert = @plant.alerts.find(params[:id])
+  rescue ActiveRecord::RecordNotFound => _e
+    redirect_to pages_no_permission_path, notice: 'Access not Allowed'
   end
 
   # GET /alerts/new
@@ -39,14 +42,17 @@ class AlertsController < ApplicationController
 
   # GET /alerts/1/edit
   def edit
-    @plant = Alert.find(params[:id]).plant
+    @plant = Plant.find(params[:plant_id])
+    @alert = @plant.alerts.find(params[:id])
+  rescue ActiveRecord::RecordNotFound => _e
+    redirect_to pages_no_permission_path, notice: 'Access not Allowed'
   end
 
   # PATCH/PUT /alerts/1
   # PATCH/PUT /alerts/1.json
   def update
-    params[:alert][:status_id] = params[:alert][:incident_resolution].length > 10 ? Status.find_by(name: "Fixed").id : params[:alert][:status_id]
-
+    params_alert = params[:alert]
+    params_alert[:status_id] = params_alert[:incident_resolution].length > 10 ? Status.find_by(name: 'Fixed').id : params_alert[:status_id]
     respond_to do |format|
       if @alert.update(alert_params)
         format.html { redirect_to plant_alerts_path(@plant), notice: 'Alert was successfully updated.' }

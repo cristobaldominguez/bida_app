@@ -11,7 +11,11 @@ class SamplingListsController < ApplicationController
   # GET /sampling_lists/1
   # GET /sampling_lists/1.json
   def show
+    @plant = Plant.find(params[:plant_id])
+    @sampling_list = @plant.sampling_lists.find(params[:id])
     @samplings = @sampling_list.samplings.includes(standard: :option)
+  rescue ActiveRecord::RecordNotFound => _e
+    redirect_to pages_no_permission_path, notice: 'Access not Allowed'
   end
 
   # GET /sampling_lists/new
@@ -21,8 +25,11 @@ class SamplingListsController < ApplicationController
 
   # GET /sampling_lists/1/edit
   def edit
-    @plant = @sampling_list.plant
+    @plant = Plant.find(params[:plant_id])
+    @sampling_list = @plant.sampling_lists.find(params[:id])
     @samplings = @sampling_list.samplings.includes(standard: [:option])
+  rescue ActiveRecord::RecordNotFound => _e
+    redirect_to pages_no_permission_path, notice: 'Access not Allowed'
   end
 
   # POST /sampling_lists

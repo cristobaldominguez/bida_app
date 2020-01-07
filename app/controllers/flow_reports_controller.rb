@@ -10,7 +10,11 @@ class FlowReportsController < ApplicationController
   # GET /plants/1/flow_reports/1
   # GET /plants/1/flow_reports/1.json
   def show
+    @plant = Plant.find(params[:plant_id])
+    @flow_report = @plant.flow_reports.find(params[:id])
     @flows = @flow_report.flows.order(:id)
+  rescue ActiveRecord::RecordNotFound => _e
+    redirect_to pages_no_permission_path, notice: 'Access not Allowed'
   end
 
   # GET /plants/1/flow_reports/new
@@ -24,7 +28,11 @@ class FlowReportsController < ApplicationController
 
   # GET /plants/1/flow_reports/1/edit
   def edit
-    @flow_reports = FlowReport.find(params[:id]).flows.order(:id)
+    @plant = Plant.find(params[:plant_id])
+    @flow_report = @plant.flow_reports.find(params[:id])
+    @flows = @flow_report.flows.order(:id)
+  rescue ActiveRecord::RecordNotFound => _e
+    redirect_to pages_no_permission_path, notice: 'Access not Allowed'
   end
 
   # POST /plants/1/flow_reports

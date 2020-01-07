@@ -12,8 +12,12 @@ class ReportsController < ApplicationController
   # GET /reports/1
   # GET /reports/1.json
   def show
+    @plant = Plant.find(params[:plant_id])
+    @report = @plant.reports.find(params[:id])
     set_graphs_data(@report)
     @graphs = @report.graphs.includes(graph_standard: :chart)
+  rescue ActiveRecord::RecordNotFound => _e
+    redirect_to pages_no_permission_path, notice: 'Access not Allowed'
   end
 
   # GET /reports/new
@@ -37,8 +41,12 @@ class ReportsController < ApplicationController
 
   # GET /reports/1/edit
   def edit
+    @plant = Plant.find(params[:plant_id])
+    @report = @plant.reports.find(params[:id])
     @graphs = @report.graphs
     set_graphs_data(@report)
+  rescue ActiveRecord::RecordNotFound => _e
+    redirect_to pages_no_permission_path, notice: 'Access not Allowed'
   end
 
   # POST /reports

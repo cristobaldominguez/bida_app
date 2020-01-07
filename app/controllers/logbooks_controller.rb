@@ -12,8 +12,11 @@ class LogbooksController < ApplicationController
   # GET /logbooks/1
   # GET /logbooks/1.json
   def show
-    # @logbooks.includes(:log_standard)
+    @plant = Plant.find(params[:plant_id])
+    @logbook = @plant.logbooks.find(params[:id])
     @filtered_logs = @logbook.logs.includes(current_log_standard: [:log_standard]).order('date DESC').reject { |log| log.date > @current_date }
+  rescue ActiveRecord::RecordNotFound => _e
+    redirect_to pages_no_permission_path, notice: 'Access not Allowed'
   end
 
   # GET plants/1/logbooks/new
@@ -57,7 +60,8 @@ class LogbooksController < ApplicationController
 
   # GET /logbooks/1/edit
   def edit
-    @plant = @logbook.plant
+    @plant = Plant.find(params[:plant_id])
+    @logbook = @plant.logbooks.find(params[:id])
     logs = @logbook.logs.includes(:current_log_standard).order('date DESC')
     cls = @plant.current_log_standards.includes(:log_standard)
 
@@ -66,6 +70,9 @@ class LogbooksController < ApplicationController
     empty_logs = lgs.reject { |log| log.value.present? }
     ordered_logs = empty_logs.group_by { |log| log.current_log_standard.log_standard.name }
     @filtered_logs = ordered_logs.map { |block| block.second.max_by(&:date) }.sort_by(&:date).reverse
+
+  rescue ActiveRecord::RecordNotFound => _e
+    redirect_to pages_no_permission_path, notice: 'Access not Allowed'
   end
 
   # PATCH/PUT /logbooks/1

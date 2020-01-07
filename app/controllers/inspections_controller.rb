@@ -13,7 +13,11 @@ class InspectionsController < ApplicationController
   # GET /inspections/1
   # GET /inspections/1.json
   def show
+    @plant = Plant.find(params[:plant_id])
+    @inspection = @plant.inspections.find(params[:id])
     @fluents = @inspection.fluents.includes(:output, :color, :odor).order(:output_id)
+  rescue ActiveRecord::RecordNotFound => _e
+    redirect_to pages_no_permission_path, notice: 'Access not Allowed'
   end
 
   # GET /inspections/new
@@ -29,13 +33,16 @@ class InspectionsController < ApplicationController
 
   # GET /inspections/1/edit
   def edit
+    @plant = Plant.find(params[:plant_id])
+    @inspection = @plant.inspections.find(params[:id])
     @fluents = @inspection.fluents.includes(:output)
+  rescue ActiveRecord::RecordNotFound => _e
+    redirect_to pages_no_permission_path, notice: 'Access not Allowed'
   end
 
   # POST /inspections
   # POST /inspections.json
   def create
-
     respond_to do |format|
       if @inspection.save
         @inspection.send_notifications!
