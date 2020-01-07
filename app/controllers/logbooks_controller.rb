@@ -147,6 +147,6 @@ class LogbooksController < ApplicationController
   def logbook_params
     params.require(:logbook).permit(:id, :plant_id, logs_attributes: [:id, :logbook_id, :active, :value, :document, :date,
                                     current_log_standard_attributes: [:frecuency, :cycle, :plant_id,
-                                      log_standard_attributes: [:season, :responsible, :comment, :name, :plant_id, :active, :task_id, task_attributes:[:id]]]])
+                                    log_standard_attributes: [:season, :responsible, :comment, :name, :plant_id, :active, :task_id, task_attributes:[:id]]]])
   end
 end
