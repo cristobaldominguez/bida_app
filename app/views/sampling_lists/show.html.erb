@@ -4,7 +4,7 @@
   <% end %>
 <% end %>
 
-<h2 class="main__title">Flows</h2>
+<h2 class="main__title"><%= @sampling_list.access.name %> Sampling</h2>
 
 <div class="view_info">
   <p class="view_info__data"><%= @sampling_list.created_at.strftime('%B, %Y') %></p>
@@ -16,23 +16,13 @@
   <p class="view_info__title">Access</p>
 </div>
 
-<div class="view_info">
-  <p class="view_info__data"><%= @sampling_list.frecuency.name %></p>
-  <p class="view_info__title">Frecuency</p>
-</div>
-
-<div class="view_info">
-  <p class="view_info__data"><%= @sampling_list.per_cycle %></p>
-  <p class="view_info__title">Per Cycle</p>
-</div>
-
-<%= render 'shared/tables/elements_list', headers: ['', 'In', 'Out', 'Date Added'] do %>
+<%= render 'shared/tables/elements_list', headers: ['', 'In', 'Out', 'Grab Date'] do %>
   <% @samplings.each do |sampling| %>
   <tr class="table_main__table-row--stripped">
     <td class="table_main__table-data--left-text"><%= sampling.standard.option.name %></td>
     <td class="table_main__table-data"><%= sampling.value_in %></td>
     <td class="table_main__table-data"><%= sampling.value_out %></td>
-    <td class="table_main__table-data"><%= sampling.updated_at.strftime('%m/%d/%y') %></td>
+    <td class="table_main__table-data"><%= sampling.value_in.present? && sampling.value_out.present? ? sampling.updated_at.strftime('%m/%d/%y') : '-' %></td>
   </tr>
   <% end %>
 <% end %>

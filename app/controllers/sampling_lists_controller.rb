@@ -5,7 +5,7 @@ class SamplingListsController < ApplicationController
   # GET /sampling_lists
   # GET /sampling_lists.json
   def index
-    @sampling_lists = SamplingList.all.includes(:access, :frecuency).order('created_at DESC')
+    @sampling_lists = @plant.sampling_lists.includes(:access).order('created_at DESC')
   end
 
   # GET /sampling_lists/1

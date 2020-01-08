@@ -1,13 +1,15 @@
-<h2 class="main__title">Sampling Lists</h2>
+<%= render 'shared/buttons/option_button', alt: 'header' do %>
+  <li class="option-button__option"><%= link_to 'New Samplings', '#', class: 'option-button__option-link' %></li>
+<% end %>
+
+<h2 class="main__title">Samplings History</h2>
 
 <% if @sampling_lists.present? %>
-<%= render 'shared/tables/elements_list', headers: ['Plant', 'Access', 'Frecuency', 'Per Cycle', 'Options'] do %>
+<%= render 'shared/tables/elements_list', headers: ['Plant', 'Access', 'Options'] do %>
 <% @sampling_lists.each do |sampling_list| %>
   <tr class="table_main__table-row">
-    <td class="table_main__table-data--left-text"><%= sampling_list.created_at.strftime('%B, %Y') %></td>
+    <td class="table_main__table-data--left-text"><%= link_to sampling_list.created_at.strftime('%B, %Y'), plant_sampling_list_path(@plant, sampling_list), class: 'table_main__link-show' %></td>
     <td class="table_main__table-data"><%= sampling_list.access.name %></td>
-    <td class="table_main__table-data"><%= sampling_list.frecuency.name %></td>
-    <td class="table_main__table-data"><%= sampling_list.per_cycle %></td>
     <td class="table_main__table-data--options">
       <a href="#" class="table_main__link--options"></a>
       <div class="options_menu">
