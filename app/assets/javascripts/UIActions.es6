@@ -19,9 +19,9 @@ document.addEventListener('turbolinks:load', function() {
 
     if (!is_empty(toast_notices)) {
       toast_notices.each(function(index) {
-        // $(toast_notices[index]).delay(5000).fadeOut('slow', function() {
-        //   $(this).remove()
-        // })
+        $(toast_notices[index]).delay(5000).fadeOut('slow', function() {
+          $(this).remove()
+        })
       })
     }
 
