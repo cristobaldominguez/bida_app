@@ -14,7 +14,12 @@ Rails.application.routes.draw do
     resources :plants, only: %i[index new create update destroy]
   end
   resources :plants, path_prefix: '/companies/:company_id', except: %i[new create update destroy] do
-    resources :sampling_lists
+    resources :sampling_lists do
+      collection do
+        get 'lab'
+        get 'internal'
+      end
+    end
     resources :logbooks
     resources :inspections
     resources :alerts

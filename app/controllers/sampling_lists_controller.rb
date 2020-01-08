@@ -72,6 +72,16 @@ class SamplingListsController < ApplicationController
     end
   end
 
+  def lab
+    lab_sampling = @plant.sampling_lists.lab.last
+    redirect_to edit_plant_sampling_list_path(@plant, lab_sampling)
+  end
+
+  def internal
+    lab_sampling = @plant.sampling_lists.internal.last
+    redirect_to edit_plant_sampling_list_path(@plant, lab_sampling)
+  end
+
   private
 
   def assign_date_to_samplings

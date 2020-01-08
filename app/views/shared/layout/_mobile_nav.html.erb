@@ -77,8 +77,8 @@
         <% if can? :read, Sampling %>
         <li class="mobile_nav__subitem"><a href="#" class="mobile_nav__sublink">samplings</a>
           <ul class="mobile_nav__submenu-list">
-            <li class="mobile_nav__subitem"><%= link_to 'lab', @lab_samplings, class: 'mobile_nav__sublink' %></li>
-            <li class="mobile_nav__subitem"><%= link_to 'internal', @internal_samplings, class: 'mobile_nav__sublink' %></li>
+            <li class="mobile_nav__subitem"><%= link_to 'lab', lab_plant_sampling_lists_path(@plant), class: 'mobile_nav__sublink' %></li>
+            <li class="mobile_nav__subitem"><%= link_to 'internal', internal_plant_sampling_lists_path(@plant), class: 'mobile_nav__sublink' %></li>
             <li class="mobile_nav__subitem"><%= link_to 'samplings history', plant_sampling_lists_path(@plant), class: 'mobile_nav__sublink' %></li>
           </ul>
         </li>
