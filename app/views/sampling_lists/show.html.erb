@@ -7,7 +7,7 @@
 <h2 class="main__title"><%= @sampling_list.access.name %> Sampling</h2>
 
 <div class="view_info">
-  <p class="view_info__data"><%= @sampling_list.created_at.strftime('%B, %Y') %></p>
+  <p class="view_info__data"><%= @sampling_list.date.to_s(:custom) %></p>
   <p class="view_info__title">Plant</p>
 </div>
 
@@ -22,7 +22,7 @@
     <td class="table_main__table-data--left-text"><%= sampling.standard.option.name %></td>
     <td class="table_main__table-data"><%= sampling.value_in %></td>
     <td class="table_main__table-data"><%= sampling.value_out %></td>
-    <td class="table_main__table-data"><%= sampling.value_in.present? && sampling.value_out.present? ? sampling.updated_at.strftime('%m/%d/%y') : '-' %></td>
+    <td class="table_main__table-data"><%= sampling.value_in.present? && sampling.value_out.present? ? sampling.date.to_s(:custom) : '-' %></td>
   </tr>
   <% end %>
 <% end %>
