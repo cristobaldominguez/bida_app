@@ -30,7 +30,11 @@ Rails.application.routes.draw do
       end
     end
     resources :graphs
-    resources :reports
+    resources :reports do
+      collection do
+        get 'latest_report'
+      end
+    end
     resources :graph_standards
     resources :supports do
       collection do
