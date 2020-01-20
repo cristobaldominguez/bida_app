@@ -80,6 +80,9 @@
             <li class="mobile_nav__subitem"><%= link_to 'lab', lab_plant_sampling_lists_path(@plant), class: 'mobile_nav__sublink' %></li>
             <li class="mobile_nav__subitem"><%= link_to 'internal', internal_plant_sampling_lists_path(@plant), class: 'mobile_nav__sublink' %></li>
             <li class="mobile_nav__subitem"><%= link_to 'samplings history', plant_sampling_lists_path(@plant), class: 'mobile_nav__sublink' %></li>
+            <% if can? :create, Sampling %>
+            <li class="mobile_nav__subitem"><%= link_to 'import samplings', samplings_plant_imports_path(@plant), class: 'mobile_nav__sublink' %></li>
+            <% end %>
           </ul>
         </li>
         <% end %>
@@ -87,11 +90,7 @@
         <li class="mobile_nav__subitem"><a href="#" class="mobile_nav__sublink">graph reports</a>
           <ul class="mobile_nav__submenu-list">
             <% if can? :update, Report %>
-            <% if @latest_report.present? %>
-            <li class="mobile_nav__subitem"><%= link_to 'latest report', plant_report_path(@plant, @latest_report), class: 'mobile_nav__sublink' %></li>
-            <% else %>
-            <li class="mobile_nav__subitem"><%= link_to 'latest report', new_plant_report_path(@plant), class: 'mobile_nav__sublink' %></li>
-            <% end %>
+            <li class="mobile_nav__subitem"><%= link_to 'latest report', latest_report_plant_reports_path(@plant), class: 'mobile_nav__sublink' %></li>
             <% end %>
             <li class="mobile_nav__subitem"><%= link_to 'reports history', plant_reports_path(@plant), class: 'mobile_nav__sublink' %></li>
           </ul>

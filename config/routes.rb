@@ -41,6 +41,8 @@ Rails.application.routes.draw do
       collection do
         get  'flows'
         post 'flows_create'
+        get  'samplings'
+        post 'samplings_create'
       end
     end
     member do

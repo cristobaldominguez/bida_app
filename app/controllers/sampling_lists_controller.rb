@@ -5,7 +5,7 @@ class SamplingListsController < ApplicationController
   # GET /sampling_lists
   # GET /sampling_lists.json
   def index
-    @sampling_lists = @plant.sampling_lists.includes(:access).order('created_at DESC')
+    @sampling_lists = @plant.sampling_lists.includes(:access).order('date DESC')
   end
 
   # GET /sampling_lists/1
@@ -80,6 +80,60 @@ class SamplingListsController < ApplicationController
   def internal
     lab_sampling = @plant.sampling_lists.internal.last
     redirect_to edit_plant_sampling_list_path(@plant, lab_sampling)
+  end
+
+  def self.api_new(plant, access, data = {}, date = Date.today)
+    sampling_list = current_sampling_lists(plant, access)
+    new_sampling_list = generate_sampling_list(sampling_list, data, date)
+    generate_samplings(sampling_list, new_sampling_list, data, date)
+
+    data.present? ? new_sampling_list : api_save(new_sampling_list)
+  end
+
+  def self.current_sampling_lists(plant, access)
+    sampling_access = plant.sampling_lists.send(access.downcase)
+    sampling_access.includes(:samplings).max_by(&:created_at)
+  end
+
+  def self.generate_sampling_list(sampling_list, data = {}, date = Date.today)
+    sl_date = data.present? ? data[:list][:date] : date
+    SamplingList.new(date: sl_date,
+                     plant_id: sampling_list.plant_id,
+                     access_id: sampling_list.access_id,
+                     per_cycle: sampling_list.per_cycle,
+                     frecuency_id: sampling_list.frecuency_id)
+  end
+
+  def self.generate_samplings(lista, sampling_list, data = {}, date = Date.today)
+    lista.samplings.each do |sampling|
+      current = generate_params(sampling, data)
+
+      sampling_list.samplings.build(standard_id: sampling.standard_id, value_in: current[:value_in], value_out: current[:value_out], date: date)
+    end
+  end
+
+  def self.generate_params(sampling, data)
+    current_data = data[:samplings].select { |s| s[:option] == sampling.standard.option.name }.first || {}
+
+    { value_in: current_data[:value_in], value_out: current_data[:value_out], date: current_data[:date] || Date.today }
+  end
+
+  def self.api_save(sampling_list)
+    if sampling_list.valid? && sampling_list.samplings.map(&:valid?).all?
+      sampling_list.save
+      true
+    else
+      handle_errors(sampling_list)
+      false
+    end
+  end
+
+  def handle_errors(sampling_list)
+    sampling_list.samplings.each_with_index do |item, index|
+      item.errors.full_messages.each do |msg|
+        errors.add :base, "Row #{index + 6}: #{msg}"
+      end
+    end
   end
 
   private

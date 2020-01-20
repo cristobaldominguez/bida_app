@@ -6,6 +6,7 @@ class Import
 
   def initialize(attributes = {})
     attributes.each { |name, value| send("#{name}=", value) }
+    @rows = []
   end
 
   def persisted?
@@ -27,7 +28,11 @@ class Import
   def grouped_rows(spreadsheet)
     header = spreadsheet.row(1).map { |h| h.parameterize.underscore.to_sym }
     rows_arr = rows(spreadsheet, header)
-    rows_arr.group_by { |r| r[:date].beginning_of_month.strftime('%Y-%m-%d') }
+    group_structure(rows_arr)
+  end
+
+  def group_structure(rows)
+    rows.group_by { |r| r[:date].beginning_of_month.strftime('%Y-%m-%d') }
   end
 
   def rows(spreadsheet, header)

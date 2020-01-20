@@ -94,6 +94,14 @@ class ReportsController < ApplicationController
     end
   end
 
+  def latest_report
+    plant = Plant.find(params[:plant_id])
+    report = plant.reports.active.created_between(Date.today.at_beginning_of_month.beginning_of_day, Time.now)
+    latest_report = report.first || nil
+
+    redirect_to latest_report ? plant_report_path(plant, latest_report) : new_plant_report_path(plant)
+  end
+
   private
 
   def set_report

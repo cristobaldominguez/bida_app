@@ -19,6 +19,22 @@ class ImportsController < ApplicationController
     end
   end
 
+  def samplings
+    @sampling_import = SamplingImport.new
+  end
+
+  def samplings_create
+    sp = updated_params(params, :sampling_import)
+    @sampling_import = SamplingImport.new(sp)
+    @sampling_import.save
+
+    if @sampling_import.save
+      redirect_to plant_sampling_lists_path(params[:plant_id])
+    else
+      render samplings_plant_imports_path(params[:plant_id])
+    end
+  end
+
   def updated_params(params, target)
     current_params = params[target]
     current_params[:plant] = params[:plant_id].to_i

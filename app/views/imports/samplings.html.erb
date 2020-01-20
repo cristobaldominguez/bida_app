@@ -1,0 +1,30 @@
+<h2 class="main__title">Sampling Import</h2>
+
+<p>Note: Only import spreadsheets that were previously downloaded from this application.</p>
+
+<h3>Requirements</h3>
+<ul>
+  <li>Here you could list the validations you have in place for your model</li>
+  <li>That way your user has a better chance of successful import</li>
+</ul>
+
+<h5>Select File</h5>
+<%= form_for @sampling_import, url: samplings_create_plant_imports_path do |f| %>
+  <% if @sampling_import.errors.any? %>
+    <%= pluralize(@items_import.errors.count, "error") %> prevented us from
+    importing your spreadsheet. Please update your spreadsheet and try agin.
+    <ul>
+      <% @sampling_import.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <p>
+    <%= f.file_field :file %>
+  </p>
+
+  <p>
+    <%= f.submit "Import File" %>
+  </p>
+<% end %>

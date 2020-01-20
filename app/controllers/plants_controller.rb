@@ -110,6 +110,8 @@ class PlantsController < ApplicationController
     end
 
     @plant.sampling_lists.each do |sampling_list|
+      sampling_list.date = Date.today.beginning_of_month
+
       samplings_names[sampling_list.access.name.convert_as_parameter.to_sym].each do |sn|
         standard = @plant.standards.select { |stan| stan.option.name.convert_as_parameter == sn.convert_as_parameter }.first
         sampling_list.samplings.build(standard: standard, date: date)
@@ -220,7 +222,6 @@ class PlantsController < ApplicationController
     plants = Plant.all.select(&:active)
     plants.each do |plant|
       logbook = plant.logbooks.create
-      # GenerateLogsJob.perform_later(logbook)
       LogsController.generate_monthly_logs(logbook, Date.today)
     end
   end
