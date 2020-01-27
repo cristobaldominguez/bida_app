@@ -6,7 +6,8 @@ document.addEventListener('turbolinks:load', function() {
     //State
     const state = {
       sizes: [],
-      current_module: 1
+      current_module: 1,
+      metric: 'm²'
     }
 
     // CacheDom
@@ -43,6 +44,8 @@ document.addEventListener('turbolinks:load', function() {
     function init() {
       const li = document.querySelector('li.system_size__size')
       if (!li) { return }
+
+      state.metric = li.querySelector('.field__value-span').innerText
       eventBinding()
       get_sizes()
     }
@@ -116,7 +119,7 @@ document.addEventListener('turbolinks:load', function() {
       // span.field__value-span
       const value_span = document.createElement('span')
       value_span.className = 'field__value-span'
-      value_span.innerText = 'm²'
+      value_span.innerText = state.metric
       _div_input.appendChild(value_span)
 
       // Append nodes

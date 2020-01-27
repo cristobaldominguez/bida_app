@@ -90,7 +90,7 @@
     </div>
 
     <%= form.label 'Total Size of the modules' %>
-    <%= form.value_field 'plant_system_size_total', "m&sup2;", value: @plant.system_size.reduce(:+) %>
+    <%= form.value_field 'plant_system_size_total', @plant.country.metric.area, value: @plant.system_size.reduce(:+) %>
     <%= form.hidden_field :system_size %>
   </div>
 

@@ -3,6 +3,6 @@
   <h3>Module #<span class="size__number"><%= number %></span></h3>
   <div class="field__value">
     <input type="text" class="size__input field__value-input" name="size__quantity" placeholder="Size of the module" data-module="<%= number %>" value="<%= size %>">
-    <span class="field__value-span">m&sup2;</span>
+    <span class="field__value-span"><%= @plant.country.metric.area %></span>
   </div>
 </li>
