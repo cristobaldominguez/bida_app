@@ -25,7 +25,7 @@
         <% if log.object.date == @current_date %>
         Today
         <% else %>
-        <%= log.object.date.to_s(:long_ordinal) %>
+        <%= log.object.date.to_s(:english) %>
         <% end %>
       </td>
     </tr>

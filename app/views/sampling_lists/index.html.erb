@@ -11,7 +11,7 @@
 <%= render 'shared/tables/elements_list', headers: ['Plant', 'Access', 'Options'] do %>
 <% @sampling_lists.each do |sampling_list| %>
   <tr class="table_main__table-row">
-    <td class="table_main__table-data--left-text"><%= link_to sampling_list.date.to_s(:custom), plant_sampling_list_path(@plant, sampling_list), class: 'table_main__link-show' %></td>
+    <td class="table_main__table-data--left-text"><%= link_to sampling_list.date.to_s(:english), plant_sampling_list_path(@plant, sampling_list), class: 'table_main__link-show' %></td>
     <td class="table_main__table-data"><%= sampling_list.access.name %></td>
     <td class="table_main__table-data--options">
       <a href="#" class="table_main__link--options"></a>
