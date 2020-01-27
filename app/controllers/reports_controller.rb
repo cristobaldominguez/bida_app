@@ -126,6 +126,7 @@ class ReportsController < ApplicationController
 
     # Database info
     flows_history = @plant.flows
+    return nil if flows_history.empty?
 
     flows_year = flows_history.select { |flow| flow.date > start_date - 11.months && flow.date < end_date }
     flows_month = flows_history.select { |flow| flow.date >= start_date && flow.date <= end_date }
@@ -196,16 +197,20 @@ class ReportsController < ApplicationController
 
   def samplings_average(data)
     data.map do |key, value|
-      value_in = (value.sum(&:value_in) / value.size).round(0)
-      value_out = (value.sum(&:value_out) / value.size).round(0)
+      v_in = value.map(&:value_in).compact
+      v_out = value.map(&:value_out).compact
+      value_in = (v_in.sum / v_in.size).round(0)
+      value_out = (v_out.sum / v_out.size).round(0)
       { key => { in: value_in, out: value_out, removal: percent(value_in, value_out) } }
     end
   end
 
   def samplings_peak(data)
     data.map do |key, value|
-      value_in = value.map(&:value_in).max.round(0)
-      value_out = value.map(&:value_out).max.round(0)
+      v_in = value.map(&:value_in).compact
+      v_out = value.map(&:value_out).compact
+      value_in = v_in.max.round(0)
+      value_out = v_out.max.round(0)
       { key => { in: value_in, out: value_out, removal: percent(value_in, value_out) } }
     end
   end
