@@ -9,7 +9,7 @@ class SamplingList < ApplicationRecord
   scope :internal, -> { where(access_id: Access.find_by(name: 'Internal').id) }
 
   scope :created_between, ->(start_date, end_date) { where('sampling_lists.created_at BETWEEN ? and ?', start_date, end_date) }
-  scope :created_before, ->(end_date) { where('sampling_lists.created_at < ?', end_date) }
+  scope :created_before, ->(end_date) { where('sampling_lists.date < ?', end_date) }
 
   accepts_nested_attributes_for :samplings, allow_destroy: true
 
