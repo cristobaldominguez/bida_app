@@ -17,8 +17,8 @@
           <input type="text" value="" name="comment" id="task_comment" data-target="comment">
         </div>
         <div class="field no-border">
-          <label for="task_responsible">Responsible</label>
-          <%= collection_select(:responsible, :responsible_id, @responsibles, :first, :second, {prompt: 'Select a Responsible'}, data: {required: true, error: 'Responsible is required', target: 'responsible'}) %>
+          <label for="task_responsible">Responsible Party</label>
+          <%= collection_select(:responsible, :responsible_id, @responsibles, :first, :second, {prompt: 'Select a Responsible Party'}, data: {required: true, error: 'Responsible Party is required', target: 'responsible'}) %>
         </div>
       </div>
 

@@ -162,7 +162,7 @@
 
 <h2 class="cell_division">Logbook</h2>
 
-<%= render 'shared/tables/elements_list', headers: ['Task', 'Responsible'] do %>
+<%= render 'shared/tables/elements_list', headers: ['Task', 'Responsible Party'] do %>
 <% @current_log_standards.each do |log| %>
 <tr class="table_main__table-row">
   <td class="table_main__table-data--left-text"><input type="checkbox" name="active" value="Boat" <%= 'checked' if log.log_standard.active %> disabled> <%= log.log_standard.name %></td>
@@ -173,7 +173,7 @@
 
 <div class="view_info">
   <p class="view_info__data"><%= @plant.logbook_bf_responsible&.full_name %></p>
-  <p class="view_info__title">Logbook BioFiltro Responsible</p>
+  <p class="view_info__title">Logbook BioFiltro Assigned Operator</p>
 </div>
 
 <div class="view_info">
@@ -183,7 +183,7 @@
 
 <div class="view_info">
   <p class="view_info__data"><%= @plant.logbook_company_responsible&.full_name %></p>
-  <p class="view_info__title">Logbook Company Responsible</p>
+  <p class="view_info__title">Logbook Company Manager</p>
 </div>
 
 <h3>Graphs</h3>

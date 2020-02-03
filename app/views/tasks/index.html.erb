@@ -6,7 +6,7 @@
 
 <h2 class="main__title">Tasks</h2>
 
-<%= render 'shared/tables/elements_list', headers: ['Name', 'Cycle', 'Input Type', 'Responsible', 'Options'], title: 'Your Companies' do %>
+<%= render 'shared/tables/elements_list', headers: ['Name', 'Cycle', 'Input Type', 'Responsible Party', 'Options'], title: 'Your Companies' do %>
 <% @tasks.each do |task| %>
 <tr class="table_main__table-row">
   <td class="table_main__table-data--left-text"><%= task.name %></td>

@@ -233,8 +233,8 @@
     <% end %>
 
   <div class="field  no-border">
-    <%= form.label 'Logbook BF Responsible' %>
-    <%= form.collection_select(:logbook_bf_responsible_id, @users, :id, :full_name, {prompt: 'Select a Logbook BF Responsible'})  %>
+    <%= form.label 'Logbook BF Assigned Operator' %>
+    <%= form.collection_select(:logbook_bf_responsible_id, @users, :id, :full_name, {prompt: 'Select a Logbook BF Assigned Operator'})  %>
   </div>
 
   <div class="field  no-border">
@@ -243,8 +243,8 @@
   </div>
 
   <div class="field  no-border">
-    <%= form.label 'Logbook Company Responsible' %>
-    <%= form.collection_select(:logbook_company_responsible_id, @users, :id, :full_name, {prompt: 'Select a Logbook Company Responsible'})  %>
+    <%= form.label 'Logbook Company Manager' %>
+    <%= form.collection_select(:logbook_company_responsible_id, @users, :id, :full_name, {prompt: 'Select a Logbook Company Manager'})  %>
   </div>
 
   <h3>Graphs</h3>
