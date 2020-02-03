@@ -39,6 +39,7 @@ class PlantsController < ApplicationController
     @company = Company.find(params[:company_id])
     @plant = @company.plants.build
     @is_new = true
+    @plant.country = Country.find(3)
 
     outlets = Outlet.all
     options = Option.all
