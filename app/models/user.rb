@@ -30,9 +30,9 @@ class User < ApplicationRecord
   has_many :client_supports, class_name: 'Support', foreign_key: 'client_id'
   has_many :bf_technician_supports, class_name: 'Support', foreign_key: 'bf_technician_id'
 
-  enum role: [:no_role, :admin, :client, :operator, :operations_manager, :viewer]
-  enum interface_color: [:light, :dark]
-  enum employee: [:company, :biofiltro]
+  enum interface_color: %i[light dark]
+  enum employee: %i[company biofiltro]
+  enum role: %i[no_role admin client operator operations_manager viewer]
 
   def full_name
     "#{name} #{lastname}"
