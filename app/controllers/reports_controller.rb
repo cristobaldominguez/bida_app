@@ -36,14 +36,14 @@ class ReportsController < ApplicationController
     end
 
     @graphs = @report.graphs
-    set_graphs_data(@report)
+    # set_graphs_data(@report)
   end
 
   # GET /reports/1/edit
   def edit
     @plant = Plant.find(params[:plant_id])
     @report = @plant.reports.find(params[:id])
-    @graphs = @report.graphs
+    @graphs = @report.graphs.includes(graph_standard: :chart)
     set_graphs_data(@report)
   rescue ActiveRecord::RecordNotFound => _e
     redirect_to pages_no_permission_path, notice: 'Access not Allowed'
@@ -119,8 +119,8 @@ class ReportsController < ApplicationController
   def set_graphs_data(report)
     # Common variables
     report_date = report.date
-    start_date = report_date.beginning_of_month
-    end_date = report_date.end_of_month
+    @start_date = report_date.beginning_of_month
+    @end_date = report_date.end_of_month
     minimum_liquid_required = (0.05 * @plant.flow_design).to_i
     outputs = %w[In Out]
 
@@ -128,11 +128,11 @@ class ReportsController < ApplicationController
     flows_history = @plant.flows
     return nil if flows_history.empty?
 
-    flows_year = flows_history.select { |flow| flow.date > start_date - 11.months && flow.date < end_date }
-    flows_month = flows_history.select { |flow| flow.date >= start_date && flow.date <= end_date }
+    flows_year = flows_history.select { |flow| flow.date > @start_date - 11.months && flow.date < @end_date }
+    flows_month = flows_history.select { |flow| flow.date >= @start_date && flow.date <= @end_date }
 
-    treated_water_history = flows_history.reject { |flow| flow.value.nil? || flow.date > end_date || flow.value < minimum_liquid_required }.group_by_month(&:date)
-    sampling_lists_history = @plant.sampling_lists.includes(samplings: [standard: :option]).created_before(end_date)
+    treated_water_history = flows_history.reject { |flow| flow.value.nil? || flow.date > @end_date || flow.value < minimum_liquid_required }.group_by_month(&:date)
+    sampling_lists_history = @plant.sampling_lists.includes(samplings: [standard: :option]).created_before(@end_date)
     sampling_lists_labs = sampling_lists_history.lab
 
     samplings_lab = sampling_lists_labs.map(&:samplings).flatten
@@ -140,7 +140,7 @@ class ReportsController < ApplicationController
 
     lifetime_analysis_headers = samplings_grouped_by_option.map { |key, _| key }.map { |key| ["#{key} In", "#{key} Out", 'Removal'] }.flatten
 
-    year_samplings = year_samplings(sampling_lists_labs, start_date)
+    year_samplings = year_samplings(sampling_lists_labs)
     year_samplings_grouped_by_option = year_samplings.group_by { |sampling| sampling.standard.option.name }
 
     # View Variables
@@ -150,7 +150,7 @@ class ReportsController < ApplicationController
     @treated_water = { "headers": ['', 'Month', 'Year', 'Lifetime'], "data": monthly_water_flow_analysis(treated_water_history) }
     @lifetime_analysis = { "headers": [['', 'Biological Oxygen Demand (mg/l)', 'Total Suspended Solids (mg/l)'], lifetime_analysis_headers],
                            "average": samplings_average(samplings_grouped_by_option), "peak": samplings_peak(samplings_grouped_by_option) }
-    @year_samplings_analysis = { 'headers': [['', 'Biological Oxygen Demand (mg/l)', 'Total Suspended Solids (mg/l)'], ['Grab Date', lifetime_analysis_headers].flatten], 'data': year_samplings_tabledata(sampling_lists_labs, start_date), 'footer': [] }
+    @year_samplings_analysis = { 'headers': [['', 'Biological Oxygen Demand (mg/l)', 'Total Suspended Solids (mg/l)'], ['Grab Date', lifetime_analysis_headers].flatten], 'data': year_samplings_table_data(sampling_lists_labs), 'footer': [] }
     @year_samplings_grouped_by_option = outputs.map { |output| year_samplings_grouped_by_option.map { |key, values| { name: "#{key} #{output}", data: values.map { |sampling| [sampling.date.strftime('%b, %Y'), output == 'In' ? sampling.value_in : sampling.value_out] } } } }.flatten
   end
 
@@ -216,25 +216,53 @@ class ReportsController < ApplicationController
   end
 
   def monthly_water_analysis_data(data)
-    current_samplings = data.map { |_, samplings| samplings.last }
+    selection = data.map { |_, samplings| samplings.select { |s| s.date.strftime('%Y %m') == @start_date.strftime('%Y %m') } }
+    current_samplings = selection.flatten
+
     current_samplings.map do |sampling|
       value_in = sampling.value_in.round(0)
       value_out = sampling.value_out.round(0)
-      { sampling.standard.option.name => [value_in, value_out, percent(value_in, value_out).to_s + '%'] }
+      { "#{sampling.standard.option.name} (#{sampling.date.strftime('%m/%d')})" => [value_in, value_out, percent(value_in, value_out).to_s + '%'] }
     end
   end
 
-  def year_samplings_tabledata(data, start_date)
-    year_samplings_data = year_samplings(data, start_date)
+  def year_samplings_table_data(data)
+    year_samplings_data = year_samplings(data)
     year_samplings_grouped_by_month = year_samplings_data.group_by_month(&:date)
-    year_samplings_grouped_by_month.map do |key, samplings|
-      { key.strftime('%B, %y') => samplings.map { |sampling| { in: sampling.value_in.round(0), out: sampling.value_out.round(0), removal: percent(sampling.value_in, sampling.value_out).to_s + '%' } } }
+
+    year_samplings_grouped = {}
+    year_samplings_grouped_by_month.map { |key, value| year_samplings_grouped[key] = value.group_by { |g| g.standard.option.name } }
+
+    # year_samplings_grouped.map { |date, samples| year_samplings[date] = { 1 => [samples[1].map(&:value_in).sum / samples[1].size, samples[1].map(&:value_out).sum / samples[1].size], 2 => [samples[2].map(&:value_in).sum / samples[2].size, samples[2].map(&:value_out).sum / samples[2].size]} }
+    # ret = ys_grouped.map { |group| group.map { |_, v| v.map { |_, val| val.size } } }
+
+    # year_samplings.map do |key, samplings|
+    #   resp = { key.strftime('%B, %y') => samplings.map { |sampling| sampling.map { |s| s }.flatten } }
+    #   byebug
+    #
+    #   resp
+    # end
+
+    year_samplings = {}
+    year_samplings_grouped.map do |date, samples|
+      samples.map do |k, s|
+        vin = s.pluck(:value_in).sum / s.pluck(:value_in).size
+        vout = s.pluck(:value_out).sum / s.pluck(:value_out).size
+        year_samplings[date] = {} if year_samplings[date].nil?
+
+        year_samplings[date][k] = { 'in'.to_sym => vin, 'out'.to_sym => vout, removal: percent(vin, vout).to_s + '%' }
+      end
     end
+
+    # byebug
+    # raise
+
+    year_samplings
   end
 
-  def year_samplings(data, start_date)
-    end_date = start_date - 11.months
-    data.select { |sampling_list| sampling_list.date > end_date }.map(&:samplings).flatten
+  def year_samplings(data)
+    @end_date = @start_date - 11.months
+    data.select { |sampling_list| sampling_list.date > @end_date }.map(&:samplings).flatten
   end
 
   def report_params

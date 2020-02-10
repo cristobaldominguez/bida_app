@@ -13,17 +13,15 @@
     <% end %>
   </thead>
   <tbody>
-    <% data[:data].each do |info| %>
-    <% info.each do |key, val| %>
+    <% data[:data].map do |date, info| %>
     <tr>
-      <th scope="row"><%= key %></th>
-      <% val.each do |sampling| %>
-      <td class="table__text-center"><%= sampling[:in] %></td>
-      <td class="table__text-center"><%= sampling[:out] %></td>
-      <td class="table__text-center"><%= sampling[:removal] %></td>
+      <th scope="row"><%= date %></th>
+      <% info.map do |key, val| %>
+      <td class="table__text-center"><%= val[:in] %></td>
+      <td class="table__text-center"><%= val[:out] %></td>
+      <td class="table__text-center"><%= val[:removal] %></td>
       <% end %>
     </tr>
-    <% end %>
     <% end %>
   </tbody>
 </table>
