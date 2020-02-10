@@ -21,10 +21,12 @@ class SamplingListsController < ApplicationController
   # GET /sampling_lists/new
   def new
     @sampling_list = SamplingList.new
+    @accesses = Access.all
   end
 
   # GET /sampling_lists/1/edit
   def edit
+    @accesses = Access.all
     @plant = Plant.find(params[:plant_id])
     @sampling_list = @plant.sampling_lists.find(params[:id])
     @samplings = @sampling_list.samplings.includes(standard: [:option])
@@ -35,7 +37,12 @@ class SamplingListsController < ApplicationController
   # POST /sampling_lists
   # POST /sampling_lists.json
   def create
+    @accesses = Access.all
     @sampling_list = SamplingList.new(sampling_list_params)
+    last_sampling = @plant.sampling_lists.send(@sampling_list.access.name.downcase.to_sym).last
+    @sampling_list.frecuency_id = last_sampling.frecuency_id
+    @sampling_list.per_cycle = last_sampling.per_cycle
+    @sampling_list.plant = @plant
 
     respond_to do |format|
       if @sampling_list.save
@@ -147,6 +154,6 @@ class SamplingListsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def sampling_list_params
-    params.require(:sampling_list).permit(:date, samplings_attributes: %i[id standard_id value_in value_out sampling_list_id])
+    params.require(:sampling_list).permit(:date, :access_id, :frecuency_id, :per_cycle, samplings_attributes: %i[id standard_id value_in value_out sampling_list_id])
   end
 end
