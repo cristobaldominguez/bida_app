@@ -1047,7 +1047,8 @@ a:visited {
 			padding: 8px 0.75rem;
 		}
 
-		input[type="text"][class$="-input"] {
+		input[type="text"][class$="-input"],
+		input[type="number"][class$="-input"] {
 			border: none;
 		}
 
@@ -1073,6 +1074,19 @@ a:visited {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+	}
+
+	&-wrap {
+		@extend .field;
+		width: auto;
+
+		.field__value {
+			max-width: 300px;
+
+			&-span {
+				border-radius: 0 5px 5px 0;
+			}
+		}
 	}
 }
 

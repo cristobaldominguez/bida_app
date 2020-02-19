@@ -1,4 +1,4 @@
-<%= form_with(model: [@plant, logbook], local: true) do |form| %>
+<%= form_with(model: [@plant, logbook], builder: BFFormBuilder, local: true) do |form| %>
   <% if logbook.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(logbook.errors.count, "error") %> prohibited this logbook from being saved:</h2>
@@ -38,7 +38,9 @@
         <span class="table_main__table-data-span"><%= log_standard.object.comment %><span>
         <% end %>
       </td>
-      <td class="table_main__table-data">
+      <% input_type = task.object.input_type %>
+      <% class_name = input_type == 'number' ? 'field-wrap' : '' %>
+      <td class="table_main__table-data <%= class_name %>">
         <%= log.hidden_field :id %>
         <%= log.hidden_field :date %>
         <%= current_log_standard.hidden_field :plant_id %>
@@ -51,23 +53,20 @@
         <%= log_standard.hidden_field :responsible %>
         <%= log_standard.hidden_field :comment %>
         <%= task.hidden_field :id %>
-        <% input_type = task.object.input_type %>
         <%#= input.hidden_field :option, value: input_type %>
         <% if input_type == 'checkbox' %>
         <%= log.check_box :value, { class: 'check' }, '1', '' %>
         <!-- <input class="check" type="checkbox" value="1" name="logbook[logs_attributes][0][value]" id="logbook_logs_attributes_0_value"> -->
-        <% elsif ['inches', 'pH record', 'PSI', '% of bed', 'COD Record'].include?(input_type) %>
-        <%= log.number_field :value, step: 0.0001 %>
+        <% elsif ['number'].include?(input_type) %>
+        <%= log.number_field :value, task.object.data_type, step: :any %>
         <% elsif input_type == 'date' %>
         <%= log.text_field :value, class: 'datepicker' %>
-        <% elsif input_type == 'boolean' %>
+        <% elsif input_type == 'yes/no' %>
         <%= log.collection_radio_buttons(:value, [['Yes', 'Yes'],['No', 'No']], :first, :second) %>
         <% elsif input_type == 'Low/Medium/High Density' %>
         <%= log.collection_select(:value, [['Low', 'Low'],['Medium','Medium'],['High Density','High Density']], :first, :second, {prompt: 'Select an Alternative'})  %>
         <% elsif input_type == 'Low/Medium/Strong Odor' %>
         <%= log.collection_select(:value, [['Low', 'Low'],['Medium','Medium'],['Strong Odor','Strong Odor']], :first, :second, {prompt: 'Select an Alternative'})  %>
-        <% elsif input_type == 'file' %>
-        <%= log.file_field :document %>
         <% end %>
       </td>
     </tr>
