@@ -90,13 +90,13 @@
     </div>
 
     <%= form.label 'Total Size of the modules' %>
-    <%= form.value_field 'plant_system_size_total', @plant.country.metric.area, value: @plant.system_size.reduce(:+) %>
+    <%= form.bf_value_field 'plant_system_size_total', @plant.country.metric.area, value: @plant.system_size.reduce(:+) %>
     <%= form.hidden_field :system_size %>
   </div>
 
   <div class="field">
     <%= form.label :flow_design %>
-    <%= form.value_field :flow_design, "m&sup3;" %>
+    <%= form.bf_value_field :flow_design, "m&sup3;" %>
 
   </div>
 

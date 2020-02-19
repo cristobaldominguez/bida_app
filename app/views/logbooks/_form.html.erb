@@ -58,7 +58,7 @@
         <%= log.check_box :value, { class: 'check' }, '1', '' %>
         <!-- <input class="check" type="checkbox" value="1" name="logbook[logs_attributes][0][value]" id="logbook_logs_attributes_0_value"> -->
         <% elsif ['number'].include?(input_type) %>
-        <%= log.number_field :value, task.object.data_type, step: :any %>
+        <%= log.bf_number_field :value, task.object.data_type, step: :any %>
         <% elsif input_type == 'date' %>
         <%= log.text_field :value, class: 'datepicker' %>
         <% elsif input_type == 'yes/no' %>

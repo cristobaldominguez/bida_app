@@ -49,7 +49,7 @@
 
     <div class="field">
       <%= fluent.label "#{fluent.object.output.name} Sampling" %>
-      <%= fluent.value_field :ph, 'pH' %>
+      <%= fluent.bf_value_field :ph, 'pH' %>
     </div>
 
     <div class="field no-border">
@@ -74,32 +74,32 @@
 
     <div class="field">
       <%= fluent.label :cod, 'COD' %>
-      <%= fluent.value_field :cod, 'mg/L' %>
+      <%= fluent.bf_value_field :cod, 'mg/L' %>
     </div>
 
     <div class="field">
       <%= fluent.label :ec, 'EC' %>
-      <%= fluent.value_field :ec, 'µS/cm' %>
+      <%= fluent.bf_value_field :ec, 'µS/cm' %>
     </div>
 
     <div class="field">
       <%= fluent.label :bod, 'BOD' %>
-      <%= fluent.value_field :bod, 'mg/L' %>
+      <%= fluent.bf_value_field :bod, 'mg/L' %>
     </div>
 
     <div class="field">
       <%= fluent.label :tss, 'TSS' %>
-      <%= fluent.value_field :tss, 'mg/L' %>
+      <%= fluent.bf_value_field :tss, 'mg/L' %>
     </div>
 
     <div class="field">
       <%= fluent.label :tn, 'TN' %>
-      <%= fluent.value_field :tn, 'mg/L' %>
+      <%= fluent.bf_value_field :tn, 'mg/L' %>
     </div>
 
     <div class="field">
       <%= fluent.label :tp, 'TP' %>
-      <%= fluent.value_field :tp, 'mg/L' %>
+      <%= fluent.bf_value_field :tp, 'mg/L' %>
     </div>
 
     <div class="field">
@@ -139,7 +139,7 @@
 
   <div class="field">
     <%= form.label 'Pumps Pressure' %>
-    <%= form.value_field :pumps_psi, 'PSI' %>
+    <%= form.bf_value_field :pumps_psi, 'PSI' %>
   </div>
 
   <div class="field no-border">

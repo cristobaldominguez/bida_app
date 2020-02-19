@@ -1,5 +1,5 @@
 class BFFormBuilder < ActionView::Helpers::FormBuilder
-  def value_field(method, value, options = {})
+  def bf_value_field(method, value, options = {})
     options['class'] = 'field__value-input'
 
     @template.content_tag(:div, class: 'field__value') do
@@ -8,7 +8,7 @@ class BFFormBuilder < ActionView::Helpers::FormBuilder
     end
   end
 
-  def number_field(method, value, options = {})
+  def bf_number_field(method, value, options = {})
     options['class'] = 'field__value-input'
 
     @template.content_tag(:div, class: 'field__value') do
