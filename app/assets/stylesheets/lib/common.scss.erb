@@ -1079,6 +1079,7 @@ a:visited {
 	&-wrap {
 		@extend .field;
 		width: auto;
+		max-width: 200px;
 
 		.field__value {
 			max-width: 300px;
@@ -1088,6 +1089,15 @@ a:visited {
 			}
 		}
 	}
+}
+
+.datepicker {
+	-webkit-appearance: none;
+	background: transparent;
+	border: 1px solid var(--input-border);
+	border-radius: var(--border-radius);
+	color: var(--input-font);
+	padding: 0.5rem;
 }
 
 .actions {
