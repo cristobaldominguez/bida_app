@@ -1,5 +1,5 @@
 class CompaniesController < ApplicationController
-  before_action :set_industries, only: [:new, :edit, :show]
+  before_action :set_industries, only: [:new, :edit, :show, :create]
   before_action :set_users, only: [:new, :create, :edit, :update]
   load_and_authorize_resource
 
