@@ -5,4 +5,6 @@ class Standard < ApplicationRecord
   has_many :samplings, dependent: :destroy
 
   accepts_nested_attributes_for :bounds, allow_destroy: true
+  accepts_nested_attributes_for :option
+  accepts_nested_attributes_for :samplings
 end

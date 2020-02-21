@@ -12,6 +12,7 @@ class SamplingList < ApplicationRecord
   scope :created_before, ->(end_date) { where('sampling_lists.date < ?', end_date) }
 
   accepts_nested_attributes_for :samplings, allow_destroy: true
+  accepts_nested_attributes_for :access
 
   # validates :per_cycle, numericality: { greater_than_or_equal_to: 1, less_than: 365 }
 end

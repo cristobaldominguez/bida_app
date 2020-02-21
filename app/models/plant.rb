@@ -1,4 +1,10 @@
 class Plant < ApplicationRecord
+  after_create :genereate_logbook
+
+  # validations
+  validates :name, presence: true, uniqueness: true
+  validates :code, presence: true, uniqueness: true
+
   belongs_to :company
   belongs_to :country
   belongs_to :discharge_point
@@ -36,6 +42,10 @@ class Plant < ApplicationRecord
   accepts_nested_attributes_for :graph_standards, allow_destroy: true
 
   enum frecuency: %w[daily weekly every_2_weeks monthly every_x_months]
+
+  def generate_logbook
+    GenerateLogsJob.perform_later(logbooks.build)
+  end
 
   def metrics
     country.metric

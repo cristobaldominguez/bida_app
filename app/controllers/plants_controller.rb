@@ -4,8 +4,12 @@ class PlantsController < ApplicationController
   before_action :set_discharge_points, :set_countries, only: %i[new edit create update]
   before_action :set_users, :set_frecuencies, only: %i[new edit create update]
   before_action :set_responsibles, :set_season, :set_log_frecuency, only: %i[new edit create update show]
-  after_action :assign_plant_to_current_user, only: :create, unless: -> { @plant.nil? }
-  append_after_action :generate_logbook_logs, only: :create
+  # after_create :assign_plant_to_current_user
+  # append_after_action :generate_logbook_logs, only: :create
+
+  #TODO after_create
+  #TODO after_commit_on_create
+  #TODO validar en el callback
 
   load_and_authorize_resource
 
@@ -38,59 +42,12 @@ class PlantsController < ApplicationController
   def new
     @company = Company.find(params[:company_id])
     @plant = @company.plants.build
-    @is_new = true
     @plant.country = Country.find(3)
+    @sampling_list = SamplingListGenerator.new(@plant, Access.find_by(name: 'Lab')).build
+    @graph_standards = Chart.all.map { |chart| @plant.graph_standards.build(chart: chart) }
 
-    outlets = Outlet.all
-    options = Option.all
-    accesses = Access.all
-    tasks = Task.all.order(:id)
-    standards = []
-    sampling_lists = []
-    log_standards = []
-    @current_log_standards = []
-
-    options.each do |option|
-      standards << @plant.standards.build(option: option)
-    end
-
-    standards.each do |standard|
-      outlets.each do |outlet|
-        standard.bounds.build(outlet: outlet)
-      end
-    end
-
-    accesses.each do |access|
-      sampling_lists << @plant.sampling_lists.build(access: access, per_cycle: 1)
-    end
-
-    standards.each do |standard|
-      sampling_lists.each do |sampling_list|
-        sampling_list.samplings.build(standard: standard)
-      end
-    end
-
-    tasks.each do |task|
-      log_standards << @plant.log_standards.build(task: task,
-                                                  name: task[:name],
-                                                  season: task[:season],
-                                                  comment: task[:comment],
-                                                  responsible: task[:responsible])
-    end
-
-    log_standards.each do |log_standard|
-      @current_log_standards << @plant.current_log_standards.build(plant: @plant,
-                                                                   log_standard: log_standard,
-                                                                   frecuency: log_standard.task.frecuency,
-                                                                   cycle: log_standard.task.cycle)
-    end
-
-    charts = Chart.all
-    charts.each do |chart|
-      @plant.graph_standards.build(chart: chart)
-    end
-
-    @graph_standards = @plant.graph_standards
+    log_standards = Task.all.order(:id).map { |task| @plant.log_standards.build(task: task, name: task[:name], season: task[:season], comment: task[:comment], responsible: task[:responsible]) }
+    @current_log_standards = log_standards.map { |log_standard| @plant.current_log_standards.build(plant: @plant, log_standard: log_standard, frecuency: log_standard.task.frecuency, cycle: log_standard.task.cycle) }
   end
 
   # POST companies/:company_id/plants
@@ -100,28 +57,22 @@ class PlantsController < ApplicationController
     @plant.system_size = params[:plant][:system_size].split(' ').map(&:to_i)
     @plant.cover.attach(params[:plant][:cover])
     @plant.discharge_permit.attach(params[:plant][:discharge_permit]) if params[:plant][:discharge_permit].present?
-
-    accesses = Access.all
+    @logbook = @plant.logbooks.build
+    @current_date = Date.today
     samplings_names = {}
-    date = Date.today
 
-    accesses.each do |access|
-      symbol = access.name.convert_as_parameter.to_sym
-      samplings_names[symbol] = params[symbol].keys
-    end
+    symbol = Access.find_by(name: 'Lab').name.convert_as_parameter.to_sym
+    samplings_names[symbol] = params[symbol].keys
 
     @plant.sampling_lists.each do |sampling_list|
-      sampling_list.date = Date.today.beginning_of_month
+      sampling_list.date = @current_date.beginning_of_month
 
-      samplings_names[sampling_list.access.name.convert_as_parameter.to_sym].each do |sn|
+      samplings_names[symbol].each do |sn|
         standard = @plant.standards.select { |stan| stan.option.name.convert_as_parameter == sn.convert_as_parameter }.first
-        sampling_list.samplings.build(standard: standard, date: date)
+        sampling_list.samplings.build(standard: standard, date: @current_date)
         sampling_list.save
       end
     end
-
-    @logbook = @plant.logbooks.build
-    @current_date = Date.today
 
     @plant.current_log_standards = []
     cls_params = params['plant']['current_log_standards_attributes']
@@ -136,6 +87,8 @@ class PlantsController < ApplicationController
                                                 responsible: ls['responsible'])
       @plant.current_log_standards.build(log_standard: log_standard, frecuency: cls.second['frecuency'], cycle: cls.second['cycle'])
     end
+
+    @plant.users << current_user
 
     respond_to do |format|
       if @plant.save
@@ -295,20 +248,24 @@ class PlantsController < ApplicationController
     new_logs.reject(&:nil?)
   end
 
-  def generate_logbook_logs
-    GenerateLogsJob.perform_later(@logbook)
-  end
-
   def plant_params
     params.require(:plant).permit(
       :name, :code, :company_id, :address01, :address02, :state, :zip, :phone, :flow_design, :startup_date, :system_purpose,
       :report_preface, :country_id, :discharge_point_id, :contact_id, :bf_contact_id, :cover, :discharge_permit,
       :logbook_bf_responsible_id, :logbook_bf_supervisor_id, :logbook_company_responsible_id, system_size: [],
       standards_attributes: [:id, :option_id, :plant_id, :isRange, :enabled,
-        bounds_attributes: [:id, :standard_id, :outlet_id, :from, :to]],
-      sampling_lists_attributes: [:id, :access_id, :frecuency_id, :per_cycle],
+        bounds_attributes: [:id, :standard_id, :outlet_id, :from, :to,
+          outlet_attributes: [:id]],
+        option_attributes: [:id, :name],
+        samplings_attributes: [:id, :active, :standard_id, :sampling_list_id, :value_in, :value_out]],
+      sampling_lists_attributes: [:id, :access_id, :frecuency_id, :per_cycle,
+        samplings_attributes: [:id, :active, :standard_id, :sampling_list_id, :value_in, :value_out,
+          standard_attributes: [:id, :option_id, :plant_id, :isRange, :enabled,
+            option_attributes: [:id, :name]]],
+        access_attributes: [:id, :name]],
       current_log_standards_attributes: [:id, :cycle, :frecuency, :log_standard_id, :plant_id,
-        log_standard_attributes: [:id, :active, :season, :responsible, :comment, :name, :task_id, :plant_id]],
+        log_standard_attributes: [:id, :active, :season, :responsible, :comment, :name, :task_id, :plant_id,
+          task_attributes: [:id]]],
       graph_standards_attributes: [:id, :show, :chart_id])
   end
 end
