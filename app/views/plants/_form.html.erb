@@ -126,32 +126,39 @@
         <th colspan="2">Out</th>
       </tr>
     <%= form.fields_for :standards do |standard| %>
+    <%= standard.fields_for :option do |option| %>
       <tr>
-        <td><%= standard.check_box :enabled, class: "standard", data: { "target" => standard.object.option.name.parameterize.underscore } %></td>
+        <td><%= standard.check_box :enabled, class: "standard", data: { "target" => option.object.name.parameterize.underscore } %></td>
         <td>
-          <%= standard.label standard.object.option.name %>
-          <%= standard.hidden_field :option_id, value: standard.object.option.id %>
+          <%= standard.label option.object.name %>
+          <%= standard.hidden_field :id %>
+          <%= option.hidden_field :id %>
         </td>
         <td class="col_span__range"><%= standard.check_box :isRange, class: 'check' %></td>
         <%= standard.fields_for :bounds do |bound| %>
+        <%= bound.fields_for :outlet do |outlet| %>
         <% if standard.object.isRange %>
         <td class="col_span">
         <% else %>
         <td colspan="2" class="col_span">
         <% end %>
-          <%= bound.hidden_field :outlet_id, value: bound.object.outlet.id %>
-          <%= bound.text_field :from, placeholder: 'Number', class: "responsive #{bound.object.outlet.name.parameterize.underscore}_from" %>
+          <%= bound.hidden_field :id %>
+          <%= outlet.hidden_field :id %>
+          <%= bound.text_field :from, placeholder: 'Number', class: "responsive #{outlet.object.name.parameterize.underscore}_from" %>
         </td>
         <% if standard.object.isRange %>
         <td class="col_span__option">
         <% else %>
         <td class="col_span__option--hidden">
         <% end %>
-          <%= bound.hidden_field :outlet_id, value: bound.object.outlet.id %>
-          <%= bound.text_field :to, placeholder: 'Number', class: "responsive #{bound.object.outlet.name.parameterize.underscore}_to" %>
+          <%= bound.hidden_field :id %>
+          <%= outlet.hidden_field :id %>
+          <%= bound.text_field :to, placeholder: 'Number', class: "responsive #{outlet.object.name.parameterize.underscore}_to" %>
         </td>
         <% end %>
+        <% end %>
       </tr>
+    <% end %>
     <% end %>
     </table>
     <input class="toggle_checkbox" type="checkbox" name="toggle_checkbox" checked="checked">
@@ -169,19 +176,27 @@
     <% end %>
   </div>
 
-    <%= form.fields_for :sampling_lists, @samplings do |sampling_list| %>
+    <%= form.fields_for :sampling_lists do |sampling_list| %>
+    <%= sampling_list.fields_for :access do |_access| %>
     <div class="field">
-      <h3><%= sampling_list.hidden_field :access_id, value: sampling_list.object.access.id %><%= sampling_list.object.access.name %> Samplings</h3>
+      <h3><%= _access.hidden_field :id %><%= _access.object.name %> Samplings</h3>
 
-      <ul class="<%= sampling_list.object.access.name.parameterize.underscore %>_samplings">
+      <ul class="<%= _access.object.name.parameterize.underscore %>_samplings">
         <li class="hide no_standards">No Standard Selected</li>
-        <% sampling_list.object.samplings.each do |sampling| %>
-        <li class="<%= sampling.standard.option.name.parameterize.underscore %> <%= 'hide' unless sampling.standard.enabled || @is_new %>">
-          <input type="checkbox"
-            name="<%= sampling.sampling_list.access.name.parameterize.underscore %>[<%= sampling.standard.option.name.parameterize.underscore %>]"
-            <%= 'checked' if sampling.persisted? || @is_new %>>
-            <%= sampling.standard.option.name %>
+        <%= sampling_list.fields_for :samplings do |sampling| %>
+        <%= sampling.fields_for :standard do |standard| %>
+        <%= standard.fields_for :option do |option| %>
+        <% option_name_param = option.object.name.parameterize.underscore %>
+        <li class="<%= option_name_param %>">
+          <%= option.hidden_field :id %>
+          <%= standard.hidden_field :id %>
+          <%= sampling.hidden_field :id %>
+
+          <%= sampling.check_box :active, class: option_name_param %>
+          <%= option.object.name %>
         </li>
+        <% end %>
+        <% end %>
         <% end %>
       </ul>
 
@@ -196,14 +211,16 @@
       </div>
     </div>
     <% end %>
+    <% end %>
 
     <%= render 'shared/tables/elements_list', headers: %w(Active Task Options), title: 'Logbook' do %>
       <%= form.fields_for :current_log_standards, @current_log_standards do |current_log| %>
       <%= current_log.fields_for :log_standard do |log_standard| %>
+      <%= log_standard.fields_for :task do |task| %>
       <tr class="table_main__table-row">
         <td class="table_main__table-data--left-text"><%= log_standard.check_box :active %></td>
         <td class="table_main__table-data--left-text">
-          <span class="span_name"><%= log_standard.object.name %><%= log_standard.hidden_field :task_id %></span>
+          <span class="span_name"><%= log_standard.object.name %><%= task.hidden_field :id %></span>
           <%= current_log.hidden_field :id %>
           <%= current_log.hidden_field :plant_id %>
           <%= current_log.hidden_field :frecuency, class: 'frecuency' %>
@@ -228,6 +245,7 @@
           </div>
         </td>
       </tr>
+      <% end %>
       <% end %>
       <% end %>
     <% end %>

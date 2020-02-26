@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_19_155155) do
+ActiveRecord::Schema.define(version: 2020_02_20_161827) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -471,6 +471,7 @@ ActiveRecord::Schema.define(version: 2020_02_19_155155) do
     t.date "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "active", default: true
     t.index ["sampling_list_id"], name: "index_samplings_on_sampling_list_id"
     t.index ["standard_id"], name: "index_samplings_on_standard_id"
   end

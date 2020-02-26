@@ -15,4 +15,12 @@ class SamplingList < ApplicationRecord
   accepts_nested_attributes_for :access
 
   # validates :per_cycle, numericality: { greater_than_or_equal_to: 1, less_than: 365 }
+
+  def lab?
+    access.name == 'Lab'
+  end
+
+  def internal?
+    access.name == 'Internal'
+  end
 end

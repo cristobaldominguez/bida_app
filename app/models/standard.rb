@@ -7,4 +7,8 @@ class Standard < ApplicationRecord
   accepts_nested_attributes_for :bounds, allow_destroy: true
   accepts_nested_attributes_for :option
   accepts_nested_attributes_for :samplings
+
+  def option_name
+    option.name.to_s
+  end
 end

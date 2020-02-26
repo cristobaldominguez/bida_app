@@ -26,10 +26,20 @@ class SamplingListsController < ApplicationController
 
   # GET /sampling_lists/1/edit
   def edit
+    @options = Option.all
     @accesses = Access.all
     @plant = Plant.find(params[:plant_id])
-    @sampling_list = @plant.sampling_lists.find(params[:id])
-    @samplings = @sampling_list.samplings.includes(standard: [:option])
+    # @sampling_list = @plant.sampling_lists.find(params[:id])
+
+    # if @sampling_list.lab?
+    #   @samplings = @sampling_list.samplings.includes(standard: :option)
+    # else
+    #   @samplings = @sampling_list.samplings
+    # end
+    # @standards = @plant.standards.includes(:option).group_by(&:option_id).select { |_, standards| standards.max_by(&:option_id) }.map { |_, v| v }.flatten
+
+    @samplings = @sampling_list.lab? ? @sampling_list.samplings.includes(standard: :option) : @sampling_list.samplings
+
   rescue ActiveRecord::RecordNotFound => _e
     redirect_to pages_no_permission_path, notice: 'Access not Allowed'
   end
@@ -154,6 +164,9 @@ class SamplingListsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def sampling_list_params
-    params.require(:sampling_list).permit(:date, :access_id, :frecuency_id, :per_cycle, samplings_attributes: %i[id standard_id value_in value_out sampling_list_id])
+    params.require(:sampling_list).permit(:date, :access_id, :frecuency_id, :per_cycle,
+                                          samplings_attributes: [:id, :value_in, :value_out, :sampling_list_id,
+                                            standard_attributes: [:id, :plant_id, :isRange,
+                                              option_attributes: [:id, :name]]])
   end
 end

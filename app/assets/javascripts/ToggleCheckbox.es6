@@ -30,7 +30,7 @@ document.addEventListener('turbolinks:load', function() {
     function toggleOneCheckbox(e){
       const css_class = e.target.dataset.target
       const nodesArray = [].slice.call(state.inputs)
-      const index = nodesArray.map(input => input.dataset.target).indexOf(css_class);
+      const index = nodesArray.map(input => input.dataset.target).indexOf(css_class)
 
       state.selections[index] = !state.selections[index]
 
@@ -67,7 +67,8 @@ document.addEventListener('turbolinks:load', function() {
 
         state.samplings.forEach(function(sampling) {
           const li = sampling.querySelector(`li.${dataset}`)
-          const input = li.querySelector('input')
+          const input = li.querySelector(`input.${dataset}`)
+          input.checked = state.selections[index]
 
           if (state.selections[index]) {
             li.classList.remove('hide')
@@ -76,10 +77,8 @@ document.addEventListener('turbolinks:load', function() {
             li.classList.add('hide')
             input.setAttribute('disabled', true)
           }
-
         })
       })
-
     }
 
     return {
