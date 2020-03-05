@@ -18,6 +18,11 @@ class SamplingList < ApplicationRecord
 
   def lab?
     access.name == 'Lab'
+  def access_attributes=(attributes)
+    self.access = Access.find(attributes[:id])
+    super(attributes)
+  end
+
   end
 
   def internal?

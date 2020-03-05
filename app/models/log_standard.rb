@@ -5,5 +5,10 @@ class LogStandard < ApplicationRecord
 
   accepts_nested_attributes_for :task
 
+  def task_attributes=(attributes)
+    self.task = Task.find(attributes[:id])
+    super(attributes)
+  end
+
   enum season: %i[no show hide]
 end

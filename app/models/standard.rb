@@ -8,6 +8,11 @@ class Standard < ApplicationRecord
   accepts_nested_attributes_for :option
   accepts_nested_attributes_for :samplings
 
+  def option_attributes=(attributes)
+    self.option = Option.find(attributes[:id])
+    super(attributes)
+  end
+
   def option_name
     option.name.to_s
   end
