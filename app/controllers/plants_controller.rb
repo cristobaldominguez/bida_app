@@ -21,7 +21,7 @@ class PlantsController < ApplicationController
     @alerts = @plant.alerts.active
     @supports = @plant.supports.active
     @inspections = @plant.inspections.active
-    @standards = @plant.standards
+    @standards = @plant.standards.includes(:option, :bounds)
     @sampling_lists = @plant.sampling_lists.includes(:access, samplings: [standard: %i[option bounds]]).group_by { |k| k.access.name }.map { |_, v| v.max_by(&:created_at) }
     @samplings = @sampling_lists.map { |sl| { sl.access.name => sl.samplings.group_by { |s| s.standard.option.name }.map { |_, v| v.max_by(&:created_at) } } }
     @log_standards = @plant.log_standards.includes(:frecuency, :task)

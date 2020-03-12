@@ -24,7 +24,7 @@ class SamplingImport < Import
 
   def grouped_by_access(accesses)
     @plant.sampling_lists
-          .group_by { |sl| accesses.find(sl.access_id).name.parameterize.underscore.to_sym }
+          .group_by { |sl| accesses.find(sl.access).parameterize.underscore.to_sym }
           .map { |key, v| { key => v.max_by(&:created_at) } }.reduce({}, :merge)
   end
 end
