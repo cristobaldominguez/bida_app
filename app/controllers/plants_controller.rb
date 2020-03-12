@@ -4,12 +4,6 @@ class PlantsController < ApplicationController
   before_action :set_discharge_points, :set_countries, only: %i[new edit create update]
   before_action :set_users, :set_frecuencies, only: %i[new edit create update]
   before_action :set_responsibles, :set_season, :set_log_frecuency, only: %i[new edit create update show]
-  # after_create :assign_plant_to_current_user
-  # append_after_action :generate_logbook_logs, only: :create
-
-  #TODO after_create
-  #TODO after_commit_on_create
-  #TODO validar en el callback
 
   load_and_authorize_resource
 
@@ -43,7 +37,8 @@ class PlantsController < ApplicationController
     @company = Company.find(params[:company_id])
     @plant = @company.plants.build
     @plant.country = Country.find(3)
-    @sampling_list = SamplingListGenerator.new(@plant, Access.find_by(name: 'Lab')).build
+    sampling_lists = SamplingListGenerator.new(@plant).build
+    @sampling_lists_filtered = sampling_lists.select { |sampling_list| sampling_list.access.name == 'External' }
     @graph_standards = Chart.all.map { |chart| @plant.graph_standards.build(chart: chart) }
 
     log_standards = Task.all.order(:id).map { |task| @plant.log_standards.build(task: task, name: task[:name], season: task[:season], comment: task[:comment], responsible: task[:responsible]) }
@@ -59,19 +54,10 @@ class PlantsController < ApplicationController
     @plant.discharge_permit.attach(params[:plant][:discharge_permit]) if params[:plant][:discharge_permit].present?
     @logbook = @plant.logbooks.build
     @current_date = Date.today
-    samplings_names = {}
-
-    symbol = Access.find_by(name: 'Lab').name.convert_as_parameter.to_sym
-    samplings_names[symbol] = params[symbol].keys
 
     @plant.sampling_lists.each do |sampling_list|
       sampling_list.date = @current_date.beginning_of_month
-
-      samplings_names[symbol].each do |sn|
-        standard = @plant.standards.select { |stan| stan.option.name.convert_as_parameter == sn.convert_as_parameter }.first
-        sampling_list.samplings.build(standard: standard, date: @current_date)
-        sampling_list.save
-      end
+      SamplingListGenerator.new(@plant).create(sampling_list)
     end
 
     @plant.current_log_standards = []
@@ -107,8 +93,8 @@ class PlantsController < ApplicationController
     @company = @plant.company
     standards = @plant.standards.includes(:option, bounds: :outlet)
     # sampling_lists = @plant.sampling_lists.includes(:access, :samplings)
-    sampling_lists = @plant.sampling_lists.includes(:access, :samplings)
-    @current_log_standards = @plant.current_log_standards.includes(:log_standard)
+    sampling_lists = @plant.sampling_lists.includes(:access)
+    @current_log_standards = @plant.current_log_standards.includes(log_standard: :task)
 
     build_samplings(sampling_lists, standards)
     @samplings = sampling_lists.group_by(&:access_id).map { |_, k| k.max_by(&:created_at) }
@@ -118,23 +104,7 @@ class PlantsController < ApplicationController
   # PATCH/PUT companies/:company_id/plants/1
   # PATCH/PUT companies/:company_id/plants/1.json
   def update
-    options_sym = Option.all.map { |op| op.name.convert_as_parameter.to_sym }
     @plant.system_size = params[:plant][:system_size].split(' ').map(&:to_i)
-
-    @plant.sampling_lists.each do |sl|
-      acc = sl.access.name
-      all_params = params[acc.convert_as_parameter.to_sym].permit(options_sym).to_h.map { |k, _| k }
-
-      all_params.each do |p|
-        strds = @plant.standards.select { |standard| standard.option.name.convert_as_parameter == p }
-
-        if strds.first.samplings.empty?
-          sl.samplings.build(standard: strds.first)
-          sl.save
-        end
-      end
-    end
-
     @plant.cover.attach(params[:plant][:cover]) if params[:plant][:cover].present?
     @plant.discharge_permit.attach(params[:plant][:discharge_permit]) if params[:plant][:discharge_permit].present?
 

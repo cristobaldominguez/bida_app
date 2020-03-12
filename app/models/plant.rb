@@ -1,5 +1,5 @@
 class Plant < ApplicationRecord
-  after_create :genereate_logbook
+  after_create_commit :generate_logbook
 
   # validations
   validates :name, presence: true, uniqueness: true
@@ -44,7 +44,7 @@ class Plant < ApplicationRecord
   enum frecuency: %w[daily weekly every_2_weeks monthly every_x_months]
 
   def generate_logbook
-    GenerateLogsJob.perform_later(logbooks.build)
+    logbooks.map { |logbook| GenerateLogsJob.perform_later(logbook) }
   end
 
   def metrics

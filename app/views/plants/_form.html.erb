@@ -119,7 +119,7 @@
     <h3>Standards</h3>
     <table class="table-standards">
       <tr>
-        <th>Active</th>
+        <th>External?</th>
         <th>Name</th>
         <th class="col_span__range">Is Range</th>
         <th colspan="2">In</th>
@@ -130,9 +130,9 @@
       <tr>
         <td><%= standard.check_box :enabled, class: "standard", data: { "target" => option.object.name.parameterize.underscore } %></td>
         <td>
-          <%= standard.label option.object.name %>
           <%= standard.hidden_field :id %>
           <%= option.hidden_field :id %>
+          <%= standard.label option.object.name %>
         </td>
         <td class="col_span__range"><%= standard.check_box :isRange, class: 'check' %></td>
         <%= standard.fields_for :bounds do |bound| %>
@@ -176,29 +176,10 @@
     <% end %>
   </div>
 
-    <%= form.fields_for :sampling_lists do |sampling_list| %>
+    <%= form.fields_for :sampling_lists, @sampling_lists_filtered do |sampling_list| %>
     <%= sampling_list.fields_for :access do |_access| %>
     <div class="field">
       <h3><%= _access.hidden_field :id %><%= _access.object.name %> Samplings</h3>
-
-      <ul class="<%= _access.object.name.parameterize.underscore %>_samplings">
-        <li class="hide no_standards">No Standard Selected</li>
-        <%= sampling_list.fields_for :samplings do |sampling| %>
-        <%= sampling.fields_for :standard do |standard| %>
-        <%= standard.fields_for :option do |option| %>
-        <% option_name_param = option.object.name.parameterize.underscore %>
-        <li class="<%= option_name_param %>">
-          <%= option.hidden_field :id %>
-          <%= standard.hidden_field :id %>
-          <%= sampling.hidden_field :id %>
-
-          <%= sampling.check_box :active, class: option_name_param %>
-          <%= option.object.name %>
-        </li>
-        <% end %>
-        <% end %>
-        <% end %>
-      </ul>
 
       <div class="field no-border">
         <%= form.label :frecuency_id %>
@@ -220,18 +201,22 @@
       <tr class="table_main__table-row">
         <td class="table_main__table-data--left-text"><%= log_standard.check_box :active %></td>
         <td class="table_main__table-data--left-text">
-          <span class="span_name"><%= log_standard.object.name %><%= task.hidden_field :id %></span>
+          <span class="span_name"><%= log_standard.object.name %></span>
           <%= current_log.hidden_field :id %>
           <%= current_log.hidden_field :plant_id %>
+          <%= current_log.hidden_field :log_standard_id %>
           <%= current_log.hidden_field :frecuency, class: 'frecuency' %>
           <%= current_log.hidden_field :cycle, class: 'cycle' %>
 
           <%= log_standard.hidden_field :id %>
           <%= log_standard.hidden_field :plant_id %>
+          <%= log_standard.hidden_field :task_id %>
           <%= log_standard.hidden_field :name, class: 'name' %>
           <%= log_standard.hidden_field :season, class: 'season' %>
           <%= log_standard.hidden_field :comment, class: 'comment' %>
           <%= log_standard.hidden_field :responsible, class: 'responsible' %>
+
+          <%= task.hidden_field :id %>
         </td>
         <td class="table_main__table-data--options">
           <a href="#" class="table_main__link--options"></a>
