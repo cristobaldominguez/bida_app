@@ -21,7 +21,7 @@ class PlantsTest < ApplicationSystemTestCase
     fill_in "Company", with: @plant.company_id
     fill_in "Flow Design", with: @plant.flow_design
     fill_in "Internal Number Per Cycle", with: @plant.internal_number_per_cycle
-    fill_in "Lab Number Per Cycle", with: @plant.lab_number_per_cycle
+    fill_in "External Number Per Cycle", with: @plant.external_number_per_cycle
     fill_in "Name", with: @plant.name
     fill_in "Phone", with: @plant.phone
     fill_in "Startup Date", with: @plant.startup_date
@@ -44,7 +44,7 @@ class PlantsTest < ApplicationSystemTestCase
     fill_in "Company", with: @plant.company_id
     fill_in "Flow Design", with: @plant.flow_design
     fill_in "Internal Number Per Cycle", with: @plant.internal_number_per_cycle
-    fill_in "Lab Number Per Cycle", with: @plant.lab_number_per_cycle
+    fill_in "External Number Per Cycle", with: @plant.external_number_per_cycle
     fill_in "Name", with: @plant.name
     fill_in "Phone", with: @plant.phone
     fill_in "Startup Date", with: @plant.startup_date

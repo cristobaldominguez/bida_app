@@ -31,14 +31,14 @@ class SamplingListsController < ApplicationController
     @plant = Plant.find(params[:plant_id])
     # @sampling_list = @plant.sampling_lists.find(params[:id])
 
-    # if @sampling_list.lab?
+    # if @sampling_list.external?
     #   @samplings = @sampling_list.samplings.includes(standard: :option)
     # else
     #   @samplings = @sampling_list.samplings
     # end
     # @standards = @plant.standards.includes(:option).group_by(&:option_id).select { |_, standards| standards.max_by(&:option_id) }.map { |_, v| v }.flatten
 
-    @samplings = @sampling_list.lab? ? @sampling_list.samplings.includes(standard: :option) : @sampling_list.samplings
+    @samplings = @sampling_list.external? ? @sampling_list.samplings.includes(standard: :option) : @sampling_list.samplings
 
   rescue ActiveRecord::RecordNotFound => _e
     redirect_to pages_no_permission_path, notice: 'Access not Allowed'
@@ -89,14 +89,14 @@ class SamplingListsController < ApplicationController
     end
   end
 
-  def lab
-    lab_sampling = @plant.sampling_lists.lab.last
-    redirect_to edit_plant_sampling_list_path(@plant, lab_sampling)
+  def external
+    external_sampling = @plant.sampling_lists.external.last
+    redirect_to edit_plant_sampling_list_path(@plant, external_sampling)
   end
 
   def internal
-    lab_sampling = @plant.sampling_lists.internal.last
-    redirect_to edit_plant_sampling_list_path(@plant, lab_sampling)
+    external_sampling = @plant.sampling_lists.internal.last
+    redirect_to edit_plant_sampling_list_path(@plant, external_sampling)
   end
 
   def self.api_new(plant, access, data = {}, date = Date.today)

@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   resources :plants, path_prefix: '/companies/:company_id', except: %i[new create update destroy] do
     resources :sampling_lists do
       collection do
-        get 'lab'
+        get 'external'
         get 'internal'
       end
     end

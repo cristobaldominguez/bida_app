@@ -133,14 +133,14 @@ class ReportsController < ApplicationController
 
     treated_water_history = flows_history.reject { |flow| flow.value.nil? || flow.date > @end_date || flow.value < minimum_liquid_required }.group_by_month(&:date)
     sampling_lists_history = @plant.sampling_lists.includes(samplings: [standard: :option]).created_before(@end_date)
-    sampling_lists_labs = sampling_lists_history.lab
+    sampling_lists_externals = sampling_lists_history.external
 
-    samplings_lab = sampling_lists_labs.map(&:samplings).flatten
-    samplings_grouped_by_option = samplings_lab.group_by { |sampling| sampling.standard.option.name }
+    samplings_external = sampling_lists_externals.map(&:samplings).flatten
+    samplings_grouped_by_option = samplings_external.group_by { |sampling| sampling.standard.option.name }
 
     lifetime_analysis_headers = samplings_grouped_by_option.map { |key, _| key }.map { |key| ["#{key} In", "#{key} Out", 'Removal'] }.flatten
 
-    year_samplings = year_samplings(sampling_lists_labs)
+    year_samplings = year_samplings(sampling_lists_externals)
     year_samplings_grouped_by_option = year_samplings.group_by { |sampling| sampling.standard.option.name }
 
     # View Variables
@@ -150,7 +150,7 @@ class ReportsController < ApplicationController
     @treated_water = { "headers": ['', 'Month', 'Year', 'Lifetime'], "data": monthly_water_flow_analysis(treated_water_history) }
     @lifetime_analysis = { "headers": [['', 'Biological Oxygen Demand (mg/l)', 'Total Suspended Solids (mg/l)'], lifetime_analysis_headers],
                            "average": samplings_average(samplings_grouped_by_option), "peak": samplings_peak(samplings_grouped_by_option) }
-    @year_samplings_analysis = { 'headers': [['', 'Biological Oxygen Demand (mg/l)', 'Total Suspended Solids (mg/l)'], ['Grab Date', lifetime_analysis_headers].flatten], 'data': year_samplings_table_data(sampling_lists_labs), 'footer': [] }
+    @year_samplings_analysis = { 'headers': [['', 'Biological Oxygen Demand (mg/l)', 'Total Suspended Solids (mg/l)'], ['Grab Date', lifetime_analysis_headers].flatten], 'data': year_samplings_table_data(sampling_lists_externals), 'footer': [] }
     @year_samplings_grouped_by_option = outputs.map { |output| year_samplings_grouped_by_option.map { |key, values| { name: "#{key} #{output}", data: values.map { |sampling| [sampling.date.strftime('%b, %Y'), output == 'In' ? sampling.value_in : sampling.value_out] } } } }.flatten
   end
 

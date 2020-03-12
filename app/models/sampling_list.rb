@@ -5,7 +5,7 @@ class SamplingList < ApplicationRecord
 
   has_many :samplings
 
-  scope :lab,      -> { where(access_id: Access.find_by(name: 'Lab').id) }
+  scope :external, -> { where(access_id: Access.find_by(name: 'External').id) }
   scope :internal, -> { where(access_id: Access.find_by(name: 'Internal').id) }
 
   scope :created_between, ->(start_date, end_date) { where('sampling_lists.created_at BETWEEN ? and ?', start_date, end_date) }
@@ -16,13 +16,13 @@ class SamplingList < ApplicationRecord
 
   # validates :per_cycle, numericality: { greater_than_or_equal_to: 1, less_than: 365 }
 
-  def lab?
-    access.name == 'Lab'
   def access_attributes=(attributes)
     self.access = Access.find(attributes[:id])
     super(attributes)
   end
 
+  def external?
+    access.name == 'External'
   end
 
   def internal?

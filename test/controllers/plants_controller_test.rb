@@ -17,7 +17,7 @@ class PlantsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create plant" do
     assert_difference('Plant.count') do
-      post plants_url, params: { plant: { active: @plant.active, address01: @plant.address01, address02: @plant.address02, code: @plant.code, company_id: @plant.company_id, flow_design: @plant.flow_design, internal_number_per_cycle: @plant.internal_number_per_cycle, lab_number_per_cycle: @plant.lab_number_per_cycle, name: @plant.name, phone: @plant.phone, startup_date: @plant.startup_date, state: @plant.state, zip: @plant.zip } }
+      post plants_url, params: { plant: { active: @plant.active, address01: @plant.address01, address02: @plant.address02, code: @plant.code, company_id: @plant.company_id, flow_design: @plant.flow_design, internal_number_per_cycle: @plant.internal_number_per_cycle, external_number_per_cycle: @plant.external_number_per_cycle, name: @plant.name, phone: @plant.phone, startup_date: @plant.startup_date, state: @plant.state, zip: @plant.zip } }
     end
 
     assert_redirected_to plant_url(Plant.last)
@@ -34,7 +34,7 @@ class PlantsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update plant" do
-    patch plant_url(@plant), params: { plant: { active: @plant.active, address01: @plant.address01, address02: @plant.address02, code: @plant.code, company_id: @plant.company_id, flow_design: @plant.flow_design, internal_number_per_cycle: @plant.internal_number_per_cycle, lab_number_per_cycle: @plant.lab_number_per_cycle, name: @plant.name, phone: @plant.phone, startup_date: @plant.startup_date, state: @plant.state, zip: @plant.zip } }
+    patch plant_url(@plant), params: { plant: { active: @plant.active, address01: @plant.address01, address02: @plant.address02, code: @plant.code, company_id: @plant.company_id, flow_design: @plant.flow_design, internal_number_per_cycle: @plant.internal_number_per_cycle, external_number_per_cycle: @plant.external_number_per_cycle, name: @plant.name, phone: @plant.phone, startup_date: @plant.startup_date, state: @plant.state, zip: @plant.zip } }
     assert_redirected_to plant_url(@plant)
   end
 

@@ -11,7 +11,7 @@ one:
   zip: MyString
   phone: MyString
   flow_design: MyString
-  lab_number_per_cycle: 1
+  external_number_per_cycle: 1
   internal_number_per_cycle: 1
   startup_date: 2018-11-09
 
@@ -26,6 +26,6 @@ two:
   zip: MyString
   phone: MyString
   flow_design: MyString
-  lab_number_per_cycle: 1
+  external_number_per_cycle: 1
   internal_number_per_cycle: 1
   startup_date: 2018-11-09
