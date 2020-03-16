@@ -147,19 +147,6 @@
   </table>
 </div>
 
-<% @samplings.each do |all_samplings| %>
-<% all_samplings.each do |key, samplings| %>
-  <div class="field">
-    <h3><%= key %> Samplings</h3>
-    <ul>
-    <% samplings.each do |sampling| %>
-      <li><input type="checkbox" name="standards[<%= sampling.standard.option.name %>]" value="1" checked disabled> <%= sampling.standard.option.name %></li>
-    <% end %>
-    </ul>
-  </div>
-<% end %>
-<% end %>
-
 <h2 class="cell_division">Logbook</h2>
 
 <%= render 'shared/tables/elements_list', headers: ['Task', 'Responsible Party'] do %>

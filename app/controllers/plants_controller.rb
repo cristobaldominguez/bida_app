@@ -21,7 +21,8 @@ class PlantsController < ApplicationController
     @alerts = @plant.alerts.active
     @supports = @plant.supports.active
     @inspections = @plant.inspections.active
-    @standards = @plant.standards.includes(:option, :bounds)
+    # @standards = @plant.standards.includes(:option, :bounds).sort_by(&:option_id)
+    @standards = @plant.standards.sort_by(&:option_id)
     @sampling_lists = @plant.sampling_lists.includes(:access, samplings: [standard: %i[option bounds]]).group_by { |k| k.access.name }.map { |_, v| v.max_by(&:created_at) }
     @samplings = @sampling_lists.map { |sl| { sl.access.name => sl.samplings.group_by { |s| s.standard.option.name }.map { |_, v| v.max_by(&:created_at) } } }
     @log_standards = @plant.log_standards.includes(:frecuency, :task)
@@ -91,13 +92,8 @@ class PlantsController < ApplicationController
   def edit
     @plant = Plant.find(params[:id])
     @company = @plant.company
-    standards = @plant.standards.includes(:option, bounds: :outlet)
-    # sampling_lists = @plant.sampling_lists.includes(:access, :samplings)
-    sampling_lists = @plant.sampling_lists.includes(:access)
+    @standards = @plant.standards.includes(:option, bounds: :outlet).sort_by(&:option_id)
     @current_log_standards = @plant.current_log_standards.includes(log_standard: :task)
-
-    build_samplings(sampling_lists, standards)
-    @samplings = sampling_lists.group_by(&:access_id).map { |_, k| k.max_by(&:created_at) }
     @graph_standards = @plant.graph_standards.includes(:chart)
   end
 
@@ -107,6 +103,8 @@ class PlantsController < ApplicationController
     @plant.system_size = params[:plant][:system_size].split(' ').map(&:to_i)
     @plant.cover.attach(params[:plant][:cover]) if params[:plant][:cover].present?
     @plant.discharge_permit.attach(params[:plant][:discharge_permit]) if params[:plant][:discharge_permit].present?
+
+    SamplingListGenerator.new(@plant).edit(with_params: params[:plant][:standards_attributes])
 
     respond_to do |format|
       if @plant.update(plant_params)

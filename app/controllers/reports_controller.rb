@@ -245,12 +245,12 @@ class ReportsController < ApplicationController
 
     year_samplings = {}
     year_samplings_grouped.map do |date, samples|
-      samples.map do |k, s|
-        vin = s.pluck(:value_in).sum / s.pluck(:value_in).size
-        vout = s.pluck(:value_out).sum / s.pluck(:value_out).size
+      samples.map do |key, sample|
+        vin = sample.pluck(:value_in).sum / sample.pluck(:value_in).size
+        vout = sample.pluck(:value_out).sum / sample.pluck(:value_out).size
         year_samplings[date] = {} if year_samplings[date].nil?
 
-        year_samplings[date][k] = { 'in'.to_sym => vin, 'out'.to_sym => vout, removal: percent(vin, vout).to_s + '%' }
+        year_samplings[date][key] = { 'in'.to_sym => vin, 'out'.to_sym => vout, removal: percent(vin, vout).to_s + '%' }
       end
     end
 

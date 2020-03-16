@@ -125,7 +125,7 @@
         <th colspan="2">In</th>
         <th colspan="2">Out</th>
       </tr>
-    <%= form.fields_for :standards do |standard| %>
+    <%= form.fields_for :standards, @standards do |standard| %>
     <%= standard.fields_for :option do |option| %>
       <tr>
         <td><%= standard.check_box :enabled, class: "standard", data: { "target" => option.object.name.parameterize.underscore } %></td>

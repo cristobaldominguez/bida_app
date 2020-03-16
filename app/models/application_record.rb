@@ -12,4 +12,9 @@ class ApplicationRecord < ActiveRecord::Base
     self.active = false
     self.save
   end
+
+  def active!
+    self.active = true
+    self.save
+  end
 end

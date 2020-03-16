@@ -34,6 +34,11 @@
   <%= @report.system_size.sum %> <%= @plant.metrics.area.pluralize(@report.system_size.sum) %>
 </p>
 
+<p>
+  <strong>Start up date:</strong>
+  <%= @plant.startup_date %>
+</p>
+
 <ul class="graphs">
   <% @graphs.each do |graph| %>
   <li class="graph">
