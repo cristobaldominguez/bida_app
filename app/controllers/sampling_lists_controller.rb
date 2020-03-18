@@ -38,7 +38,7 @@ class SamplingListsController < ApplicationController
     # end
     # @standards = @plant.standards.includes(:option).group_by(&:option_id).select { |_, standards| standards.max_by(&:option_id) }.map { |_, v| v }.flatten
 
-    @samplings = @sampling_list.external? ? @sampling_list.samplings.includes(standard: :option).select { |sampling| sampling.active } : @sampling_list.samplings
+    @samplings = @sampling_list.external? ? @sampling_list.samplings.includes(standard: :option).select(&:active) : @sampling_list.samplings
 
   rescue ActiveRecord::RecordNotFound => _e
     redirect_to pages_no_permission_path, notice: 'Access not Allowed'

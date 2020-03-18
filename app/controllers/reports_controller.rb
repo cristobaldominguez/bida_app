@@ -135,7 +135,10 @@ class ReportsController < ApplicationController
     sampling_lists_history = @plant.sampling_lists.includes(samplings: [standard: :option]).created_before(@end_date)
     sampling_lists_externals = sampling_lists_history.external
 
-    samplings_external = sampling_lists_externals.map(&:samplings).flatten
+    samplings_external = sampling_lists_externals.map(&:samplings)
+                                                 .flatten
+                                                 .reject { |sampling| sampling.active == false }
+
     samplings_grouped_by_option = samplings_external.group_by { |sampling| sampling.standard.option.name }
 
     lifetime_analysis_headers = samplings_grouped_by_option.map { |key, _| key }.map { |key| ["#{key} In", "#{key} Out", 'Removal'] }.flatten
@@ -217,7 +220,7 @@ class ReportsController < ApplicationController
 
   def monthly_water_analysis_data(data)
     selection = data.map { |_, samplings| samplings.select { |s| s.date.strftime('%Y %m') == @start_date.strftime('%Y %m') } }
-    current_samplings = selection.flatten
+    current_samplings = selection.flatten.reject { |sampling| sampling.value_in.nil? && sampling.value_out.nil? }
 
     current_samplings.map do |sampling|
       value_in = sampling.value_in.round(0)
@@ -262,7 +265,10 @@ class ReportsController < ApplicationController
 
   def year_samplings(data)
     @end_date = @start_date - 11.months
-    data.select { |sampling_list| sampling_list.date > @end_date }.map(&:samplings).flatten
+    data.select { |sampling_list| sampling_list.date > @end_date }
+        .map(&:samplings)
+        .flatten
+        .reject { |sampling| sampling.value_in.nil? && sampling.value_out.nil? }
   end
 
   def report_params
