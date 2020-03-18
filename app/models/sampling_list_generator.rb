@@ -14,7 +14,6 @@ class SamplingListGenerator
   end
 
   def edit(with_params: pms)
-    # @sampling_list = sampling_list
     @params = with_params
     @external = @plant.sampling_lists.select { |sl| sl.access.name == 'External' }.first
     @current_samplings = select_current_samplings

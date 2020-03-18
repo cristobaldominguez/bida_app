@@ -36,7 +36,6 @@ class ReportsController < ApplicationController
     end
 
     @graphs = @report.graphs
-    # set_graphs_data(@report)
   end
 
   # GET /reports/1/edit
@@ -236,16 +235,6 @@ class ReportsController < ApplicationController
     year_samplings_grouped = {}
     year_samplings_grouped_by_month.map { |key, value| year_samplings_grouped[key] = value.group_by { |g| g.standard.option.name } }
 
-    # year_samplings_grouped.map { |date, samples| year_samplings[date] = { 1 => [samples[1].map(&:value_in).sum / samples[1].size, samples[1].map(&:value_out).sum / samples[1].size], 2 => [samples[2].map(&:value_in).sum / samples[2].size, samples[2].map(&:value_out).sum / samples[2].size]} }
-    # ret = ys_grouped.map { |group| group.map { |_, v| v.map { |_, val| val.size } } }
-
-    # year_samplings.map do |key, samplings|
-    #   resp = { key.strftime('%B, %y') => samplings.map { |sampling| sampling.map { |s| s }.flatten } }
-    #   byebug
-    #
-    #   resp
-    # end
-
     year_samplings = {}
     year_samplings_grouped.map do |date, samples|
       samples.map do |key, sample|
@@ -256,9 +245,6 @@ class ReportsController < ApplicationController
         year_samplings[date][key] = { 'in'.to_sym => vin, 'out'.to_sym => vout, removal: percent(vin, vout).to_s + '%' }
       end
     end
-
-    # byebug
-    # raise
 
     year_samplings
   end

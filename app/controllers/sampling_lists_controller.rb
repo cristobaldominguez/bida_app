@@ -29,14 +29,6 @@ class SamplingListsController < ApplicationController
     @options = Option.all
     @accesses = Access.all
     @plant = Plant.find(params[:plant_id])
-    # @sampling_list = @plant.sampling_lists.find(params[:id])
-
-    # if @sampling_list.external?
-    #   @samplings = @sampling_list.samplings.includes(standard: :option)
-    # else
-    #   @samplings = @sampling_list.samplings
-    # end
-    # @standards = @plant.standards.includes(:option).group_by(&:option_id).select { |_, standards| standards.max_by(&:option_id) }.map { |_, v| v }.flatten
 
     @samplings = @sampling_list.external? ? @sampling_list.samplings.includes(standard: :option).select(&:active) : @sampling_list.samplings
 
