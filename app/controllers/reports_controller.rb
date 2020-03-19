@@ -6,7 +6,7 @@ class ReportsController < ApplicationController
   # GET /reports
   # GET /reports.json
   def index
-    @reports = Report.active.order(date: :desc)
+    @reports = @plant.reports.active.order(date: :desc)
   end
 
   # GET /reports/1
