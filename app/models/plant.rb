@@ -14,8 +14,7 @@ class Plant < ApplicationRecord
   has_many :supports, dependent: :destroy
   has_many :inspections, dependent: :destroy
 
-  has_many :log_standards
-  has_many :current_log_standards
+  has_many :task_lists
   has_many :logbooks
 
   has_many :flows, dependent: :destroy
@@ -38,7 +37,7 @@ class Plant < ApplicationRecord
 
   accepts_nested_attributes_for :standards, allow_destroy: true
   accepts_nested_attributes_for :sampling_lists, allow_destroy: true
-  accepts_nested_attributes_for :current_log_standards, allow_destroy: true
+  accepts_nested_attributes_for :task_lists, allow_destroy: false
   accepts_nested_attributes_for :graph_standards, allow_destroy: true
 
   enum frecuency: %w[daily weekly every_2_weeks monthly every_x_months]

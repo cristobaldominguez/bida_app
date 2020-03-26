@@ -1,5 +1,6 @@
 class Task < ApplicationRecord
-  has_many :log_standards
+  belongs_to :task_list
+  has_many :logs
 
   enum season: %i[no show hide]
   enum frecuency: %w[daily weekly every_2_weeks monthly every_x_months]
