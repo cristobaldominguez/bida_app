@@ -11,7 +11,7 @@
     %>
     <li class="<%= block_class %>__day">
       <a href="#" class="<%= block_class %>__day-link" <%= data_week.present? ? "data-week=#{data_week}" : '' %> data-day="<%= day_short.downcase %>" <%= data_week.present? ? "data-num=#{((data_week - 1) * 7) + (index + 1)}" : '' %>>
-          <%= data_week.present? ? data_week : '' %><%= day_th[data_week.to_i - 1] if data_week.present? %> <%= day_short %>
+          <%= data_week.present? && block_class != 'select_week' ? data_week : '' %><%= day_th[data_week.to_i - 1] + ' ' if data_week.present? && block_class != 'select_week' %><%= day_short %>
           <span class="d-lg-inline"><%= rest %></span>
       </a>
     </li>

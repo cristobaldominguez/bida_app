@@ -3,7 +3,7 @@ class PlantsController < ApplicationController
   before_action :set_companies, only: :index
   before_action :set_discharge_points, :set_countries, only: %i[new edit create update]
   before_action :set_users, :set_frecuencies, only: %i[new edit create update]
-  before_action :set_responsibles, :set_season, :set_log_frecuency, only: %i[new edit create update show]
+  before_action :set_responsibles, :set_season, :set_log_frecuency, :set_value_types, only: %i[new edit create update show]
 
   load_and_authorize_resource
 
@@ -42,8 +42,27 @@ class PlantsController < ApplicationController
     @sampling_lists_filtered = sampling_lists.select { |sampling_list| sampling_list.access.name == 'External' }
     @graph_standards = Chart.all.map { |chart| @plant.graph_standards.build(chart: chart) }
 
-    log_standards = Task.all.order(:id).map { |task| @plant.log_standards.build(task: task, name: task[:name], season: task[:season], comment: task[:comment], responsible: task[:responsible]) }
-    @current_log_standards = log_standards.map { |log_standard| @plant.current_log_standards.build(plant: @plant, log_standard: log_standard, frecuency: log_standard.task.frecuency, cycle: log_standard.task.cycle) }
+    @tasklist = TaskList.new
+    @tasklist.tasks.build(name: 'Check pH onsite equipment',
+                          comment: 'If pH is < 5.5 or > 8.5 call Supervisor',
+                          responsible: 1,
+                          season: 'no',
+                          frecuency: 'weekly',
+                          cycle: '{"months":[],"days":[{"day":"mon","week":1,"num":1},{"day":"fri","week":1,"num":5}]}',
+                          input_type: 1,
+                          data_type: 1)
+
+    @tasklist.tasks.build(name: 'Check chemical level',
+                          comment: 'Ask more if needed',
+                          responsible: 1,
+                          season: 'no',
+                          frecuency: 'weekly',
+                          cycle: '{"months":[],"days":[{"day":"mon","week":1,"num":1},{"day":"fri","week":1,"num":5}]}',
+                          input_type: 0,
+                          data_type: 0)
+
+    # log_standards = Task.all.order(:id).map { |task| @plant.log_standards.build(task: task, name: task[:name], season: task[:season], comment: task[:comment], responsible: task[:responsible]) }
+    # @current_log_standards = log_standards.map { |log_standard| @plant.current_log_standards.build(plant: @plant, log_standard: log_standard, frecuency: log_standard.task.frecuency, cycle: log_standard.task.cycle) }
   end
 
   # POST companies/:company_id/plants
@@ -179,6 +198,11 @@ class PlantsController < ApplicationController
     @responsibles = [[0, @company.name], [1, 'BioFiltro']]
   end
 
+  def set_value_types
+    @input_types = Task.input_types.map { |key, val| [val, key] }
+    @data_types = Task.data_types.map { |key, val| [val, key] }
+  end
+
   def build_samplings(sampling_lists, standards)
     sampling_lists.each do |sampling_list|
       standards.each do |standard|
@@ -197,7 +221,7 @@ class PlantsController < ApplicationController
   end
 
   def set_log_frecuency
-    @log_frecuency = CurrentLogStandard.frecuencies.map { |frecuency| [frecuency.first.parameterize.underscore, frecuency.first.humanize] }
+    @log_frecuency = Task.frecuencies.map { |frecuency| [frecuency.first.parameterize.underscore, frecuency.first.humanize] }
   end
 
   def generate_month_logs(logbook)

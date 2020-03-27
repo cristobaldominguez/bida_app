@@ -194,29 +194,26 @@
     <% end %>
     <% end %>
 
-    <%= render 'shared/tables/elements_list', headers: %w(Active Task Options), title: 'Logbook' do %>
-      <%= form.fields_for :current_log_standards, @current_log_standards do |current_log| %>
-      <%= current_log.fields_for :log_standard do |log_standard| %>
-      <%= log_standard.fields_for :task do |task| %>
+    <!-- Tasks & Task Lists -->
+    <%= render 'shared/tables/elements_list', headers: %w(Active Task Options), title: 'Logbook', css_class: 'logbook' do %>
+      <%= form.fields_for :task_list, @tasklist do |task_list| %>
+      <%= task_list.fields_for :tasks do |task| %>
       <tr class="table_main__table-row">
-        <td class="table_main__table-data--left-text"><%= log_standard.check_box :active %></td>
+        <td class="table_main__table-data--left-text"><%= task.check_box :active %></td>
         <td class="table_main__table-data--left-text">
-          <span class="span_name"><%= log_standard.object.name %></span>
-          <%= current_log.hidden_field :id %>
-          <%= current_log.hidden_field :plant_id %>
-          <%= current_log.hidden_field :log_standard_id %>
-          <%= current_log.hidden_field :frecuency, class: 'frecuency' %>
-          <%= current_log.hidden_field :cycle, class: 'cycle' %>
+          <%= task_list.hidden_field :plant_id %>
+          <%= task.hidden_field :task_list_id %>
 
-          <%= log_standard.hidden_field :id %>
-          <%= log_standard.hidden_field :plant_id %>
-          <%= log_standard.hidden_field :task_id %>
-          <%= log_standard.hidden_field :name, class: 'name' %>
-          <%= log_standard.hidden_field :season, class: 'season' %>
-          <%= log_standard.hidden_field :comment, class: 'comment' %>
-          <%= log_standard.hidden_field :responsible, class: 'responsible' %>
+          <%= task.hidden_field :name, class: 'name' %>
+          <%= task.hidden_field :season, class: 'season' %>
+          <%= task.hidden_field :comment, class: 'comment' %>
+          <%= task.hidden_field :responsible, class: 'responsible' %>
+          <%= task.hidden_field :input_type, class: 'input_type' %>
+          <%= task.hidden_field :data_type, class: 'data_type' %>
+          <%= task.hidden_field :frecuency, class: 'frecuency' %>
+          <%= task.hidden_field :cycle, class: 'cycle' %>
 
-          <%= task.hidden_field :id %>
+          <span class="span_name"><%= task.object.name %></span>
         </td>
         <td class="table_main__table-data--options">
           <a href="#" class="table_main__link--options"></a>
@@ -232,8 +229,11 @@
       </tr>
       <% end %>
       <% end %>
-      <% end %>
     <% end %>
+
+    <div class="add_task__bottom">
+      <a href="#" class="add_task__plus">+</a>
+    </div>
 
   <div class="field  no-border">
     <%= form.label 'Logbook BF Assigned Operator' %>

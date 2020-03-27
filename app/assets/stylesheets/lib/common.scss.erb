@@ -770,6 +770,7 @@ a:visited {
 	box-shadow: 0 3px 4px 2px rgba(0, 0, 0, 0.15);
 	font-size: 1rem;
 	padding: 10px;
+	margin-bottom: 2em;
 
 	.table_header {
 		border-bottom: 1px solid var(--color-line);
@@ -1189,7 +1190,8 @@ a:visited {
 	}
 }
 
-.system_size {
+.system_size,
+.add_task {
 
 	&__elements {
 		display: flex;
@@ -1638,6 +1640,17 @@ a:visited {
 [class^="step-"] {
 	position: relative;
 	padding: 5px 0;
+}
+
+.hidden_number {
+	transition: all .5s ease-in-out;
+
+	&.hide {
+		height: var(--number-height);
+		overflow: hidden;
+		margin-bottom: 0;
+		padding: 0 5px;
+	}
 }
 
 button.modal-footer {

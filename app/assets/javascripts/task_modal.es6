@@ -17,7 +17,7 @@ document.addEventListener('turbolinks:load', function() {
     Events.on('taskmodal/render/frecuencyOptions', displayFrecuencyOptions)
     Events.on('taskmodal/state/step', onStepChange)
     Events.on('taskmodal/render/svg_class', onChangeSVGClass)
-    Events.on('taskmodal/render/trail', movetrail)
+    Events.on('taskmodal/render/trail', moveTrail)
     Events.on('taskmodal/state/stepsHeight', calculateStepsHeight)
     Events.on('taskmodal/state/stepHeight', recalculateHeight)
     Events.on('taskmodal/render/stepsHeight', onDefineStepsHeight)
@@ -26,6 +26,7 @@ document.addEventListener('turbolinks:load', function() {
     Events.on('taskmodal/render/frecuencySelections', renderFrecuencySelections)
     Events.on('taskmodal/render/frequencyButtons', renderFrequencyButtons)
     Events.on('taskmodal/render/dataOnForm', renderDataOnForm)
+    Events.on('taskmodal/render/modal_number_type', modalNumberType)
 
     const week_days = $('.select_week__day-link, .select_week__day-link--selected')
     const month_days = $('.select_month__day-link, .select_month__day-link--selected')
@@ -34,10 +35,13 @@ document.addEventListener('turbolinks:load', function() {
     const save_btn = $('.modal-footer__save-btn')
     const next_btn = $('.modal-footer__next-btn')
     const prev_btn = $('.modal-footer__prev-btn')
-    const edit_on_modal = $('.options_menu__link--modal-edit')
     const steps = $('[class^="step-"]')
     const modal = $('#plant_logbook')
     const input_targets = $('.modal-content [data-target]')
+    const value_type = $('#input_type_input_type')
+    const add_task = $('.add_task__plus')
+    const table_logbook_edit = $('table.logbook')
+    const hidden_number = $('.hidden_number')[0]
 
     week_days.on('click', toggleWeekDay)
     month_days.on('click', toggleMonthDays)
@@ -46,9 +50,12 @@ document.addEventListener('turbolinks:load', function() {
     next_btn.on('click', onNextButtonClick)
     prev_btn.on('click', onPrevButtonClick)
     save_btn.on('click', onSubmit)
+    add_task.on('click', addNewTask)
+    value_type.on('change', valueTypeHandle)
     input_targets.on('change', inputsListeners)
-    $('body').on('click', '.options_menu__link--modal-edit', editOnModal)
+    $('body').on('click', '.options_menu__link--modal-edit', getFormData)
     steps.each((index, el) => state.validations[index] = $(el).find('[data-required="true"]'))
+    $('body').on('click', '.options_menu__link--modal-edit', editOnModal)
 
     function init() {
       Events.emit('taskmodal/state/stepsHeight', null)
@@ -125,6 +132,8 @@ document.addEventListener('turbolinks:load', function() {
     }
 
     function displayFrecuencyOptions(value) {
+      if (value === '') { value = 'Daily' }
+
       const elements = $('.step-2 > [class^="select_"]').not('#' + value)
       elements.each(function(i, elem) {
         $(elem).hide()
@@ -243,32 +252,17 @@ document.addEventListener('turbolinks:load', function() {
       state.svg.removeAttr('class').addClass( state.svg_class + (state.step + 1))
     }
 
-    function movetrail() {
-      const trail_movement = (state.steps_height.slice(0, state.step)
-                                                .toArray()
-                                                .reduce(function(total, num) { return total + num }, 0) * -1)
+    function moveTrail() {
+      const trail_movement = (state.steps_height
+                                   .slice(0, state.step)
+                                   .toArray()
+                                   .reduce(function(total, num) { return total + num }, 0) * -1)
 
       $(':root').get(0).style.setProperty('--steps-trail-position', trail_movement + 'px')
     }
 
     function editOnModal(e) {
-      if (e.currentTarget.className !== 'options_menu__link--modal-edit') { return 0 }
-
       e.preventDefault()
-      const element = $(this).closest('.table_main__table-row')
-      const cycles = element.find('.cycle').val()
-      state.selected_task = element
-
-      state.data = {
-        comment: element.find('.comment').val(),
-        cycles: cycles ? JSON.parse(cycles) : { days: [], months: [] },
-        frecuency: element.find('.frecuency').val(),
-        name: element.find('.name').val(),
-        responsible: parseInt(element.find('.responsible').val()),
-        season: element.find('.season').val()
-      }
-
-      Events.emit('taskmodal/render/modal', null)
     }
 
     function cleanSelections() {
@@ -289,17 +283,60 @@ document.addEventListener('turbolinks:load', function() {
       Events.emit('taskmodal/render/data_modal', null)
     }
 
+    function getFormData(e) {
+      if (e.currentTarget.className !== 'options_menu__link--modal-edit') { return 0 }
+
+      e.preventDefault()
+      const element = $(this).closest('.table_main__table-row')
+      state.selected_task = element
+
+      const _data = {
+        name: element.find('.name').val(),
+        cycles: element.find('.cycle').val(),
+        season: element.find('.season').val(),
+        comment: element.find('.comment').val(),
+        frecuency: element.find('.frecuency').val(),
+
+        responsible: parseInt(element.find('.responsible').val()),
+        input_type: parseInt(element.find('.input_type').val()),
+        data_type: parseInt(element.find('.data_type').val())
+      }
+
+      state.data = {
+        ..._data,
+        cycles: _data.cycles ? JSON.parse(_data.cycles) : { days: [], months: [] },
+        responsible: isNaN(_data.responsible) ? '' : _data.responsible,
+        input_type: isNaN(_data.input_type) ? '' : _data.input_type,
+        data_type: isNaN(_data.data_type) ? '' : _data.data_type
+      }
+
+      Events.emit('taskmodal/render/modal', null)
+      Events.emit('taskmodal/render/modal_number_type', null)
+    }
+
     function renderDataOnModal() {
       if (!state.data) { return 0 }
 
-      const { name,comment, responsible, season, frecuency } = state.data
-      $('#task_name').val(state.data.name)
-      $('#task_comment').val(state.data.comment)
-      $('#responsible_responsible_id').val(state.data.responsible)
-      $('#season_modal_season').val(state.data.season)
-      $('#frecuency_frecuency_id').val(state.data.frecuency)
+      const { name, season, comment, frecuency, cycles, responsible, input_type, data_type } = state.data
+      $('#task_name').val(name)
+      $('#task_comment').val(comment)
+      $('#responsible_responsible_id').val(responsible)
+      $('#data_type_data_type').val(data_type)
+      $('#season_modal_season').val(season)
+      select_frecuency.val(frecuency)
+      value_type.val(input_type)
 
-      Events.emit('taskmodal/render/frecuencyOptions', state.data.frecuency)
+      Events.emit('taskmodal/render/frecuencyOptions', frecuency)
+    }
+
+    function valueTypeHandle(e) {
+      const option_selected = $(this).find('option:selected').text()
+      option_selected === 'number' ? hidden_number.classList.remove('hide') : hidden_number.classList.add('hide')
+    }
+
+    function modalNumberType() {
+      state.data.input_type === 1 ? hidden_number.classList.remove('hide') : hidden_number.classList.add('hide')
+      Events.emit('taskmodal/state/stepsHeight', null)
     }
 
     function renderFrecuencySelections(data) {
@@ -343,19 +380,181 @@ document.addEventListener('turbolinks:load', function() {
 
     function renderDataOnForm() {
       const element = $(state.selected_task)
-      const { name, season, comment, frecuency, cycles, responsible } = state.data
+      const { name, season, comment, frecuency, cycles, responsible, input_type, data_type } = state.data
       const cycles_json = JSON.stringify(cycles)
 
       element.find('.name').val(name)
       element.find('.season').val(season)
       element.find('.comment').val(comment)
       element.find('.cycle').val(cycles_json)
-      element.find('.frecuency').val(frecuency)
-      element.find('.responsible').val(responsible)
+      element.find('.frecuency').val(frecuency ? frecuency : '')
+      element.find('.responsible').val(responsible ? responsible : '')
+      element.find('.span_name').text(name)
+      element.find('.input_type').val(input_type ? input_type : '')
+      element.find('.data_type').val(data_type ? data_type : '')
+    }
+
+    function addNewTask(e) {
+      e.preventDefault()
+      const list = table_logbook_edit.find('tbody')
+      const tasks_number = list.find('tr')
+      const id = tasks_number.length
+
+      const html = Task.create(id)
+
+      list.append(html)
     }
 
     return {
         init, state
+    }
+  })()
+
+  const Task = (() => {
+
+    function tr(_class) {
+      const _tr = document.createElement('tr')
+      const cl_array = _class.split(' ')
+      cl_array.forEach((cl, i) => _tr.classList.add(cl) )
+
+      return _tr
+    }
+
+    function td(_class) {
+      const _td = document.createElement('td')
+      const cl_array = _class.split(' ')
+      cl_array.forEach((cl, i) => _td.classList.add(cl) )
+
+      return _td
+    }
+
+    function input({ name, type, value, checked, id, _class }) {
+      const _input = document.createElement('input')
+
+      if (id) { _input.id = id }
+      if (type) { _input.type = type }
+      if (name) { _input.name = name }
+      if (value) { _input.value = value }
+      if (_class) { _class.split(' ').forEach((cl, i) => _input.classList.add(cl) ) }
+      if (typeof checked !== 'undefined') { _input.checked = checked }
+
+      return _input
+    }
+
+    function span(_class) {
+      const _span = document.createElement('span')
+      const cl_array = _class.split(' ')
+      cl_array.forEach((cl, i) => _span.classList.add(cl) )
+
+      return _span
+    }
+
+    function link({ href, _class, text }) {
+      const _link = document.createElement('a')
+      _link.href = href
+      const cl_array = _class.split(' ')
+      cl_array.forEach((cl, i) => _link.classList.add(cl) )
+
+      if (text) { _link.innerText = text }
+
+      return _link
+    }
+
+    function div(_class) {
+      const _div = document.createElement('div')
+      const cl_array = _class.split(' ')
+      cl_array.forEach((cl, i) => _div.classList.add(cl) )
+
+      return _div
+    }
+
+    function ul(_class) {
+      const _ul = document.createElement('ul')
+      const cl_array = _class.split(' ')
+      cl_array.forEach((cl, i) => _ul.classList.add(cl) )
+
+      return _ul
+    }
+
+    function li(_class) {
+      const _li = document.createElement('li')
+      const cl_array = _class.split(' ')
+      cl_array.forEach((cl, i) => _li.classList.add(cl) )
+
+      return _li
+    }
+
+    function create(id) {
+      const _tr = tr('table_main__table-row')
+      const td_01 = td('table_main__table-data--left-text')
+      const input_01_01 = input({name: `plant[task_list][tasks_attributes][${ id }][active]`, type: 'hidden'})
+      const input_01_02 = input({name: `plant[task_list][tasks_attributes][${ id }][active]`, type: 'checkbox', value: id, checked: true, id: `plant_task_list_tasks_attributes_${ id }_active` })
+
+      const td_02 = td('table_main__table-data--left-text')
+      const input_02_01 = input({ type: 'hidden', name: `plant[task_list][plant_id]`, id: `plant_task_list_plant_id` })
+      const input_02_02 = input({ type: 'hidden', name: `plant[task_list][tasks_attributes][${ id }][task_list_id]`, id: `plant_task_list_tasks_attributes_${ id }_task_list_id` })
+      const input_02_03 = input({ type: 'hidden', _class: 'name', name: `plant[task_list][tasks_attributes][${ id }][name]`, id: `plant_task_list_tasks_attributes_${ id }_name` })
+      const input_02_04 = input({ type: 'hidden', _class: 'season', name: `plant[task_list][tasks_attributes][${ id }][season]`, id: `plant_task_list_tasks_attributes_${ id }_season`})
+      const input_02_05 = input({ type: 'hidden', _class: 'comment', name: `plant[task_list][tasks_attributes][${ id }][comment]`, id: `plant_task_list_tasks_attributes_${ id }_comment`})
+      const input_02_06 = input({ type: 'hidden', _class: 'responsible', name: `plant[task_list][tasks_attributes][${ id }][responsible]`, id: `plant_task_list_tasks_attributes_${ id }_responsible`, value: null})
+      const input_02_07 = input({ type: 'hidden', _class: 'input_type', name: `plant[task_list][tasks_attributes][${ id }][input_type]`, id: `plant_task_list_tasks_attributes_${ id }_input_type`})
+      const input_02_08 = input({ type: 'hidden', _class: 'data_type', name: `plant[task_list][tasks_attributes][${ id }][data_type]`, id: `plant_task_list_tasks_attributes_${ id }_data_type`})
+      const input_02_09 = input({ type: 'hidden', _class: 'frecuency', name: `plant[task_list][tasks_attributes][${ id }][frecuency]`, id: `plant_task_list_tasks_attributes_${ id }_frecuency`})
+      const input_02_10 = input({ type: 'hidden', _class: 'cycle', name: `plant[task_list][tasks_attributes][${ id }][cycle]`, id: `plant_task_list_tasks_attributes_${ id }_cycle`})
+      const span_name = span('span_name')
+
+      const td_03 = td('table_main__table-data--options')
+      const link_options = link({ href: '#', _class: 'table_main__link--options' })
+
+      const div_options = div('options_menu')
+      const ul_options = ul('options_menu__list')
+      const li_options_01 = li('options_menu__item')
+      const link_options_01 = link({ href: '#', _class: 'options_menu__link--modal-show', text: 'show' })
+      const li_options_02 = li('options_menu__item')
+      const link_options_02 = link({ href: '#', _class: 'options_menu__link--modal-edit', text: 'edit' })
+      const li_options_03 = li('options_menu__item')
+      const link_options_03 = link({ href: '#', _class: 'options_menu__link--modal-destroy', text: 'destroy' })
+      const unclick = div('unclick')
+
+      td_01.appendChild(input_01_01)
+      td_01.appendChild(input_01_02)
+
+      td_02.appendChild(input_02_01)
+      td_02.appendChild(input_02_02)
+      td_02.appendChild(input_02_03)
+      td_02.appendChild(input_02_04)
+      td_02.appendChild(input_02_05)
+      td_02.appendChild(input_02_06)
+      td_02.appendChild(input_02_07)
+      td_02.appendChild(input_02_08)
+      td_02.appendChild(input_02_09)
+      td_02.appendChild(input_02_10)
+      td_02.appendChild(span_name)
+
+      td_03.appendChild(link_options)
+      td_03.appendChild(div_options)
+
+      li_options_01.appendChild(link_options_01)
+      ul_options.appendChild(li_options_01)
+      li_options_02.appendChild(link_options_02)
+      ul_options.appendChild(li_options_02)
+      li_options_03.appendChild(link_options_03)
+      ul_options.appendChild(li_options_03)
+      div_options.appendChild(ul_options)
+      div_options.appendChild(unclick)
+
+
+      _tr.appendChild(td_01)
+      _tr.appendChild(td_02)
+      _tr.appendChild(td_03)
+
+      console.log(_tr)
+
+      return _tr
+    }
+
+    return {
+      create
     }
   })()
 

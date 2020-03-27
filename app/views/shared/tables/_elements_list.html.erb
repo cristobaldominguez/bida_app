@@ -5,7 +5,7 @@
   </header>
   <% end %>
   <main class="table_main">
-    <table class="table_main__table">
+    <table class="table_main__table<%= ' ' + css_class if css_class.present? %>">
       <thead class="table_main__thead">
         <tr class="table_main__thead-row">
           <% headers.each do |header| %>

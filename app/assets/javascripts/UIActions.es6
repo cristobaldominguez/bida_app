@@ -6,13 +6,13 @@ document.addEventListener('turbolinks:load', function() {
     // DomCache
     const body = $('body')
     const general_option_btn = $('.option-button__link')
-    const element_option_btn = $('.table_main__link--options')
+    // const element_option_btn = $('.table_main__link--options')
     const toast_notification = $('.toast__close')
     const toast_notices = $('.toast--blue')
 
     // EventBinding
     general_option_btn.on('click', general_option_btn_click)
-    element_option_btn.on('click', element_option_btn_click)
+    $('body').on('click', '.table_main__link--options', element_option_btn_click)
     toast_notification.on('click', toast_notification_fadeout)
     body.on('click', '.unclick--general-options', unclick_general_options)
     body.on('click', '.unclick', unclick_specific_options)

@@ -1,12 +1,11 @@
 <%= render 'shared/modal/standard', id: 'plant_logbook', title: 'Logbook Task', large: true, button_next: 'next' do %>
   <div class="svg_img">
-    <%= render 'shared/modal/2-steps', className: 'svg_img__2-steps--1' %>
+    <%= render 'shared/modal/3-steps', className: 'svg_img__3-steps--1' %>
   </div>
   <h2>Task</h2>
   <div class="steps">
     <div class="steps__trail">
 
-      <!-- Start Steps -->
       <div class="step-1">
         <div class="field">
           <label for="task_name">Name</label>
@@ -31,7 +30,7 @@
 
         <div class="field no-border">
           <label for="task_frecuency">Frecuency</label>
-          <%= collection_select(:frecuency, :frecuency_id, @log_frecuency, :first, :second, {prompt: 'Select a Frecuency'}, data: {required: true, error: 'Frecuency is required', target: 'frecuency'}) %>
+          <%= collection_select(:frecuency, :frecuency_id, @log_frecuency, :first, :second, {prompt: 'Select a Frecuency'}, class: 'frecuency', data: {required: true, error: 'Frecuency is required', target: 'frecuency'}) %>
         </div>
 
         <div class="select_week" id="weekly">
@@ -101,7 +100,17 @@
           </ul>
         </div>
       </div>
-      <!-- End Steps -->
+
+      <div class="step-3">
+        <div class="field no-border">
+          <label for="task_responsible">Value Type</label>
+          <%= collection_select(:input_type, :input_type, @input_types, :first, :second, {prompt: 'Select a Value Type'}, data: {required: true, error: 'Value Type is required', target: 'input_type'}) %>
+        </div>
+        <div class="field no-border hidden_number hide">
+          <label for="task_responsible">Number Type</label>
+          <%= collection_select(:data_type, :data_type, @data_types, :first, :second, {prompt: 'Select a Number Type'}, data: {required: true, error: 'Number Type is required', target: 'data_type'}) %>
+        </div>
+      </div>
       </div>
   </div>
 <% end %>
