@@ -38,12 +38,16 @@ class Plant < ApplicationRecord
   accepts_nested_attributes_for :standards, allow_destroy: true
   accepts_nested_attributes_for :sampling_lists, allow_destroy: true
   accepts_nested_attributes_for :task_lists, allow_destroy: false
+  accepts_nested_attributes_for :logbooks, allow_destroy: false
   accepts_nested_attributes_for :graph_standards, allow_destroy: true
 
   enum frecuency: %w[daily weekly every_2_weeks monthly every_x_months]
 
   def generate_logbook
-    logbooks.map { |logbook| GenerateLogsJob.perform_later(logbook) }
+    logbook = logbooks.create(task_list: task_lists.last)
+    GenerateLogsJob.perform_later(logbook)
+  end
+
   end
 
   def metrics

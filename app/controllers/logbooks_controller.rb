@@ -14,7 +14,8 @@ class LogbooksController < ApplicationController
   def show
     @plant = Plant.find(params[:plant_id])
     @logbook = @plant.logbooks.find(params[:id])
-    @filtered_logs = @logbook.logs.includes(current_log_standard: [:log_standard]).order('date DESC').reject { |log| log.date > @current_date }
+    @filtered_logs = @logbook.logs.includes(:task).order('date DESC').reject { |log| log.date > @current_date }
+
   rescue ActiveRecord::RecordNotFound => _e
     redirect_to pages_no_permission_path, notice: 'Access not Allowed'
   end
@@ -62,13 +63,13 @@ class LogbooksController < ApplicationController
   def edit
     @plant = Plant.find(params[:plant_id])
     @logbook = @plant.logbooks.find(params[:id])
-    logs = @logbook.logs.includes(:current_log_standard).order('date DESC')
-    cls = @plant.current_log_standards.includes(:log_standard)
+    logs = @logbook.logs.includes(:task).order('date DESC')
+    tasks_lists = @plant.task_lists.includes(:tasks)
 
-    lgs = LogbookProcessor.new(logs, cls).valid_logs(current_user)
+    lgs = LogbookProcessor.new(logs, tasks_lists).valid_logs(current_user)
 
     empty_logs = lgs.reject { |log| log.value.present? }
-    ordered_logs = empty_logs.group_by { |log| log.current_log_standard.log_standard.name }
+    ordered_logs = empty_logs.group_by { |log| log.task.name }
     @filtered_logs = ordered_logs.map { |block| block.second.max_by(&:date) }.sort_by(&:date).reverse
 
   rescue ActiveRecord::RecordNotFound => _e

@@ -11,14 +11,13 @@
     </div>
   <% end %>
 
-
   <% date = nil %>
 
   <%= render 'shared/tables/elements_list', headers: %w(Task Value) do %>
+    <% if @filtered_logs.any? %>
     <%= form.fields_for :logs, @filtered_logs do |log| %>
-    <%= log.fields_for :current_log_standard do |current_log_standard| %>
-    <%= current_log_standard.fields_for :log_standard do |log_standard| %>
-    <%= log_standard.fields_for :task do |task| %>
+    <%= log.fields_for :task do |task| %>
+    <%= task.fields_for :task_list do |task_list| %>
     <% if date.nil? || log.object.date != date %>
     <tr class="table_main__table-row--no-height">
       <td colspan="2" class="table_main__table-data--date">
@@ -33,9 +32,9 @@
     <% date = log.object.date %>
     <tr class="table_main__table-row">
       <td class="table_main__table-data--left-text">
-        <%= log_standard.object.task.name %>
-        <% if log_standard.object.comment != '' %>
-        <span class="table_main__table-data-span"><%= log_standard.object.comment %><span>
+        <%= task.object.name %>
+        <% if task.object.comment != '' %>
+        <span class="table_main__table-data-span"><%= task.object.comment %><span>
         <% end %>
       </td>
       <% input_type = task.object.input_type %>
@@ -43,20 +42,16 @@
       <td class="table_main__table-data <%= class_name %>">
         <%= log.hidden_field :id %>
         <%= log.hidden_field :date %>
-        <%= current_log_standard.hidden_field :plant_id %>
-        <%= current_log_standard.hidden_field :frecuency %>
-        <%= current_log_standard.hidden_field :cycle %>
-        <%= log_standard.hidden_field :plant_id %>
-        <%= log_standard.hidden_field :name %>
-        <%= log_standard.hidden_field :task_id %>
-        <%= log_standard.hidden_field :season %>
-        <%= log_standard.hidden_field :responsible %>
-        <%= log_standard.hidden_field :comment %>
+        <%= log.hidden_field :task_id %>
+        <%= log.hidden_field :logbook_id %>
         <%= task.hidden_field :id %>
-        <%#= input.hidden_field :option, value: input_type %>
+        <%= task.hidden_field :task_list_id %>
+        <%= task.hidden_field :name %>
+        <%= task.hidden_field :comment %>
+        <%= task_list.hidden_field :plant_id %>
+
         <% if input_type == 'checkbox' %>
         <%= log.check_box :value, { class: 'check' }, '1', '' %>
-        <!-- <input class="check" type="checkbox" value="1" name="logbook[logs_attributes][0][value]" id="logbook_logs_attributes_0_value"> -->
         <% elsif ['number'].include?(input_type) %>
         <%= log.bf_number_field :value, task.object.data_type, step: :any %>
         <% elsif input_type == 'date' %>
@@ -73,6 +68,8 @@
     <% end %>
     <% end %>
     <% end %>
+    <% else %>
+    <tr class="table_main__table-row"><td colspan="2" class="table_main__table-data">Hurray!! No Tasks to do!</td></tr>  
     <% end %>
   <% end %>
 

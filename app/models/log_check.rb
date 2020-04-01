@@ -4,11 +4,10 @@ class LogCheck
   def initialize(log, current_date = Date.today)
     @log = log
     @current_date = current_date
-    @current_log_standard = @log.current_log_standard
-    @log_standard = @log.current_log_standard.log_standard
-    @cycle = JSON.parse(@current_log_standard.cycle) if @current_log_standard.cycle.present?
+    @task = @log.task
+    @cycle = JSON.parse(@task.cycle) if @task.cycle.present?
     @current_day = @current_date.strftime('%a').downcase
-    @plant = @current_log_standard.plant
+    @plant = @task.task_list.plant
   end
 
   def valid?(current_user)
@@ -31,16 +30,16 @@ class LogCheck
   private
 
   def employee_can_execute?(current_user)
-    current_task = @log_standard.responsible.zero? # Si responsible == 0, la empresa se hace responsable
+    current_task = @task.responsible.zero? # Si responsible == 0, la empresa se hace responsable
     current_task && current_user.company? || !current_task && current_user.biofiltro?
   end
 
   def frecuency_validate?
-    return true if @current_log_standard.daily?
-    return weekly_validate? if @current_log_standard.weekly?
-    return every_2_weeks_validate? if @current_log_standard.every_2_weeks?
-    return monthly_validate? if @current_log_standard.monthly?
-    return every_x_months_validate? if @current_log_standard.every_x_months?
+    return true if @task.daily?
+    return weekly_validate? if @task.weekly?
+    return every_2_weeks_validate? if @task.every_2_weeks?
+    return monthly_validate? if @task.monthly?
+    return every_x_months_validate? if @task.every_x_months?
   end
 
   def weekly_validate?
@@ -66,7 +65,7 @@ class LogCheck
   end
 
   def plant_in_season?
-    true if @plant.high_season && @log_standard.hide? || !@plant.high_season && @log_standard.show?
+    true if @plant.high_season && @task.hide? || !@plant.high_season && @task.show?
   end
 
   def even_week?

@@ -9,7 +9,7 @@
 <%= render 'shared/tables/elements_list', headers: %w(Task Value Date), title: 'Logbook' do %>
   <% @filtered_logs.each do |log| %>
   <tr class="table_main__table-row">
-    <td class="table_main__table-data--left-text"><%= log.current_log_standard.log_standard.name %></td>
+    <td class="table_main__table-data--left-text"><%= log.task.name %></td>
     <td class="table_main__table-data"><%= log.value %></td>
     <td class="table_main__table-data"><%= log.date %></td>
   </tr>

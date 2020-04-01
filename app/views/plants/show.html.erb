@@ -150,10 +150,10 @@
 <h2 class="cell_division">Logbook</h2>
 
 <%= render 'shared/tables/elements_list', headers: ['Task', 'Responsible Party'] do %>
-<% @current_log_standards.each do |log| %>
+<% @task_list.each do |task| %>
 <tr class="table_main__table-row">
-  <td class="table_main__table-data--left-text"><input type="checkbox" name="active" value="Boat" <%= 'checked' if log.log_standard.active %> disabled> <%= log.log_standard.name %></td>
-  <td class="table_main__table-data"><%= @responsibles[log.log_standard.responsible][1] %></td>
+  <td class="table_main__table-data--left-text"><input type="checkbox" name="active" value="Boat" <%= 'checked' if task.active %> disabled> <%= task.name %></td>
+  <td class="table_main__table-data"><%= @responsibles[task.responsible][1] %></td>
 </tr>
 <% end %>
 <% end %>

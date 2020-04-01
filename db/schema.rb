@@ -533,7 +533,7 @@ ActiveRecord::Schema.define(version: 2020_02_20_161827) do
     t.integer "input_type", default: 0
     t.integer "data_type", default: 0
     t.integer "responsible", default: 0
-    t.string "cycle", default: "1"
+    t.string "cycle"
     t.string "name", null: false
     t.string "comment"
     t.datetime "created_at", null: false

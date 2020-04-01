@@ -1,23 +1,23 @@
 require 'json'
 
 class LogbookProcessor
-  def initialize(logs, current_log_standards)
+  def initialize(logs, task_lists)
     @logs = logs
-    @current_log_standards = current_log_standards
-    @plant = @current_log_standards.first.plant
+    @task_list = task_lists.first
+    @plant = @task_list.plant
     @current_date = Date.today
     @prev_month = @current_date.beginning_of_month.prev_month
   end
 
   def valid_logs(current_user)
-    list_valid_logs = @current_log_standards.map do |cls|
-      @current_log_standard = cls
-      date = generate_cycle_dates(cls)
+    list_valid_logs = @task_list.tasks.map do |task|
+      @task = task
+      date = generate_cycle_dates(task)
       next if date.nil?
-      next if plant_in_season?(cls)
+      next if plant_in_season?(task)
       next unless employee_can_execute?(current_user)
 
-      log_on_date(date, cls)
+      log_on_date(date, task)
     end
 
     list_valid_logs.flatten.reject(&:nil?)
@@ -31,12 +31,12 @@ class LogbookProcessor
     return every_x_months_period if cls.every_x_months?
   end
 
-  def log_on_date(date, cls)
-    @logs.select { |log| log.date == date && log.current_log_standard_id == cls.id }
+  def log_on_date(date, task)
+    @logs.select { |log| log.date == date && log.task_id == task.id }
   end
 
   def weekly_period
-    cycle = JSON.parse(@current_log_standard.cycle)
+    cycle = JSON.parse(@task.cycle)
     weeks = last_two_weeks
     dates = array_of_dates(cycle['days'], weeks)
 
@@ -44,7 +44,7 @@ class LogbookProcessor
   end
 
   def every_2_weeks_period
-    cycle = JSON.parse(@current_log_standard.cycle)
+    cycle = JSON.parse(@task.cycle)
     days = weeks_dates
     dates = array_of_dates(cycle['days'], days)
 
@@ -52,14 +52,14 @@ class LogbookProcessor
   end
 
   def monthly_period
-    cycle = JSON.parse(@current_log_standard.cycle)
+    cycle = JSON.parse(@task.cycle)
     dates = cycle['days'].map { |day| [@prev_month.public_send(method_in_string(day)), @current_date.public_send(method_in_string(day))] }.flatten
 
     dates.reject(&:nil?).empty? ? nil : closest_day(dates)
   end
 
   def every_x_months_period
-    cycle = JSON.parse(@current_log_standard.cycle)
+    cycle = JSON.parse(@task.cycle)
     months = months_in_period(cycle['months'])
     dates = cycle['days'].map { |day| months.map { |month| month.public_send(method_in_string(day)) } }.flatten
 
@@ -110,13 +110,13 @@ class LogbookProcessor
   end
 
   def plant_in_season?(cls)
-    true if @plant.high_season && cls.log_standard.hide? || !@plant.high_season && cls.log_standard.show?
+    true if @plant.high_season && cls.hide? || !@plant.high_season && cls.show?
   end
 
   def employee_can_execute?(current_user)
     return true if current_user.admin? # Todos los administradores podran ver todos los Logs
 
-    current_task = @current_log_standard.log_standard.responsible.zero? # Si responsible == 0, la empresa se hace responsable
+    current_task = @task.log_standard.responsible.zero? # Si responsible == 0, la empresa se hace responsable
     current_task && current_user.company? || !current_task && current_user.biofiltro?
   end
 end

@@ -196,23 +196,12 @@
 
     <!-- Tasks & Task Lists -->
     <%= render 'shared/tables/elements_list', headers: %w(Active Task Options), title: 'Logbook', css_class: 'logbook' do %>
-      <%= form.fields_for :task_list, @tasklist do |task_list| %>
+      <%= form.fields_for :task_lists, @task_list do |task_list| %>
       <%= task_list.fields_for :tasks do |task| %>
       <tr class="table_main__table-row">
         <td class="table_main__table-data--left-text"><%= task.check_box :active %></td>
         <td class="table_main__table-data--left-text">
-          <%= task_list.hidden_field :plant_id %>
-          <%= task.hidden_field :task_list_id %>
-
-          <%= task.hidden_field :name, class: 'name' %>
-          <%= task.hidden_field :season, class: 'season' %>
-          <%= task.hidden_field :comment, class: 'comment' %>
-          <%= task.hidden_field :responsible, class: 'responsible' %>
-          <%= task.hidden_field :input_type, class: 'input_type' %>
-          <%= task.hidden_field :data_type, class: 'data_type' %>
-          <%= task.hidden_field :frecuency, class: 'frecuency' %>
-          <%= task.hidden_field :cycle, class: 'cycle' %>
-
+          <%= render 'shared/hidden_task_fields', task: task, task_list: task_list %>
           <span class="span_name"><%= task.object.name %></span>
         </td>
         <td class="table_main__table-data--options">

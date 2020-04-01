@@ -8,7 +8,7 @@ class CreateTasks < ActiveRecord::Migration[5.2]
       t.integer :input_type, default: 0
       t.integer :data_type, default: 0
       t.integer :responsible, default: 0
-      t.string :cycle, default: 1
+      t.string :cycle
       t.string :name, null: false
       t.string :comment
 

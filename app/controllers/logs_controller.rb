@@ -6,9 +6,9 @@ class LogsController < ApplicationController
   end
 
   def self.log_creation(logbook, actual_date)
-    current_log_standards = logbook.plant.current_log_standards.includes(log_standard: %i[task plant])
-    new_logs = current_log_standards.map do |cls|
-      log = Log.new(logbook: logbook, value: '', date: actual_date, current_log_standard: cls)
+    tasks = logbook.plant.task_lists.last.tasks
+    new_logs = tasks.map do |task|
+      log = Log.new(logbook: logbook, value: '', date: actual_date, task: task)
       LogCheck.new(log, actual_date).generate? ? log : nil
     end
 

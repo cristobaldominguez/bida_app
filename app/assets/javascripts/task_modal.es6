@@ -42,6 +42,7 @@ document.addEventListener('turbolinks:load', function() {
     const add_task = $('.add_task__plus')
     const table_logbook_edit = $('table.logbook')
     const hidden_number = $('.hidden_number')[0]
+    const first_task_in_list = $('.logbook .table_main__table-row:first-child')
 
     week_days.on('click', toggleWeekDay)
     month_days.on('click', toggleMonthDays)
@@ -296,18 +297,16 @@ document.addEventListener('turbolinks:load', function() {
         season: element.find('.season').val(),
         comment: element.find('.comment').val(),
         frecuency: element.find('.frecuency').val(),
+        data_type: element.find('.data_type').val(),
+        input_type: element.find('.input_type').val(),
 
-        responsible: parseInt(element.find('.responsible').val()),
-        input_type: parseInt(element.find('.input_type').val()),
-        data_type: parseInt(element.find('.data_type').val())
+        responsible: parseInt(element.find('.responsible').val())
       }
 
       state.data = {
         ..._data,
         cycles: _data.cycles ? JSON.parse(_data.cycles) : { days: [], months: [] },
-        responsible: isNaN(_data.responsible) ? '' : _data.responsible,
-        input_type: isNaN(_data.input_type) ? '' : _data.input_type,
-        data_type: isNaN(_data.data_type) ? '' : _data.data_type
+        responsible: isNaN(_data.responsible) ? '' : _data.responsible
       }
 
       Events.emit('taskmodal/render/modal', null)
@@ -335,7 +334,7 @@ document.addEventListener('turbolinks:load', function() {
     }
 
     function modalNumberType() {
-      state.data.input_type === 1 ? hidden_number.classList.remove('hide') : hidden_number.classList.add('hide')
+      state.data.input_type === 'number' ? hidden_number.classList.remove('hide') : hidden_number.classList.add('hide')
       Events.emit('taskmodal/state/stepsHeight', null)
     }
 
@@ -391,16 +390,21 @@ document.addEventListener('turbolinks:load', function() {
       element.find('.responsible').val(responsible ? responsible : '')
       element.find('.span_name').text(name)
       element.find('.input_type').val(input_type ? input_type : '')
-      element.find('.data_type').val(data_type ? data_type : '')
+      element.find('.data_type').val(data_type && input_type === 'number' ? data_type : 'other')
     }
 
     function addNewTask(e) {
       e.preventDefault()
       const list = table_logbook_edit.find('tbody')
       const tasks_number = list.find('tr')
-      const id = tasks_number.length
 
-      const html = Task.create(id)
+      state.tasks = {
+        id: tasks_number.length,
+        task_list_id: parseInt(first_task_in_list.find('.task_list_id').val()),
+        plant_id: parseInt(first_task_in_list.find('.plant_id').val()),
+      }
+
+      const html = Task.create(state.tasks)
 
       list.append(html)
     }
@@ -484,23 +488,29 @@ document.addEventListener('turbolinks:load', function() {
       return _li
     }
 
-    function create(id) {
+    function create({ id, task_list_id, plant_id }) {
+
       const _tr = tr('table_main__table-row')
       const td_01 = td('table_main__table-data--left-text')
-      const input_01_01 = input({name: `plant[task_list][tasks_attributes][${ id }][active]`, type: 'hidden'})
-      const input_01_02 = input({name: `plant[task_list][tasks_attributes][${ id }][active]`, type: 'checkbox', value: id, checked: true, id: `plant_task_list_tasks_attributes_${ id }_active` })
+      td_01.innerHTML = `<input name="plant[task_lists_attributes][0][tasks_attributes][${ id }][active]" type="hidden" value="0">
+      <input type="checkbox" value="1" checked="checked" name="plant[task_lists_attributes][0][tasks_attributes][${ id }][active]" id="plant_task_lists_attributes_0_tasks_attributes_${ id }_active">`
 
       const td_02 = td('table_main__table-data--left-text')
-      const input_02_01 = input({ type: 'hidden', name: `plant[task_list][plant_id]`, id: `plant_task_list_plant_id` })
-      const input_02_02 = input({ type: 'hidden', name: `plant[task_list][tasks_attributes][${ id }][task_list_id]`, id: `plant_task_list_tasks_attributes_${ id }_task_list_id` })
-      const input_02_03 = input({ type: 'hidden', _class: 'name', name: `plant[task_list][tasks_attributes][${ id }][name]`, id: `plant_task_list_tasks_attributes_${ id }_name` })
-      const input_02_04 = input({ type: 'hidden', _class: 'season', name: `plant[task_list][tasks_attributes][${ id }][season]`, id: `plant_task_list_tasks_attributes_${ id }_season`})
-      const input_02_05 = input({ type: 'hidden', _class: 'comment', name: `plant[task_list][tasks_attributes][${ id }][comment]`, id: `plant_task_list_tasks_attributes_${ id }_comment`})
-      const input_02_06 = input({ type: 'hidden', _class: 'responsible', name: `plant[task_list][tasks_attributes][${ id }][responsible]`, id: `plant_task_list_tasks_attributes_${ id }_responsible`, value: null})
-      const input_02_07 = input({ type: 'hidden', _class: 'input_type', name: `plant[task_list][tasks_attributes][${ id }][input_type]`, id: `plant_task_list_tasks_attributes_${ id }_input_type`})
-      const input_02_08 = input({ type: 'hidden', _class: 'data_type', name: `plant[task_list][tasks_attributes][${ id }][data_type]`, id: `plant_task_list_tasks_attributes_${ id }_data_type`})
-      const input_02_09 = input({ type: 'hidden', _class: 'frecuency', name: `plant[task_list][tasks_attributes][${ id }][frecuency]`, id: `plant_task_list_tasks_attributes_${ id }_frecuency`})
-      const input_02_10 = input({ type: 'hidden', _class: 'cycle', name: `plant[task_list][tasks_attributes][${ id }][cycle]`, id: `plant_task_list_tasks_attributes_${ id }_cycle`})
+      td_02.innerHTML = `<input type="hidden" value="${ task_list_id }" name="plant[task_lists_attributes][0][id]" id="plant_task_lists_attributes_0_id">
+      <input type="hidden" value="${ plant_id }" name="plant[task_lists_attributes][0][plant_id]" id="plant_task_lists_attributes_0_plant_id">`
+
+
+      const input_02_03 = input({ type: 'hidden', name: `plant[task_lists_attributes][0][tasks_attributes][${ id }][id]`, id: `plant_task_lists_attributes_0_tasks_attributes_${ id }_id` })
+      const input_02_04 = input({ type: 'hidden', name: `plant[task_lists_attributes][0][tasks_attributes][${ id }][task_list_id]`, id: `plant_task_lists_attributes_0_tasks_attributes_${ id }_task_list_id`, value: task_list_id.toString() })
+
+      const input_02_05 = input({ type: 'hidden', _class: 'name', name: `plant[task_lists_attributes][0][tasks_attributes][${ id }][name]`, id: `plant_task_lists_attributes_0_tasks_attributes_${ id }_name` })
+      const input_02_06 = input({ type: 'hidden', _class: 'season', name: `plant[task_lists_attributes][0][tasks_attributes][${ id }][season]`, id: `plant_task_lists_attributes_0_tasks_attributes_${ id }_season`})
+      const input_02_07 = input({ type: 'hidden', _class: 'comment', name: `plant[task_lists_attributes][0][tasks_attributes][${ id }][comment]`, id: `plant_task_lists_attributes_0_tasks_attributes_${ id }_comment`})
+      const input_02_08 = input({ type: 'hidden', _class: 'responsible', name: `plant[task_lists_attributes][0][tasks_attributes][${ id }][responsible]`, id: `plant_task_lists_attributes_0_tasks_attributes_${ id }_responsible`})
+      const input_02_09 = input({ type: 'hidden', _class: 'input_type', name: `plant[task_lists_attributes][0][tasks_attributes][${ id }][input_type]`, id: `plant_task_lists_attributes_0_tasks_attributes_${ id }_input_type`})
+      const input_02_10 = input({ type: 'hidden', _class: 'data_type', name: `plant[task_lists_attributes][0][tasks_attributes][${ id }][data_type]`, id: `plant_task_lists_attributes_0_tasks_attributes_${ id }_data_type`})
+      const input_02_11 = input({ type: 'hidden', _class: 'frecuency', name: `plant[task_lists_attributes][0][tasks_attributes][${ id }][frecuency]`, id: `plant_task_lists_attributes_0_tasks_attributes_${ id }_frecuency`})
+      const input_02_12 = input({ type: 'hidden', _class: 'cycle', name: `plant[task_lists_attributes][0][tasks_attributes][${ id }][cycle]`, id: `plant_task_lists_attributes_0_tasks_attributes_${ id }_cycle`})
       const span_name = span('span_name')
 
       const td_03 = td('table_main__table-data--options')
@@ -516,19 +526,18 @@ document.addEventListener('turbolinks:load', function() {
       const link_options_03 = link({ href: '#', _class: 'options_menu__link--modal-destroy', text: 'destroy' })
       const unclick = div('unclick')
 
-      td_01.appendChild(input_01_01)
-      td_01.appendChild(input_01_02)
 
-      td_02.appendChild(input_02_01)
-      td_02.appendChild(input_02_02)
       td_02.appendChild(input_02_03)
       td_02.appendChild(input_02_04)
+
       td_02.appendChild(input_02_05)
       td_02.appendChild(input_02_06)
       td_02.appendChild(input_02_07)
       td_02.appendChild(input_02_08)
       td_02.appendChild(input_02_09)
       td_02.appendChild(input_02_10)
+      td_02.appendChild(input_02_11)
+      td_02.appendChild(input_02_12)
       td_02.appendChild(span_name)
 
       td_03.appendChild(link_options)
@@ -547,8 +556,6 @@ document.addEventListener('turbolinks:load', function() {
       _tr.appendChild(td_01)
       _tr.appendChild(td_02)
       _tr.appendChild(td_03)
-
-      console.log(_tr)
 
       return _tr
     }
