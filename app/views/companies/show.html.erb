@@ -3,7 +3,7 @@
     <li class="option-button__option"><%= link_to 'Edit', edit_company_path(@company), class: 'option-button__option-link' %></li>
     <% if can? :create, Plant %>
     <li class="option-button__separator"></li>
-    <li class="option-button__option"><%= link_to 'New Plant', new_company_plant_path(@company), class: 'option-button__option-link' %></li>
+    <li class="option-button__option"><%= link_to 'New Plant', new_company_plant_path(@company), class: 'option-button__option-link', data: { turbolinks: false } %></li>
     <% end %>
   <% end %>
 <% end %>
@@ -46,7 +46,7 @@
     <div class="options_menu">
       <ul class="options_menu__list">
         <% if can? :read, Plant %><li class="options_menu__item"><%= link_to 'show', plant, class: 'options_menu__link' %></li><% end %>
-        <% if can? :edit, Plant %><li class="options_menu__item"><%= link_to 'edit', edit_plant_path(plant), class: 'options_menu__link' %></li><% end %>
+        <% if can? :edit, Plant %><li class="options_menu__item"><%= link_to 'edit', edit_plant_path(plant), class: 'options_menu__link', data: { turbolinks: false } %></li><% end %>
         <% if can? :destroy, Plant %><li class="options_menu__item"><%= link_to 'destroy', plant, class: 'options_menu__link', method: :delete, data: { confirm: 'Are you sure?' } %></li><% end %>
       </ul>
       <div class="unclick"></div>

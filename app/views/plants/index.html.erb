@@ -11,7 +11,7 @@
       <div class="options_menu">
         <ul class="options_menu__list">
           <% if can? :read, Plant %><li class="options_menu__item"><%= link_to 'Show', plant, class: 'options_menu__link' %></li><% end %>
-          <% if can? :edit, Plant %><li class="options_menu__item"><%= link_to 'Edit', edit_plant_path(plant), class: 'options_menu__link' %></li><% end %>
+          <% if can? :edit, Plant %><li class="options_menu__item"><%= link_to 'Edit', edit_plant_path(plant), class: 'options_menu__link', data: { turbolinks: false } %></li><% end %>
           <% if can? :destroy, Plant %><li class="options_menu__item"><%= link_to 'Destroy', plant, class: 'options_menu__link', method: :delete, data: { confirm: 'Are you sure?' } %></li><% end %>
         </ul>
         <div class="unclick"></div>

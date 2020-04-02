@@ -6,7 +6,7 @@
 
 <% if can? :edit, Plant %>
   <%= render 'shared/buttons/option_button', alt: 'header' do %>
-    <li class="option-button__option"><%= link_to 'Edit', edit_plant_path(@plant), class: 'option-button__option-link' %></li>
+    <li class="option-button__option"><%= link_to 'Edit', edit_plant_path(@plant), class: 'option-button__option-link', data: { turbolinks: false } %></li>
     <li class="option-button__separator"></li>
     <% if can? :destroy, Plant %>
     <li class="option-button__option"><%= link_to 'Destroy', @plant, class: 'option-button__option-link', method: :delete, data: { confirm: 'Are you sure?' } %></li>
