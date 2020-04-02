@@ -49,8 +49,17 @@ class PlantsController < ApplicationController
     @plant.discharge_permit.attach(params[:plant][:discharge_permit]) if params[:plant][:discharge_permit].present?
     @current_date = Date.today
 
+    external_sampling_list = @plant.sampling_lists.first
+    external_sampling_list.date = @current_date.beginning_of_month
+
+    accesses_without_external.each do |access|
+      @plant.sampling_lists.build(date: external_sampling_list.date,
+                                  frecuency_id: external_sampling_list.frecuency_id,
+                                  access: access,
+                                  per_cycle: external_sampling_list.per_cycle)
+    end
+
     @plant.sampling_lists.each do |sampling_list|
-      sampling_list.date = @current_date.beginning_of_month
       SamplingListGenerator.new(@plant).create(sampling_list)
     end
 
@@ -194,6 +203,10 @@ class PlantsController < ApplicationController
     end
 
     new_logs.reject(&:nil?)
+  end
+
+  def accesses_without_external
+    Access.all.reject { |access| access.name == 'External' }
   end
 
   def plant_params
