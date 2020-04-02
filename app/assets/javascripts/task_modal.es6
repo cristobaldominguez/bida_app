@@ -398,10 +398,13 @@ document.addEventListener('turbolinks:load', function() {
       const list = table_logbook_edit.find('tbody')
       const tasks_number = list.find('tr')
 
+      const task_list_id = parseInt(first_task_in_list.find('.task_list_id').val())
+      const plant_id = parseInt(first_task_in_list.find('.plant_id').val())
+
       state.tasks = {
         id: tasks_number.length,
-        task_list_id: parseInt(first_task_in_list.find('.task_list_id').val()),
-        plant_id: parseInt(first_task_in_list.find('.plant_id').val()),
+        task_list_id: isNaN(task_list_id) ? '' : task_list_id,
+        plant_id: isNaN(plant_id) ? '' : plant_id,
       }
 
       const html = Task.create(state.tasks)
