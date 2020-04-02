@@ -10,8 +10,6 @@ class PlantsController < ApplicationController
   # GET companies/:company_id/plants
   # GET companies/:company_id/plants.json
   def index
-    # @plants = Company.find(params[:company_id]).plants.active
-    # @company = Company.find(params[:company_id])
     @plants = current_user.plants.active
   end
 
@@ -33,7 +31,6 @@ class PlantsController < ApplicationController
     @volume_metric = @system_size > 1 ? @plant.country.metric.volume.pluralize : @plant.country.metric.volume
   end
 
-  # GET companies/:company_id/plants/new
   def new
     @plant = Company.find(params[:company_id]).plants.build
     @plant.country = Country.find(3)
@@ -45,8 +42,6 @@ class PlantsController < ApplicationController
     @task_list.tasks.build
   end
 
-  # POST companies/:company_id/plants
-  # POST companies/:company_id/plants.json
   def create
     @plant = @company.plants.build(plant_params)
     @plant.system_size = params[:plant][:system_size].split(' ').map(&:to_i)
@@ -72,7 +67,6 @@ class PlantsController < ApplicationController
     end
   end
 
-  # GET companies/:company_id/plants/1/edit
   def edit
     @plant = Plant.find(params[:id])
     @company = @plant.company
@@ -82,8 +76,6 @@ class PlantsController < ApplicationController
     @task_list = @plant.task_lists.last
   end
 
-  # PATCH/PUT companies/:company_id/plants/1
-  # PATCH/PUT companies/:company_id/plants/1.json
   def update
     @plant.system_size = params[:plant][:system_size].split(' ').map(&:to_i)
     @plant.cover.attach(params[:plant][:cover]) if params[:plant][:cover].present?
@@ -102,8 +94,6 @@ class PlantsController < ApplicationController
     end
   end
 
-  # DELETE companies/:company_id/plants/1
-  # DELETE companies/:company_id/plants/1.json
   def destroy
     @plant.inactive!
     respond_to do |format|
