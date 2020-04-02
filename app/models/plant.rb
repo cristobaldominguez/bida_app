@@ -48,8 +48,6 @@ class Plant < ApplicationRecord
     GenerateLogsJob.perform_later(logbook)
   end
 
-  end
-
   def metrics
     country.metric
   end
