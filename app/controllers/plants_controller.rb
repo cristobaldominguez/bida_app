@@ -183,7 +183,7 @@ class PlantsController < ApplicationController
   end
 
   def set_season
-    @seasons = Task.seasons.map { |season, _| [season, "#{'Yes, ' unless season == 'no'}#{season.to_s.capitalize}#{' it' unless season == 'no'}"] }
+    @seasons = Task.seasons.map { |season, _| [season, season == 'no' ? 'No' : "Yes, show it #{season.humanize.underscore}"] }
   end
 
   def set_log_frecuency

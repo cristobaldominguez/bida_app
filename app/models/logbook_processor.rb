@@ -110,7 +110,7 @@ class LogbookProcessor
   end
 
   def plant_in_season?(cls)
-    true if @plant.high_season && cls.hide? || !@plant.high_season && cls.show?
+    true if @plant.high_season && cls.out_season? || !@plant.high_season && cls.in_season?
   end
 
   def employee_can_execute?(current_user)

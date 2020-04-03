@@ -65,7 +65,7 @@ class LogCheck
   end
 
   def plant_in_season?
-    true if @plant.high_season && @task.hide? || !@plant.high_season && @task.show?
+    true if @plant.high_season && @task.out_season? || !@plant.high_season && @task.in_season?
   end
 
   def even_week?
