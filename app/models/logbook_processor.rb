@@ -116,7 +116,7 @@ class LogbookProcessor
   def employee_can_execute?(current_user)
     return true if current_user.admin? # Todos los administradores podran ver todos los Logs
 
-    current_task = @task.log_standard.responsible.zero? # Si responsible == 0, la empresa se hace responsable
+    current_task = @task.responsible.zero? # Si responsible == 0, la empresa se hace responsable
     current_task && current_user.company? || !current_task && current_user.biofiltro?
   end
 end
