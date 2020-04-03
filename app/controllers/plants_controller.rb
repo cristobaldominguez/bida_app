@@ -81,6 +81,7 @@ class PlantsController < ApplicationController
     @company = @plant.company
     @standards = @plant.standards.includes(:option, bounds: :outlet).sort_by(&:option_id)
     @graph_standards = @plant.graph_standards.includes(:chart)
+    @sampling_lists_filtered = @plant.sampling_lists.includes(:access).select { |sampling_list| sampling_list.access.name == 'External' }
 
     @task_list = @plant.task_lists.last
   end
