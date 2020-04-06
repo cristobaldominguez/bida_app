@@ -59,9 +59,9 @@
         <% elsif input_type == 'yes/no' %>
         <%= log.collection_radio_buttons(:value, [['Yes', 'Yes'],['No', 'No']], :first, :second) %>
         <% elsif input_type == 'Low/Medium/High Density' %>
-        <%= log.collection_select(:value, [['Low', 'Low'],['Medium','Medium'],['High Density','High Density']], :first, :second, {prompt: 'Select an Alternative'})  %>
+        <%= log.collection_select(:value, [['Low', 'Low Density'],['Medium','Medium Density'],['High Density','High Density']], :first, :second, {prompt: 'Select an Alternative'})  %>
         <% elsif input_type == 'Low/Medium/Strong Odor' %>
-        <%= log.collection_select(:value, [['Low', 'Low'],['Medium','Medium'],['Strong Odor','Strong Odor']], :first, :second, {prompt: 'Select an Alternative'})  %>
+        <%= log.collection_select(:value, [['Low', 'Low Odor'],['Medium','Medium Odor'],['Strong Odor','Strong Odor']], :first, :second, {prompt: 'Select an Alternative'})  %>
         <% end %>
       </td>
     </tr>
