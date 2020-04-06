@@ -63,8 +63,8 @@ class LogbooksController < ApplicationController
   def edit
     @plant = Plant.find(params[:plant_id])
     @logbook = @plant.logbooks.find(params[:id])
-    logs = @logbook.logs.includes(:task).order('date DESC')
-    tasks_lists = @plant.task_lists.includes(:tasks)
+    logs = @logbook.logs.includes(task: [:task_list]).order('date DESC')
+    tasks_lists = @plant.task_lists
 
     lgs = LogbookProcessor.new(logs, tasks_lists).valid_logs(current_user)
 
