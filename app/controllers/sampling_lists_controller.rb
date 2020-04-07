@@ -62,7 +62,7 @@ class SamplingListsController < ApplicationController
   def update
     respond_to do |format|
       if @sampling_list.update(sampling_list_params)
-        format.html { redirect_to edit_plant_sampling_list_path(@plant, @sampling_list), notice: 'Sampling list was successfully updated.' }
+        format.html { redirect_to plant_sampling_list_path(@plant, @sampling_list), notice: 'Sampling list was successfully updated.' }
         format.json { render :show, status: :ok, location: @sampling_list }
       else
         format.html { render :edit }
