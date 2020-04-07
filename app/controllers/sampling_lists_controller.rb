@@ -5,7 +5,7 @@ class SamplingListsController < ApplicationController
   # GET /sampling_lists
   # GET /sampling_lists.json
   def index
-    @sampling_lists = @plant.sampling_lists.includes(:access).order('date DESC')
+    @sampling_lists = @plant.sampling_lists.includes(:access).active.order('date DESC')
   end
 
   # GET /sampling_lists/1
@@ -76,7 +76,7 @@ class SamplingListsController < ApplicationController
   def destroy
     @sampling_list.inactive!
     respond_to do |format|
-      format.html { redirect_to sampling_lists_url, notice: 'Sampling list was successfully destroyed.' }
+      format.html { redirect_to plant_sampling_lists_url, notice: 'Sampling list was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
