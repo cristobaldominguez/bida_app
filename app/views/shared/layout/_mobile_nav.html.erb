@@ -1,7 +1,9 @@
 <nav class="mobile_nav">
   <ul class="mobile_nav__list">
     <% if can? :read, Company %>
-    <li class="mobile_nav__item"><a class="mobile_nav__link" href="#">companies</a>
+    <% companies_menu = @menu[:companies] ? 'mobile_nav__item--active' : '' %>
+    <li class="mobile_nav__item <%= companies_menu %>">
+      <%= link_to 'companies', companies_path, class: 'mobile_nav__link' %>
       <ul class="mobile_nav__submenu-list">
         <li class="mobile_nav__subitem"><%= link_to 'all companies', companies_path, class: 'mobile_nav__sublink' %></li>
         <% if can? :create, Company %>
@@ -10,39 +12,61 @@
       </ul>
     </li>
     <% end %>
+
+    <% if @user_plants %>
+    <li class="mobile_nav__item">
+      <a class="mobile_nav__link" href="#">plants</a>
+      <ul class="mobile_nav__submenu-list">
+        <% @user_plants.each do |plant| %>
+        <li class="mobile_nav__subitem"><%= link_to plant.name, plant_path(plant), class: 'mobile_nav__sublink' %></li>
+        <% end %>
+      </ul>
+    </li>
+    <% end %>
+
     <% if @plant.present? && @plant.persisted? %>
     <% if can? :read, Plant %>
-    <li class="mobile_nav__item"><a class="mobile_nav__link--active" href="#">plant</a>
+    <% plant_menu = @menu[:plants] ? 'mobile_nav__item--active' : '' %>
+    <li class="mobile_nav__item mobile_nav__item--active">
+      <a class="mobile_nav__link" href="#"><%= @plant.name %></a>
       <ul class="mobile_nav__submenu-list">
-        <li class="mobile_nav__subitem"><a href="#" class="mobile_nav__sublink">tickets</a>
+        <% ticket_menu = @menu[:tickets] ? 'mobile_nav__subitem--active' : '' %>
+        <li class="mobile_nav__subitem <%= ticket_menu %>">
+          <a href="#" class="mobile_nav__sublink">tickets</a>
           <ul class="mobile_nav__submenu-list">
 
             <% if can? :read, Alert %>
-            <li class="mobile_nav__subitem"><a href="#" class="mobile_nav__sublink">alerts</a>
+            <% active = @menu[:alerts] ? 'mobile_nav__sublink--active' : '' %>
+            <li class="mobile_nav__subitem <%= active %>"><a href="#" class="mobile_nav__sublink">alerts</a>
               <ul class="mobile_nav__submenu-list">
-                <li class="mobile_nav__subitem"><%= link_to 'alert history', plant_alerts_path(@plant), class: 'mobile_nav__sublink' %></li>
+                <% active = @menu[:alerts] && @menu[:action] %>
+                <li class="mobile_nav__subitem <%= active == 'index' && 'mobile_nav__subitem--active' %>"><%= link_to 'alert history', plant_alerts_path(@plant), class: 'mobile_nav__sublink' %></li>
                 <% if can? :create, Alert %>
-                <li class="mobile_nav__subitem"><%= link_to 'new alert', new_plant_alert_path(@plant), class: 'mobile_nav__sublink' %></li>
+                <li class="mobile_nav__subitem <%= active == 'new' && 'mobile_nav__subitem--active' %>"><%= link_to 'new alert', new_plant_alert_path(@plant), class: 'mobile_nav__sublink' %></li>
                 <% end %>
               </ul>
             </li>
             <% end %>
             <% if can? :read, Support %>
-            <li class="mobile_nav__subitem"><a href="#" class="mobile_nav__sublink">supports</a>
+            <% active = @menu[:supports] ? 'mobile_nav__subitem--active' : '' %>
+            <li class="mobile_nav__subitem <%= active %>"><a href="#" class="mobile_nav__sublink">supports</a>
               <ul class="mobile_nav__submenu-list">
-                <li class="mobile_nav__subitem"><%= link_to 'support history', plant_supports_path(@plant), class: 'mobile_nav__sublink' %></li>
+                <% active = @menu[:supports] && @menu[:action] %>
+                <li class="mobile_nav__subitem <%= active == 'index' && 'mobile_nav__subitem--active' %>"><%= link_to 'support history', plant_supports_path(@plant), class: 'mobile_nav__sublink' %></li>
                 <% if can? :create, Support %>
-                <li class="mobile_nav__subitem"><%= link_to 'new support', new_plant_support_path(@plant), class: 'mobile_nav__sublink' %></li>
+                <li class="mobile_nav__subitem <%= active == 'new' && 'mobile_nav__subitem--active' %>"><%= link_to 'new support', new_plant_support_path(@plant), class: 'mobile_nav__sublink' %></li>
                 <% end %>
               </ul>
             </li>
             <% end %>
             <% if can? :read, Inspection %>
+            <% active = @menu[:inspections] ? 'mobile_nav__subitem--active' : '' %>
             <li class="mobile_nav__subitem"><a href="#" class="mobile_nav__sublink">inspections</a>
               <ul class="mobile_nav__submenu-list">
-                <li class="mobile_nav__subitem"><%= link_to 'inspection history', plant_inspections_path(@plant), class: 'mobile_nav__sublink' %></li>
+                <% active = @menu[:inspections] && @menu[:action] %>
+                <li class="mobile_nav__subitem <%= active == 'index' && 'mobile_nav__subitem--active' %>"><%= link_to 'inspection history', plant_inspections_path(@plant), class: 'mobile_nav__sublink' %></li>
                 <% if can? :create, Inspection %>
-                <li class="mobile_nav__subitem"><%= link_to 'new inspection', new_plant_inspection_path(@plant), class: 'mobile_nav__sublink' %></li>
+                <li class="mobile_nav__subitem <%= active == 'new' && 'mobile_nav__subitem--active' %>"><%= link_to 'new inspection', new_plant_inspection_path(@plant), class: 'mobile_nav__sublink' %></li>
                 <% end %>
               </ul>
             </li>
@@ -50,49 +74,61 @@
           </ul>
         </li>
         <% if can? :read, Logbook %>
-        <li class="mobile_nav__subitem"><a href="#" class="mobile_nav__sublink">logbooks</a>
+        <% logbooks_menu = @menu[:logbooks] ? 'mobile_nav__subitem--active' : '' %>
+        <li class="mobile_nav__subitem <%= logbooks_menu %>">
+          <a href="#" class="mobile_nav__sublink">logbooks</a>
           <ul class="mobile_nav__submenu-list">
-            <li class="mobile_nav__subitem"><%= link_to 'logbook', logbook_plant_path(@plant), class: 'mobile_nav__sublink' %></li>
-            <li class="mobile_nav__subitem"><%= link_to 'logbook history', plant_logbooks_path(@plant), class: 'mobile_nav__sublink' %></li>
+            <% active = @menu[:logbooks] && @menu[:action] %>
+            <li class="mobile_nav__subitem <%= active == 'edit' && 'mobile_nav__subitem--active' %>"><%= link_to 'logbook', logbook_plant_path(@plant), class: 'mobile_nav__sublink' %></li>
+            <li class="mobile_nav__subitem <%= active == 'index' && 'mobile_nav__subitem--active' %>"><%= link_to 'logbook history', plant_logbooks_path(@plant), class: 'mobile_nav__sublink' %></li>
           </ul>
         </li>
         <% end %>
         <% if can? :read, FlowReport %>
-        <li class="mobile_nav__subitem"><a href="#" class="mobile_nav__sublink--active">flows</a>
+        <% flows_menu = @menu[:flow_reports] || (@menu[:imports] && @menu[:action] == 'flows') ? 'mobile_nav__subitem--active' : '' %>
+        <li class="mobile_nav__subitem <%= flows_menu %>">
+          <a href="#" class="mobile_nav__sublink">flows</a>
           <ul class="mobile_nav__submenu-list">
+            <% active = (@menu[:flow_reports] || @menu[:imports]) && @menu[:action] %>
             <% if @latest_flow_report.present? %>
-            <li class="mobile_nav__subitem"><%= link_to 'current flow', plant_flow_report_path(@plant, @latest_flow_report), class: 'mobile_nav__sublink' %></li>
+            <li class="mobile_nav__subitem <%= active == 'show' && 'mobile_nav__subitem--active' %>"><%= link_to 'current flow', plant_flow_report_path(@plant, @latest_flow_report), class: 'mobile_nav__sublink' %></li>
             <% else %>
             <% if can? :create, FlowReport %>
-            <li class="mobile_nav__subitem"><%= link_to 'new flow', new_plant_flow_report_path(@plant), class: 'mobile_nav__sublink' %></li>
+            <li class="mobile_nav__subitem <%= active == 'new' && 'mobile_nav__subitem--active' %>"><%= link_to 'new flow', new_plant_flow_report_path(@plant), class: 'mobile_nav__sublink' %></li>
             <% end %>
             <% end %>
-            <li class="mobile_nav__subitem"><%= link_to 'flow history', plant_flow_reports_path(@plant), class: 'mobile_nav__sublink' %></li>
+            <li class="mobile_nav__subitem <%= active == 'index' && 'mobile_nav__subitem--active' %>"><%= link_to 'flow history', plant_flow_reports_path(@plant), class: 'mobile_nav__sublink' %></li>
             <% if can? :create, FlowReport %>
-            <li class="mobile_nav__subitem"><%= link_to 'upload flow from file', flows_plant_imports_path(@plant), class: 'mobile_nav__sublink' %></li>
+            <li class="mobile_nav__subitem <%= active == 'flows' && 'mobile_nav__subitem--active' %>"><%= link_to 'upload flow from file', flows_plant_imports_path(@plant), class: 'mobile_nav__sublink' %></li>
             <% end %>
           </ul>
         </li>
         <% end %>
         <% if can? :read, Sampling %>
-        <li class="mobile_nav__subitem"><a href="#" class="mobile_nav__sublink">samplings</a>
+        <% samplings_menu = @menu[:sampling_lists] || (@menu[:imports] && @menu[:action] == 'samplings') ? 'mobile_nav__subitem--active' : '' %>
+        <li class="mobile_nav__subitem <%= samplings_menu %>">
+          <a href="#" class="mobile_nav__sublink">samplings</a>
           <ul class="mobile_nav__submenu-list">
-            <li class="mobile_nav__subitem"><%= link_to 'external', external_plant_sampling_lists_path(@plant), class: 'mobile_nav__sublink' %></li>
-            <li class="mobile_nav__subitem"><%= link_to 'internal', internal_plant_sampling_lists_path(@plant), class: 'mobile_nav__sublink' %></li>
-            <li class="mobile_nav__subitem"><%= link_to 'samplings history', plant_sampling_lists_path(@plant), class: 'mobile_nav__sublink' %></li>
+            <% active = (@menu[:sampling_lists] || @menu[:imports]) && @menu[:action] %>
+            <li class="mobile_nav__subitem <%= active == 'edit' && @sampling_list.external? && 'mobile_nav__subitem--active' %>"><%= link_to 'external', external_plant_sampling_lists_path(@plant), class: 'mobile_nav__sublink' %></li>
+            <li class="mobile_nav__subitem <%= active == 'edit' && @sampling_list.internal? && 'mobile_nav__subitem--active' %>"><%= link_to 'internal', internal_plant_sampling_lists_path(@plant), class: 'mobile_nav__sublink' %></li>
+            <li class="mobile_nav__subitem <%= active == 'index' && 'mobile_nav__subitem--active' %>"><%= link_to 'samplings history', plant_sampling_lists_path(@plant), class: 'mobile_nav__sublink' %></li>
             <% if can? :create, Sampling %>
-            <li class="mobile_nav__subitem"><%= link_to 'import samplings', samplings_plant_imports_path(@plant), class: 'mobile_nav__sublink' %></li>
+            <li class="mobile_nav__subitem <%= active == 'samplings' && 'mobile_nav__subitem--active' %>"><%= link_to 'import samplings', samplings_plant_imports_path(@plant), class: 'mobile_nav__sublink' %></li>
             <% end %>
           </ul>
         </li>
         <% end %>
         <% if can? :read, Report %>
-        <li class="mobile_nav__subitem"><a href="#" class="mobile_nav__sublink">graph reports</a>
+        <% reports_menu = @menu[:reports] ? 'mobile_nav__subitem--active' : '' %>
+        <li class="mobile_nav__subitem <%= reports_menu %>">
+          <a href="#" class="mobile_nav__sublink">graph reports</a>
           <ul class="mobile_nav__submenu-list">
+            <% active = @menu[:reports] && @menu[:action] %>
             <% if can? :update, Report %>
-            <li class="mobile_nav__subitem"><%= link_to 'latest report', latest_report_plant_reports_path(@plant), class: 'mobile_nav__sublink' %></li>
+            <li class="mobile_nav__subitem <%= active == 'new' && 'mobile_nav__subitem--active' %>"><%= link_to 'latest report', latest_report_plant_reports_path(@plant), class: 'mobile_nav__sublink' %></li>
             <% end %>
-            <li class="mobile_nav__subitem"><%= link_to 'reports history', plant_reports_path(@plant), class: 'mobile_nav__sublink' %></li>
+            <li class="mobile_nav__subitem <%= active == 'index' && 'mobile_nav__subitem--active' %>"><%= link_to 'reports history', plant_reports_path(@plant), class: 'mobile_nav__sublink' %></li>
           </ul>
         </li>
         <% end %>
@@ -100,8 +136,11 @@
     </li>
     <% end %>
     <% end %>
+
     <% if can? :read, User %>
-    <li class="mobile_nav__item"><a class="mobile_nav__link" href="#">users</a>
+    <% users_menu = @menu[:users] ? 'mobile_nav__item--active' : '' %>
+    <li class="mobile_nav__item <%= users_menu %>">
+      <%= link_to 'users', users_path, class: 'mobile_nav__link' %>
       <ul class="mobile_nav__submenu-list">
         <li class="mobile_nav__subitem"><%= link_to 'all users', users_path, class: 'mobile_nav__sublink' %></li>
         <% if can? :create, User %>

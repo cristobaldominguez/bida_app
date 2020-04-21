@@ -19,10 +19,10 @@
     <%= csp_meta_tag %>
   </head>
 
-  <% if current_user %>
+  <% if user_signed_in? %>
   <body class="<%= current_user.interface_color + '-ui' %>" data-action="<%= params[:action] %>" data-controller="<%= params[:controller] %>">
   <% else %>
-  <body class="light-ui" data-action="<%= params[:action] %>" data-controller="<%= params[:controller] %>">
+  <body class="light-ui">
   <% end %>
 
     <%= render 'shared/layout/notifications' %>
@@ -36,9 +36,30 @@
             <i class="icon-hamburger"></i>
           </a>
           <ul class="main_nav__list">
-            <li class="main_nav__item"><a class="main_nav__link--active" href="#">companies</a></li>
-            <li class="main_nav__item"><a class="main_nav__link" href="#">plant</a></li>
-            <li class="main_nav__item"><a class="main_nav__link" href="#">users</a></li>
+            <% if can? :read, Company %>
+            <li class="main_nav__item <%= 'main_nav__item--active' if @companies %>"><%= link_to 'companies', companies_path, class: 'main_nav__link' %></li>
+            <% end %>
+
+            <% if @user_plants.present? %>
+            <% if can? :read, Plant %>
+            <li class="main_nav__item <%= 'main_nav__item--active' if @plant %>">
+              <% _text = @plant.present? ? @plant.name : 'plants' %>
+              <%= link_to _text, '#', class: 'main_nav__link-dropdown' %>
+              <div class="options_menu">
+                <ul class="main_nav__plants">
+                  <% @user_plants.each do |plant| %>
+                  <li class="main_nav__plant"><%= link_to plant.name, plant_path(plant), class: 'options_menu__link' %></li>
+                  <% end %>
+                </ul>
+                <div class="unclick--plants"></div>
+              </div>
+            </li>
+            <% end %>
+            <% end %>
+
+            <% if can? :read, User %>
+            <li class="main_nav__item <%= 'main_nav__item--active' if @users %>"><%= link_to 'users', users_path, class: 'main_nav__link' %></li>
+            <% end %>
           </ul>
         </nav>
         <% end %>
@@ -52,10 +73,14 @@
         <% end %>
       </div>
 
+      <% if user_signed_in? %>
       <div class="main_header__lower">
         <%= render 'shared/layout/mobile_nav' %>
-        <nav class="desktop_nav"></nav>
+        <% if @plant %>
+        <%= render 'shared/layout/desktop_nav', plant: @plant %>
+        <% end %>
       </div>
+      <% end %>
     </header>
     <main class="main__container">
       <%= yield %>

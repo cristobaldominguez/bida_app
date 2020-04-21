@@ -3,15 +3,15 @@
     <li class="user_options__item--ui">
       <a class="user_options__link--<%= current_user.interface_color %>-ui" href="#">
         <% if current_user.dark? %>
-        <i class="icon-sun"></i>
+        <svg class="user_options__svg user_options__sun"><use xlink:href="#sun"></use><svg>
         <% else %>
-        <i class="icon-moon"></i>
+        <svg class="user_options__svg user_options__moon"><use xlink:href="#moon"></use><svg>
         <% end %>
       </a>
     </li>
     <li class="user_options__item">
       <a class="user_options__link--users" href="#">
-        <i class="icon-user"></i>
+        <svg class="user_options__svg user_options__user"><use xlink:href="#user"></use><svg>
       </a>
       <div class="options_menu">
         <ul class="options_menu__list">

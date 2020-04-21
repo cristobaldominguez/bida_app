@@ -34,8 +34,8 @@ document.addEventListener('turbolinks:load', function() {
 
     function onChange({color, icon}) {
       $('body').removeAttr('class').addClass(`${color}-ui`)
-      $('li.user_options__item--ui a').removeAttr('class').addClass(`user_options__link--${color}-ui`)
-      $('li.user_options__item--ui a i').attr('class', `icon-${icon}`)
+      const use = document.querySelector('.user_options__svg use')
+      use.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', `#${icon}`)
     }
 
     // API

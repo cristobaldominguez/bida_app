@@ -1,0 +1,126 @@
+<nav class="desktop_nav">
+  <ul class="desktop_nav__list">
+    <% plant_menu = @menu[:plants] ? 'desktop_nav__item--active' : '' %>
+    <li class="desktop_nav__item <%= plant_menu %>"><%= link_to 'Plant', plant_path(plant), class: 'desktop_nav__link nav_icon nav_icon_plant' %></li>
+    <% ticket_menu = @menu[:tickets] ? 'desktop_nav__item--active' : '' %>
+
+    <li class="desktop_nav__item <%= ticket_menu %>">
+      <%= link_to 'Tickets', '#', class: 'desktop_nav__link nav_icon nav_icon_tickets' %>
+      <div class="desktop_nav__submenu">
+        <ul class="desktop_nav__subul">
+          <% if can? :read, Alert %>
+          <li class="desktop_nav__subli">
+            <div class="desktop_nav__sublink nav_icon nav_icon_alerts">alerts</div>
+            <ul class="desktop_nav__subul">
+              <% active = @menu[:alerts] && @menu[:action] %>
+              <li class="desktop_nav__subli <%= active == 'index' && 'desktop_nav__subli--active' %>"><%= link_to 'alert history', plant_alerts_path(@plant), class: 'desktop_nav__sublink' %></li>
+              <% if can? :create, Alert %>
+              <li class="desktop_nav__subli <%= active == 'new' && 'desktop_nav__subli--active' %>"><%= link_to 'new alert', new_plant_alert_path(@plant), class: 'desktop_nav__sublink' %></li>
+              <% end %>
+            </ul>
+          </li>
+          <% end %>
+
+          <% if can? :read, Support %>
+          <li class="desktop_nav__subli">
+            <div class="desktop_nav__sublink nav_icon nav_icon_supports">supports</div>
+            <ul class="desktop_nav__subul">
+              <% active = @menu[:supports] && @menu[:action] %>
+              <li class="desktop_nav__subli <%= active == 'index' && 'desktop_nav__subli--active' %>"><%= link_to 'support history', plant_supports_path(@plant), class: 'desktop_nav__sublink' %></li>
+              <% if can? :create, Support %>
+              <li class="desktop_nav__subli <%= active == 'new' && 'desktop_nav__subli--active' %>"><%= link_to 'new support', new_plant_support_path(@plant), class: 'desktop_nav__sublink' %></li>
+              <% end %>
+            </ul>
+          </li>
+          <% end %>
+
+          <% if can? :read, Inspection %>
+          <li class="desktop_nav__subli">
+            <div class="desktop_nav__sublink nav_icon nav_icon_inspections">inspections</div>
+            <ul class="desktop_nav__subul">
+              <% active = @menu[:inspections] && @menu[:action] %>
+              <li class="desktop_nav__subli <%= active == 'index' && 'desktop_nav__subli--active' %>"><%= link_to 'logbook', plant_inspections_path(@plant), class: 'desktop_nav__sublink' %></li>
+              <% if can? :create, Inspection %>
+              <li class="desktop_nav__subli <%= active == 'new' && 'desktop_nav__subli--active' %>"><%= link_to 'logbook history', new_plant_inspection_path(@plant), class: 'desktop_nav__sublink' %></li>
+              <% end %>
+            </ul>
+          </li>
+          <% end %>
+          <div class="unclick--desktop_menu"></div>
+        </ul>
+      </div>
+    </li>
+
+    <% if can? :read, Logbook %>
+    <% logbook_menu = @menu[:logbooks] ? 'desktop_nav__item--active' : '' %>
+    <li class="desktop_nav__item <%= logbook_menu %>">
+      <%= link_to 'Logbooks', '#', class: 'desktop_nav__link nav_icon nav_icon_logbooks' %>
+      <div class="desktop_nav__submenu">
+        <ul class="desktop_nav__subul">
+          <% active = @menu[:logbooks] && @menu[:action] %>
+          <li class="desktop_nav__subli <%= active == 'edit' && 'desktop_nav__subli--active' %>"><%= link_to 'logbook', logbook_plant_path(plant), class: 'desktop_nav__sublink' %></li>
+          <li class="desktop_nav__subli <%= active == 'index' && 'desktop_nav__subli--active' %>"><%= link_to 'logbook history', plant_logbooks_path(plant), class: 'desktop_nav__sublink' %></li>
+          <div class="unclick--desktop_menu"></div>
+        </ul>
+      </div>
+    </li>
+    <% end %>
+
+    <% if can? :read, FlowReport %>
+    <% flows_menu = @menu[:flow_reports] || (@menu[:imports] && @menu[:action] == 'flows') ? 'desktop_nav__item--active' : '' %>
+    <li class="desktop_nav__item <%= flows_menu %>">
+      <%= link_to 'Flows', '#', class: 'desktop_nav__link nav_icon nav_icon_flows' %>
+      <div class="desktop_nav__submenu">
+        <ul class="desktop_nav__subul">
+          <% active = (@menu[:flow_reports] || @menu[:imports]) && @menu[:action] %>
+          <% if can? :create, FlowReport %>
+          <li class="desktop_nav__subli <%= active == 'new' && 'desktop_nav__subli--active' %>"><%= link_to 'new flow', new_plant_flow_report_path(plant), class: 'desktop_nav__sublink' %></li>
+          <% end %>
+          <li class="desktop_nav__subli <%= active == 'index' && 'desktop_nav__subli--active' %>"><%= link_to 'flow history', plant_flow_reports_path(plant), class: 'desktop_nav__sublink' %></li>
+          <% if can? :create, FlowReport %>
+          <li class="desktop_nav__subli <%= active == 'flows' && 'desktop_nav__subli--active' %>"><%= link_to 'import flows', flows_plant_imports_path(plant), class: 'desktop_nav__sublink' %></li>
+          <% end %>
+          <div class="unclick--desktop_menu"></div>
+        </ul>
+      </div>
+    </li>
+    <% end %>
+
+    <% if can? :read, Sampling %>
+    <% samplings_menu = @menu[:sampling_lists] || (@menu[:imports] && @menu[:action] == 'samplings') ? 'desktop_nav__item--active' : '' %>
+    <li class="desktop_nav__item <%= samplings_menu %>">
+      <%= link_to 'Samplings', '#', class: 'desktop_nav__link nav_icon nav_icon_samplings' %>
+      <div class="desktop_nav__submenu">
+        <ul class="desktop_nav__subul">
+          <% active = (@menu[:sampling_lists] || @menu[:imports]) && @menu[:action] %>
+          <li class="desktop_nav__subli <%= active == 'edit' && @sampling_list.external? && 'desktop_nav__subli--active' %>"><%= link_to 'external', external_plant_sampling_lists_path(plant), class: 'desktop_nav__sublink' %></li>
+          <li class="desktop_nav__subli <%= active == 'edit' && @sampling_list.internal? && 'desktop_nav__subli--active' %>"><%= link_to 'internal', internal_plant_sampling_lists_path(plant), class: 'desktop_nav__sublink' %></li>
+          <li class="desktop_nav__subli <%= active == 'index' && 'desktop_nav__subli--active' %>"><%= link_to 'samplings history', plant_sampling_lists_path(plant), class: 'desktop_nav__sublink' %></li>
+          <% if can? :create, Sampling %>
+          <li class="desktop_nav__subli <%= active == 'samplings' && 'desktop_nav__subli--active' %>"><%= link_to 'import samplings', samplings_plant_imports_path(plant), class: 'desktop_nav__sublink' %></li>
+          <% end %>
+          <div class="unclick--desktop_menu"></div>
+        </ul>
+      </div>
+    </li>
+    <% end %>
+
+    <% if can? :read, Report %>
+    <% reports_menu = @menu[:reports] ? 'desktop_nav__item--active' : '' %>
+    <li class="desktop_nav__item <%= reports_menu %>">
+      <%= link_to 'Reports', '#', class: 'desktop_nav__link nav_icon nav_icon_reports' %>
+      <div class="desktop_nav__submenu">
+        <ul class="desktop_nav__subul">
+          <% active = @menu[:reports] && @menu[:action] %>
+          <% if can? :update, Report %>
+          <li class="desktop_nav__subli <%= active == 'new' && 'desktop_nav__subli--active' %>"><%= link_to 'latest report', latest_report_plant_reports_path(plant), class: 'desktop_nav__sublink' %></li>
+          <% end %>
+          <li class="desktop_nav__subli <%= active == 'index' && 'desktop_nav__subli--active' %>"><%= link_to 'reports history', plant_reports_path(plant), class: 'desktop_nav__sublink' %></li>
+          <div class="unclick--desktop_menu"></div>
+        </ul>
+      </div>
+    </li>
+    <% end %>
+
+  </ul>
+</nav>

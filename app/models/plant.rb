@@ -43,6 +43,8 @@ class Plant < ApplicationRecord
 
   enum frecuency: %w[daily weekly every_2_weeks monthly every_x_months]
 
+  scope :filter_by_id, ->(id) { where.not(id: id) }
+
   def generate_logbook
     logbook = logbooks.create(task_list: task_lists.last)
     GenerateLogsJob.perform_later(logbook)

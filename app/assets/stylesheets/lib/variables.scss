@@ -1,3 +1,12 @@
+/* Sass Variables */
+/* Break Points in px */
+$xxs: 480;
+$xs: 481;
+$sm: 768;
+$md: 992;
+$lg: 1200;
+
+
 :root {
 	--black: rgb(0,0,0);
 	--gray4: rgb(12,12,12);
@@ -45,6 +54,11 @@
 	--steps-trail-position: 0;
 
 	--number-height: 0;
+
+	//
+	--gray-light: #a0a0a0;
+	--gray-dark: #666;
+
 }
 
 .light-ui {
@@ -55,6 +69,10 @@
 	--logo-text: var(--black);
 	--menu-text: var(--gray70);
 	--menu-text-active: var(--gray40);
+	--submenu-bg: var(--gray98);
+	--submenu-text: var(--bf-dark-blue);
+	--submenu-text-active: var(--bf-light-blue);
+	--submenu-line: var(--gray90);
 	--color-line: var(--gray96);
 	--color-line-stronger: var(--gray80);
 
@@ -116,6 +134,9 @@
 		--blue: var(--white);
 	}
 
+	/* Menu buttons */
+	--menu-button-color: var(--gray-dark);
+
 }
 
 .dark-ui {
@@ -126,6 +147,10 @@
 	--logo-text: var(--white);
 	--menu-text: var(--gray60);
 	--menu-text-active: var(--gray96);
+	--submenu-bg: var(--gray20);
+	--submenu-text: var(--white);
+	--submenu-text-active: var(--bf-cyan);
+	--submenu-line: var(--gray10);
 	--color-line: var(--gray20);
 	--color-line-stronger: var(--gray30);
 
@@ -186,5 +211,8 @@
 		--menu-text: var(--white);
 		--blue: var(--black);
 	}
+
+	/* Menu buttons */
+	--menu-button-color: var(--gray-light);
 
 }

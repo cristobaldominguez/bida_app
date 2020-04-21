@@ -6,16 +6,22 @@ document.addEventListener('turbolinks:load', function() {
     // DomCache
     const body = $('body')
     const general_option_btn = $('.option-button__link')
-    // const element_option_btn = $('.table_main__link--options')
+    const nav_plants_btn = $('.main_nav__link-dropdown')
     const toast_notification = $('.toast__close')
     const toast_notices = $('.toast--blue')
+    const unclick_desktop_menu = $('.unclick--desktop_menu')
+    const desktop_nav_link = $('.desktop_nav__link')
 
     // EventBinding
     general_option_btn.on('click', general_option_btn_click)
     $('body').on('click', '.table_main__link--options', element_option_btn_click)
+    nav_plants_btn.on('click', nav_plants_btn_click)
     toast_notification.on('click', toast_notification_fadeout)
     body.on('click', '.unclick--general-options', unclick_general_options)
     body.on('click', '.unclick', unclick_specific_options)
+    body.on('click', '.unclick--plants', unclick_plants_options)
+    desktop_nav_link.on('click', desktop_nav_link_click)
+    unclick_desktop_menu.on('click', unclick_desktop_menu_click)
 
     if (!is_empty(toast_notices)) {
       toast_notices.each(function(index) {
@@ -71,6 +77,26 @@ document.addEventListener('turbolinks:load', function() {
       }
     }
 
+    function nav_plants_btn_click(e) {
+      e.preventDefault()
+      e.stopPropagation()
+
+      const elem = $(this).siblings('.options_menu')
+      const icon = $(this)
+
+      icon.toggleClass('main_nav__link--options-open')
+
+      // if (icon.hasClass('main_nav__link')) {
+      //   icon.attr('class', 'table_main__link--options-open')
+      // }
+
+      if (elem) {
+        elem.attr('class', 'options_menu--show')
+      } else {
+        $(this).find('.options_menu--show').attr('class', 'options_menu')
+      }
+    }
+
     function unclick_general_options(event) {
       event.preventDefault()
       $(this).parent().attr('class', 'option-button__options')
@@ -82,6 +108,12 @@ document.addEventListener('turbolinks:load', function() {
       $('.table_main__link--options-open').attr('class', 'table_main__link--options')
     }
 
+    function unclick_plants_options(event) {
+      event.preventDefault()
+      $(this).parent().attr('class', 'options_menu')
+      $('.main_nav__link--options-open').toggleClass('main_nav__link--options-open')
+    }
+
     function toast_notification_fadeout(e) {
       e.preventDefault()
       const parent = $(this).parent()
@@ -89,6 +121,29 @@ document.addEventListener('turbolinks:load', function() {
         $(this).remove()
       })
     }
+
+    function unclick_desktop_menu_click(e) {
+      e.preventDefault()
+      removeSubmenus()
+    }
+
+    function desktop_nav_link_click(e) {
+      const next_elem = $(this).next()
+
+      if (next_elem.hasClass('desktop_nav__submenu')) {
+        e.preventDefault()
+
+        removeSubmenus()
+        $(this).toggleClass('desktop_nav__link--options-open')
+        next_elem.toggleClass('desktop_nav__submenu--open')
+      }
+    }
+
+    function removeSubmenus() {
+      $('.desktop_nav__link').removeClass('desktop_nav__link--options-open')
+      $('.desktop_nav__submenu').removeClass('desktop_nav__submenu--open')
+    }
+
 
     // API
     return {

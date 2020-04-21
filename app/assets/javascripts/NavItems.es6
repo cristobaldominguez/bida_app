@@ -25,8 +25,8 @@ document.addEventListener('turbolinks:load', function() {
 
 	mainHamburger.on('click', function(event) {
 		event.preventDefault()
-		const close = 'main_header__lower'
-		const open = 'main_header__lower--open'
+		const close = 'mobile_nav'
+		const open = 'mobile_nav--open'
 
 		const div_open = $(`.${open}`)
 		const div_close = $(`.${close}`)
