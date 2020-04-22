@@ -35,7 +35,6 @@ a:visited {
 	border-radius: var(--border-radius);
 	box-shadow: 0 0 8px 4px rgba(0,0,0,.15);
 	display: none;
-	overflow: hidden;
 	position: absolute;
 	right: -2px;
 	top: 6em;
@@ -46,15 +45,6 @@ a:visited {
 		@extend .options_menu;
 		display: block;
 		z-index: 2;
-
-		// &:before {
-		// 	content: url(<%= asset_path('options_menu_triangle-light.svg') %>);
-		// 	display: block;
-		// 	position: absolute;
-		// 	top: -14px;
-		// 	margin: 0 0 0 160px;
-		// 	width: 35px;
-		// }
 	}
 
 	&__list {

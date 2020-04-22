@@ -17,9 +17,9 @@ document.addEventListener('turbolinks:load', function() {
     $('body').on('click', '.table_main__link--options', element_option_btn_click)
     nav_plants_btn.on('click', nav_plants_btn_click)
     toast_notification.on('click', toast_notification_fadeout)
-    body.on('click', '.unclick--general-options', unclick_general_options)
+    body.on('click touchstart', '.unclick--general-options', unclick_general_options)
+    // $('.unclick--general-options').on('click touchstart', unclick_plants_options)
     body.on('click', '.unclick', unclick_specific_options)
-    body.on('click', '.unclick--plants', unclick_plants_options)
     desktop_nav_link.on('click', desktop_nav_link_click)
     unclick_desktop_menu.on('click', unclick_desktop_menu_click)
 
@@ -85,16 +85,7 @@ document.addEventListener('turbolinks:load', function() {
       const icon = $(this)
 
       icon.toggleClass('main_nav__link--options-open')
-
-      // if (icon.hasClass('main_nav__link')) {
-      //   icon.attr('class', 'table_main__link--options-open')
-      // }
-
-      if (elem) {
-        elem.attr('class', 'options_menu--show')
-      } else {
-        $(this).find('.options_menu--show').attr('class', 'options_menu')
-      }
+      if (elem) { elem.toggleClass('options_menu--show') }
     }
 
     function unclick_general_options(event) {
@@ -108,11 +99,13 @@ document.addEventListener('turbolinks:load', function() {
       $('.table_main__link--options-open').attr('class', 'table_main__link--options')
     }
 
-    function unclick_plants_options(event) {
-      event.preventDefault()
-      $(this).parent().attr('class', 'options_menu')
-      $('.main_nav__link--options-open').toggleClass('main_nav__link--options-open')
-    }
+    // function unclick_plants_options(event) {
+    //   if (!event.target.closest('.main_nav__plants')) {
+    //     event.preventDefault()
+    //     $('.options_menu').removeClass('options_menu--show')
+    //     $('.main_nav__link--options-open').toggleClass('main_nav__link--options-open')
+    //   }
+    // }
 
     function toast_notification_fadeout(e) {
       e.preventDefault()
