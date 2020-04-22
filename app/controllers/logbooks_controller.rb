@@ -80,7 +80,7 @@ class LogbooksController < ApplicationController
   # PATCH/PUT /logbooks/1.json
   def update
     @logbook.logs = @logbook.logs.map do |log|
-      log.value = '' if (log.value == '0' || log.value.nil?) && log.current_log_standard.log_standard.task.checkbox?
+      log.value = '' if (log.value == '0' || log.value.nil?) && log.task.checkbox?
       log
     end
 
