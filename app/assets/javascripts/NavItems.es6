@@ -52,7 +52,7 @@ document.addEventListener('turbolinks:load', function() {
     }
   })
 
-  $('body').on('click', '.unclick--user', function(event) {
+  $('body').on('click touchstart', '.unclick--user', function(event) {
     event.preventDefault();
     $('.main_header .options_menu--show').removeAttr('class').addClass('options_menu')
     $('.user_options__link--open').attr('class', 'user_options__link--users')
