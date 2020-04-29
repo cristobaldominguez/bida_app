@@ -1,9 +1,10 @@
+<% if @plant.persisted? %>
 <nav class="desktop_nav">
   <ul class="desktop_nav__list">
     <% plant_menu = @menu[:plants] ? 'desktop_nav__item--active' : '' %>
     <li class="desktop_nav__item <%= plant_menu %>"><%= link_to 'Plant', plant_path(plant), class: 'desktop_nav__link nav_icon nav_icon_plant' %></li>
-    <% ticket_menu = @menu[:tickets] ? 'desktop_nav__item--active' : '' %>
 
+    <% ticket_menu = @menu[:tickets] ? 'desktop_nav__item--active' : '' %>
     <li class="desktop_nav__item <%= ticket_menu %>">
       <%= link_to 'Tickets', '#', class: 'desktop_nav__link nav_icon nav_icon_tickets' %>
       <div class="desktop_nav__submenu">
@@ -121,6 +122,6 @@
       </div>
     </li>
     <% end %>
-
   </ul>
 </nav>
+<% end %>

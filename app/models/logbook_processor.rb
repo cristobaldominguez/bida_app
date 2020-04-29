@@ -1,10 +1,10 @@
 require 'json'
 
 class LogbookProcessor
-  def initialize(logs, task_lists)
-    @logs = logs
-    @task_list = task_lists.first
-    @plant = @task_list.plant
+  def initialize(logbook)
+    @logs = logbook.logs.includes(task: [:task_list]).order('date DESC')
+    @task_list = logbook.task_list
+    @plant = logbook.plant
     @current_date = Date.today
     @prev_month = @current_date.beginning_of_month.prev_month
   end

@@ -1,6 +1,5 @@
 class LogbooksController < ApplicationController
   before_action :set_date, only: %i[create new edit update show]
-  after_action :generate_month_logs, only: :create
   load_and_authorize_resource
 
   # GET /logbooks
@@ -20,53 +19,12 @@ class LogbooksController < ApplicationController
     redirect_to pages_no_permission_path, notice: 'Access not Allowed'
   end
 
-  # GET plants/1/logbooks/new
-  def new
-    @logbook = Logbook.new
-    @logbook.plant = Plant.find(params[:plant_id])
-
-    current_log_standards = @logbook.plant.current_log_standards.includes(log_standard: [:task])
-
-    current_log_standards.each do |cls|
-      @logbook.logs.build(current_log_standard: cls, date: @current_date)
-    end
-
-    # @filtered_logs = @logbook.logs.select { |log| log.date == @current_date }
-    @filtered_logs = @logbook.logs
-  end
-
-  # POST /logbooks
-  # POST /logbooks.json
-  def create
-    @logbook = Logbook.new(logbook_params)
-    @logbook.plant = Plant.find(params[:plant_id])
-
-    @logbook.logs = []
-    logs_params = params[:logbook][:logs_attributes]
-    logs_params.each do |current_log|
-      log = current_log.second
-      @logbook.logs.build(value: log['value'], date: @current_date, current_log_standard_id: log['current_log_standard_attributes']['id'])
-    end
-
-    respond_to do |format|
-      if @logbook.save
-        format.html { redirect_to edit_plant_logbook_path(@plant, @logbook), notice: 'Logbook was successfully created.' }
-        format.json { render :show, status: :created, location: @logbook }
-      else
-        format.html { render :new }
-        format.json { render json: @logbook.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
   # GET /logbooks/1/edit
   def edit
     @plant = Plant.find(params[:plant_id])
     @logbook = @plant.logbooks.find(params[:id])
-    logs = @logbook.logs.includes(task: [:task_list]).order('date DESC')
-    tasks_lists = @plant.task_lists
 
-    lgs = LogbookProcessor.new(logs, tasks_lists).valid_logs(current_user)
+    lgs = LogbookProcessor.new(@logbook).valid_logs(current_user)
 
     empty_logs = lgs.reject { |log| log.value.present? }
     ordered_logs = empty_logs.group_by { |log| log.task.name }
@@ -125,36 +83,7 @@ class LogbooksController < ApplicationController
     @current_date = Date.today
   end
 
-  def generate_month_logs
-    days_of_month = @current_date.week_split.flatten.reject(&:nil?).reject { |day| day == @current_date.day }
-    logs = days_of_month.map { |day| log_creation(@logbook, Date.new(@current_date.year, @current_date.month, day)) }
-
-    @logbook.logs << logs.reject(&:nil?)
-  end
-
-  def log_creation(logbook, actual_date)
-    new_logs = logbook.logs.map do |log|
-      Log.new(logbook_id: logbook.id, value: nil, date: actual_date, current_log_standard_id: log.current_log_standard.id) if LogCheck.new(log, actual_date).valid?
-    end
-
-    new_logs.reject(&:nil?)
-  end
-
-  def automatic_logbook_generation
-    plants = Plant.all
-    this_month = Date.today.at_beginning_of_month
-
-    last_logbooks = plants.map { |plant| plant.logbooks.last }
-    olders = last_logbooks.select { |logbook| logbook.created_at < this_month }
-    new_logbooks = olders.map { |logbook| Logbook.create(plant_id: logbook.id, created_at: this_month) }
-    new_logbooks.each do |logbook|
-      GenerateLogsJob.perform_later(logbook)
-    end
-  end
-
   def logbook_params
-    params.require(:logbook).permit(:id, :plant_id, logs_attributes: [:id, :logbook_id, :active, :value, :document, :date,
-                                    current_log_standard_attributes: [:frecuency, :cycle, :plant_id,
-                                    log_standard_attributes: [:season, :responsible, :comment, :name, :plant_id, :active, :task_id, task_attributes:[:id]]]])
+    params.require(:logbook).permit(:id, :plant_id, logs_attributes: %i[id logbook_id active value document date])
   end
 end

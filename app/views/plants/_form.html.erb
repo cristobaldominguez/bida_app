@@ -197,7 +197,7 @@
     <!-- Tasks & Task Lists -->
     <%= render 'shared/tables/elements_list', headers: %w(Active Task Options), title: 'Logbook', css_class: 'logbook' do %>
       <%= form.fields_for :task_lists, @task_list do |task_list| %>
-      <%= task_list.fields_for :tasks do |task| %>
+      <%= task_list.fields_for :tasks, @tasks do |task| %>
       <tr class="table_main__table-row">
         <td class="table_main__table-data--left-text"><%= task.check_box :active %></td>
         <td class="table_main__table-data--left-text">

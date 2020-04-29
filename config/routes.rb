@@ -20,7 +20,7 @@ Rails.application.routes.draw do
         get 'internal'
       end
     end
-    resources :logbooks
+    resources :logbooks, except: %i[new create]
     resources :inspections
     resources :alerts
     resources :flows

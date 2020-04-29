@@ -7,7 +7,8 @@ document.addEventListener('turbolinks:load', function() {
         svg: '',
         trail_position: 0,
         validations: [],
-        current_validation: []
+        current_validation: [],
+        never_been_edited: true
     }
 
     Events.on('taskmodal/render/modal', renderModal)
@@ -309,6 +310,8 @@ document.addEventListener('turbolinks:load', function() {
         responsible: isNaN(_data.responsible) ? '' : _data.responsible
       }
 
+      state.data_comparison = JSON.stringify({...state.data})
+
       Events.emit('taskmodal/render/modal', null)
       Events.emit('taskmodal/render/modal_number_type', null)
     }
@@ -379,6 +382,13 @@ document.addEventListener('turbolinks:load', function() {
 
     function renderDataOnForm() {
       const element = $(state.selected_task)
+
+      const recently_edited = JSON.stringify({...state.data}) !== state.data_comparison
+      if (state.never_been_edited && recently_edited) {
+        removeTaskIds()
+        state.never_been_edited = false
+      }
+
       const { name, season, comment, frecuency, cycles, responsible, input_type, data_type } = state.data
       const cycles_json = JSON.stringify(cycles)
 
@@ -391,6 +401,12 @@ document.addEventListener('turbolinks:load', function() {
       element.find('.span_name').text(name)
       element.find('.input_type').val(input_type ? input_type : '')
       element.find('.data_type').val(data_type && input_type === 'number' ? data_type : 'other')
+    }
+
+    function removeTaskIds() {
+      const logbook_table = document.querySelector('.logbook')
+      const elems = logbook_table.querySelectorAll('.task_list_id, .task_id')
+      elems.forEach((elem, i) => elem.remove())
     }
 
     function addNewTask(e) {
