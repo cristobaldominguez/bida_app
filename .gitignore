@@ -115,3 +115,4 @@ yarn-debug.log*
 dump.rdb
 sidekiq.service
 db/deleted_seeds.rb
+db_backup/
