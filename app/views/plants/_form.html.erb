@@ -210,7 +210,7 @@
             <ul class="options_menu__list">
               <% if can? :read, Task %><li class="options_menu__item"><%= link_to 'show', '#', class: 'options_menu__link--modal-show' %></li><% end %>
               <% if can? :edit, Task %><li class="options_menu__item"><%= link_to 'edit', '#', class: 'options_menu__link--modal-edit' %></li><% end %>
-              <% if can? :destroy, Task %><li class="options_menu__item"><%= link_to 'destroy', '#', class: 'options_menu__link--modal-destroy' %></li><% end %>
+              <% if can? :destroy, Task %><li class="options_menu__item"><%= link_to 'destroy', '#', class: 'options_menu__link--modal-destroy', data: { confirm: 'Are you sure?' } %></li><% end %>
             </ul>
             <div class="unclick"></div>
           </div>

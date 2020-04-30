@@ -44,6 +44,7 @@ document.addEventListener('turbolinks:load', function() {
     const table_logbook_edit = $('table.logbook')
     const hidden_number = $('.hidden_number')[0]
     const first_task_in_list = $('.logbook .table_main__table-row:first-child')
+    const delete_button = $('.options_menu__link--modal-destroy')
 
     week_days.on('click', toggleWeekDay)
     month_days.on('click', toggleMonthDays)
@@ -52,6 +53,7 @@ document.addEventListener('turbolinks:load', function() {
     next_btn.on('click', onNextButtonClick)
     prev_btn.on('click', onPrevButtonClick)
     save_btn.on('click', onSubmit)
+    delete_button.on('confirm', deleteTask)
     add_task.on('click', addNewTask)
     value_type.on('change', valueTypeHandle)
     input_targets.on('change', inputsListeners)
@@ -428,6 +430,12 @@ document.addEventListener('turbolinks:load', function() {
       list.append(html)
     }
 
+    function deleteTask(e) {
+      e.preventDefault()
+      const _parent = $(e.target).closest('.table_main__table-row')
+      _parent.remove()
+    }
+
     return {
         init, state
     }
@@ -472,13 +480,14 @@ document.addEventListener('turbolinks:load', function() {
       return _span
     }
 
-    function link({ href, _class, text }) {
+    function link({ href, _class, text, confirm }) {
       const _link = document.createElement('a')
       _link.href = href
       const cl_array = _class.split(' ')
       cl_array.forEach((cl, i) => _link.classList.add(cl) )
 
       if (text) { _link.innerText = text }
+      if (confirm) { _link.dataset.confirm = confirm }
 
       return _link
     }
@@ -542,7 +551,7 @@ document.addEventListener('turbolinks:load', function() {
       const li_options_02 = li('options_menu__item')
       const link_options_02 = link({ href: '#', _class: 'options_menu__link--modal-edit', text: 'edit' })
       const li_options_03 = li('options_menu__item')
-      const link_options_03 = link({ href: '#', _class: 'options_menu__link--modal-destroy', text: 'destroy' })
+      const link_options_03 = link({ href: '#', _class: 'options_menu__link--modal-destroy', text: 'destroy', confirm: 'Are you sure?' })
       const unclick = div('unclick')
 
 
