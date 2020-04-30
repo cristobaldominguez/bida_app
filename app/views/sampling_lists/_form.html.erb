@@ -30,8 +30,7 @@
         <%= sampling.hidden_field :id %>
         <%= standard.hidden_field :id %>
         <%= option.hidden_field :id %>
-
-        <%= standard.collection_select(:option_id, @options, :id, :name, {prompt: 'Select a Sampling Type'})  %>
+        <%= option.object.name %>
       </td>
       <td class="table_main__table-data--padding"><%= sampling.number_field :value_in, class: 'table_main__input' %></td>
       <td class="table_main__table-data--padding"><%= sampling.number_field :value_out, class: 'table_main__input' %></td>
