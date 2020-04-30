@@ -28,6 +28,7 @@ document.addEventListener('turbolinks:load', function() {
     Events.on('taskmodal/render/frequencyButtons', renderFrequencyButtons)
     Events.on('taskmodal/render/dataOnForm', renderDataOnForm)
     Events.on('taskmodal/render/modal_number_type', modalNumberType)
+    Events.on('taskmodal/render/removeTaskIds', removeTaskIds)
 
     const week_days = $('.select_week__day-link, .select_week__day-link--selected')
     const month_days = $('.select_month__day-link, .select_month__day-link--selected')
@@ -387,7 +388,7 @@ document.addEventListener('turbolinks:load', function() {
 
       const recently_edited = JSON.stringify({...state.data}) !== state.data_comparison
       if (state.never_been_edited && recently_edited) {
-        removeTaskIds()
+        Events.emit('taskmodal/render/removeTaskIds', null)
         state.never_been_edited = false
       }
 
