@@ -2,7 +2,8 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :set_plants, only: [:create, :update]
   before_action :set_employees, only: [:new, :create, :edit, :update]
-  before_action :grouped_plants, :set_roles, :set_interface_colors, only: [:edit, :new, :create, :update]
+  before_action :grouped_plants, :set_roles, :set_interface_colors, only: [:new, :create, :edit, :update]
+  before_action :check_user_ability, only: [:create, :update]
   authorize_resource
   skip_authorize_resource only: :uicolor
 
@@ -112,6 +113,13 @@ class UsersController < ApplicationController
 
   def set_interface_colors
     @interface_colors = User.interface_colors.map { |color, _| [color, color.to_s.humanize] }
+  end
+
+  def check_user_ability
+    if params[:user][:role] == 'admin' && !current_user.admin?
+      flash.now[:alert] = 'Only Admins can assign Admin Users'
+      render :new
+    end
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
