@@ -44,7 +44,7 @@ gem 'sprockets-es6'
 gem 'devise'
 
 # Authorization
-gem 'cancancan', '~> 2.0'
+gem 'cancancan', '~> 3.1.0'
 
 # Image Processing
 gem 'image_processing', '~> 1.2'
