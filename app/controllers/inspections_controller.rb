@@ -88,7 +88,8 @@ class InspectionsController < ApplicationController
   end
 
   def set_variables
-    @users = User.active
+    @plant = Plant.find(params[:plant_id])
+    @users = User.filtered_by(@plant)
     @screens = Screen.all
     @collectionbins = CollectionBin.all
     @noises = Noise.all

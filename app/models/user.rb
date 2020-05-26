@@ -37,4 +37,16 @@ class User < ApplicationRecord
   def full_name
     "#{name} #{lastname}"
   end
+
+  def self.users_filter
+    ['cristobald@me.com','cristobald@gmail.com', 'aiacobelli@biofiltro.com', 'ivergara@biofiltro.com', 'msjogren@biofiltro.com']
+  end
+
+  def self.filtered_by(filter)
+    filter.users.where.not(email: users_filter)
+  end
+
+  def self.filtered
+    where.not(email: users_filter)
+  end
 end

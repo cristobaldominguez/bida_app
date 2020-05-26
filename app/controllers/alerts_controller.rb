@@ -23,6 +23,7 @@ class AlertsController < ApplicationController
   def new
     @plant = Plant.find(params[:plant_id])
     @alert = @plant.alerts.build
+    @users = User.filtered_by(@plant)
   end
 
   # POST /alerts

@@ -23,7 +23,7 @@ class SupportsController < ApplicationController
   def new
     @plant = Plant.find(params[:plant_id])
     @support = @plant.supports.build
-    @attentions = @plant.users
+    @users = User.filtered_by(@plant)
     @support.work_summaries.build
   end
 
