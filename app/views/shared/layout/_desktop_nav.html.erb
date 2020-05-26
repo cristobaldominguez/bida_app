@@ -40,9 +40,9 @@
             <div class="desktop_nav__sublink nav_icon nav_icon_inspections">inspections</div>
             <ul class="desktop_nav__subul">
               <% active = @menu[:inspections] && @menu[:action] %>
-              <li class="desktop_nav__subli <%= active == 'index' && 'desktop_nav__subli--active' %>"><%= link_to 'logbook', plant_inspections_path(@plant), class: 'desktop_nav__sublink' %></li>
+              <li class="desktop_nav__subli <%= active == 'index' && 'desktop_nav__subli--active' %>"><%= link_to 'inspection history', plant_inspections_path(@plant), class: 'desktop_nav__sublink' %></li>
               <% if can? :create, Inspection %>
-              <li class="desktop_nav__subli <%= active == 'new' && 'desktop_nav__subli--active' %>"><%= link_to 'logbook history', new_plant_inspection_path(@plant), class: 'desktop_nav__sublink' %></li>
+              <li class="desktop_nav__subli <%= active == 'new' && 'desktop_nav__subli--active' %>"><%= link_to 'new inspection', new_plant_inspection_path(@plant), class: 'desktop_nav__sublink' %></li>
               <% end %>
             </ul>
           </li>
