@@ -84,6 +84,11 @@
     <%= form.collection_select(:interface_color, @interface_colors, :first, :second) %>
   </div>
 
+  <div class="field no-border">
+    <%= form.label 'Removed from users listing?' %>
+    <%= form.check_box :filtered %> Filtered?
+  </div>
+
   <div class="actions">
     <%= form.submit class: 'action-btn' %>
   </div>
