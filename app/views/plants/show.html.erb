@@ -153,7 +153,7 @@
 <% @task_list.each do |task| %>
 <tr class="table_main__table-row">
   <td class="table_main__table-data--left-text"><input type="checkbox" name="active" value="Boat" <%= 'checked' if task.active %> disabled> <%= task.name %></td>
-  <td class="table_main__table-data"><%= @responsibles[task.responsible][1] %></td>
+  <td class="table_main__table-data"><%= Responsible.name(task) %></td>
 </tr>
 <% end %>
 <% end %>

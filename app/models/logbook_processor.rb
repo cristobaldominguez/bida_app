@@ -23,6 +23,8 @@ class LogbookProcessor
     list_valid_logs.flatten.reject(&:nil?)
   end
 
+  private
+
   def generate_cycle_dates(cls)
     return @current_date if cls.daily?
     return weekly_period if cls.weekly?
@@ -115,8 +117,14 @@ class LogbookProcessor
 
   def employee_can_execute?(current_user)
     return true if current_user.admin? # Todos los administradores podran ver todos los Logs
+    return true if is_in_charge?(current_user) # Se revisa si es el encargado directo o el gerente de operaciones de la planta
 
-    current_task = @task.responsible.zero? # Si responsible == 0, la empresa se hace responsable
+    current_task = @task.responsible.zero? # Si responsible == 0, la empresa se hace responsable. responsible == -1 se hace responsable Biofiltro
     current_task && current_user.company? || !current_task && current_user.biofiltro?
+  end
+
+  def is_in_charge?(current_user)
+    responsibles_ids = (@task.task_list.plant.users.select(&:operations_manager?).pluck(:id) + [ current_user.id ]).uniq
+    responsibles_ids.include? @task.responsible
   end
 end
