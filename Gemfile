@@ -33,6 +33,9 @@ gem 'mini_magick', '~> 4.8'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+# Ruby internationalization and localization
+gem 'rails-i18n'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
@@ -74,6 +77,9 @@ group :development, :test do
   # To identify slow endpoints
   gem 'rack-mini-profiler', require: false
   gem 'rubycritic', require: false
+
+  # Ruby internationalization and localization
+  gem 'i18n-debug'
 end
 
 group :development do
