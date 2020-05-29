@@ -162,7 +162,7 @@ class PlantsController < ApplicationController
 
   def set_responsibles
     @company = params[:company_id].present? ? Company.find(params[:company_id]) : Plant.find(params[:id]).company
-    @responsibles = Responsible.get_list(@plant)
+    @responsibles = params[:action] == 'new' ? [[-1, 'BioFiltro'], [0, @company.name]] : Responsible.get_list(@plant)
   end
 
   def set_value_types
