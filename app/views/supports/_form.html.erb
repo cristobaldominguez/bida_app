@@ -38,11 +38,13 @@
   <div class="field no-border">
     <%= form.label :name_client_onsite %>
     <%= form.collection_select(:client_id, @support.plant.users, :id, :full_name, {prompt: 'Select a Client'})  %>
+    <%= form.collection_select(:client_id, @users, :id, :full_name, {prompt: 'Select a Client'})  %>
   </div>
 
   <div class="field no-border">
     <%= form.label :bf_technician, 'BioFiltro Technician' %>
     <%= form.collection_select(:bf_technician_id, @support.plant.users, :id, :full_name, {prompt: 'Select a Technician'})  %>
+    <%= form.collection_select(:bf_technician_id, @users, :id, :full_name, {prompt: 'Select a Technician'})  %>
   </div>
 
   <h2 class="cell_division">Work Summary</h2>

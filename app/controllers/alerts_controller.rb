@@ -45,6 +45,7 @@ class AlertsController < ApplicationController
   def edit
     @plant = Plant.find(params[:plant_id])
     @alert = @plant.alerts.find(params[:id])
+    @users = User.filtered_by(@plant)
   rescue ActiveRecord::RecordNotFound => _e
     redirect_to pages_no_permission_path, notice: 'Access not Allowed'
   end
