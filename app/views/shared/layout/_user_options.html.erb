@@ -15,10 +15,10 @@
       </a>
       <div class="options_menu">
         <ul class="options_menu__list">
-          <li class="options_menu__item"><%= link_to 'edit profile', edit_user_path(current_user.id), class: 'options_menu__link' %></li>
-          <li class="options_menu__item"><%= link_to "change your password", edit_user_registration_path, class: 'options_menu__link' %></li>
+          <li class="options_menu__item"><%= link_to t(:edit_profile, scope: :global), edit_user_path(current_user.id), class: 'options_menu__link' %></li>
+          <li class="options_menu__item"><%= link_to t(:change_password, scope: :global), edit_user_registration_path, class: 'options_menu__link' %></li>
           <li class="options_menu__separator"></li>
-          <li class="options_menu__item"><%= link_to "logout", destroy_user_session_path, method: :delete, class: 'options_menu__link'  %></li>
+          <li class="options_menu__item"><%= link_to t(:logout, scope: :global), destroy_user_session_path, method: :delete, class: 'options_menu__link'  %></li>
         </ul>
         <div class="unclick--user"></div>
       </div>

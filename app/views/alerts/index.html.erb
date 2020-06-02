@@ -1,11 +1,12 @@
 <% if can? :create, Alert %>
   <%= render 'shared/buttons/option_button', alt: 'header' do %>
-    <li class="option-button__option"><%= link_to 'New Alert', new_plant_alert_path(@plant), class: 'option-button__option-link' %></li>
+    <li class="option-button__option"><%= link_to t(:new, scope: :alert), new_plant_alert_path(@plant), class: 'option-button__option-link' %></li>
   <% end %>
 <% end %>
-<h2 class="main__title">Alerts</h2>
 
-<%= render 'shared/tables/elements_list', headers: %w(Incident Options), title: 'All Alerts' do %>
+<h2 class="main__title"><%= t(:index, scope: :alert) %></h2>
+
+<%= render 'shared/tables/elements_list', headers: [t(:incident, scope: :alert), t(:options, scope: :global).camelcase], title: t(:all, scope: :alert) do %>
 <% @alerts.each do |alert| %>
   <tr class="table_main__table-row">
     <td class="table_main__table-data--left-text"><%= link_to alert.title, plant_alert_path(@plant, alert), class: 'table_main__link-show' %></td>
@@ -13,9 +14,9 @@
       <a href="#" class="table_main__link--options"></a>
       <div class="options_menu">
         <ul class="options_menu__list">
-          <% if can? :read, Alert %><li class="options_menu__item"><%= link_to 'Show', plant_alert_path(@plant, alert), class: 'options_menu__link' %></li><% end %>
-          <% if can? :edit, Alert %><li class="options_menu__item"><%= link_to 'Edit', edit_plant_alert_path(@plant, alert), class: 'options_menu__link' %></li><% end %>
-          <% if can? :destroy, Alert %><li class="options_menu__item"><%= link_to 'Destroy', [@plant, alert], class: 'options_menu__link', method: :delete, data: { confirm: 'Are you sure?' } %></li><% end %>
+          <% if can? :read, Alert %><li class="options_menu__item"><%= link_to t(:show, scope: :global), plant_alert_path(@plant, alert), class: 'options_menu__link' %></li><% end %>
+          <% if can? :edit, Alert %><li class="options_menu__item"><%= link_to t(:edit, scope: :global), edit_plant_alert_path(@plant, alert), class: 'options_menu__link' %></li><% end %>
+          <% if can? :destroy, Alert %><li class="options_menu__item"><%= link_to t(:destroy, scope: :global), [@plant, alert], class: 'options_menu__link', method: :delete, data: { confirm: t(:confirm, scope: :global) } %></li><% end %>
         </ul>
         <div class="unclick"></div>
       </div>

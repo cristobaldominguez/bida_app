@@ -1,7 +1,7 @@
-<h2 class="main__title">Plants</h2>
+<h2 class="main__title"><%= t(:index, scope: :plant) %></h2>
 
 <% if @plants.present? %>
-<%= render 'shared/tables/elements_list', headers: ['Name', 'Code', 'Options'], title: 'My Plants' do %>
+<%= render 'shared/tables/elements_list', headers: [t(:plant, scope: [:activerecord, :models]), t(:code, scope: :global), t(:options, scope: :global).capitalize], title: t(:my_plants, scope: :plant) do %>
 <% @plants.each do |plant| %>
   <tr class="table_main__table-row">
     <td class="table_main__table-data--left-text"><%= link_to plant.name, plant, class: 'table_main__link-show' %></td>
@@ -10,9 +10,9 @@
       <a href="#" class="table_main__link--options"></a>
       <div class="options_menu">
         <ul class="options_menu__list">
-          <% if can? :read, Plant %><li class="options_menu__item"><%= link_to 'Show', plant, class: 'options_menu__link' %></li><% end %>
-          <% if can? :edit, Plant %><li class="options_menu__item"><%= link_to 'Edit', edit_plant_path(plant), class: 'options_menu__link', data: { turbolinks: false } %></li><% end %>
-          <% if can? :destroy, Plant %><li class="options_menu__item"><%= link_to 'Destroy', plant, class: 'options_menu__link', method: :delete, data: { confirm: 'Are you sure?' } %></li><% end %>
+          <% if can? :read, Plant %><li class="options_menu__item"><%= link_to t(:show, scope: :global), plant, class: 'options_menu__link' %></li><% end %>
+          <% if can? :edit, Plant %><li class="options_menu__item"><%= link_to t(:edit, scope: :global), edit_plant_path(plant), class: 'options_menu__link', data: { turbolinks: false } %></li><% end %>
+          <% if can? :destroy, Plant %><li class="options_menu__item"><%= link_to t(:destroy, scope: :global), plant, class: 'options_menu__link', method: :delete, data: { confirm: t(:confirm, scope: :global) } %></li><% end %>
         </ul>
         <div class="unclick"></div>
       </div>

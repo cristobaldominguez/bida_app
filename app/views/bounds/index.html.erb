@@ -20,9 +20,9 @@
         <td><%= bound.from %></td>
         <td><%= bound.to %></td>
         <td><%= bound.active %></td>
-        <td><% if can? :read, Bound %><%= link_to 'Show', bound %><% end %></td>
-        <td><% if can? :edit, Bound %><%= link_to 'Edit', edit_bound_path(bound) %><% end %></td>
-        <td><% if can? :destroy, Bound %><%= link_to 'Destroy', bound, method: :delete, data: { confirm: 'Are you sure?' } %><% end %></td>
+        <td><% if can? :read, Bound %><%= link_to t(:show, scope: :global), bound %><% end %></td>
+        <td><% if can? :edit, Bound %><%= link_to t(:edit, scope: :global), edit_bound_path(bound) %><% end %></td>
+        <td><% if can? :destroy, Bound %><%= link_to t(:destroy, scope: :global), bound, method: :delete, data: { confirm: t(:confirm, scope: :global) } %><% end %></td>
       </tr>
     <% end %>
   </tbody>

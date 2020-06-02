@@ -1,4 +1,4 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<h2 class="main__title"><%= t(:edit, scope: :user) %></h2>
 
 <%= form_for(resource, as: resource_name, url: user_registration_path, html: { method: :put }) do |f| %>
   <%= devise_error_messages! %>
@@ -9,25 +9,24 @@
 
   <div class="field">
     <%= f.label :current_password %>
-    <p><i>(we need your current password to confirm your changes)</i></p>
     <%= f.password_field :current_password, autocomplete: "current-password", autofocus: true %>
+    <em><%= t(:current_password_text, scope: [:activerecord, :attributes, :user]) %></em>
   </div>
 
   <div class="field">
-    <%= f.label :password %><br />
+    <%= f.label :password %>
     <%= f.password_field :password, autocomplete: "new-password" %>
     <% if @minimum_password_length %>
-      <br />
-      <em><%= @minimum_password_length %> characters minimum</em>
+      <em><%= @minimum_password_length %> <%= t(:minimum_chars, scope: [:activerecord, :attributes, :user]) %></em>
     <% end %>
   </div>
 
   <div class="field">
-    <%= f.label :password_confirmation %><br />
+    <%= f.label :password_confirmation %>
     <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
   </div>
 
   <div class="actions">
-    <%= f.submit "Update" %>
+    <%= f.submit "Update", class: 'action-btn' %>
   </div>
 <% end %>

@@ -1,0 +1,8 @@
+en:
+  logbook:
+    title: 'Logbook'
+    edit: "Editing %{plant} Logbook"
+    history: 'Logbook History'
+    task: 'Task'
+    value: 'Value'
+    date: 'Date'

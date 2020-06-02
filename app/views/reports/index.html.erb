@@ -16,9 +16,9 @@
       <a href="#" class="table_main__link--options"></a>
       <div class="options_menu">
         <ul class="options_menu__list">
-          <% if can? :read, Report %><li class="options_menu__item"><%= link_to 'Show', plant_report_url(@plant, report), class: 'options_menu__link' %></li><% end %>
-          <% if can? :edit, Report %><li class="options_menu__item"><%= link_to 'Edit', edit_plant_report_path(@plant, report), class: 'options_menu__link' %></li><% end %>
-          <% if can? :destroy, Report %><li class="options_menu__item"><%= link_to 'Destroy', plant_report_path(@plant, report), class: 'options_menu__link', method: :delete, data: { confirm: 'Are you sure?' } %></li><% end %>
+          <% if can? :read, Report %><li class="options_menu__item"><%= link_to t(:show, scope: :global), plant_report_url(@plant, report), class: 'options_menu__link' %></li><% end %>
+          <% if can? :edit, Report %><li class="options_menu__item"><%= link_to t(:edit, scope: :global), edit_plant_report_path(@plant, report), class: 'options_menu__link' %></li><% end %>
+          <% if can? :destroy, Report %><li class="options_menu__item"><%= link_to t(:destroy, scope: :global), plant_report_path(@plant, report), class: 'options_menu__link', method: :delete, data: { confirm: t(:confirm, scope: :global) } %></li><% end %>
         </ul>
         <div class="unclick"></div>
       </div>

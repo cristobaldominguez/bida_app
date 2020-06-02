@@ -1,0 +1,18 @@
+en:
+  global:
+    options: 'options'
+    active: 'Active'
+    name: 'Name'
+    taxid: 'Tax id'
+    industry: 'Industry'
+    show: 'show'
+    edit: 'edit'
+    destroy: 'destroy'
+    new: "New %{name}"
+    edit_profile: 'Edit Profile'
+    change_password: 'Change Password'
+    logout: 'Logout'
+    code: 'Code'
+    confirm: 'Are you sure?'
+    _yes: 'Yes'
+    _no: 'No'

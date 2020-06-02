@@ -1,0 +1,13 @@
+es:
+  activerecord:
+    models:
+      support: 'Soporte'
+    attributes:
+      support:
+        attention: 'Atención'
+        start_date: 'Fecha de Inicio'
+        end_date: 'Fecha de Término'
+        client_onsite: 'Cliente en el Lugar'
+        name_client_onsite: 'Nombre del Cliente'
+        bf_technician_id: 'Técnico de Biofiltro'
+    errors:

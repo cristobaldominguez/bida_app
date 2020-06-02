@@ -14,5 +14,5 @@
 </p>
 
 <% if can? :edit, Task %>
-<%= link_to 'Edit', edit_task_path(@task) %>
+<%= link_to t(:edit, scope: :global), edit_task_path(@task) %>
 <% end %>

@@ -16,9 +16,9 @@
         <td><%= standard.option %></td>
         <td><%= standard.plant %></td>
         <td><%= standard.active %></td>
-        <td><% if can? :read, Standard %><%= link_to 'Show', standard %><% end %></td>
-        <td><% if can? :edit, Standard %><%= link_to 'Edit', edit_standard_path(standard) %><% end %></td>
-        <td><% if can? :destroy, Standard %><%= link_to 'Destroy', standard, method: :delete, data: { confirm: 'Are you sure?' } %><% end %></td>
+        <td><% if can? :read, Standard %><%= link_to t(:show, scope: :global), standard %><% end %></td>
+        <td><% if can? :edit, Standard %><%= link_to t(:edit, scope: :global), edit_standard_path(standard) %><% end %></td>
+        <td><% if can? :destroy, Standard %><%= link_to t(:destroy, scope: :global), standard, method: :delete, data: { confirm: t(:confirm, scope: :global) } %><% end %></td>
       </tr>
     <% end %>
   </tbody>

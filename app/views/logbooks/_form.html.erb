@@ -13,7 +13,7 @@
 
   <% date = nil %>
 
-  <%= render 'shared/tables/elements_list', headers: %w(Task Value) do %>
+  <%= render 'shared/tables/elements_list', headers: [t(:task, scope: :logbook), t(:value, scope: :logbook)] do %>
     <% if @filtered_logs.any? %>
     <%= form.fields_for :logs, @filtered_logs do |log| %>
     <%= log.fields_for :task do |task| %>
@@ -69,7 +69,7 @@
     <% end %>
     <% end %>
     <% else %>
-    <tr class="table_main__table-row"><td colspan="2" class="table_main__table-data">Hurray!! No Tasks to do!</td></tr>  
+    <tr class="table_main__table-row"><td colspan="2" class="table_main__table-data">Hurray!! No Tasks to do!</td></tr>
     <% end %>
   <% end %>
 

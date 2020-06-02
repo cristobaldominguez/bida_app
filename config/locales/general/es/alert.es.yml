@@ -1,0 +1,10 @@
+es:
+  alert:
+    history: 'Historial de Alertas'
+    index: 'Alertas'
+    new: 'Nueva Alerta'
+    incident: 'Incidente'
+    all: 'Todas las Alertas'
+    incident_type: 'Selecciona un tipo de Incidente'
+    status: 'Selecciona un Estado'
+    priority: 'Selecciona una Prioridad'

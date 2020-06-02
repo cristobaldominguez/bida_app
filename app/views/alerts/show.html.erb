@@ -1,68 +1,70 @@
 <% if can? :edit, Alert %>
   <%= render 'shared/buttons/option_button', alt: 'header' do %>
-    <li class="option-button__option"><%= link_to 'Edit', edit_plant_alert_path(@plant, @alert), class: 'option-button__option-link' %></li>
+    <li class="option-button__option"><%= link_to t(:edit, scope: :global), edit_plant_alert_path(@plant, @alert), class: 'option-button__option-link' %></li>
     <% if can? :destroy, Alert %>
     <li class="option-button__separator"></li>
-    <li class="option-button__option"><%= link_to 'Destroy', plant_alert_path(@plant, @alert), method: :delete, data: { confirm: 'Are you sure?' }, class: 'option-button__option-link' %></li>
+    <li class="option-button__option"><%= link_to t(:destroy, scope: :global), plant_alert_path(@plant, @alert), method: :delete, data: { confirm: t(:confirm, scope: :global) }, class: 'option-button__option-link' %></li>
     <% end %>
   <% end %>
 <% end %>
 
-<h2 class="main__title">Alert <%= @alert.title %></h2>
+<h2 class="main__title"><%= t(:alert, scope: [:activerecord, :models]) %> <%= @alert.title %></h2>
 
+<% if @alert.users.present? %>
 <div class="view_info">
   <ul class="view_info__elements">
     <% @alert.users.each do |user| %>
     <li class="view_info__element"><%= user.full_name %></li>
     <% end %>
   </ul>
-  <p class="view_info__title">Atention</p>
+  <p class="view_info__title"><%= t(:attention, scope: [:activerecord, :attributes, :alert]) %></p>
 </div>
+<% end %>
 
 <div class="view_info">
   <p class="view_info__data"><%= @alert.incident_type.name %></p>
-  <p class="view_info__title">Incident Type</p>
+  <p class="view_info__title"><%= t(:incident_type_id, scope: [:activerecord, :attributes, :alert]) %></p>
 </div>
 
 <div class="view_info">
   <p class="view_info__data"><%= @alert.status.name %></p>
-  <p class="view_info__title">Status</p>
+  <p class="view_info__title"><%= t(:status_id, scope: [:activerecord, :attributes, :alert]) %></p>
 </div>
 
 <div class="view_info">
   <p class="view_info__data"><%= @alert.priority.name %></p>
-  <p class="view_info__title">Solution Priority</p>
+  <p class="view_info__title"><%= t(:priority_id, scope: [:activerecord, :attributes, :alert]) %></p>
 </div>
 
 <div class="view_info">
   <p class="view_info__data"><%= @alert.incident_description %></p>
-  <p class="view_info__title">Incident description</p>
+  <p class="view_info__title"><%= t(:incident_description, scope: [:activerecord, :attributes, :alert]) %></p>
 </div>
 
 <div class="view_info">
   <p class="view_info__data"><%= @alert.negative_impact %></p>
-  <p class="view_info__title">Negative impact</p>
+  <p class="view_info__title"><%= t(:negative_impact, scope: [:activerecord, :attributes, :alert]) %></p>
 </div>
 
 <div class="view_info">
   <p class="view_info__data"><%= @alert.solution %></p>
-  <p class="view_info__title">Solution</p>
+  <p class="view_info__title"><%= t(:solution, scope: [:activerecord, :attributes, :alert]) %></p>
 </div>
 
 <% if @alert.incident_resolution.present? %>
 <div class="view_info">
   <p class="view_info__data"><%= @alert.incident_resolution %></p>
-  <p class="view_info__title">Incident resolution</p>
+  <p class="view_info__title"><%= t(:incident_resolution, scope: [:activerecord, :attributes, :alert]) %></p>
 </div>
 <% end %>
 
 <div class="view_info">
   <p class="view_info__data"><%= @alert.solution_target_date %></p>
-  <p class="view_info__title">Solution target date</p>
+  <p class="view_info__title"><%= t(:solution_target_date, scope: [:activerecord, :attributes, :alert]) %></p>
 </div>
 
 
 <div class="view_info">
   <p class="view_info__data"><%= @alert.technician_hours_required %></p>
-  <p class="view_info__title">Technician hours required</p>
+  <p class="view_info__title"><%= t(:technician_hours_required, scope: [:activerecord, :attributes, :alert]) %></p>
 </div>

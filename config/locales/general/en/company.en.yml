@@ -1,0 +1,11 @@
+en:
+  company:
+    index: 'Companies'
+    new: 'New Company'
+    edit: 'Editing Company'
+    title: 'Company'
+    title_plural: 'Companies'
+    your_companies: 'Your Companies'
+    new_company: 'New Company'
+    select_industry: 'Select an Industry'
+    select_a_contact: 'Select a Company Contact'

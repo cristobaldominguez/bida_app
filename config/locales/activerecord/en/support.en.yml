@@ -1,0 +1,8 @@
+en:
+  activerecord:
+    models:
+      support: 'Support'
+    attributes:
+      support:
+        attention: 'Attention'
+    errors:

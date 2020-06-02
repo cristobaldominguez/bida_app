@@ -12,7 +12,7 @@
   <% end %>
 
   <div class="field">
-    <%= form.label 'Attention' %>
+    <%= form.label :attention %>
     <ul>
     <%= form.collection_check_boxes(:user_ids, @users, :id, :full_name) do |user| %>
       <li><%= user.check_box %> <%= user.label %></li>
@@ -22,26 +22,26 @@
 
   <div class="field no-border">
     <%= form.label :incident_type_id %>
-    <%= form.collection_select :incident_type_id, @incidents, :id, :name, {prompt: 'Select a Incident Type'} %>
+    <%= form.collection_select :incident_type_id, @incidents, :id, :name, {prompt: t(:incident_type, scope: :alert)} %>
   </div>
 
   <div class="field no-border">
     <%= form.label :status_id %>
-    <%= form.collection_select :status_id, @statuses, :id, :name, {prompt: 'Select a Status'} %>
+    <%= form.collection_select :status_id, @statuses, :id, :name, {prompt: t(:status, scope: :alert)} %>
   </div>
 
   <div class="field no-border">
-    <%= form.label 'Solution Priority' %>
-    <%= form.collection_select :priority_id, @priorities, :id, :name, {prompt: 'Select a Priority'}, class:'describe' %>
+    <%= form.label :priority_id %>
+    <%= form.collection_select :priority_id, @priorities, :id, :name, {prompt: t(:priority, scope: :alert)}, class:'describe' %>
   </div>
 
   <div class="field">
-    <%= form.label 'Incident Description' %>
+    <%= form.label :incident_description %>
     <%= form.text_area :incident_description %>
   </div>
 
   <div class="field">
-    <%= form.label 'Negative Impact to System Description' %>
+    <%= form.label :negative_impact %>
     <%= form.text_area :negative_impact %>
   </div>
 

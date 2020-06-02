@@ -1,0 +1,6 @@
+en:
+  user:
+    filtered: 'Filtered?'
+    index: 'Users'
+    new: 'New User'
+    edit: 'Editing User'

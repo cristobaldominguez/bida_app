@@ -1,0 +1,7 @@
+es:
+  activerecord:
+    models:
+      task: 'Tarea'
+    attributes:
+      task:
+    errors:

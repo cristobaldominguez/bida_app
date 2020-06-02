@@ -1,0 +1,9 @@
+en:
+  alert:
+    history: 'Alert History'
+    new: 'New Alert'
+    incident: 'Incident'
+    all: 'All Alerts'
+    incident_type: 'Select a Incident Type'
+    status: 'Select a Status'
+    priority: 'Select a Priority'

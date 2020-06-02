@@ -16,9 +16,9 @@
       <tr>
         <td><%= flow.value %></td>
         <td><%= flow.plant %></td>
-        <td><%= link_to 'Show', flow %></td>
-        <td><%= link_to 'Edit', edit_flow_path(flow) %></td>
-        <td><%= link_to 'Destroy', flow, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to t(:show, scope: :global), flow %></td>
+        <td><%= link_to t(:edit, scope: :global), edit_flow_path(flow) %></td>
+        <td><%= link_to t(:destroy, scope: :global), flow, method: :delete, data: { confirm: t(:confirm, scope: :global) } %></td>
       </tr>
     <% end %>
   </tbody>

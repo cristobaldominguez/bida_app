@@ -1,0 +1,11 @@
+es:
+  plant:
+    all: "Plantas"
+    index: "Plantas"
+    new: "Nueva Planta"
+    edit: "Editar Planta"
+    title: 'Planta'
+    title_plural: 'Plantas'
+    new_plant: 'Nueva Planta'
+    related_plants: 'Plantas relacionadas'
+    my_plants: 'Mis Plantas'

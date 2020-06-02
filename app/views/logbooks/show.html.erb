@@ -1,12 +1,12 @@
 <% if can? :edit, Logbook %>
   <%= render 'shared/buttons/option_button', alt: 'header' do %>
-    <li class="option-button__option"><%= link_to 'Edit', edit_plant_logbook_path(@plant, @logbook), class: 'option-button__option-link' %></li>
+    <li class="option-button__option"><%= link_to t(:edit, scope: :global), edit_plant_logbook_path(@plant, @logbook), class: 'option-button__option-link' %></li>
   <% end %>
 <% end %>
 
 <h2 class="main__title">Logbook</h2>
 
-<%= render 'shared/tables/elements_list', headers: %w(Task Value Date), title: 'Logbook' do %>
+<%= render 'shared/tables/elements_list', headers: [t(:task, scope: :logbook), t(:value, scope: :logbook), t(:date, scope: :logbook)], title: 'Logbook' do %>
   <% @filtered_logs.each do |log| %>
   <tr class="table_main__table-row">
     <td class="table_main__table-data--left-text"><%= log.task.name %></td>

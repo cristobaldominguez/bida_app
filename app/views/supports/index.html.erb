@@ -3,9 +3,10 @@
     <li class="option-button__option"><%= link_to 'New Support', new_plant_support_path(@plant), class: 'option-button__option-link' %></li>
   <% end %>
 <% end %>
-<h2 class="main__title">Supports</h2>
 
-<%= render 'shared/tables/elements_list', headers: ['Support Number', 'Options'], title: 'All Support Tickets' do %>
+<h2 class="main__title"><%= t(:index, scope: :support) %></h2>
+
+<%= render 'shared/tables/elements_list', headers: [t(:support_number, scope: :support).camelcase, t(:options, scope: :global).capitalize], title: t(:all, scope: :support) do %>
 <% @supports.each do |support| %>
   <tr class="table_main__table-row">
     <td class="table_main__table-data--left-text"><%= link_to support.number, plant_support_path(@plant, support), class: 'table_main__link-show' %></td>
@@ -13,9 +14,9 @@
       <a href="#" class="table_main__link--options"></a>
       <div class="options_menu">
         <ul class="options_menu__list">
-          <% if can? :read, Support %><li class="options_menu__item"><%= link_to 'Show', plant_support_path(@plant, support), class: 'options_menu__link' %></li><% end %>
-          <% if can? :edit, Support %><li class="options_menu__item"><%= link_to 'Edit', edit_plant_support_path(@plant, support), class: 'options_menu__link' %></li><% end %>
-          <% if can? :destroy, Support %><li class="options_menu__item"><%= link_to 'Destroy', plant_support_path(@plant, support), class: 'options_menu__link', method: :delete, data: { confirm: 'Are you sure?' } %></li><% end %>
+          <% if can? :read, Support %><li class="options_menu__item"><%= link_to t(:show, scope: :global), plant_support_path(@plant, support), class: 'options_menu__link' %></li><% end %>
+          <% if can? :edit, Support %><li class="options_menu__item"><%= link_to t(:edit, scope: :global), edit_plant_support_path(@plant, support), class: 'options_menu__link' %></li><% end %>
+          <% if can? :destroy, Support %><li class="options_menu__item"><%= link_to t(:destroy, scope: :global), plant_support_path(@plant, support), class: 'options_menu__link', method: :delete, data: { confirm: t(:confirm, scope: :global) } %></li><% end %>
         </ul>
         <div class="unclick"></div>
       </div>

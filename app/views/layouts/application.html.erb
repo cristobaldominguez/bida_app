@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>BIDAApp</title>
+    <title>BIDA Software</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <link rel="icon" type="image/png" sizes="32x32" href="<%= asset_path 'head/favicon-32x32.png' -%>">
@@ -37,13 +37,13 @@
           </a>
           <ul class="main_nav__list">
             <% if can? :read, Company %>
-            <li class="main_nav__item <%= 'main_nav__item--active' if @companies %>"><%= link_to 'companies', companies_path, class: 'main_nav__link' %></li>
+            <li class="main_nav__item <%= 'main_nav__item--active' if @companies %>"><%= link_to t(:companies, scope: [:header, :menu]), companies_path, class: 'main_nav__link' %></li>
             <% end %>
 
             <% if @user_plants.present? %>
             <% if can? :read, Plant %>
             <li class="main_nav__item <%= 'main_nav__item--active' if @plant %>">
-              <% _text = @plant.present? ? @plant.name : 'plants' %>
+              <% _text = @plant.present? && @plant.persisted? ? @plant.name : t(:plants, scope: [:header, :menu]) %>
               <%= link_to _text, '#', class: 'main_nav__link-dropdown' %>
               <div class="options_menu">
                 <ul class="main_nav__plants">
@@ -57,7 +57,7 @@
             <% end %>
 
             <% if can? :read, User %>
-            <li class="main_nav__item <%= 'main_nav__item--active' if @users %>"><%= link_to 'users', users_path, class: 'main_nav__link' %></li>
+            <li class="main_nav__item <%= 'main_nav__item--active' if @users %>"><%= link_to t(:users, scope: [:header, :menu]), users_path, class: 'main_nav__link' %></li>
             <% end %>
           </ul>
         </nav>

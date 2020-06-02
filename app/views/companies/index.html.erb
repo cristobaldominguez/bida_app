@@ -1,11 +1,12 @@
 <% if can? :create, Company %>
   <%= render 'shared/buttons/option_button', alt: 'header' do %>
-    <li class="option-button__option"><%= link_to 'New Company', new_company_path, class: 'option-button__option-link' %></li>
+    <li class="option-button__option"><%= link_to t(:new, scope: :company).downcase, new_company_path, class: 'option-button__option-link' %></li>
   <% end %>
 <% end %>
-<h2 class="main__title">Companies</h2>
 
-<%= render 'shared/tables/elements_list', headers: %w(Name Taxid Industry Options), title: 'Your Companies' do %>
+<h2 class="main__title"><%= t(:index, scope: :company) %></h2>
+
+<%= render 'shared/tables/elements_list', headers: [t(:name, scope: :global).camelize, t(:taxid, scope: :global).camelize, t(:industry, scope: :global).camelize, t(:options, scope: :global).camelize], title: t(:your_companies, scope: :global) do %>
 <% @companies.each do |company| %>
 <tr class="table_main__table-row">
   <td class="table_main__table-data--left-text"><%= link_to company.name, company, class: 'table_main__link-show' %></td>
@@ -15,12 +16,12 @@
     <a href="#" class="table_main__link--options"></a>
     <div class="options_menu">
       <ul class="options_menu__list">
-        <% if can? :read, Company %><li class="options_menu__item"><%= link_to 'show', company, class: 'options_menu__link' %></li><% end %>
-        <% if can? :edit, Company %><li class="options_menu__item"><%= link_to 'edit', edit_company_path(company), class: 'options_menu__link' %></li><% end %>
-        <% if can? :destroy, Company %><li class="options_menu__item"><%= link_to 'destroy', company, method: :delete, data: { confirm: 'Are you sure?' }, class: 'options_menu__link' %></li><% end %>
+        <% if can? :read, Company %><li class="options_menu__item"><%= link_to t(:show, scope: :global).downcase, company, class: 'options_menu__link' %></li><% end %>
+        <% if can? :edit, Company %><li class="options_menu__item"><%= link_to t(:edit, scope: :global).downcase, edit_company_path(company), class: 'options_menu__link' %></li><% end %>
+        <% if can? :destroy, Company %><li class="options_menu__item"><%= link_to t(:destroy, scope: :global).downcase, company, method: :delete, data: { confirm: t(:confirm, scope: :global) }, class: 'options_menu__link' %></li><% end %>
         <% if can? :create, Plant %>
         <li class="options_menu__separator"></li>
-        <li class="options_menu__item"><%= link_to 'new plant', new_company_plant_path(company), class: 'options_menu__link' %></li>
+        <li class="options_menu__item"><%= link_to t(:new_plant, scope: :plant).downcase, new_company_plant_path(company), class: 'options_menu__link' %></li>
         <% end %>
       </ul>
       <div class="unclick"></div>

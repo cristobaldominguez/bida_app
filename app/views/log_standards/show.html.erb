@@ -29,5 +29,5 @@
 </p>
 
 <% if can? :edit, LogStandard %>
-<%= link_to 'Edit', edit_log_standard_path(@log_standard) %>
+<%= link_to t(:edit, scope: :global), edit_log_standard_path(@log_standard) %>
 <% end %>

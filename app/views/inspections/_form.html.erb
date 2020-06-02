@@ -11,25 +11,25 @@
     </div>
   <% end %>
 
-  <h2 class="cell_division">General Info</h2>
+  <h2 class="cell_division"><%= t(:general_info, scope: :inspection) %></h2>
 
   <div class="field no-border">
     <%= form.label :on_site_client %>
-    <%= form.select(:on_site_client, @on_site_client, {prompt: 'Select an Option'}, class:'describe')  %>
+    <%= form.select(:on_site_client, @on_site_client, {prompt: t(:select_option, scope: :inspection)}, class:'describe')  %>
   </div>
 
   <div class="field description <%= 'show' if inspection.on_site_client %> no-border">
-    <%= form.label 'Onsite Client' %>
-    <%= form.collection_select(:on_site_user_id, @users, :id, :full_name, {prompt: 'Select a Client'})  %>
+    <%= form.label :on_site_user_id %>
+    <%= form.collection_select(:on_site_user_id, @users, :id, :full_name, {prompt: t(:select_option, scope: :inspection)})  %>
   </div>
 
   <div class="field no-border">
-    <%= form.label 'Report Technician *' %>
-    <%= form.collection_select(:report_technician_id, @users, :id, :full_name, {prompt: 'Select a Technician'}) %>
+    <%= form.label :report_technician_id %>
+    <%= form.collection_select(:report_technician_id, @users, :id, :full_name, {prompt: t(:select_option, scope: :inspection)}) %>
   </div>
 
   <div class="field">
-    <%= form.label 'Notify to:' %>
+    <%= form.label :notify %>
     <ul>
     <%= form.collection_check_boxes(:user_ids, @users, :id, :full_name) do |user| %>
       <li><%= user.check_box %> <%= user.label %></li>
@@ -38,67 +38,68 @@
   </div>
 
   <div class="field no-border date">
-    <%= form.label :Inspection_Date %>
+    <%= form.label :date %>
     <%= form.date_select :date %>
   </div>
 
-  <h2 class="cell_division">Water Quality</h2>
+  <h2 class="cell_division"><%= t(:water_quality, scope: :inspection) %></h2>
 
   <%= form.fields_for :fluents, @fluents do |fluent| %>
-    <h3><%= fluent.hidden_field :output_id, value: fluent.object.output.id %><%= fluent.object.output.name %></h3>
+    <% _fluent = fluent.object.output.name %>
+    <h3><%= fluent.hidden_field :output_id, value: fluent.object.output.id %><%= t(_fluent.downcase, scope: :inspection) %></h3>
 
     <div class="field">
-      <%= fluent.label "#{fluent.object.output.name} Sampling" %>
+      <%= fluent.label t(:fluent_sampling, fluent: t(_fluent.downcase, scope: :inspection), scope: [:activerecord, :attributes, :inspection]) %>
       <%= fluent.bf_value_field :ph, 'pH' %>
     </div>
 
     <div class="field no-border">
-      <%= fluent.label "#{fluent.object.output.name} Sampling Color" %>
-      <%= fluent.collection_select(:color_id, @colors, :id, :option, {prompt: 'Select a Color'}, class:'describe') %>
+      <%= fluent.label t(:sampling_color, fluent: t(_fluent.downcase, scope: :inspection), scope: [:activerecord, :attributes, :inspection]) %>
+      <%= fluent.collection_select(:color_id, @colors, :id, :option, {prompt: t(:select_option, scope: :inspection)}, class: 'describe') %>
     </div>
 
     <div class="field description">
-      <%= fluent.label "#{fluent.object.output.name} #{:color_description}" %>
+      <%= fluent.label t(:color_description, fluent: t(_fluent.downcase, scope: :inspection), scope: [:activerecord, :attributes, :inspection]) %>
       <%= fluent.text_area :color_description %>
     </div>
 
     <div class="field no-border">
-      <%= fluent.label "#{fluent.object.output.name} Sampling Odor" %>
-      <%= fluent.collection_select(:odor_id, @odors, :id, :option, {prompt: 'Select an Odor'}, class:'describe')  %>
+      <%= fluent.label t(:sampling_odor, fluent: t(_fluent.downcase, scope: :inspection), scope: [:activerecord, :attributes, :inspection]) %>
+      <%= fluent.collection_select(:odor_id, @odors, :id, :option, {prompt: t(:select_option, scope: :inspection)}, class:'describe')  %>
     </div>
 
     <div class="field description">
-      <%= fluent.label "#{fluent.object.output.name} #{:odor_description}" %>
+      <%= fluent.label t(:odor_description, fluent: t(_fluent.downcase, scope: :inspection), scope: [:activerecord, :attributes, :inspection]) %>
       <%= fluent.text_area :odor_description %>
     </div>
 
     <div class="field">
-      <%= fluent.label :cod, 'COD' %>
+      <%= fluent.label :cod %>
       <%= fluent.bf_value_field :cod, 'mg/L' %>
     </div>
 
     <div class="field">
-      <%= fluent.label :ec, 'EC' %>
+      <%= fluent.label :ec %>
       <%= fluent.bf_value_field :ec, 'µS/cm' %>
     </div>
 
     <div class="field">
-      <%= fluent.label :bod, 'BOD' %>
+      <%= fluent.label :bod %>
       <%= fluent.bf_value_field :bod, 'mg/L' %>
     </div>
 
     <div class="field">
-      <%= fluent.label :tss, 'TSS' %>
+      <%= fluent.label :tss %>
       <%= fluent.bf_value_field :tss, 'mg/L' %>
     </div>
 
     <div class="field">
-      <%= fluent.label :tn, 'TN' %>
+      <%= fluent.label :tn %>
       <%= fluent.bf_value_field :tn, 'mg/L' %>
     </div>
 
     <div class="field">
-      <%= fluent.label :tp, 'TP' %>
+      <%= fluent.label :tp %>
       <%= fluent.bf_value_field :tp, 'mg/L' %>
     </div>
 
@@ -108,16 +109,16 @@
     </div>
     <% end %>
 
-  <h2 class="cell_division">Primary Screen</h2>
+  <h2 class="cell_division"><%= t(:primary_screen, scope: :inspection) %></h2>
 
   <div class="field no-border">
     <%= form.label :screen_id %>
-    <%= form.collection_select(:screen_id, @screens, :id, :option, {prompt: 'Select a Screen'})  %>
+    <%= form.collection_select(:screen_id, @screens, :id, :option, {prompt: t(:select_option, scope: :inspection)})  %>
   </div>
 
   <div class="field no-border">
     <%= form.label :collection_bin_id %>
-    <%= form.collection_select(:collection_bin_id, @collectionbins, :id, :option, {prompt: 'Select a Collection Bin'})  %>
+    <%= form.collection_select(:collection_bin_id, @collectionbins, :id, :option, {prompt: t(:select_option, scope: :inspection)})  %>
   </div>
 
   <div class="field">
@@ -125,11 +126,11 @@
     <%= form.text_area :screen_comments %>
   </div>
 
-  <h2 class="cell_division">Pumps and Irrigation System</h2>
+  <h2 class="cell_division"><%= t(:pumps_irrigation, scope: :inspection) %></h2>
 
   <div class="field no-border">
-    <%= form.label 'Pumps noise' %>
-    <%= form.collection_select(:noise_id, @noises, :id, :option, {prompt: 'Select a Noise'}, class:'describe') %>
+    <%= form.label :noise_id %>
+    <%= form.collection_select(:noise_id, @noises, :id, :option, {prompt: t(:select_option, scope: :inspection)}, class:'describe') %>
   </div>
 
   <div class="field description">
@@ -138,23 +139,23 @@
   </div>
 
   <div class="field">
-    <%= form.label 'Pumps Pressure' %>
+    <%= form.label :pumps_psi %>
     <%= form.bf_value_field :pumps_psi, 'PSI' %>
   </div>
 
   <div class="field no-border">
     <%= form.label :sprinklers_pressure_id %>
-    <%= form.collection_select(:sprinklers_pressure_id, @sprinklers_pressures, :id, :option, {prompt: 'Select the Sprinkler\'s Pressure'})  %>
+    <%= form.collection_select(:sprinklers_pressure_id, @sprinklers_pressures, :id, :option, {prompt: t(:select_option, scope: :inspection)})  %>
   </div>
 
   <div class="field no-border">
     <%= form.label :sprinklers_head_id %>
-    <%= form.collection_select(:sprinklers_head_id, @sprinklers_heads, :id, :option, {prompt: 'Select the Sprinkler\'s Head'})  %>
+    <%= form.collection_select(:sprinklers_head_id, @sprinklers_heads, :id, :option, {prompt: t(:select_option, scope: :inspection)})  %>
   </div>
 
   <div class="field no-border">
     <%= form.label :piping_id %>
-    <%= form.collection_select(:piping_id, @pipings, :id, :option, {prompt: 'Select a Pipe State'})  %>
+    <%= form.collection_select(:piping_id, @pipings, :id, :option, {prompt: t(:select_option, scope: :inspection)})  %>
   </div>
 
   <div class="field">
@@ -162,16 +163,16 @@
     <%= form.text_area :pumps_comments %>
   </div>
 
-  <h2 class="cell_division">BIDA System</h2>
+  <h2 class="cell_division"><%= t(:bida, scope: :inspection) %></h2>
 
   <div class="field no-border">
     <%= form.label :system_surface_id %>
-    <%= form.collection_select(:system_surface_id, @system_surfaces, :id, :option, {prompt: 'Select a System Surface'})  %>
+    <%= form.collection_select(:system_surface_id, @system_surfaces, :id, :option, {prompt: t(:select_option, scope: :inspection)})  %>
   </div>
 
   <div class="field no-border">
     <%= form.label :worms_color_id %>
-    <%= form.collection_select(:worms_color_id, @worms_color, :id, :option, {prompt: 'Select a Worms Color'}, class:'describe') %>
+    <%= form.collection_select(:worms_color_id, @worms_color, :id, :option, {prompt: t(:select_option, scope: :inspection)}, class:'describe') %>
   </div>
 
   <div class="field description">
@@ -181,7 +182,7 @@
 
   <div class="field no-border">
     <%= form.label :worms_activity_id %>
-    <%= form.collection_select(:worms_activity_id, @worms_activity, :id, :option, {prompt: 'Select a Worms Activity'}, class:'describe') %>
+    <%= form.collection_select(:worms_activity_id, @worms_activity, :id, :option, {prompt: t(:select_option, scope: :inspection)}, class:'describe') %>
   </div>
 
   <div class="field description">
@@ -191,17 +192,17 @@
 
   <div class="field no-border">
     <%= form.label :worms_density_id %>
-    <%= form.collection_select(:worms_density_id, @worms_density, :id, :option, {prompt: 'Select a Worms Density'})  %>
+    <%= form.collection_select(:worms_density_id, @worms_density, :id, :option, {prompt: t(:select_option, scope: :inspection)})  %>
   </div>
 
   <div class="field no-border">
     <%= form.label :bed_compaction_id %>
-    <%= form.collection_select(:bed_compaction_id, @bed_compactions, :id, :option, {prompt: 'Select a Bed Compaction'})  %>
+    <%= form.collection_select(:bed_compaction_id, @bed_compactions, :id, :option, {prompt: t(:select_option, scope: :inspection)})  %>
   </div>
 
   <div class="field no-border">
     <%= form.label :ponding_id %>
-    <%= form.collection_select(:ponding_id, @pondings, :id, :option, {prompt: 'Select a Ponding'})  %>
+    <%= form.collection_select(:ponding_id, @pondings, :id, :option, {prompt: t(:select_option, scope: :inspection)})  %>
   </div>
 
   <div class="field">
@@ -209,11 +210,11 @@
     <%= form.text_area :bida_comments %>
   </div>
 
-  <h2 class="cell_division">General</h2>
+  <h2 class="cell_division"><%= t(:general, scope: :inspection) %></h2>
 
   <div class="field no-border">
     <%= form.label :odor_id %>
-    <%= form.collection_select(:odor_id, @odors, :id, :option, {prompt: 'Select an Odor'})  %>
+    <%= form.collection_select(:odor_id, @odors, :id, :option, {prompt: t(:select_option, scope: :inspection)})  %>
   </div>
 
   <div class="field description">
@@ -223,15 +224,15 @@
 
   <div class="field no-border">
     <%= form.label :birds %>
-    <%= form.select(:birds, @birds, {prompt: 'Select an Option'})  %>
+    <%= form.select(:birds, @birds, {prompt: t(:select_option, scope: :inspection)})  %>
   </div>
 
   <div class="field no-border">
-    <%= form.label 'Flies' %>
-    <%= form.collection_select(:fly_id, @flies, :id, :option, {prompt: 'Select an Option'})  %>
+    <%= form.label :fly_id %>
+    <%= form.collection_select(:fly_id, @flies, :id, :option, {prompt: t(:select_option, scope: :inspection)})  %>
   </div>
 
-  <h2 class="cell_division">Summary/Recommendations</h2>
+  <h2 class="cell_division"><%= t(:summary, scope: :inspection) %></h2>
 
   <div class="field">
     <%= form.label :summary_comments %>

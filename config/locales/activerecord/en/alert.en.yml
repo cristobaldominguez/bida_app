@@ -1,0 +1,11 @@
+en:
+  activerecord:
+    models:
+      alert: 'Alert'
+    attributes:
+      alert:
+        attention: 'Attention'
+        priority_id: 'Solution Priority'
+        incident_description: 'Incident Description'
+        negative_impact: 'Negative Impact to System Description'
+    errors:

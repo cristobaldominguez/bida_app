@@ -1,15 +1,15 @@
 <% if can? :edit, Inspection %>
   <%= render 'shared/buttons/option_button', alt: 'header' do %>
-    <li class="option-button__option"><%= link_to 'Edit', edit_plant_inspection_path(@plant, @inspection), class: 'option-button__option-link' %></li>
+    <li class="option-button__option"><%= link_to t(:edit, scope: :global), edit_plant_inspection_path(@plant, @inspection), class: 'option-button__option-link' %></li>
     <% if can? :create, Inspection %>
     <li class="option-button__separator"></li>
     <li class="option-button__option"><%= link_to 'New', new_plant_inspection_path(@plant, @inspection), class: 'option-button__option-link' %></li>
-    <% if can? :destroy, Inspection %><li class="option-button__option"><%= link_to 'Destroy', plant_inspection_path(@plant, @inspection), class: 'option-button__option-link', method: :delete, data: { confirm: 'Are you sure?' } %></li><% end %>
+    <% if can? :destroy, Inspection %><li class="option-button__option"><%= link_to t(:destroy, scope: :global), plant_inspection_path(@plant, @inspection), class: 'option-button__option-link', method: :delete, data: { confirm: t(:confirm, scope: :global) } %></li><% end %>
     <% end %>
   <% end %>
 <% end %>
 
-<h2 class="main__title">Inspection #<%= @inspection.id %></h2>
+<h2 class="main__title"><%= t(:show, scope: :inspection) %> #<%= @inspection.id %></h2>
 
 <h2 class="main__division">General Info</h2>
 

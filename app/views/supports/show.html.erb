@@ -1,6 +1,6 @@
 <% if can? :edit, Support %>
   <%= render 'shared/buttons/option_button', alt: 'header' do %>
-    <li class="option-button__option"><%= link_to 'Edit', edit_plant_support_path(@plant, @support), class: 'option-button__option-link' %></li>
+    <li class="option-button__option"><%= link_to t(:edit, scope: :global), edit_plant_support_path(@plant, @support), class: 'option-button__option-link' %></li>
   <% end %>
 <% end %>
 <h2 class="main__title">Support <%= @support.number %></h2>

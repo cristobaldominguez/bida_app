@@ -1,6 +1,6 @@
 <% if can? :edit, Bound %>
   <%= render 'shared/buttons/option_button', alt: 'header' do %>
-    <li class="option-button__option"><%= link_to 'Edit', edit_bound_path(@bound), class: 'option-button__option-link' %></li>
+    <li class="option-button__option"><%= link_to t(:edit, scope: :global), edit_bound_path(@bound), class: 'option-button__option-link' %></li>
   <% end %>
 <% end %>
 

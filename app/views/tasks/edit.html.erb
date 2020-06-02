@@ -1,6 +1,6 @@
 <% if can? :read, Task %>
   <%= render 'shared/buttons/option_button', alt: 'header' do %>
-    <li class="option-button__option"><%= link_to 'Show', @task, class: 'option-button__option-link' %></li>
+    <li class="option-button__option"><%= link_to t(:show, scope: :global), @task, class: 'option-button__option-link' %></li>
   <% end %>
 <% end %>
 

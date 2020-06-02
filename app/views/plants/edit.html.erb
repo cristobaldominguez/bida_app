@@ -1,9 +1,9 @@
 <% if can? :read, Plant %>
   <%= render 'shared/buttons/option_button', alt: 'header' do %>
-    <li class="option-button__option"><%= link_to 'Show', plant_path, class: 'option-button__option-link' %></li>
+    <li class="option-button__option"><%= link_to t(:show, scope: :global), plant_path, class: 'option-button__option-link' %></li>
   <% end %>
 <% end %>
 
-<h2 class="main__title">Editing Plant</h2>
+<h2 class="main__title"><%= t(:edit, scope: :plant, model: t(:plant, scope: [:activerecord, :models])) %></h2>
 
 <%= render 'form', plant: @plant %>

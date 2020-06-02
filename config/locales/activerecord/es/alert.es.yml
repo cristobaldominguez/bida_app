@@ -1,0 +1,17 @@
+es:
+  activerecord:
+    models:
+      alert: 'Alerta'
+    attributes:
+      alert:
+        attention: 'Atención'
+        incident_type_id: 'Tipo de Incidente'
+        status_id: 'Estado del Incidente'
+        priority_id: 'Prioridad de la Solución'
+        incident_description: 'Descripción del Incidente'
+        negative_impact: 'Descripción del Impacto Negativo en el Sistema'
+        solution: 'Solución'
+        incident_resolution: 'Resolución del Incidente'
+        solution_target_date: 'Fecha de Resolución'
+        technician_hours_required: 'Horas Requeridas del Técnico'
+    errors:

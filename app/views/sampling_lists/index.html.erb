@@ -17,9 +17,9 @@
       <a href="#" class="table_main__link--options"></a>
       <div class="options_menu">
         <ul class="options_menu__list">
-          <% if can? :read, SamplingList %><li class="options_menu__item"><%= link_to 'Show', plant_sampling_list_path(@plant, sampling_list), class: 'options_menu__link' %></li><% end %>
-          <% if can? :edit, SamplingList %><li class="options_menu__item"><%= link_to 'Edit', edit_plant_sampling_list_path(@plant, sampling_list), class: 'options_menu__link' %></li><% end %>
-          <% if can? :destroy, SamplingList %><li class="options_menu__item"><%= link_to 'Destroy', plant_sampling_list_path(@plant, sampling_list), class: 'options_menu__link', method: :delete, data: { confirm: 'Are you sure?' } %></li><% end %>
+          <% if can? :read, SamplingList %><li class="options_menu__item"><%= link_to t(:show, scope: :global), plant_sampling_list_path(@plant, sampling_list), class: 'options_menu__link' %></li><% end %>
+          <% if can? :edit, SamplingList %><li class="options_menu__item"><%= link_to t(:edit, scope: :global), edit_plant_sampling_list_path(@plant, sampling_list), class: 'options_menu__link' %></li><% end %>
+          <% if can? :destroy, SamplingList %><li class="options_menu__item"><%= link_to t(:destroy, scope: :global), plant_sampling_list_path(@plant, sampling_list), class: 'options_menu__link', method: :delete, data: { confirm: t(:confirm, scope: :global) } %></li><% end %>
         </ul>
         <div class="unclick"></div>
       </div>

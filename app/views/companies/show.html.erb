@@ -1,9 +1,9 @@
 <% if can? :edit, Company %>
   <%= render 'shared/buttons/option_button', alt: 'header' do %>
-    <li class="option-button__option"><%= link_to 'Edit', edit_company_path(@company), class: 'option-button__option-link' %></li>
+    <li class="option-button__option"><%= link_to t(:edit, scope: :global).downcase, edit_company_path(@company), class: 'option-button__option-link' %></li>
     <% if can? :create, Plant %>
     <li class="option-button__separator"></li>
-    <li class="option-button__option"><%= link_to 'New Plant', new_company_plant_path(@company), class: 'option-button__option-link', data: { turbolinks: false } %></li>
+    <li class="option-button__option"><%= link_to t(:new, scope: :plant, name: :title ).downcase, new_company_plant_path(@company), class: 'option-button__option-link', data: { turbolinks: false } %></li>
     <% end %>
   <% end %>
 <% end %>
@@ -12,32 +12,32 @@
 
 <div class="view_info">
   <p class="view_info__data"><%= @company.name %></p>
-  <p class="view_info__title">Name</p>
+  <p class="view_info__title"><%= t(:name, scope: [:activerecord, :attributes]) %></p>
 </div>
 
 <div class="view_info">
   <p class="view_info__data"><%= @company.taxid %></p>
-  <p class="view_info__title">Taxid</p>
+  <p class="view_info__title"><%= t(:taxid, scope: [:activerecord, :attributes]) %></p>
 </div>
 
 <div class="view_info">
   <p class="view_info__data"><%= @company.industry.name %></p>
-  <p class="view_info__title">Industry</p>
+  <p class="view_info__title"><%= t(:industry_id, scope: [:activerecord, :attributes]) %></p>
 </div>
 
 <div class="view_info">
   <p class="view_info__data"><%= @company.contact&.full_name  %></p>
-  <p class="view_info__title">Company Contact</p>
+  <p class="view_info__title"><%= t(:contact_id, scope: [:activerecord, :attributes]) %></p>
 </div>
 
 <div class="view_info">
   <p class="view_info__data"><%= @company.bf_contact&.full_name  %></p>
-  <p class="view_info__title">BioFiltro Contact</p>
+  <p class="view_info__title"><%= t(:bf_contact_id, scope: [:activerecord, :attributes]) %></p>
 </div>
 
 <div class="space"></div>
 
-<%= render 'shared/tables/elements_list', headers: %w(Plants Options), title: 'Related Plants' do %>
+<%= render 'shared/tables/elements_list', headers: [t(:title_plural, scope: :plant), t(:options, scope: :global)], title: t(:related_plants, scope: [:plant]) do %>
 <% @plants.each do |plant| %>
 <tr class="table_main__table-row">
   <td class="table_main__table-data--left-text"><%= link_to plant.name, plant, class: 'table_main__link-show' %></td>
@@ -45,9 +45,9 @@
     <a href="#" class="table_main__link--options"></a>
     <div class="options_menu">
       <ul class="options_menu__list">
-        <% if can? :read, Plant %><li class="options_menu__item"><%= link_to 'show', plant, class: 'options_menu__link' %></li><% end %>
-        <% if can? :edit, Plant %><li class="options_menu__item"><%= link_to 'edit', edit_plant_path(plant), class: 'options_menu__link', data: { turbolinks: false } %></li><% end %>
-        <% if can? :destroy, Plant %><li class="options_menu__item"><%= link_to 'destroy', plant, class: 'options_menu__link', method: :delete, data: { confirm: 'Are you sure?' } %></li><% end %>
+        <% if can? :read, Plant %><li class="options_menu__item"><%= link_to t(:show, scope: :global), plant, class: 'options_menu__link' %></li><% end %>
+        <% if can? :edit, Plant %><li class="options_menu__item"><%= link_to t(:edit, scope: :global), edit_plant_path(plant), class: 'options_menu__link', data: { turbolinks: false } %></li><% end %>
+        <% if can? :destroy, Plant %><li class="options_menu__item"><%= link_to t(:destroy, scope: :global), plant, class: 'options_menu__link', method: :delete, data: { confirm: t(:confirm, scope: :global) } %></li><% end %>
       </ul>
       <div class="unclick"></div>
     </div>

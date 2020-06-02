@@ -1,0 +1,9 @@
+en:
+  support:
+    index: 'Supports'
+    history: 'Support History'
+    new: 'New Support'
+    select_client: 'Select a Client'
+    select_technician: 'Select a Technician'
+    support_number: 'Support Number'
+    all: 'All Support Tickets'

@@ -14,9 +14,9 @@
       <tr>
         <td><%= graph_standard.chart.name %></td>
         <td><%= graph_standard.chart.shape %></td>
-        <td><% if can? :read, GraphStandard %><%= link_to 'Show', plant_graph_standard_path(@plant, graph_standard) %><% end %></td>
-        <td><% if can? :edit, GraphStandard %><%= link_to 'Edit', edit_plant_graph_standard_path(@plant, graph_standard) %><% end %></td>
-        <td><% if can? :destroy, GraphStandard %><%= link_to 'Destroy', plant_graph_standard_path(@plant, graph_standard), method: :delete, data: { confirm: 'Are you sure?' } %><% end %></td>
+        <td><% if can? :read, GraphStandard %><%= link_to t(:show, scope: :global), plant_graph_standard_path(@plant, graph_standard) %><% end %></td>
+        <td><% if can? :edit, GraphStandard %><%= link_to t(:edit, scope: :global), edit_plant_graph_standard_path(@plant, graph_standard) %><% end %></td>
+        <td><% if can? :destroy, GraphStandard %><%= link_to t(:destroy, scope: :global), plant_graph_standard_path(@plant, graph_standard), method: :delete, data: { confirm: t(:confirm, scope: :global) } %><% end %></td>
       </tr>
     <% end %>
   </tbody>

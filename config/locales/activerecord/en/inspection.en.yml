@@ -1,0 +1,24 @@
+en:
+  activerecord:
+    models:
+      inspection: 'Inspection'
+    attributes:
+      inspection:
+        notify: 'Notify to:'
+        date: 'Inspection Date'
+        fluent_sampling: "%{fluent} Sampling"
+        sampling_color: "%{fluent} Sampling Color"
+        color_description: "%{fluent} Color Description"
+        sampling_odor: "%{fluent} Sampling Odor"
+        odor_description: "%{fluent} Odor Description"
+        noise_id: 'Pumps noise'
+        pumps_psi: 'Pumps Pressure'
+      fluent:
+        cod: 'COD'
+        ec: 'EC'
+        bod: 'BOD'
+        tss: 'TSS'
+        tn: 'TN'
+        tp: 'TP'
+        sample_comments: 'Sample Comments'
+    errors:

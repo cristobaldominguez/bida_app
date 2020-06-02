@@ -1,6 +1,6 @@
 <% if can? :read, Report %>
   <%= render 'shared/buttons/option_button', alt: 'header' do %>
-    <li class="option-button__option"><%= link_to 'Show', plant_report_path(@plant, @report), class: 'option-button__option-link' %></li>
+    <li class="option-button__option"><%= link_to t(:show, scope: :global), plant_report_path(@plant, @report), class: 'option-button__option-link' %></li>
   <% end %>
 <% end %>
 

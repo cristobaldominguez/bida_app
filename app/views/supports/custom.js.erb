@@ -6,17 +6,17 @@ li.className = 'work_summary'
 li.innerHTML = `<div class="work_summary__delete_div"><a href="#" class="work_summary__delete">x</a></div>
   <input type="hidden" value="false" name="support[work_summaries_attributes][${num}][_destroy]" id="support_work_summaries_attributes_${num}__destroy">
   <div class='field'>
-    <label for='support_work_summaries_attributes_${num}_description'>Description</label>
+    <label for='support_work_summaries_attributes_${num}_description'><%= t(:description, scope: [:activerecord, :attributes, :work_summary]) %></label>
     <input type='text' name='support[work_summaries_attributes][${num}][description]' id='support_work_summaries_attributes_${num}_description'>
   </div>
 
   <div class='field'>
-    <label for='support_work_summaries_attributes_${num}_hours'>Hours</label>
+    <label for='support_work_summaries_attributes_${num}_hours'><%= t(:hours, scope: [:activerecord, :attributes, :work_summary]) %></label>
     <input type='number' name='support[work_summaries_attributes][${num}][hours]' id='support_work_summaries_attributes_${num}_hours'>
   </div>
 
   <div class='field'>
-    <label for='support_work_summaries_attributes_${num}_materials'>Material</label>
+    <label for='support_work_summaries_attributes_${num}_materials'><%= t(:materials, scope: [:activerecord, :attributes, :work_summary]) %></label>
     <textarea name='support[work_summaries_attributes][${num}][materials]' id='support_work_summaries_attributes_${num}_materials'></textarea>
   </div>`
 

@@ -1,26 +1,25 @@
 <% if can? :edit, User %>
   <%= render 'shared/buttons/option_button', alt: 'header' do %>
-    <li class="option-button__option"><%= link_to 'Edit', edit_user_path(@user), class: 'option-button__option-link' %></li>
+    <li class="option-button__option"><%= link_to t(:edit, scope: :global), edit_user_path(@user), class: 'option-button__option-link' %></li>
   <% end %>
 <% end %>
 
 <h2 class="main__titles"><%= @user.full_name %></h2>
-<h3 class="main__subtitle">User</h3>
-
+<h3 class="main__subtitle"><%= t(:user, scope: [:activerecord, :models]) %></h3>
 
 <div class="view_info">
   <p class="view_info__data"><%= @user.name %></p>
-  <p class="view_info__title">Name</p>
+  <p class="view_info__title"><%= t(:name, scope: [:activerecord, :attributes, :user]) %></p>
 </div>
 
 <div class="view_info">
   <p class="view_info__data"><%= @user.lastname %></p>
-  <p class="view_info__title">Lastname</p>
+  <p class="view_info__title"><%= t(:lastname, scope: [:activerecord, :attributes, :user]) %></p>
 </div>
 
 <div class="view_info">
   <p class="view_info__data"><%= @user.email %></p>
-  <p class="view_info__title">Email</p>
+  <p class="view_info__title"><%= t(:email, scope: [:activerecord, :attributes, :user]) %></p>
 </div>
 
 <div class="view_info">
@@ -30,32 +29,32 @@
   <% else %>
   <p class="view_info__data"><%= @user.address01 %></p>
   <% end %>
-  <p class="view_info__title">Address</p>
+  <p class="view_info__title"><%= t(:address01, scope: [:activerecord, :attributes, :user]) %></p>
 </div>
 
 <div class="view_info">
   <p class="view_info__data"><%= @user.phone %></p>
-  <p class="view_info__title">Phone</p>
+  <p class="view_info__title"><%= t(:phone, scope: [:activerecord, :attributes, :user]) %></p>
 </div>
 
 <div class="view_info">
   <p class="view_info__data"><%= @user.mobile %></p>
-  <p class="view_info__title">Mobile</p>
+  <p class="view_info__title"><%= t(:mobile, scope: [:activerecord, :attributes, :user]) %></p>
 </div>
 
 <div class="view_info">
-  <p class="view_info__data"><%= @user.role.humanize %></p>
-  <p class="view_info__title">Role</p>
+  <p class="view_info__data"><%= User.human_enum_name(:roles, @user.role) %></p>
+  <p class="view_info__title"><%= t(:role, scope: [:activerecord, :attributes, :user]) %></p>
 </div>
 
 <div class="view_info">
-  <p class="view_info__data"><%= @user.interface_color %></p>
-  <p class="view_info__title">Interface Color</p>
+  <p class="view_info__data"><%= User.human_enum_name(:interface_colors, @user.interface_color) %></p>
+  <p class="view_info__title"><%= t(:interface_color, scope: [:activerecord, :attributes, :user]) %></p>
 </div>
 
 <div class="view_info">
-  <p class="view_info__data"><%= @user.filtered? ? 'Yes' : 'No' %></p>
-  <p class="view_info__title">Removed from users listing?</p>
+  <p class="view_info__data"><%= User.human_enum_name(:filtered, @user.filtered) %></p>
+  <p class="view_info__title"><%= t(:filtered, scope: [:activerecord, :attributes, :user]) %></p>
 </div>
 
 <p><strong>Plants:</strong></p>

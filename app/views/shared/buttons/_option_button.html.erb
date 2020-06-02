@@ -1,7 +1,7 @@
 <% alt_btn = alt ? "--#{alt}" : '' %>
 
 <div class="option-button<%= alt_btn %>">
-  <a href="#" class="option-button__link"><span class="option-button__text">Options</span></a>
+  <a href="#" class="option-button__link"><span class="option-button__text"><%= t(:options, scope: :global) %></span></a>
   <div class="option-button__options">
     <ul class="option-button__options-list">
       <%= yield %>

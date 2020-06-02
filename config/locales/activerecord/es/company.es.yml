@@ -1,0 +1,14 @@
+es:
+  activerecord:
+    models:
+      company: 'Empresa'
+    attributes:
+      contact_id: 'Contacto de la empresa'
+      bf_contact_id: 'Contacto de Biofiltro'
+      company:
+        name: 'Nombre'
+        taxid: 'Tax Id'
+        industry_id: 'Industria'
+        contact_id: 'Contacto de la Empresa'
+        bf_contact_id: 'Contacto de Biofiltro'
+    errors:

@@ -14,5 +14,5 @@
 </p>
 
 <% if can? :edit, Standard %>
-<%= link_to 'Edit', edit_standard_path(@standard) %>
+<%= link_to t(:edit, scope: :global), edit_standard_path(@standard) %>
 <% end %>

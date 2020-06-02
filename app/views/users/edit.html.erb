@@ -1,9 +1,9 @@
 <% if can? :create, User %>
 <%= render 'shared/buttons/option_button', alt: 'header' do %>
-  <li class="option-button__option"><%= link_to 'Show', @user, class: 'option-button__option-link' %></li>
+  <li class="option-button__option"><%= link_to t(:show, scope: :global), @user, class: 'option-button__option-link' %></li>
 <% end %>
 <% end %>
 
-<h2 class="main__title">Editing User</h2>
+<h2 class="main__title"><%= t(:edit, scope: :user) %></h2>
 
 <%= render 'form', user: @user %>

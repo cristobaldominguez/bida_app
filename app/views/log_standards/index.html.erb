@@ -22,9 +22,9 @@
         <td><%= log_standard.active %></td>
         <td><%= log_standard.cycle %></td>
         <td><%= log_standard.responsible %></td>
-        <td><% if can? :read, LogStandard %><%= link_to 'Show', log_standard %><% end %></td>
-        <td><% if can? :edit, LogStandard %><%= link_to 'Edit', edit_log_standard_path(log_standard) %><% end %></td>
-        <td><% if can? :destroy, LogStandard %><%= link_to 'Destroy', log_standard, method: :delete, data: { confirm: 'Are you sure?' } %><% end %></td>
+        <td><% if can? :read, LogStandard %><%= link_to t(:show, scope: :global), log_standard %><% end %></td>
+        <td><% if can? :edit, LogStandard %><%= link_to t(:edit, scope: :global), edit_log_standard_path(log_standard) %><% end %></td>
+        <td><% if can? :destroy, LogStandard %><%= link_to t(:destroy, scope: :global), log_standard, method: :delete, data: { confirm: t(:confirm, scope: :global) } %><% end %></td>
       </tr>
     <% end %>
   </tbody>

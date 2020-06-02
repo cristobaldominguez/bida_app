@@ -1,5 +1,5 @@
   <%= render 'shared/buttons/option_button', alt: 'header' do %>
-    <li class="option-button__option"><%= link_to 'Show', plant_sampling_list_path(@plant, @sampling_list), class: 'option-button__option-link' %></li>
+    <li class="option-button__option"><%= link_to t(:show, scope: :global), plant_sampling_list_path(@plant, @sampling_list), class: 'option-button__option-link' %></li>
   <% end %>
 
 <h2 class="main__title">Editing <%= @sampling_list.access.name %> Samplings</h2>

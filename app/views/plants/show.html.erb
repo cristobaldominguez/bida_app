@@ -6,20 +6,20 @@
 
 <% if can? :edit, Plant %>
   <%= render 'shared/buttons/option_button', alt: 'header' do %>
-    <li class="option-button__option"><%= link_to 'Edit', edit_plant_path(@plant), class: 'option-button__option-link', data: { turbolinks: false } %></li>
+    <li class="option-button__option"><%= link_to t(:edit, scope: :global), edit_plant_path(@plant), class: 'option-button__option-link', data: { turbolinks: false } %></li>
     <li class="option-button__separator"></li>
     <% if can? :destroy, Plant %>
-    <li class="option-button__option"><%= link_to 'Destroy', @plant, class: 'option-button__option-link', method: :delete, data: { confirm: 'Are you sure?' } %></li>
+    <li class="option-button__option"><%= link_to t(:destroy, scope: :global), @plant, class: 'option-button__option-link', method: :delete, data: { confirm: t(:confirm, scope: :global) } %></li>
     <% end %>
   <% end %>
 <% end %>
 
 <h2 class="main__titles"><%= @plant.name %></h2>
-<h3 class="main__subtitle">Plant</h3>
+<h3 class="main__subtitle"><%= t(:plant, scope: [:activerecord, :models]) %></h3>
 
 <div class="view_info">
   <p class="view_info__data"><%= @plant.code %></p>
-  <p class="view_info__title">Code</p>
+  <p class="view_info__title"><%= t(:code, scope: [:activerecord, :attributes, :plant]) %></p>
 </div>
 
 <div class="view_info">
@@ -29,57 +29,57 @@
   <% else %>
   <p class="view_info__data"><%= @plant.address01 %></p>
   <% end %>
-  <p class="view_info__title">Address</p>
+  <p class="view_info__title"><%= t(:address01, scope: [:activerecord, :attributes, :plant]) %></p>
 </div>
 
 <div class="view_info">
   <p class="view_info__data"><%= @plant.state %></p>
-  <p class="view_info__title">State</p>
+  <p class="view_info__title"><%= t(:state, scope: [:activerecord, :attributes, :plant]) %></p>
 </div>
 
 <div class="view_info">
   <p class="view_info__data"><%= @plant.zip %></p>
-  <p class="view_info__title">Zip</p>
+  <p class="view_info__title"><%= t(:zip, scope: [:activerecord, :attributes, :plant]) %></p>
 </div>
 
 <div class="view_info">
   <p class="view_info__data"><%= @plant.country.name %></p>
-  <p class="view_info__title">Country</p>
+  <p class="view_info__title"><%= t(:country_id, scope: [:activerecord, :attributes, :plant]) %></p>
 </div>
 
 <div class="view_info">
   <p class="view_info__data"><%= @plant.phone %></p>
-  <p class="view_info__title">Phone</p>
+  <p class="view_info__title"><%= t(:phone, scope: [:activerecord, :attributes, :plant]) %></p>
 </div>
 
 <div class="view_info">
   <p class="view_info__data"><%= @plant.startup_date.to_s(:english) %></p>
-  <p class="view_info__title">Startup Date</p>
+  <p class="view_info__title"><%= t(:startup_date, scope: [:activerecord, :attributes, :plant]) %></p>
 </div>
 
 <div class="view_info">
   <p class="view_info__data"><%= @plant.contact&.full_name %></p>
-  <p class="view_info__title">Company Contact</p>
+  <p class="view_info__title"><%= t(:contact_id, scope: [:activerecord, :attributes, :plant]) %></p>
 </div>
 
 <div class="view_info">
   <p class="view_info__data"><%= @plant.bf_contact&.full_name %></p>
-  <p class="view_info__title">BioFiltro Contact</p>
+  <p class="view_info__title"><%= t(:bf_contact_id, scope: [:activerecord, :attributes, :plant]) %></p>
 </div>
 
 <div class="view_info">
   <p class="view_info__data"><%= @plant.discharge_point.name %></p>
-  <p class="view_info__title">Discharge Point</p>
+  <p class="view_info__title"><%= t(:discharge_point_id, scope: [:activerecord, :attributes, :plant]) %></p>
 </div>
 
 <div class="view_info">
   <p class="view_info__data"><%= @plant.system_size.sum %> <%= @plant.metrics.area.pluralize(@plant.system_size.sum) %></p>
-  <p class="view_info__title">System Size</p>
+  <p class="view_info__title"><%= t(:system_size, scope: [:activerecord, :attributes, :plant]) %></p>
 </div>
 
 <div class="view_info">
   <p class="view_info__data"><%= @plant.flow_design %> <%= @plant.flow_design > 1 ? @plant.metrics.volume.pluralize : @plant.metrics.volume %> per day.</p>
-  <p class="view_info__title">Flow Design</p>
+  <p class="view_info__title"><%= t(:flow_design, scope: [:activerecord, :attributes, :plant]) %></p>
 </div>
 
 <% if @plant.discharge_permit.attached? %>
@@ -96,19 +96,19 @@
 
 <div class="view_info">
   <p class="view_info__data"><%= @plant.system_purpose %></p>
-  <p class="view_info__title">System Purpose</p>
+  <p class="view_info__title"><%= t(:system_purpose, scope: [:activerecord, :attributes, :plant]) %></p>
 </div>
 
 <div class="view_info">
   <p class="view_info__data"><%= @plant.report_preface %></p>
-  <p class="view_info__title">Report Preface</p>
+  <p class="view_info__title"><%= t(:report_preface, scope: [:activerecord, :attributes, :plant]) %></p>
 </div>
 
 <div class="space"></div>
 
 <div class="highseason <%= @plant.high_season ? 'active' : '' %>">
 
-  <h2 class="cell_division">High Season</h2>
+  <h2 class="cell_division"><%= t(:high_season, scope: [:activerecord, :attributes, :plant]) %></h2>
 
   <label class="switch">
     <input type="checkbox" <%= @plant.high_season ? 'checked' : '' %> class="highseason__input">
@@ -149,7 +149,7 @@
 
 <h2 class="cell_division">Logbook</h2>
 
-<%= render 'shared/tables/elements_list', headers: ['Task', 'Responsible Party'] do %>
+<%= render 'shared/tables/elements_list', headers: [t(:task, scope: [:activerecord, :models]).pluralize, t(:responsible, scope: [:activerecord, :attributes, :plant])] do %>
 <% @task_list.each do |task| %>
 <tr class="table_main__table-row">
   <td class="table_main__table-data--left-text"><input type="checkbox" name="active" value="Boat" <%= 'checked' if task.active %> disabled> <%= task.name %></td>
@@ -160,17 +160,17 @@
 
 <div class="view_info">
   <p class="view_info__data"><%= @plant.logbook_bf_responsible&.full_name %></p>
-  <p class="view_info__title">Logbook BioFiltro Assigned Operator</p>
+  <p class="view_info__title"><%= t(:logbook_bf_responsible_id, scope: [:activerecord, :attributes, :plant]) %></p>
 </div>
 
 <div class="view_info">
   <p class="view_info__data"><%= @plant.logbook_bf_supervisor&.full_name %></p>
-  <p class="view_info__title">Logbook BioFiltro Supervisor</p>
+  <p class="view_info__title"><%= t(:logbook_bf_supervisor_id, scope: [:activerecord, :attributes, :plant]) %></p>
 </div>
 
 <div class="view_info">
   <p class="view_info__data"><%= @plant.logbook_company_responsible&.full_name %></p>
-  <p class="view_info__title">Logbook Company Manager</p>
+  <p class="view_info__title"><%= t(:logbook_company_responsible_id, scope: [:activerecord, :attributes, :plant]) %></p>
 </div>
 
 <h3>Graphs</h3>

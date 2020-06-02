@@ -1,0 +1,8 @@
+es:
+  user:
+    filtered: '¿Filtrado?'
+    all_users: 'Todos los usuarios'
+    resend: 'Reenviar confirmación'
+    index: 'Usuarios'
+    new: 'Nuevo Usuario'
+    edit: 'Editando Usuario'

@@ -104,20 +104,20 @@ class UsersController < ApplicationController
   end
 
   def set_roles
-    @roles = User.roles.map { |role, _| [role, role.to_s.humanize] }
+    @roles = User.roles.map { |role, _| [role, User.human_enum_name(:roles, role).to_s.humanize] }
   end
 
   def set_employees
-    @employees = User.employees.map { |employee| [employee.first, employee.first.humanize] }
+    @employees = User.employees.map { |employee| [employee.first, User.human_enum_name(:employees, employee.first).humanize] }
   end
 
   def set_interface_colors
-    @interface_colors = User.interface_colors.map { |color, _| [color, color.to_s.humanize] }
+    @interface_colors = User.interface_colors.map { |color, _| [color, User.human_enum_name(:interface_colors, color).to_s.humanize] }
   end
 
   def check_user_ability
     if params[:user][:role] == 'admin' && !current_user.admin?
-      flash.now[:alert] = 'Only Admins can assign Admin Users'
+      flash.now[:alert] = I18n.t(:not_allowed_admin_creation, scope: [:activerecord, :models, :attributes])
       render :new
     end
   end

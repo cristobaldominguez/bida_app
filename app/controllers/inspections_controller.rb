@@ -101,8 +101,8 @@ class InspectionsController < ApplicationController
     @pondings = Ponding.all
     @odors = Odor.all
     @flies = Fly.all
-    @birds = [['Yes', true], ['No', false]]
-    @on_site_client = [['Yes (Describe)', true], ['No', false]]
+    @birds = [[I18n.t(:_yes, scope: :global), true], [I18n.t(:_no, scope: :global), false]]
+    @on_site_client = [[I18n.t(:_yes, scope: :global) + ' (Describe)', true], [I18n.t(:_no, scope: :global), false]]
     @worms_color = WormsColor.all
     @worms_activity = WormsActivity.all
     @worms_density = WormsDensity.all

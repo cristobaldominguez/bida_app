@@ -1,6 +1,6 @@
 <% if can? :edit, FlowReport %>
   <%= render 'shared/buttons/option_button', alt: 'header' do %>
-    <li class="option-button__option"><%= link_to 'Edit', edit_plant_flow_report_path(@plant, @flow_report), class: 'option-button__option-link' %></li>
+    <li class="option-button__option"><%= link_to t(:edit, scope: :global), edit_plant_flow_report_path(@plant, @flow_report), class: 'option-button__option-link' %></li>
   <% end %>
 <% end %>
 

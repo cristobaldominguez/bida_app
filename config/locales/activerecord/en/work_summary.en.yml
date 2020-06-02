@@ -1,0 +1,6 @@
+en:
+  activerecord:
+    models:
+      work_summary: 'Work Summary'
+    attributes:
+    errors:

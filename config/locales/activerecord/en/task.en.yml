@@ -1,0 +1,7 @@
+en:
+  activerecord:
+    models:
+      task: 'Task'
+    attributes:
+      task:
+    errors:

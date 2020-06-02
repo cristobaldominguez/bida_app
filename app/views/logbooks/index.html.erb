@@ -1,6 +1,6 @@
 <h2 class="main__title">Logbooks</h2>
 
-<%= render 'shared/tables/elements_list', headers: %w(Plant Options) do %>
+<%= render 'shared/tables/elements_list', headers: [t(:title, scope: :plant), t(:options, scope: :global).capitalize] do %>
 <% @logbooks.each do |logbook| %>
   <tr class="table_main__table-row">
     <td class="table_main__table-data--left-text"><%= link_to logbook.created_at.to_date.strftime('%B, %Y'), edit_plant_logbook_path(@plant, logbook), class: 'table_main__link-show' %></td>
@@ -8,9 +8,9 @@
       <a href="#" class="table_main__link--options"></a>
       <div class="options_menu">
         <ul class="options_menu__list">
-          <% if can? :read, Logbook %><li class="options_menu__item"><%= link_to 'Show', [@plant, logbook], class: 'options_menu__link' %></li><% end %>
-          <% if can? :edit, Logbook %><li class="options_menu__item"><%= link_to 'Edit', edit_plant_logbook_path(@plant, logbook), class: 'options_menu__link' %></li><% end %>
-          <% if can? :destroy, Logbook %><li class="options_menu__item"><%= link_to 'Destroy', [@plant, logbook], class: 'options_menu__link', method: :delete, data: { confirm: 'Are you sure?' } %></li><% end %>
+          <% if can? :read, Logbook %><li class="options_menu__item"><%= link_to t(:show, scope: :global), [@plant, logbook], class: 'options_menu__link' %></li><% end %>
+          <% if can? :edit, Logbook %><li class="options_menu__item"><%= link_to t(:edit, scope: :global), edit_plant_logbook_path(@plant, logbook), class: 'options_menu__link' %></li><% end %>
+          <% if can? :destroy, Logbook %><li class="options_menu__item"><%= link_to t(:destroy, scope: :global), [@plant, logbook], class: 'options_menu__link', method: :delete, data: { confirm: t(:confirm, scope: :global) } %></li><% end %>
         </ul>
         <div class="unclick"></div>
       </div>

@@ -15,9 +15,9 @@
       <a href="#" class="table_main__link--options"></a>
       <div class="options_menu">
         <ul class="options_menu__list">
-          <% if can? :read, FlowReport %><li class="options_menu__item"><%= link_to 'Show', plant_flow_report_path(@plant, flow_report), class: 'options_menu__link' %></li><% end %>
-          <% if can? :edit, FlowReport %><li class="options_menu__item"><%= link_to 'Edit', edit_plant_flow_report_path(@plant, flow_report), class: 'options_menu__link' %></li><% end %>
-          <% if can? :destroy, FlowReport %><li class="options_menu__item"><%= link_to 'Destroy', plant_flow_report_path(@plant, flow_report), class: 'options_menu__link', method: :delete, data: { confirm: 'Are you sure?' } %></li><% end %>
+          <% if can? :read, FlowReport %><li class="options_menu__item"><%= link_to t(:show, scope: :global), plant_flow_report_path(@plant, flow_report), class: 'options_menu__link' %></li><% end %>
+          <% if can? :edit, FlowReport %><li class="options_menu__item"><%= link_to t(:edit, scope: :global), edit_plant_flow_report_path(@plant, flow_report), class: 'options_menu__link' %></li><% end %>
+          <% if can? :destroy, FlowReport %><li class="options_menu__item"><%= link_to t(:destroy, scope: :global), plant_flow_report_path(@plant, flow_report), class: 'options_menu__link', method: :delete, data: { confirm: t(:confirm, scope: :global) } %></li><% end %>
         </ul>
         <div class="unclick"></div>
       </div>

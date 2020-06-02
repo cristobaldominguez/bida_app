@@ -13,27 +13,27 @@
 
   <div class="field">
     <%= form.label :name %>
-    <%= form.text_field :name, placeholder: :name %>
+    <%= form.text_field :name, placeholder: t(:name, scope: [:activerecord, :attributes, :company]) %>
   </div>
 
   <div class="field">
     <%= form.label :taxid %>
-    <%= form.text_field :taxid, placeholder: :taxid %>
+    <%= form.text_field :taxid, placeholder: t(:taxid, scope: [:activerecord, :attributes, :company]) %>
   </div>
 
   <div class="field no-border">
     <%= form.label :industry_id %>
-    <%= form.collection_select(:industry_id, @industries, :id, :name, {prompt: 'Select an Industry'})  %>
+    <%= form.collection_select(:industry_id, @industries, :id, :name, {prompt: t(:select_industry, scope: :company)})  %>
   </div>
 
   <div class="field no-border">
-    <label>Company Contact</label>
-    <%= form.collection_select(:contact_id, @users, :id, :full_name, {prompt: 'Select a Company Contact'})  %>
+    <%= form.label :contact_id %>
+    <%= form.collection_select(:contact_id, @users, :id, :full_name, {prompt: t(:select_a_contact, scope: :company)})  %>
   </div>
 
   <div class="field no-border">
-    <label>BF Contact</label>
-    <%= form.collection_select(:bf_contact_id, @users, :id, :full_name, {prompt: 'Select a BF Contact'})  %>
+    <%= form.label :bf_contact_id %>
+    <%= form.collection_select(:bf_contact_id, @users, :id, :full_name, {prompt: t(:select_a_contact, scope: :company)})  %>
   </div>
 
   <div class="actions">

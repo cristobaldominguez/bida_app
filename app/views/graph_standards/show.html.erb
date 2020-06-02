@@ -19,5 +19,5 @@
 </p>
 
 <% if can? :edit, GraphStandard %>
-<%= link_to 'Edit', edit_plant_graph_standard_path(@graph_standard) %>
+<%= link_to t(:edit, scope: :global), edit_plant_graph_standard_path(@graph_standard) %>
 <% end %>

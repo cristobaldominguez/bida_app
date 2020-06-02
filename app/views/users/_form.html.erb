@@ -27,7 +27,7 @@
   </div>
 
   <div class="field">
-    <%= form.label :password, "Password" %>
+    <%= form.label :password %>
     <%= form.password_field :password, :autocomplete => "off"  %>
   </div>
 
@@ -85,8 +85,8 @@
   </div>
 
   <div class="field no-border">
-    <%= form.label 'Removed from users listing?' %>
-    <%= form.check_box :filtered %> Filtered?
+    <%= form.label :filtered %>
+    <%= form.check_box :filtered %> <%= t(:filtered, scope: :user) %> 
   </div>
 
   <div class="actions">
