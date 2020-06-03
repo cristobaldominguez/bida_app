@@ -53,7 +53,7 @@
 </div>
 
 <div class="view_info">
-  <p class="view_info__data"><%= @plant.startup_date.to_s(:english) %></p>
+  <p class="view_info__data"><%= l(@plant.startup_date, format: :long) %></p>
   <p class="view_info__title"><%= t(:startup_date, scope: [:activerecord, :attributes, :plant]) %></p>
 </div>
 

@@ -11,7 +11,7 @@
   <tr class="table_main__table-row">
     <td class="table_main__table-data--left-text"><%= log.task.name %></td>
     <td class="table_main__table-data"><%= log.value %></td>
-    <td class="table_main__table-data"><%= log.date %></td>
+    <td class="table_main__table-data"><%= l(log.date, format: :day_month) %></td>
   </tr>
   <% end %>
 <% end %>
