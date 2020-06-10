@@ -22,17 +22,17 @@
 <% end %>
 
 <div class="view_info">
-  <p class="view_info__data"><%= @alert.incident_type.name %></p>
+  <p class="view_info__data"><%= t(@alert.incident_type.name.parameterize(separator: '_'), scope: [:activerecord, :attributes, :incident_type, :incident_types]) %></p>
   <p class="view_info__title"><%= t(:incident_type_id, scope: [:activerecord, :attributes, :alert]) %></p>
 </div>
 
 <div class="view_info">
-  <p class="view_info__data"><%= @alert.status.name %></p>
+  <p class="view_info__data"><%= t(@alert.status.name.parameterize(separator: '_'), scope: [:activerecord, :attributes, :status, :statuses]) %></p>
   <p class="view_info__title"><%= t(:status_id, scope: [:activerecord, :attributes, :alert]) %></p>
 </div>
 
 <div class="view_info">
-  <p class="view_info__data"><%= @alert.priority.name %></p>
+  <p class="view_info__data"><%= t(@alert.priority.name.parameterize(separator: '_'), scope: [:activerecord, :attributes, :priority, :priorities]) %></p>
   <p class="view_info__title"><%= t(:priority_id, scope: [:activerecord, :attributes, :alert]) %></p>
 </div>
 
@@ -59,7 +59,7 @@
 <% end %>
 
 <div class="view_info">
-  <p class="view_info__data"><%= @alert.solution_target_date %></p>
+  <p class="view_info__data"><%= l(@alert.solution_target_date, format: :long) %></p>
   <p class="view_info__title"><%= t(:solution_target_date, scope: [:activerecord, :attributes, :alert]) %></p>
 </div>
 

@@ -1,0 +1,11 @@
+es:
+  activerecord:
+    attributes:
+      frecuency:
+        frecuencies:
+          daily: 'Diariamente'
+          weekly: 'Semanalmente'
+          every_2_weeks: 'Cada 2 semanas'
+          monthly: 'Mensualmente'
+          annualy: 'Anualmente'
+          every_x_months: 'Cada x Meses'

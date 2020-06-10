@@ -1,0 +1,8 @@
+es:
+  activerecord:
+    attributes:
+      screen:
+        screens:
+          normal: 'Normal'
+          clogged: 'Obstruida'
+          film_has_formed: 'Se ha formado una película'

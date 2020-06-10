@@ -1,7 +1,5 @@
 en:
   activerecord:
-    models:
-      inspection: 'Inspection'
     attributes:
       inspection:
         notify: 'Notify to:'

@@ -4,4 +4,13 @@ en:
       task: 'Task'
     attributes:
       task:
-    errors:
+        name: 'Name'
+        comment: 'Comment'
+        responsible: 'Responsible Party'
+        season: 'Afected by Seasons?'
+        frecuency: 'Frecuency'
+        select_day: 'Select day(s) and week(s)'
+        select_day_week: 'Select day(s) and week(s)'
+        select_day_week_month: 'Select day(s), week(s) and month(s)'
+        value_type: 'Value Type'
+        number_type: 'Number Type'

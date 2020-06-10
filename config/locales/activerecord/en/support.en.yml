@@ -1,8 +1,9 @@
 en:
   activerecord:
-    models:
-      support: 'Support'
     attributes:
       support:
         attention: 'Attention'
+        client_onsite: 'Client on Site'
+        name_client_onsite: 'Name of the Client on Site'
+        bf_technician_id: 'Biofiltro Technician'
     errors:

@@ -7,3 +7,4 @@ es:
     select_technician: 'Selecciona un Técnico'
     support_number: 'Número de Soporte'
     all: 'Todos los Ticket de Soporte'
+    title: "%{text} de Soporte"

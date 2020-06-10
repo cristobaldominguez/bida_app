@@ -66,7 +66,7 @@ class CompaniesController < ApplicationController
   private
 
   def set_industries
-    @industries = Industry.all
+    @industries = Industry.all_names
   end
 
   def set_users

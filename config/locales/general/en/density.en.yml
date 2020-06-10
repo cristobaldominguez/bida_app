@@ -1,0 +1,5 @@
+en:
+  density:
+    low: 'Low Density'
+    medium: 'Medium Density'
+    high: 'High Density'

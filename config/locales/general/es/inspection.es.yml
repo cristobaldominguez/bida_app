@@ -17,3 +17,5 @@ es:
     summary: 'Resumen/Recomendaciones'
     select_option: 'Selecciona una opción'
     number: 'Número de Inspección'
+    general_info: 'Información General'
+    sample_comments: 'Comentarios de la muestra'

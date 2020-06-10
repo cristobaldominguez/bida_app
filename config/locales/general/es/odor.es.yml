@@ -1,0 +1,5 @@
+es:
+  odor:
+    low: 'Bajo Olor'
+    medium: 'Medio Olor'
+    strong: 'Fuerte Olor'

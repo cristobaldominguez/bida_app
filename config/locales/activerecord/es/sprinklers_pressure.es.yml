@@ -1,0 +1,8 @@
+es:
+  activerecord:
+    attributes:
+      sprinklers_pressure:
+        sprinklers_pressures:
+          low: 'Baja'
+          normal: 'Normal'
+          high: 'Alta'

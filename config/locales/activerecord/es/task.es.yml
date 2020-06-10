@@ -4,4 +4,13 @@ es:
       task: 'Tarea'
     attributes:
       task:
-    errors:
+        name: 'Nombre'
+        comment: 'Comentario'
+        responsible: 'Responsable'
+        season: '¿Afecto a las temporadas?'
+        frecuency: 'Frecuencia'
+        select_day: 'Selecciona el(los) día(s) de la semana'
+        select_day_week: 'Selecciona el(los) día(s) y la semana'
+        select_day_week_month: 'Selecciona día(s), semana(s) y mes(es)'
+        value_type: 'Tipo de valor'
+        number_type: 'Tipo de número'

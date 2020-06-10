@@ -1,0 +1,7 @@
+es:
+  activerecord:
+    attributes:
+      odor:
+        odors:
+          typical: 'Típico'
+          no_typical_describe: 'Atípico (Describe)'

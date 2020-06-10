@@ -90,24 +90,23 @@ class InspectionsController < ApplicationController
   def set_variables
     @plant = Plant.find(params[:plant_id])
     @users = User.filtered_by(@plant)
-    @screens = Screen.all
-    @collectionbins = CollectionBin.all
-    @noises = Noise.all
-    @sprinklers_pressures = SprinklersPressure.all
-    @sprinklers_heads = SprinklersHead.all
-    @pipings = Piping.all
-    @system_surfaces = SystemSurface.all
-    @bed_compactions = BedCompaction.all
-    @pondings = Ponding.all
-    @odors = Odor.all
-    @flies = Fly.all
+    @screens = Screen.all_options
+    @collectionbins = CollectionBin.all_options
+    @noises = Noise.all_options
+    @sprinklers_pressures = SprinklersPressure.all_options
+    @sprinklers_heads = SprinklersHead.all_options
+    @pipings = Piping.all_options
+    @system_surfaces = SystemSurface.all_options
+    @bed_compactions = BedCompaction.all_options
+    @pondings = Ponding.all_options
+    @flies = Fly.all_options
     @birds = [[I18n.t(:_yes, scope: :global), true], [I18n.t(:_no, scope: :global), false]]
     @on_site_client = [[I18n.t(:_yes, scope: :global) + ' (Describe)', true], [I18n.t(:_no, scope: :global), false]]
-    @worms_color = WormsColor.all
-    @worms_activity = WormsActivity.all
-    @worms_density = WormsDensity.all
-    @colors = Color.all
-    @odors = Odor.all
+    @worms_color = WormsColor.all_options
+    @worms_activity = WormsActivity.all_options
+    @worms_density = WormsDensity.all_options
+    @colors = Color.all_options
+    @odors = Odor.all_options
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

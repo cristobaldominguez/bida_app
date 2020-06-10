@@ -1,0 +1,8 @@
+es:
+  activerecord:
+    attributes:
+      sprinklers_head:
+        sprinklers_heads:
+          normal: 'Normal'
+          clogged: 'Obstruida'
+          missing: 'Perdida'

@@ -2,8 +2,8 @@
   <%= render 'shared/buttons/option_button', alt: 'header' do %>
     <li class="option-button__option"><%= link_to t(:edit, scope: :global), edit_plant_inspection_path(@plant, @inspection), class: 'option-button__option-link' %></li>
     <% if can? :create, Inspection %>
+    <li class="option-button__option"><%= link_to t(:new, scope: :inspection), new_plant_inspection_path(@plant, @inspection), class: 'option-button__option-link' %></li>
     <li class="option-button__separator"></li>
-    <li class="option-button__option"><%= link_to 'New', new_plant_inspection_path(@plant, @inspection), class: 'option-button__option-link' %></li>
     <% if can? :destroy, Inspection %><li class="option-button__option"><%= link_to t(:destroy, scope: :global), plant_inspection_path(@plant, @inspection), class: 'option-button__option-link', method: :delete, data: { confirm: t(:confirm, scope: :global) } %></li><% end %>
     <% end %>
   <% end %>
@@ -11,7 +11,7 @@
 
 <h2 class="main__title"><%= t(:show, scope: :inspection) %> #<%= @inspection.id %></h2>
 
-<h2 class="main__division">General Info</h2>
+<h2 class="main__division"><%= t(:general_info, scope: :inspection) %></h2>
 
 <div class="view_info">
   <% if (@inspection.on_site_client) %>
@@ -19,12 +19,12 @@
   <% else %>
   <p class="view_info__data"><%= @inspection.on_site_client %></p>
   <% end %>
-  <p class="view_info__title">Client OnSite</p>
+  <p class="view_info__title"><%= t(:on_site_client, scope: [:activerecord, :attributes, :inspection]) %></p>
 </div>
 
 <div class="view_info">
   <p class="view_info__data"><%= @inspection.report_technician.full_name %></p>
-  <p class="view_info__title">Report Technician</p>
+  <p class="view_info__title"><%= t(:report_technician_id, scope: [:activerecord, :attributes, :inspection]) %></p>
 </div>
 
 <div class="view_info">
@@ -33,198 +33,197 @@
     <li class="view_info__element"><%= user.full_name %></li>
     <% end %>
   </ul>
-  <p class="view_info__title">Notify to</p>
+  <p class="view_info__title"><%= t(:notify, scope: [:activerecord, :attributes, :inspection]) %></p>
 </div>
 
 <div class="view_info">
-  <p class="view_info__data"><%= @inspection.date %></p>
-  <p class="view_info__title">Inspection Date</p>
+  <p class="view_info__data"><%= l(@inspection.date, format: :long) %></p>
+  <p class="view_info__title"><%= t(:date, scope: [:activerecord, :attributes, :inspection]) %></p>
 </div>
 
-<h2 class="main__division">Water Quality</h2>
+<h2 class="main__division"><%= t(:water_quality, scope: [:inspection]) %></h2>
 
 <% @fluents.each do |fluent|%>
 <div class="fluent__<%= fluent.output.name.parameterize.underscore %>">
-  <h4><%= fluent.output.name %></h4>
+  <h4><%= t(fluent.output.name.downcase.to_sym, scope: [:inspection]) %></h4>
 
   <div class="view_info">
     <p class="view_info__data"><%= fluent.ph %></p>
-    <p class="view_info__title">pH</p>
+    <p class="view_info__title"><%= t(:fluent_sampling, scope: [:activerecord, :attributes, :inspection], fluent: t(fluent.output.name.downcase.to_sym, scope: [:inspection])) %></p>
   </div>
 
   <div class="view_info">
-    <p class="view_info__data"><%= fluent.color.option %></p>
+    <p class="view_info__data"><%= t(fluent.color.option.parameterize(separator: '_'), scope: [:activerecord, :attributes, :color, :colors]) %></p>
     <% if fluent.color_description.present? %>
     <p class="view_info__data-description"><%= fluent.color_description %></p>
     <% end %>
-    <p class="view_info__title">Color</p>
+    <p class="view_info__title"><%= t(:sampling_color, scope: [:activerecord, :attributes, :inspection], fluent: t(fluent.output.name.downcase.to_sym, scope: [:inspection])) %></p>
   </div>
 
   <div class="view_info">
-    <p class="view_info__data"><%= fluent.odor.option %></p>
+    <p class="view_info__data"><%= t(fluent.odor.option.parameterize(separator: '_'), scope: [:activerecord, :attributes, :odor, :odors]) %></p>
     <% if fluent.odor_description.present? %>
     <p class="view_info__data-description"><%= fluent.odor_description %></p>
     <% end %>
-    <p class="view_info__title">Odor</p>
+    <p class="view_info__title"><%= t(:sampling_odor, scope: [:activerecord, :attributes, :inspection], fluent: t(fluent.output.name.downcase.to_sym, scope: [:inspection])) %></p>
   </div>
 
   <% if fluent.cod.present? %>
   <div class="view_info">
     <p class="view_info__data"><%= fluent.cod %> <span class="view_info__value-type">mg/L</span></p>
-    <p class="view_info__title">COD</p>
+    <p class="view_info__title"><%= t(:cod, scope: [:activerecord, :attributes, :fluent]) %></p>
   </div>
   <% end %>
 
   <% if fluent.ec.present? %>
   <div class="view_info">
     <p class="view_info__data"><%= fluent.ec %> <span class="view_info__value-type">µS/cm</span></p>
-    <p class="view_info__title">EC</p>
+    <p class="view_info__title"><%= t(:ec, scope: [:activerecord, :attributes, :fluent]) %></p>
   </div>
   <% end %>
 
   <% if fluent.bod.present? %>
   <div class="view_info">
     <p class="view_info__data"><%= fluent.bod %> <span class="view_info__value-type">mg/L</span></p>
-    <p class="view_info__title">BOD</p>
+    <p class="view_info__title"><%= t(:bod, scope: [:activerecord, :attributes, :fluent]) %></p>
   </div>
   <% end %>
 
   <% if fluent.tss.present? %>
     <div class="view_info">
       <p class="view_info__data"><%= fluent.tss %> <span class="view_info__value-type">mg/L</span></p>
-      <p class="view_info__title">TSS</p>
+      <p class="view_info__title"><%= t(:tss, scope: [:activerecord, :attributes, :fluent]) %></p>
     </div>
   <% end %>
 
   <% if fluent.tn.present? %>
   <div class="view_info">
     <p class="view_info__data"><%= fluent.tn %> <span class="view_info__value-type">mg/L</span></p>
-    <p class="view_info__title">TN</p>
+    <p class="view_info__title"><%= t(:tn, scope: [:activerecord, :attributes, :fluent]) %></p>
   </div>
   <% end %>
 
   <% if fluent.tp.present? %>
   <div class="view_info">
     <p class="view_info__data"><%= fluent.tp %> <span class="view_info__value-type">mg/L</span></p>
-    <p class="view_info__title">TP</p>
+    <p class="view_info__title"><%= t(:tp, scope: [:activerecord, :attributes, :fluent]) %></p>
   </div>
   <% end %>
 
   <% if fluent.sample_comments.present? %>
-  <p>
-    <strong>Sample comments:</strong>
-    <%= fluent.sample_comments %>
-  </p>
+  <div class="view_info">
+    <p class="view_info__data"><%= fluent.sample_comments %></p>
+    <p class="view_info__title"><%= t(:sample_comments, scope: [:activerecord, :attributes, :fluent]) %></p>
+  </div>
   <% end %>
 </div>
 <% end %>
 
-<h2 class="main__division">Primary Screen</h2>
+<h2 class="main__division"><%= t(:primary_screen, scope: [:inspection]) %></h2>
 
 <div class="view_info">
-  <p class="view_info__data"><%= @inspection.screen.option %></p>
-  <p class="view_info__title">Screen</p>
+  <p class="view_info__data"><%= t(@inspection.screen.option.parameterize(separator: '_'), scope: [:activerecord, :attributes, :screen, :screens]) %></p>
+  <p class="view_info__title"><%= t(:screen_id, scope: [:activerecord, :attributes, :inspection]) %></p>
 </div>
 
 <div class="view_info">
-  <p class="view_info__data"><%= @inspection.collection_bin.option %></p>
-  <p class="view_info__title">Collection Bin</p>
+  <p class="view_info__data"><%= t(@inspection.collection_bin.option.parameterize(separator: '_'), scope: [:activerecord, :attributes, :collection_bin, :collection_bins]) %></p>
+  <p class="view_info__title"><%= t(:collection_bin_id, scope: [:activerecord, :attributes, :inspection]) %></p>
 </div>
 
+<% if @inspection.screen_comments.present? %>
 <div class="view_info">
   <p class="view_info__data"><%= @inspection.screen_comments %></p>
-  <p class="view_info__title">Screen Comments</p>
+  <p class="view_info__title"><%= t(:screen_comments, scope: [:activerecord, :attributes, :inspection]) %></p>
 </div>
+<% end %>
 
-<!--
-<div class="view_info">
-  <p class="view_info__data"></p>
-  <p class="view_info__title"></p>
-</div>
- -->
-
-<h2 class="main__division">Pumps and Irrigation System</h2>
+<h2 class="main__division"><%= t(:pumps_irrigation, scope: [:inspection]) %></h2>
 
 <div class="view_info">
-  <p class="view_info__data"><%= @inspection.noise.option %></p>
+  <p class="view_info__data"><%= t(@inspection.noise.option.parameterize(separator: '_'), scope: [:activerecord, :attributes, :noise, :noises]) %></p>
   <% if @inspection.pumps_noise_description.present? %>
   <p class="view_info__data-description"><%= @inspection.pumps_noise_description %></p>
   <% end %>
-  <p class="view_info__title">Pumps Noise</p>
+  <p class="view_info__title"><%= t(:noise_id, scope: [:activerecord, :attributes, :inspection]) %></p>
 </div>
 
 <div class="view_info">
   <p class="view_info__data"><%= @inspection.pumps_psi %></p>
-  <p class="view_info__title">Pumps PSI</p>
+  <p class="view_info__title"><%= t(:pumps_psi, scope: [:activerecord, :attributes, :inspection]) %></p>
 </div>
 
 <div class="view_info">
-  <p class="view_info__data"><%= @inspection.sprinklers_pressure.option %></p>
-  <p class="view_info__title">Sprinklers Pressure</p>
+  <p class="view_info__data"><%= t(@inspection.sprinklers_pressure.option.parameterize(separator: '_'), scope: [:activerecord, :attributes, :sprinklers_pressure, :sprinklers_pressures]) %></p>
+  <p class="view_info__title"><%= t(:sprinklers_pressure_id, scope: [:activerecord, :attributes, :inspection]) %></p>
 </div>
 
 <div class="view_info">
-  <p class="view_info__data"><%= @inspection.sprinklers_head.option %></p>
-  <p class="view_info__title">Sprinklers Head</p>
+  <p class="view_info__data"><%= t(@inspection.sprinklers_head.option.parameterize(separator: '_'), scope: [:activerecord, :attributes, :sprinklers_head, :sprinklers_heads]) %></p>
+  <p class="view_info__title"><%= t(:sprinklers_head_id, scope: [:activerecord, :attributes, :inspection]) %></p>
 </div>
 
 <div class="view_info">
-  <p class="view_info__data"><%= @inspection.piping.option %></p>
-  <p class="view_info__title">Piping</p>
+  <p class="view_info__data"><%= t(@inspection.piping.option.parameterize(separator: '_'), scope: [:activerecord, :attributes, :piping, :pipings]) %></p>
+  <p class="view_info__title"><%= t(:piping_id, scope: [:activerecord, :attributes, :inspection]) %></p>
 </div>
 
+<% if @inspection.pumps_comments.present? %>
 <div class="view_info">
   <p class="view_info__data"><%= @inspection.pumps_comments %></p>
-  <p class="view_info__title">Pumps Comments</p>
+  <p class="view_info__title"><%= t(:pumps_comments, scope: [:activerecord, :attributes, :inspection]) %></p>
 </div>
+<% end %>
 
-<h2 class="main__division">BIDA System</h2>
+<h2 class="main__division"><%= t(:bida, scope: [:inspection]) %></h2>
 
 <div class="view_info">
-  <p class="view_info__data"><%= @inspection.system_surface.option %></p>
-  <p class="view_info__title">System Surface</p>
-</div>
-
-<div class="view_info">
-  <p class="view_info__data"><%= @inspection.bed_compaction.option %></p>
-  <p class="view_info__title">Bed Compaction</p>
+  <p class="view_info__data"><%= t(@inspection.system_surface.option.parameterize(separator: '_'), scope: [:activerecord, :attributes, :system_surface, :system_surfaces]) %></p>
+  <p class="view_info__title"><%= t(:system_surface_id, scope: [:activerecord, :attributes, :inspection]) %></p>
 </div>
 
 <div class="view_info">
-  <p class="view_info__data"><%= @inspection.ponding.option %></p>
-  <p class="view_info__title">Ponding</p>
+  <p class="view_info__data"><%= t(@inspection.bed_compaction.option.parameterize(separator: '_'), scope: [:activerecord, :attributes, :bed_compaction, :bed_compactions]) %></p>
+  <p class="view_info__title"><%= t(:bed_compaction_id, scope: [:activerecord, :attributes, :inspection]) %></p>
+</div>
+
+<div class="view_info">
+  <p class="view_info__data"><%= t(@inspection.ponding.option.parameterize(separator: '_'), scope: [:activerecord, :attributes, :ponding, :pondings]) %></p>
+  <p class="view_info__title"><%= t(:ponding_id, scope: [:activerecord, :attributes, :inspection]) %></p>
 </div>
 
 <% if @inspection.bida_comments.present? %>
 <div class="view_info">
   <p class="view_info__data"><%= @inspection.bida_comments %></p>
-  <p class="view_info__title">Bida Comments</p>
+  <p class="view_info__title"><%= t(:bida_comments, scope: [:activerecord, :attributes, :inspection]) %></p>
 </div>
 <% end %>
 
-<h2 class="main__division">General</h2>
+<h2 class="main__division"><%= t(:general, scope: [:inspection]) %></h2>
 
 <div class="view_info">
-  <p class="view_info__data"><%= @inspection.odor.option %></p>
+  <p class="view_info__data"><%= t(@inspection.odor.option.parameterize(separator: '_'), scope: [:activerecord, :attributes, :odor, :odors]) %></p>
   <% if @inspection.plant_odor_description.present? %>
   <p class="view_info__data-description"><%= @inspection.plant_odor_description %></p>
   <% end %>
-  <p class="view_info__title">Odor</p>
+  <p class="view_info__title"><%= t(:odor_id, scope: [:activerecord, :attributes, :inspection]) %></p>
 </div>
 
 <div class="view_info">
-  <p class="view_info__data"><%= @inspection.birds ? 'Yes' : 'No' %></p>
-  <p class="view_info__title">Birds</p>
+  <p class="view_info__data"><%= @inspection.birds ? I18n.t(:_yes, scope: :global) : I18n.t(:_no, scope: :global) %></p>
+  <p class="view_info__title"><%= t(:birds, scope: [:activerecord, :attributes, :inspection]) %></p>
 </div>
 
 <div class="view_info">
-  <p class="view_info__data"><%= @inspection.fly.option %></p>
-  <p class="view_info__title">Fly</p>
+  <p class="view_info__data"><%= t(@inspection.fly.option.parameterize(separator: '_'), scope: [:activerecord, :attributes, :fly, :flies]) %></p>
+  <p class="view_info__title"><%= t(:fly_id, scope: [:activerecord, :attributes, :inspection]) %></p>
 </div>
 
-<h2 class="main__division">Summary/Recommendations</h2>
+<% if @inspection.summary_comments.present? %>
+<h2 class="main__division"><%= t(:summary, scope: [:inspection]) %></h2>
 
 <div class="view_info">
   <p class="view_info__data"><%= @inspection.summary_comments %></p>
-  <p class="view_info__title">Summary Comments</p>
+  <p class="view_info__title"><%= t(:summary_comments, scope: [:activerecord, :attributes, :inspection]) %></p>
 </div>
+<% end %>

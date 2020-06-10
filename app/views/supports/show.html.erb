@@ -3,7 +3,7 @@
     <li class="option-button__option"><%= link_to t(:edit, scope: :global), edit_plant_support_path(@plant, @support), class: 'option-button__option-link' %></li>
   <% end %>
 <% end %>
-<h2 class="main__title">Support <%= @support.number %></h2>
+<h2 class="main__title"><%= t(:title, scope: [:support], text: @support.number) %></h2>
 
 <div class="view_info">
   <ul class="view_info__elements">
@@ -11,32 +11,32 @@
     <li class="view_info__element"><%= user.full_name %></li>
     <% end %>
   </ul>
-  <p class="view_info__title">Atention</p>
+  <p class="view_info__title"><%= t(:attention, scope: [:activerecord, :attributes, :support]) %></p>
 </div>
 
 <div class="view_info">
-  <p class="view_info__data"><%= @support.start_date %></p>
-  <p class="view_info__title">Start date</p>
+  <p class="view_info__data"><%= l(@support.start_date, format: :long) %></p>
+  <p class="view_info__title"><%= t(:start_date, scope: [:activerecord, :attributes, :support]) %></p>
 </div>
 
 <div class="view_info">
-  <p class="view_info__data"><%= @support.end_date %></p>
-  <p class="view_info__title">End date</p>
+  <p class="view_info__data"><%= l(@support.end_date, format: :long) %></p>
+  <p class="view_info__title"><%= t(:end_date, scope: [:activerecord, :attributes, :support]) %></p>
 </div>
 
 <div class="view_info">
   <p class="view_info__data"><%= @support.client_onsite ? 'Yes' : 'No' %></p>
-  <p class="view_info__title">Client onsite</p>
+  <p class="view_info__title"><%= t(:client_onsite, scope: [:activerecord, :attributes, :support]) %></p>
 </div>
 
 <div class="view_info">
   <p class="view_info__data"><%= @support.client.full_name %></p>
-  <p class="view_info__title">Name Client onsite</p>
+  <p class="view_info__title"><%= t(:name_client_onsite, scope: [:activerecord, :attributes, :support]) %></p>
 </div>
 
 <div class="view_info">
   <p class="view_info__data"><%= @support.bf_technician.full_name %></p>
-  <p class="view_info__title">Name BioFiltro Technician</p>
+  <p class="view_info__title"><%= t(:bf_technician_id, scope: [:activerecord, :attributes, :support]) %></p>
 </div>
 
 <div class="view_info">
@@ -44,13 +44,13 @@
     <% @support.work_summaries.each do |work_summary| %>
     <li class="view_info__work_summary">
       <p class="view_info__ws_description"><%= work_summary.description %></p>
-      <p class="view_info__ws_title">Description</p>
+      <p class="view_info__ws_title"><%= t(:description, scope: [:activerecord, :attributes, :work_summary]) %></p>
       <p class="view_info__ws_hours"><%= pluralize(work_summary.hours, 'hour') %></p>
-      <p class="view_info__ws_title">Hours</p>
+      <p class="view_info__ws_title"><%= t(:hours, scope: [:activerecord, :attributes, :work_summary]) %></p>
       <p class="view_info__ws_materials"><%= work_summary.materials %></p>
-      <p class="view_info__ws_title">Materials</p>
+      <p class="view_info__ws_title"><%= t(:materials, scope: [:activerecord, :attributes, :work_summary]) %></p>
     </li>
     <% end %>
   </ul>
-  <p class="view_info__title">Summaries</p>
+  <p class="view_info__title"><%= t(:work_summary, scope: [:activerecord, :models]) %></p>
 </div>

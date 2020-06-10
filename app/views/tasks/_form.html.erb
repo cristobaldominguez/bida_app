@@ -33,7 +33,7 @@
 
   <div class="field">
     <%= form.label :responsible, 'Responsible Party' %>
-    <%= form.collection_select(:responsible, @responsibles, :first, :second, {prompt: 'Select a Responsible Party'}) %>
+    <%= form.collection_select(:responsible, @responsibles, :first, :second, {prompt: t(:responsible, scope: :task)}) %>
   </div>
 
   <div class="field">

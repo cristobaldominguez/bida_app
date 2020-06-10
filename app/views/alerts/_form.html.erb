@@ -22,17 +22,17 @@
 
   <div class="field no-border">
     <%= form.label :incident_type_id %>
-    <%= form.collection_select :incident_type_id, @incidents, :id, :name, {prompt: t(:incident_type, scope: :alert)} %>
+    <%= form.collection_select :incident_type_id, @incidents, :first, :second, {prompt: t(:incident_type, scope: :alert)} %>
   </div>
 
   <div class="field no-border">
     <%= form.label :status_id %>
-    <%= form.collection_select :status_id, @statuses, :id, :name, {prompt: t(:status, scope: :alert)} %>
+    <%= form.collection_select :status_id, @statuses, :first, :second, {prompt: t(:status, scope: :alert)} %>
   </div>
 
   <div class="field no-border">
     <%= form.label :priority_id %>
-    <%= form.collection_select :priority_id, @priorities, :id, :name, {prompt: t(:priority, scope: :alert)}, class:'describe' %>
+    <%= form.collection_select :priority_id, @priorities, :first, :second, {prompt: t(:priority, scope: :alert)}, class:'describe' %>
   </div>
 
   <div class="field">

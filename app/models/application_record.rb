@@ -12,6 +12,20 @@ class ApplicationRecord < ActiveRecord::Base
     I18n.t("activerecord.attributes.#{model_name.i18n_key}.#{enum_name.to_s.pluralize}.#{enum_value}")
   end
 
+  def self.all_options
+    options = self.all.sort.pluck(:id, :option)
+    params_translations(options)
+  end
+
+  def self.all_names
+    names = self.all.sort.pluck(:id, :name)
+    params_translations(names)
+  end
+
+  def self.params_translations(options)
+    options.map { |opt| [opt.first, model_name.name.classify.constantize.human_enum_name(model_name.plural.to_sym, opt.second.parameterize(separator: '_'))] }
+  end
+
   def inactive!
     self.active = false
     self.save

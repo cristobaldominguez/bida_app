@@ -1,7 +1,5 @@
 es:
   activerecord:
-    models:
-      inspection: 'Inspección'
     attributes:
       inspection:
         on_site_client: 'Cliente en el Lugar'

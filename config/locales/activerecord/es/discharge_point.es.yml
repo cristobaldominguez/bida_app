@@ -1,0 +1,12 @@
+es:
+  activerecord:
+    attributes:
+      discharge_point:
+        discharge_points:
+          infiltration: 'Infiltración'
+          irrigation: 'Riego'
+          land_application: 'Aplicación en Tierra'
+          other: 'Otro'
+          pond: 'Estanque'
+          sewer: 'Alcantarillado'
+          stream: 'Torrente'

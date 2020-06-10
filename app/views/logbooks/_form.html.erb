@@ -22,7 +22,7 @@
     <tr class="table_main__table-row--no-height">
       <td colspan="2" class="table_main__table-data--date">
         <% if log.object.date == @current_date %>
-        Today
+        <%= t(:today, scope: :global) %>
         <% else %>
         <%= l(log.object.date, format: :long) %>
         <% end %>
@@ -57,11 +57,11 @@
         <% elsif input_type == 'date' %>
         <%= log.text_field :value, class: 'datepicker' %>
         <% elsif input_type == 'yes/no' %>
-        <%= log.collection_radio_buttons(:value, [['Yes', 'Yes'],['No', 'No']], :first, :second) %>
+        <%= log.collection_radio_buttons(:value, [['Yes', t(:_yes, scope: :global)],['No', t(:_no, scope: :global)]], :first, :second) %>
         <% elsif input_type == 'Low/Medium/High Density' %>
-        <%= log.collection_select(:value, [['Low', 'Low Density'],['Medium','Medium Density'],['High Density','High Density']], :first, :second, {prompt: 'Select an Alternative'})  %>
+        <%= log.collection_select(:value, [['Low', t(:low, scope: :density)],['Medium', t(:medium, scope: :density)],['High Density', t(:high, scope: :density)]], :first, :second, {prompt: t(:select_alt, scope: :global)})  %>
         <% elsif input_type == 'Low/Medium/Strong Odor' %>
-        <%= log.collection_select(:value, [['Low', 'Low Odor'],['Medium','Medium Odor'],['Strong Odor','Strong Odor']], :first, :second, {prompt: 'Select an Alternative'})  %>
+        <%= log.collection_select(:value, [['Low', t(:low, scope: :odor)],['Medium', t(:medium, scope: :odor)],['Strong Odor',t(:strong, scope: :odor)]], :first, :second, {prompt: t(:select_alt, scope: :global)})  %>
         <% end %>
       </td>
     </tr>
@@ -69,7 +69,7 @@
     <% end %>
     <% end %>
     <% else %>
-    <tr class="table_main__table-row"><td colspan="2" class="table_main__table-data">Hurray!! No Tasks to do!</td></tr>
+    <tr class="table_main__table-row"><td colspan="2" class="table_main__table-data"><%= t(:no_tasks_to_do, scope: :task) %></td></tr>
     <% end %>
   <% end %>
 

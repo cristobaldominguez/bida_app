@@ -1,7 +1,5 @@
 en:
   activerecord:
-    models:
-      user: 'User'
     attributes:
       user:
         address01: 'Address'

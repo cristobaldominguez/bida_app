@@ -1,0 +1,7 @@
+en:
+  activerecord:
+    attributes:
+      noise:
+        noises:
+          normal: 'Normal'
+          unnormal_describe: 'Unnormal (Describe)'

@@ -17,3 +17,5 @@ en:
     summary: 'Summary/Recommendations'
     select_option: 'Select an Option'
     number: 'Inspection Number'
+    general_info: 'General Info'
+    sample_comments: 'Sample Comments'

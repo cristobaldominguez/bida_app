@@ -7,3 +7,4 @@ en:
     select_technician: 'Select a Technician'
     support_number: 'Support Number'
     all: 'All Support Tickets'
+    title: "Support %{text}"

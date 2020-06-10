@@ -1,7 +1,7 @@
 class PlantsController < ApplicationController
   before_action :set_company, only: %i[show create update destroy]
   before_action :set_companies, only: :index
-  before_action :set_discharge_points, :set_countries, only: %i[new edit create update]
+  before_action :set_discharge_points, :set_countries, :set_months, :set_weekdays, only: %i[new edit create update]
   before_action :set_users, :set_frecuencies, only: %i[new edit create update]
   before_action :set_responsibles, :set_season, :set_log_frecuency, :set_value_types, only: %i[new edit create update show]
 
@@ -40,6 +40,7 @@ class PlantsController < ApplicationController
 
     @task_list = @plant.task_lists.build
     @task_list.tasks.build
+    @responsibles = [[-1, 'BioFiltro'], [0, @plant.company.name]]
   end
 
   def create
@@ -136,6 +137,17 @@ class PlantsController < ApplicationController
 
   private
 
+  def set_months
+    @months = I18n.t('date.month_names').compact.map { |month| [month[0..2].capitalize, month[3..-1]] }
+  end
+
+  def set_weekdays
+    days = I18n.t('date.day_names').map { |day| I18n.transliterate(day) }
+    days << days.shift
+
+    @days = days.map { |day| [day[0..2].capitalize, day[3..-1]] }
+  end
+
   def set_company
     @company = params[:company_id].nil? ? Plant.find(params[:id]).company : Company.find(params[:company_id])
   end
@@ -149,7 +161,7 @@ class PlantsController < ApplicationController
   end
 
   def set_discharge_points
-    @points = DischargePoint.all
+    @points = DischargePoint.all_names
   end
 
   def set_users
@@ -157,17 +169,17 @@ class PlantsController < ApplicationController
   end
 
   def set_frecuencies
-    @frecuencies = Frecuency.all
+    @frecuencies = Frecuency.all_names
   end
 
   def set_responsibles
     @company = params[:company_id].present? ? Company.find(params[:company_id]) : Plant.find(params[:id]).company
-    @responsibles = params[:action] == 'new' ? [[-1, 'BioFiltro'], [0, @company.name]] : Responsible.get_list(@plant)
+    @responsibles = Responsible.get_list(@plant)
   end
 
   def set_value_types
-    @input_types = Task.input_types.map { |key, val| [key, key] }
-    @data_types = Task.data_types.map { |key, val| [key, key] }
+    @input_types = Task.input_types.map { |key, val| [key, t(key, scope: [:task, :input_types])] }
+    @data_types = Task.data_types.map { |key, val| [key, t(key == '%' ? '_%' : key, scope: [:task, :data_types])] }
   end
 
   def build_samplings(sampling_lists, standards)
@@ -184,11 +196,17 @@ class PlantsController < ApplicationController
   end
 
   def set_season
-    @seasons = Task.seasons.map { |season, _| [season, season == 'no' ? 'No' : "Yes, show it #{season.humanize.underscore}"] }
+    @seasons = Task.seasons.map do |season, _|
+      _season = season == 'no' ? '_no' : season
+      [season, t(_season, scope: [:activerecord, :attributes, :season, :seasons])]
+    end
   end
 
   def set_log_frecuency
-    @log_frecuency = Task.frecuencies.map { |frecuency| [frecuency.first.parameterize.underscore, frecuency.first.humanize] }
+    @log_frecuency = Task.frecuencies.map do |frecuency|
+      _frecuency = frecuency.first.parameterize(separator: '_')
+      [_frecuency, t(_frecuency, scope: [:activerecord, :attributes, :frecuency, :frecuencies])]
+    end
   end
 
   def generate_month_logs(logbook)

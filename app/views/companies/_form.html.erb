@@ -23,7 +23,7 @@
 
   <div class="field no-border">
     <%= form.label :industry_id %>
-    <%= form.collection_select(:industry_id, @industries, :id, :name, {prompt: t(:select_industry, scope: :company)})  %>
+    <%= form.collection_select(:industry_id, @industries, :first, :second, {prompt: t(:select_industry, scope: :company)})  %>
   </div>
 
   <div class="field no-border">

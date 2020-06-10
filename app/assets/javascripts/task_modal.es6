@@ -335,7 +335,7 @@ document.addEventListener('turbolinks:load', function() {
     }
 
     function valueTypeHandle(e) {
-      const option_selected = $(this).find('option:selected').text()
+      const option_selected = $(this).val()
       option_selected === 'number' ? hidden_number.classList.remove('hide') : hidden_number.classList.add('hide')
     }
 

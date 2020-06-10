@@ -1,0 +1,8 @@
+es:
+  activerecord:
+    attributes:
+      collection_bin:
+        collection_bins:
+          normal: 'Normal'
+          full: 'Lleno'
+          spillage: 'Rebalsado'

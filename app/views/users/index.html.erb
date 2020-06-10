@@ -13,7 +13,7 @@
   <td class="table_main__table-data--left-text"><%= user.name %></td>
   <td class="table_main__table-data"><%= user.lastname %></td>
   <td class="table_main__table-data--email"><%= user.email %></td>
-  <td class="table_main__table-data"><%= user.role.humanize %></td>
+  <td class="table_main__table-data"><%= t(user.role, scope: [:activerecord, :attributes, :user, :roles]) %></td>
   <td class="table_main__table-data--options">
     <a href="#" class="table_main__link--options"></a>
     <div class="options_menu">

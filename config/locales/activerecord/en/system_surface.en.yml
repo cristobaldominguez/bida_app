@@ -1,0 +1,8 @@
+en:
+  activerecord:
+    attributes:
+      system_surface:
+        system_surfaces:
+          normal: 'Normal'
+          vegetation_growing: 'Vegetation growing'
+          trash: 'Trash'

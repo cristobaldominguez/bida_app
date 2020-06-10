@@ -6,3 +6,4 @@ es:
     task: 'Tarea'
     value: 'Valor'
     date: 'Fecha'
+    logbook_task: 'Tareas del Logbook'

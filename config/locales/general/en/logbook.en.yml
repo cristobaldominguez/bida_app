@@ -6,3 +6,4 @@ en:
     task: 'Task'
     value: 'Value'
     date: 'Date'
+    logbook_task: 'Logbook Task'

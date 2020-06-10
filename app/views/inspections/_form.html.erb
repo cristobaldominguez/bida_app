@@ -15,7 +15,7 @@
 
   <div class="field no-border">
     <%= form.label :on_site_client %>
-    <%= form.select(:on_site_client, @on_site_client, {prompt: t(:select_option, scope: :inspection)}, class:'describe')  %>
+    <%= form.collection_select(:on_site_client, @on_site_client, :second, :first, {prompt: t(:select_option, scope: :inspection)}, class:'describe')  %>
   </div>
 
   <div class="field description <%= 'show' if inspection.on_site_client %> no-border">
@@ -55,7 +55,7 @@
 
     <div class="field no-border">
       <%= fluent.label t(:sampling_color, fluent: t(_fluent.downcase, scope: :inspection), scope: [:activerecord, :attributes, :inspection]) %>
-      <%= fluent.collection_select(:color_id, @colors, :id, :option, {prompt: t(:select_option, scope: :inspection)}, class: 'describe') %>
+      <%= fluent.collection_select(:color_id, @colors, :first, :second, {prompt: t(:select_option, scope: :inspection)}, class: 'describe') %>
     </div>
 
     <div class="field description">
@@ -65,7 +65,7 @@
 
     <div class="field no-border">
       <%= fluent.label t(:sampling_odor, fluent: t(_fluent.downcase, scope: :inspection), scope: [:activerecord, :attributes, :inspection]) %>
-      <%= fluent.collection_select(:odor_id, @odors, :id, :option, {prompt: t(:select_option, scope: :inspection)}, class:'describe')  %>
+      <%= fluent.collection_select(:odor_id, @odors, :first, :second, {prompt: t(:select_option, scope: :inspection)}, class:'describe')  %>
     </div>
 
     <div class="field description">
@@ -113,12 +113,12 @@
 
   <div class="field no-border">
     <%= form.label :screen_id %>
-    <%= form.collection_select(:screen_id, @screens, :id, :option, {prompt: t(:select_option, scope: :inspection)})  %>
+    <%= form.collection_select(:screen_id, @screens, :first, :second, {prompt: t(:select_option, scope: :inspection)})  %>
   </div>
 
   <div class="field no-border">
     <%= form.label :collection_bin_id %>
-    <%= form.collection_select(:collection_bin_id, @collectionbins, :id, :option, {prompt: t(:select_option, scope: :inspection)})  %>
+    <%= form.collection_select(:collection_bin_id, @collectionbins, :first, :second, {prompt: t(:select_option, scope: :inspection)})  %>
   </div>
 
   <div class="field">
@@ -130,7 +130,7 @@
 
   <div class="field no-border">
     <%= form.label :noise_id %>
-    <%= form.collection_select(:noise_id, @noises, :id, :option, {prompt: t(:select_option, scope: :inspection)}, class:'describe') %>
+    <%= form.collection_select(:noise_id, @noises, :first, :second, {prompt: t(:select_option, scope: :inspection)}, class:'describe') %>
   </div>
 
   <div class="field description">
@@ -145,17 +145,17 @@
 
   <div class="field no-border">
     <%= form.label :sprinklers_pressure_id %>
-    <%= form.collection_select(:sprinklers_pressure_id, @sprinklers_pressures, :id, :option, {prompt: t(:select_option, scope: :inspection)})  %>
+    <%= form.collection_select(:sprinklers_pressure_id, @sprinklers_pressures, :first, :second, {prompt: t(:select_option, scope: :inspection)})  %>
   </div>
 
   <div class="field no-border">
     <%= form.label :sprinklers_head_id %>
-    <%= form.collection_select(:sprinklers_head_id, @sprinklers_heads, :id, :option, {prompt: t(:select_option, scope: :inspection)})  %>
+    <%= form.collection_select(:sprinklers_head_id, @sprinklers_heads, :first, :second, {prompt: t(:select_option, scope: :inspection)})  %>
   </div>
 
   <div class="field no-border">
     <%= form.label :piping_id %>
-    <%= form.collection_select(:piping_id, @pipings, :id, :option, {prompt: t(:select_option, scope: :inspection)})  %>
+    <%= form.collection_select(:piping_id, @pipings, :first, :second, {prompt: t(:select_option, scope: :inspection)})  %>
   </div>
 
   <div class="field">
@@ -167,12 +167,12 @@
 
   <div class="field no-border">
     <%= form.label :system_surface_id %>
-    <%= form.collection_select(:system_surface_id, @system_surfaces, :id, :option, {prompt: t(:select_option, scope: :inspection)})  %>
+    <%= form.collection_select(:system_surface_id, @system_surfaces, :first, :second, {prompt: t(:select_option, scope: :inspection)})  %>
   </div>
 
   <div class="field no-border">
     <%= form.label :worms_color_id %>
-    <%= form.collection_select(:worms_color_id, @worms_color, :id, :option, {prompt: t(:select_option, scope: :inspection)}, class:'describe') %>
+    <%= form.collection_select(:worms_color_id, @worms_color, :first, :second, {prompt: t(:select_option, scope: :inspection)}, class:'describe') %>
   </div>
 
   <div class="field description">
@@ -182,7 +182,7 @@
 
   <div class="field no-border">
     <%= form.label :worms_activity_id %>
-    <%= form.collection_select(:worms_activity_id, @worms_activity, :id, :option, {prompt: t(:select_option, scope: :inspection)}, class:'describe') %>
+    <%= form.collection_select(:worms_activity_id, @worms_activity, :first, :second, {prompt: t(:select_option, scope: :inspection)}, class:'describe') %>
   </div>
 
   <div class="field description">
@@ -192,17 +192,17 @@
 
   <div class="field no-border">
     <%= form.label :worms_density_id %>
-    <%= form.collection_select(:worms_density_id, @worms_density, :id, :option, {prompt: t(:select_option, scope: :inspection)})  %>
+    <%= form.collection_select(:worms_density_id, @worms_density, :first, :second, {prompt: t(:select_option, scope: :inspection)})  %>
   </div>
 
   <div class="field no-border">
     <%= form.label :bed_compaction_id %>
-    <%= form.collection_select(:bed_compaction_id, @bed_compactions, :id, :option, {prompt: t(:select_option, scope: :inspection)})  %>
+    <%= form.collection_select(:bed_compaction_id, @bed_compactions, :first, :second, {prompt: t(:select_option, scope: :inspection)})  %>
   </div>
 
   <div class="field no-border">
     <%= form.label :ponding_id %>
-    <%= form.collection_select(:ponding_id, @pondings, :id, :option, {prompt: t(:select_option, scope: :inspection)})  %>
+    <%= form.collection_select(:ponding_id, @pondings, :first, :second, {prompt: t(:select_option, scope: :inspection)})  %>
   </div>
 
   <div class="field">
@@ -214,7 +214,7 @@
 
   <div class="field no-border">
     <%= form.label :odor_id %>
-    <%= form.collection_select(:odor_id, @odors, :id, :option, {prompt: t(:select_option, scope: :inspection)})  %>
+    <%= form.collection_select(:odor_id, @odors, :first, :second, {prompt: t(:select_option, scope: :inspection)}, class:'describe')  %>
   </div>
 
   <div class="field description">
@@ -229,7 +229,7 @@
 
   <div class="field no-border">
     <%= form.label :fly_id %>
-    <%= form.collection_select(:fly_id, @flies, :id, :option, {prompt: t(:select_option, scope: :inspection)})  %>
+    <%= form.collection_select(:fly_id, @flies, :first, :second, {prompt: t(:select_option, scope: :inspection)})  %>
   </div>
 
   <h2 class="cell_division"><%= t(:summary, scope: :inspection) %></h2>

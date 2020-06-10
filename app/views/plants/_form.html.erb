@@ -102,7 +102,7 @@
 
   <div class="field no-border">
     <%= form.label :discharge_point_id %>
-    <%= form.collection_select(:discharge_point_id, @points, :id, :name, {prompt: 'Select a Discharge Point'})  %>
+    <%= form.collection_select(:discharge_point_id, @points, :first, :second, {prompt: 'Select a Discharge Point'})  %>
   </div>
 
   <div class="field">
@@ -115,7 +115,7 @@
     <%= form.text_area :report_preface %>
   </div>
 
-  <div class="field">
+  <!-- <div class="field">
     <h3>Standards</h3>
     <table class="table-standards">
       <tr>
@@ -125,74 +125,74 @@
         <th colspan="2">In</th>
         <th colspan="2">Out</th>
       </tr>
-    <%= form.fields_for :standards, @standards do |standard| %>
-    <%= standard.fields_for :option do |option| %>
+    <%#= form.fields_for :standards, @standards do |standard| %>
+    <%#= standard.fields_for :option do |option| %>
       <tr>
-        <td><%= standard.check_box :enabled, class: "standard", data: { "target" => option.object.name.parameterize.underscore } %></td>
+        <td><%#= standard.check_box :enabled, class: "standard", data: { "target" => option.object.name.parameterize.underscore } %></td>
         <td>
-          <%= standard.hidden_field :id %>
-          <%= option.hidden_field :id %>
-          <%= standard.label option.object.name %>
+          <%#= standard.hidden_field :id %>
+          <%#= option.hidden_field :id %>
+          <%#= standard.label option.object.name %>
         </td>
-        <td class="col_span__range"><%= standard.check_box :isRange, class: 'check' %></td>
-        <%= standard.fields_for :bounds do |bound| %>
-        <%= bound.fields_for :outlet do |outlet| %>
-        <% if standard.object.isRange %>
+        <td class="col_span__range"><%#= standard.check_box :isRange, class: 'check' %></td>
+        <%#= standard.fields_for :bounds do |bound| %>
+        <%#= bound.fields_for :outlet do |outlet| %>
+        <%# if standard.object.isRange %>
         <td class="col_span">
-        <% else %>
+        <%# else %>
         <td colspan="2" class="col_span">
-        <% end %>
-          <%= bound.hidden_field :id %>
-          <%= outlet.hidden_field :id %>
-          <%= bound.text_field :from, placeholder: 'Number', class: "responsive #{outlet.object.name.parameterize.underscore}_from" %>
+        <%# end %>
+          <%#= bound.hidden_field :id %>
+          <%#= outlet.hidden_field :id %>
+          <%#= bound.text_field :from, placeholder: 'Number', class: "responsive #{outlet.object.name.parameterize.underscore}_from" %>
         </td>
-        <% if standard.object.isRange %>
+        <%# if standard.object.isRange %>
         <td class="col_span__option">
-        <% else %>
+        <%# else %>
         <td class="col_span__option--hidden">
-        <% end %>
-          <%= bound.hidden_field :id %>
-          <%= outlet.hidden_field :id %>
-          <%= bound.text_field :to, placeholder: 'Number', class: "responsive #{outlet.object.name.parameterize.underscore}_to" %>
+        <%# end %>
+          <%#= bound.hidden_field :id %>
+          <%#= outlet.hidden_field :id %>
+          <%#= bound.text_field :to, placeholder: 'Number', class: "responsive #{outlet.object.name.parameterize.underscore}_to" %>
         </td>
-        <% end %>
-        <% end %>
+        <%# end %>
+        <%# end %>
       </tr>
-    <% end %>
-    <% end %>
+    <%# end %>
+    <%# end %>
     </table>
     <input class="toggle_checkbox" type="checkbox" name="toggle_checkbox" checked="checked">
     <label for="toggle_checkbox">Toggle Active</label>
-  </div>
+  </div> -->
 
-  <div class="field">
-    <%= form.label 'Discharge Permit' %>
-    <%= form.file_field :discharge_permit %>
+  <!-- <div class="field">
+    <%#= form.label 'Discharge Permit' %>
+    <%#= form.file_field :discharge_permit %>
 
-    <% if plant.discharge_permit.attached? %>
-    <%= link_to rails_blob_path(plant.discharge_permit, disposition: :attachment), class: 'text-icon' do %>
-      <%= render 'shared/icons/document' %> <%= plant.discharge_permit.filename %>
-    <% end %>
-    <% end %>
-  </div>
+    <%# if plant.discharge_permit.attached? %>
+    <%#= link_to rails_blob_path(plant.discharge_permit, disposition: :attachment), class: 'text-icon' do %>
+      <%#= render 'shared/icons/document' %> <%#= plant.discharge_permit.filename %>
+    <%# end %>
+    <%# end %>
+  </div> -->
 
-    <%= form.fields_for :sampling_lists, @sampling_lists_filtered do |sampling_list| %>
-    <%= sampling_list.fields_for :access do |_access| %>
-    <div class="field">
-      <h3><%= _access.hidden_field :id %><%= _access.object.name %> Samplings</h3>
+    <%#= form.fields_for :sampling_lists, @sampling_lists_filtered do |sampling_list| %>
+    <%#= sampling_list.fields_for :access do |_access| %>
+    <!-- <div class="field">
+      <h3><%#= _access.hidden_field :id %><%#= _access.object.name %> Samplings</h3>
 
       <div class="field no-border">
-        <%= form.label :frecuency_id %>
-        <%= sampling_list.collection_select(:frecuency_id, @frecuencies, :id, :name, {prompt: 'Select a Frecuency'})  %>
+        <%#= form.label :frecuency_id %>
+        <%#= sampling_list.collection_select(:frecuency_id, @frecuencies, :first, :second, {prompt: 'Select a Frecuency'})  %>
       </div>
 
       <div class="field">
-        <%= form.label :per_cycle %>
-        <%= sampling_list.number_field :per_cycle, placeholder: 'Number' %>
+        <%#= form.label :per_cycle %>
+        <%#= sampling_list.number_field :per_cycle, placeholder: 'Number' %>
       </div>
-    </div>
-    <% end %>
-    <% end %>
+    </div> -->
+    <%# end %>
+    <%# end %>
 
     <!-- Tasks & Task Lists -->
     <%= render 'shared/tables/elements_list', headers: [t(:active, scope: :global).camelcase, t(:task, scope: [:activerecord, :models]).pluralize, t(:options, scope: :global).camelcase], title: 'Logbook', css_class: 'logbook' do %>
@@ -239,14 +239,14 @@
     <%= form.collection_select(:logbook_company_responsible_id, @users, :id, :full_name, {prompt: 'Select a Logbook Company Manager'})  %>
   </div>
 
-  <h3>Graphs</h3>
+  <!-- <h3>Graphs</h3>
   <ul>
-  <%= form.fields_for :graph_standards, @graph_standards do |graph_standard| %>
-  <%= graph_standard.fields_for :charts do |chart| %>
-    <li><%= graph_standard.check_box :show %> <%= graph_standard.object.chart.name %> <%= graph_standard.hidden_field :chart_id %></li>
-  <% end %>
-  <% end %>
-  </ul>
+  <%#= form.fields_for :graph_standards, @graph_standards do |graph_standard| %>
+  <%#= graph_standard.fields_for :charts do |chart| %>
+    <li><%#= graph_standard.check_box :show %> <%#= graph_standard.object.chart.name %> <%#= graph_standard.hidden_field :chart_id %></li>
+  <%# end %>
+  <%# end %>
+  </ul> -->
 
   <div class="actions">
     <%= form.submit class: 'action-btn' %>

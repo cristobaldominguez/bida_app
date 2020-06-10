@@ -1,0 +1,8 @@
+es:
+  activerecord:
+    attributes:
+      worms_density:
+        worms_densities:
+          low: 'Baja'
+          normal: 'Normal'
+          high: 'Alta'

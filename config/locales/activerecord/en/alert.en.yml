@@ -1,7 +1,5 @@
 en:
   activerecord:
-    models:
-      alert: 'Alert'
     attributes:
       alert:
         attention: 'Attention'

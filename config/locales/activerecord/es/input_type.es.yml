@@ -1,0 +1,6 @@
+es:
+  activerecord:
+    attributes:
+      input_type:
+        input_types:
+          

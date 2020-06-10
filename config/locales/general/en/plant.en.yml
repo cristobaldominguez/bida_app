@@ -5,7 +5,7 @@ en:
     new_plant: 'New Plant'
     related_plants: 'Related Plants'
     my_plants: 'My Plants'
-    new: "New Plant"
-    edit: "Editing Plant"
+    new: 'New Plant'
+    edit: 'Editing Plant'
     index: 'Plants'
-    all: "Plants"
+    all: 'Plants'

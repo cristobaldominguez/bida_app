@@ -6,12 +6,12 @@
 
 <h2 class="main__title"><%= t(:index, scope: :company) %></h2>
 
-<%= render 'shared/tables/elements_list', headers: [t(:name, scope: :global).camelize, t(:taxid, scope: :global).camelize, t(:industry, scope: :global).camelize, t(:options, scope: :global).camelize], title: t(:your_companies, scope: :global) do %>
+<%= render 'shared/tables/elements_list', headers: [t(:name, scope: [:activerecord, :attributes, :company]).camelize, t(:taxid, scope: [:activerecord, :attributes, :company]).camelize, t(:industry, scope: [:activerecord, :attributes, :company]).camelize, t(:options, scope: :global).camelize], title: t(:your_companies, scope: :company) do %>
 <% @companies.each do |company| %>
 <tr class="table_main__table-row">
   <td class="table_main__table-data--left-text"><%= link_to company.name, company, class: 'table_main__link-show' %></td>
   <td class="table_main__table-data"><%= company.taxid %></td>
-  <td class="table_main__table-data"><%= company.industry.name %></td>
+  <td class="table_main__table-data"><%= t(company.industry.name.parameterize(separator: '_'), scope: [:activerecord, :attributes, :industry, :industries]) %></td>
   <td class="table_main__table-data--options">
     <a href="#" class="table_main__link--options"></a>
     <div class="options_menu">

@@ -79,15 +79,15 @@ class AlertsController < ApplicationController
   private
 
   def set_incident_type
-    @incidents = IncidentType.all
+    @incidents = IncidentType.all_names
   end
 
   def set_status
-    @statuses = Status.all
+    @statuses = Status.all_names
   end
 
   def set_priority
-    @priorities = Priority.all
+    @priorities = Priority.all_names
   end
 
   def set_create_assignment
