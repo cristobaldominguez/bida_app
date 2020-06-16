@@ -22,6 +22,7 @@ en:
     close: 'Close'
     next: 'Next'
     previous: 'Previous'
+    per_day: 'per day'
     ordinal:
       first: 'st'
       second: 'nd'

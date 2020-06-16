@@ -1,0 +1,12 @@
+en:
+  activerecord:
+    attributes:
+      discharge_point:
+        discharge_points:
+          infiltration: 'Infiltration'
+          irrigation: 'Irrigation'
+          land_application: 'Land Application'
+          other: 'Other'
+          pond: 'Pond'
+          sewer: 'Sewer'
+          stream: 'Stream'

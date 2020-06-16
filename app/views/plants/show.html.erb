@@ -68,7 +68,7 @@
 </div>
 
 <div class="view_info">
-  <p class="view_info__data"><%= @plant.discharge_point.name %></p>
+  <p class="view_info__data"><%= t(@plant.discharge_point.name.parameterize(separator: '_'), scope: [:activerecord, :attributes, :discharge_point, :discharge_points]) %></p>
   <p class="view_info__title"><%= t(:discharge_point_id, scope: [:activerecord, :attributes, :plant]) %></p>
 </div>
 
@@ -78,7 +78,7 @@
 </div>
 
 <div class="view_info">
-  <p class="view_info__data"><%= @plant.flow_design %> <%= @plant.flow_design > 1 ? @plant.metrics.volume.pluralize : @plant.metrics.volume %> per day.</p>
+  <p class="view_info__data"><%= @plant.flow_design %> <%= @plant.flow_design > 1 ? t(:volumes, scope: [:activerecord, :attributes, :metrics]) : t(:volume, scope: [:activerecord, :attributes, :metrics]) %> <%= t(:per_day, scope: :global) %></p>
   <p class="view_info__title"><%= t(:flow_design, scope: [:activerecord, :attributes, :plant]) %></p>
 </div>
 

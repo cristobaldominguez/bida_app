@@ -1,0 +1,6 @@
+es:
+  activerecord:
+    attributes:
+      metrics:
+        volume: 'Galón'
+        volumes: 'Galones'

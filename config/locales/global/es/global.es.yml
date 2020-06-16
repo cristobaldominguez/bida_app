@@ -22,6 +22,7 @@ es:
     close: 'Cerrar'
     next: 'Siguiente'
     previous: 'Previo'
+    per_day: 'por día'
     ordinal:
       first: 'er'
       second: 'o'
