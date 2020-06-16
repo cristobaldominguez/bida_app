@@ -5,12 +5,8 @@ Rails.application.routes.draw do
     get 'pages/index'
     get 'pages/no_permission'
 
-    resources :log_standards
-    resources :tasks
-    resources :bounds
-    resources :standards
-    resources :charts
-    # resources :plants, only: %i[index]
+    resources :log_standards, :tasks, :bounds, :standards, :charts
+
     resources :companies do
       resources :plants, only: %i[index new create update destroy]
     end
@@ -22,21 +18,17 @@ Rails.application.routes.draw do
         end
       end
       resources :logbooks, except: %i[new create]
-      resources :inspections
-      resources :alerts
-      resources :flows
+      resources :inspections, :alerts, :flows, :graphs, :graph_standards
       resources :flow_reports do
         collection do
           get 'custom'
         end
       end
-      resources :graphs
       resources :reports do
         collection do
           get 'latest_report'
         end
       end
-      resources :graph_standards
       resources :supports do
         collection do
           get 'custom'

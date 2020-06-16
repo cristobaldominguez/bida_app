@@ -3,7 +3,8 @@ class PlantsController < ApplicationController
   before_action :set_companies, only: :index
   before_action :set_discharge_points, :set_countries, :set_months, :set_weekdays, only: %i[new edit create update]
   before_action :set_users, :set_frecuencies, only: %i[new edit create update]
-  before_action :set_responsibles, :set_season, :set_log_frecuency, :set_value_types, only: %i[new edit create update show]
+  before_action :set_season, :set_log_frecuency, :set_value_types, only: %i[new edit create update show]
+  before_action :set_responsibles, only: %i[edit update show]
 
   load_and_authorize_resource
 
@@ -21,7 +22,7 @@ class PlantsController < ApplicationController
     @inspections = @plant.inspections.active
     # @standards = @plant.standards.includes(:option, :bounds).sort_by(&:option_id)
     @standards = @plant.standards.sort_by(&:option_id)
-    @sampling_lists = @plant.sampling_lists.includes(:access, samplings: [standard: %i[option bounds]]).group_by { |k| k.access.name }.map { |_, v| v.max_by(&:created_at) }
+    @sampling_lists = @plant.sampling_lists.includes(:access, samplings: [standard: %i[option]]).group_by { |k| k.access.name }.map { |_, v| v.max_by(&:created_at) }
     @samplings = @sampling_lists.map { |sl| { sl.access.name => sl.samplings.group_by { |s| s.standard.option.name }.map { |_, v| v.max_by(&:created_at) } } }
     @task_lists = @plant.task_lists.includes(:tasks)
     @graph_standards = @plant.graph_standards.includes(:chart)
@@ -32,11 +33,12 @@ class PlantsController < ApplicationController
   end
 
   def new
-    @plant = Company.find(params[:company_id]).plants.build
+    @company = Company.find(params[:company_id])
+    @plant = @company.plants.build
     @plant.country = Country.find(3)
-    sampling_lists = SamplingListGenerator.new(@plant).build
-    @sampling_lists_filtered = sampling_lists.select { |sampling_list| sampling_list.access.name == 'External' }
-    @graph_standards = Chart.all.map { |chart| @plant.graph_standards.build(chart: chart) }
+    # sampling_lists = SamplingListGenerator.new(@plant).build
+    # @sampling_lists_filtered = sampling_lists.select { |sampling_list| sampling_list.access.name == 'External' }
+    # @graph_standards = Chart.all.map { |chart| @plant.graph_standards.build(chart: chart) }
 
     @task_list = @plant.task_lists.build
     @task_list.tasks.build
@@ -50,19 +52,19 @@ class PlantsController < ApplicationController
     @plant.discharge_permit.attach(params[:plant][:discharge_permit]) if params[:plant][:discharge_permit].present?
     @current_date = Date.today
 
-    external_sampling_list = @plant.sampling_lists.first
-    external_sampling_list.date = @current_date.beginning_of_month
+    # external_sampling_list = @plant.sampling_lists.first
+    # external_sampling_list.date = @current_date.beginning_of_month
 
-    accesses_without_external.each do |access|
-      @plant.sampling_lists.build(date: external_sampling_list.date,
-                                  frecuency_id: external_sampling_list.frecuency_id,
-                                  access: access,
-                                  per_cycle: external_sampling_list.per_cycle)
-    end
+    # accesses_without_external.each do |access|
+    #   @plant.sampling_lists.build(date: external_sampling_list.date,
+    #                               frecuency_id: external_sampling_list.frecuency_id,
+    #                               access: access,
+    #                               per_cycle: external_sampling_list.per_cycle)
+    # end
 
-    @plant.sampling_lists.each do |sampling_list|
-      SamplingListGenerator.new(@plant).create(sampling_list)
-    end
+    # @plant.sampling_lists.each do |sampling_list|
+    #   SamplingListGenerator.new(@plant).create(sampling_list)
+    # end
 
     @plant.users << current_user
 
@@ -80,7 +82,7 @@ class PlantsController < ApplicationController
   def edit
     @plant = Plant.find(params[:id])
     @company = @plant.company
-    @standards = @plant.standards.includes(:option, bounds: :outlet).sort_by(&:option_id)
+    @standards = @plant.standards.sort_by(&:option_id)
     @graph_standards = @plant.graph_standards.includes(:chart)
     @sampling_lists_filtered = @plant.sampling_lists.includes(:access).select { |sampling_list| sampling_list.access.name == 'External' }.last
 
@@ -182,14 +184,14 @@ class PlantsController < ApplicationController
     @data_types = Task.data_types.map { |key, val| [key, t(key == '%' ? '_%' : key, scope: [:task, :data_types])] }
   end
 
-  def build_samplings(sampling_lists, standards)
-    sampling_lists.each do |sampling_list|
-      standards.each do |standard|
-        # N+1
-        sampling_list.samplings.find_or_initialize_by(standard: standard)
-      end
-    end
-  end
+  # def build_samplings(sampling_lists, standards)
+  #   sampling_lists.each do |sampling_list|
+  #     standards.each do |standard|
+  #       # N+1
+  #       sampling_list.samplings.find_or_initialize_by(standard: standard)
+  #     end
+  #   end
+  # end
 
   def assign_plant_to_current_user
     current_user.plants << @plant
@@ -226,7 +228,7 @@ class PlantsController < ApplicationController
   end
 
   def accesses_without_external
-    Access.all.reject { |access| access.name == 'External' }
+    Access.where.not(name: 'External')
   end
 
   def plant_params

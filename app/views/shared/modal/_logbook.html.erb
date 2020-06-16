@@ -41,30 +41,18 @@
         <div class="select_month" id="every_2_weeks">
           <p class="select_month__label"><%= t(:select_day_week, scope: [:activerecord, :attributes, :task]) %></p>
           <ul class="select_month__month">
-            <li class="select_month__week-item">
-              <%= render 'shared/modal/week', data_week: 1 %>
-            </li>
-            <li class="select_month__week-item">
-              <%= render 'shared/modal/week', data_week: 2 %>
-            </li>
+            <% 2.times do |num| %>
+            <li class="select_month__week-item"><%= render 'shared/modal/week', data_week: num + 1 %></li>
+            <% end %>
           </ul>
         </div>
 
         <div class="select_month" id="monthly">
           <p class="select_month__label"><%= t(:select_day_week, scope: [:activerecord, :attributes, :task]) %></p>
           <ul class="select_month__month">
-            <li class="select_month__week-item">
-              <%= render 'shared/modal/week', data_week: 1 %>
-            </li>
-            <li class="select_month__week-item">
-              <%= render 'shared/modal/week', data_week: 2 %>
-            </li>
-            <li class="select_month__week-item">
-              <%= render 'shared/modal/week', data_week: 3 %>
-            </li>
-            <li class="select_month__week-item">
-              <%= render 'shared/modal/week', data_week: 4 %>
-            </li>
+            <% 4.times do |num| %>
+            <li class="select_month__week-item"><%= render 'shared/modal/week', data_week: num + 1 %></li>
+            <% end %>
           </ul>
         </div>
 
@@ -76,18 +64,9 @@
             <% end %>
           </ul>
           <ul class="select_month__month">
-            <li class="select_month__week-item">
-              <%= render 'shared/modal/week', data_week: 1 %>
-            </li>
-            <li class="select_month__week-item">
-              <%= render 'shared/modal/week', data_week: 2 %>
-            </li>
-            <li class="select_month__week-item">
-              <%= render 'shared/modal/week', data_week: 3 %>
-            </li>
-            <li class="select_month__week-item">
-              <%= render 'shared/modal/week', data_week: 4 %>
-            </li>
+            <% 4.times do |num| %>
+            <li class="select_month__week-item"><%= render 'shared/modal/week', data_week: num + 1 %></li>
+            <% end %>
           </ul>
         </div>
       </div>

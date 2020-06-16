@@ -82,17 +82,17 @@
   <p class="view_info__title"><%= t(:flow_design, scope: [:activerecord, :attributes, :plant]) %></p>
 </div>
 
-<% if @plant.discharge_permit.attached? %>
-<div class="view_info">
+<%# <% if @plant.discharge_permit.attached? %>
+<!-- <div class="view_info">
   <p class="view_info__data">
-    <%= link_to @plant.discharge_permit, class: 'text-icon', download: true do %>
-    <%= render 'shared/icons/document' %>
-      <%= @plant.discharge_permit.filename %>
-    <% end %>
+    <%#= link_to @plant.discharge_permit, class: 'text-icon', download: true do %>
+    <%#= render 'shared/icons/document' %>
+      <%#= @plant.discharge_permit.filename %>
+    <%# end %>
   </p>
   <p class="view_info__title">Discharge Permit</p>
-</div>
-<% end %>
+</div> -->
+<%# end %>
 
 <div class="view_info">
   <p class="view_info__data"><%= @plant.system_purpose %></p>
@@ -118,9 +118,9 @@
 
 <div class="space"></div>
 
-<h2 class="cell_division">Standards</h2>
+<!-- <h2 class="cell_division">Standards</h2> -->
 
-<div class="field standards">
+<!-- <div class="field standards">
   <table class="standards__view">
     <tr>
       <th class="standard__th">Active</th>
@@ -128,24 +128,24 @@
       <th colspan="2" class="standards__th">In</th>
       <th colspan="2" class="standards__th">Out</th>
     </tr>
-  <% @standards.each do |standard| %>
-    <% if (standard.enabled) %>
+  <%# @standards.each do |standard| %>
+    <%# if (standard.enabled) %>
     <tr>
-      <td><input type="checkbox" name="<%= standard.option.name %>" checked="true" disabled></td>
-      <td><%= standard.option.name %></td>
-      <% standard.bounds.each do |bound| %>
-      <% if standard.isRange %>
-      <td><%= bound.from %></td>
-      <td><%= bound.to %></td>
-      <% else %>
-      <td colspan="2" class="standards__th"><%= bound.from %></td>
-      <% end %>
-      <% end %>
+      <td><input type="checkbox" name="<%#= standard.option.name %>" checked="true" disabled></td>
+      <td><%#= standard.option.name %></td>
+      <%# standard.bounds.each do |bound| %>
+      <%# if standard.isRange %>
+      <td><%#= bound.from %></td>
+      <td><%#= bound.to %></td>
+      <%# else %>
+      <td colspan="2" class="standards__th"><%#= bound.from %></td>
+      <%# end %>
+      <%# end %>
     </tr>
-    <% end %>
-  <% end %>
+    <%# end %>
+  <%# end %>
   </table>
-</div>
+</div> -->
 
 <h2 class="cell_division">Logbook</h2>
 
@@ -173,12 +173,12 @@
   <p class="view_info__title"><%= t(:logbook_company_responsible_id, scope: [:activerecord, :attributes, :plant]) %></p>
 </div>
 
-<h3>Graphs</h3>
+<!-- <h3>Graphs</h3>
 <ul>
-  <% @graph_standards.each do |graph| %>
+  <%# @graph_standards.each do |graph| %>
   <li>
-    <input type="checkbox" name="active" value="Boat" <%= 'checked' if graph.show %> disabled>
-    <%= graph.chart.name %>
+    <input type="checkbox" name="active" value="Boat" <%#= 'checked' if graph.show %> disabled>
+    <%#= graph.chart.name %>
   </li>
-  <% end %>
-</ul>
+  <%# end %>
+</ul> -->

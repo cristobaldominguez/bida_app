@@ -4,7 +4,6 @@ class Responsible
   end
 
   def self.get_list(plant)
-    @plant = plant
     [[-1, 'BioFiltro'], [0, plant.company.name]] + User.filtered_by(plant).map {|u| [u.id, u.full_name] }
   end
 
