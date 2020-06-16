@@ -1,4 +1,6 @@
 es:
   activerecord:
+    models:
+      logbook: 'Logbook'
     attributes:
       logbook:

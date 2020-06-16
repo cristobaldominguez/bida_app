@@ -1,4 +1,4 @@
-en:
+es:
   activerecord:
     models:
       bed_compaction: 'Compactación de la cama'
@@ -9,6 +9,7 @@ en:
       incident_type: 'Tipo de Incidente'
       industry: 'Industria'
       inspection: 'Inspección'
+      logbook: 'Logbook'
       odor: 'Olor'
       piping: 'Tubería'
       plant: 'Planta'

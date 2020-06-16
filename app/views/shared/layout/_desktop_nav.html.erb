@@ -55,7 +55,7 @@
     <% if can? :read, Logbook %>
     <% logbook_menu = @menu[:logbooks] ? 'desktop_nav__item--active' : '' %>
     <li class="desktop_nav__item <%= logbook_menu %>">
-      <%= link_to t(:title, scope: :logbook).pluralize, '#', class: 'desktop_nav__link nav_icon nav_icon_logbooks' %>
+      <%= link_to t(:logbook, scope: [:activerecord, :models]).pluralize, '#', class: 'desktop_nav__link nav_icon nav_icon_logbooks' %>
       <div class="desktop_nav__submenu">
         <ul class="desktop_nav__subul">
           <% active = @menu[:logbooks] && @menu[:action] %>

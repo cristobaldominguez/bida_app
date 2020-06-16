@@ -3,19 +3,13 @@
     <% if can? :read, Company %>
     <% companies_menu = @menu[:companies] ? 'mobile_nav__item--active' : '' %>
     <li class="mobile_nav__item <%= companies_menu %>">
-      <%= link_to 'companies', companies_path, class: 'mobile_nav__link' %>
-      <ul class="mobile_nav__submenu-list">
-        <li class="mobile_nav__subitem"><%= link_to 'all companies', companies_path, class: 'mobile_nav__sublink' %></li>
-        <% if can? :create, Company %>
-        <li class="mobile_nav__subitem"><%= link_to 'new company', new_company_path, class: 'mobile_nav__sublink' %></li>
-        <% end %>
-      </ul>
+      <%= link_to t(:companies, scope: [:header, :menu]), companies_path, class: 'mobile_nav__link' %>
     </li>
     <% end %>
 
     <% if @user_plants %>
     <li class="mobile_nav__item">
-      <a class="mobile_nav__link" href="#">plants</a>
+      <a class="mobile_nav__link" href="#"><%= t(:plants, scope: [:header, :menu]) %></a>
       <ul class="mobile_nav__submenu-list">
         <% @user_plants.each do |plant| %>
         <li class="mobile_nav__subitem"><%= link_to plant.name, plant_path(plant), class: 'mobile_nav__sublink' %></li>
@@ -30,19 +24,22 @@
     <li class="mobile_nav__item mobile_nav__item--active">
       <a class="mobile_nav__link" href="#"><%= @plant.name %></a>
       <ul class="mobile_nav__submenu-list">
+        <li class="mobile_nav__subitem">
+          <%= link_to t(:plant, scope: [:activerecord, :models]).downcase, plant_path(@plant), class: 'mobile_nav__sublink' %>
+        </li>
         <% ticket_menu = @menu[:tickets] ? 'mobile_nav__subitem--active' : '' %>
         <li class="mobile_nav__subitem <%= ticket_menu %>">
-          <a href="#" class="mobile_nav__sublink">tickets</a>
+          <a href="#" class="mobile_nav__sublink"><%= t(:title, scope: :ticket).pluralize.downcase %></a>
           <ul class="mobile_nav__submenu-list">
 
             <% if can? :read, Alert %>
             <% active = @menu[:alerts] ? 'mobile_nav__sublink--active' : '' %>
-            <li class="mobile_nav__subitem <%= active %>"><a href="#" class="mobile_nav__sublink">alerts</a>
+            <li class="mobile_nav__subitem <%= active %>"><a href="#" class="mobile_nav__sublink"><%= t(:alert, scope: [:activerecord, :models]).pluralize.downcase %></a>
               <ul class="mobile_nav__submenu-list">
                 <% active = @menu[:alerts] && @menu[:action] %>
-                <li class="mobile_nav__subitem <%= active == 'index' && 'mobile_nav__subitem--active' %>"><%= link_to 'alert history', plant_alerts_path(@plant), class: 'mobile_nav__sublink' %></li>
+                <li class="mobile_nav__subitem <%= active == 'index' && 'mobile_nav__subitem--active' %>"><%= link_to t(:history, scope: :alert).downcase, plant_alerts_path(@plant), class: 'mobile_nav__sublink' %></li>
                 <% if can? :create, Alert %>
-                <li class="mobile_nav__subitem <%= active == 'new' && 'mobile_nav__subitem--active' %>"><%= link_to 'new alert', new_plant_alert_path(@plant), class: 'mobile_nav__sublink' %></li>
+                <li class="mobile_nav__subitem <%= active == 'new' && 'mobile_nav__subitem--active' %>"><%= link_to t(:new, scope: :alert).downcase, new_plant_alert_path(@plant), class: 'mobile_nav__sublink' %></li>
                 <% end %>
               </ul>
             </li>
@@ -50,12 +47,12 @@
 
             <% if can? :read, Support %>
             <% active = @menu[:supports] ? 'mobile_nav__subitem--active' : '' %>
-            <li class="mobile_nav__subitem <%= active %>"><a href="#" class="mobile_nav__sublink">supports</a>
+            <li class="mobile_nav__subitem <%= active %>"><a href="#" class="mobile_nav__sublink"><%= t(:support, scope: [:activerecord, :models]).pluralize.downcase %></a>
               <ul class="mobile_nav__submenu-list">
                 <% active = @menu[:supports] && @menu[:action] %>
-                <li class="mobile_nav__subitem <%= active == 'index' && 'mobile_nav__subitem--active' %>"><%= link_to 'support history', plant_supports_path(@plant), class: 'mobile_nav__sublink' %></li>
+                <li class="mobile_nav__subitem <%= active == 'index' && 'mobile_nav__subitem--active' %>"><%= link_to t(:history, scope: :support).downcase, plant_supports_path(@plant), class: 'mobile_nav__sublink' %></li>
                 <% if can? :create, Support %>
-                <li class="mobile_nav__subitem <%= active == 'new' && 'mobile_nav__subitem--active' %>"><%= link_to 'new support', new_plant_support_path(@plant), class: 'mobile_nav__sublink' %></li>
+                <li class="mobile_nav__subitem <%= active == 'new' && 'mobile_nav__subitem--active' %>"><%= link_to t(:new, scope: :support).downcase, new_plant_support_path(@plant), class: 'mobile_nav__sublink' %></li>
                 <% end %>
               </ul>
             </li>
@@ -63,12 +60,12 @@
 
             <% if can? :read, Inspection %>
             <% active = @menu[:inspections] ? 'mobile_nav__subitem--active' : '' %>
-            <li class="mobile_nav__subitem"><a href="#" class="mobile_nav__sublink">inspections</a>
+            <li class="mobile_nav__subitem"><a href="#" class="mobile_nav__sublink"><%= t(:plural, scope: :inspection).downcase %></a>
               <ul class="mobile_nav__submenu-list">
                 <% active = @menu[:inspections] && @menu[:action] %>
-                <li class="mobile_nav__subitem <%= active == 'index' && 'mobile_nav__subitem--active' %>"><%= link_to 'inspection history', plant_inspections_path(@plant), class: 'mobile_nav__sublink' %></li>
+                <li class="mobile_nav__subitem <%= active == 'index' && 'mobile_nav__subitem--active' %>"><%= link_to t(:history, scope: :inspection).downcase, plant_inspections_path(@plant), class: 'mobile_nav__sublink' %></li>
                 <% if can? :create, Inspection %>
-                <li class="mobile_nav__subitem <%= active == 'new' && 'mobile_nav__subitem--active' %>"><%= link_to 'new inspection', new_plant_inspection_path(@plant), class: 'mobile_nav__sublink' %></li>
+                <li class="mobile_nav__subitem <%= active == 'new' && 'mobile_nav__subitem--active' %>"><%= link_to t(:new, scope: :inspection).downcase, new_plant_inspection_path(@plant), class: 'mobile_nav__sublink' %></li>
                 <% end %>
               </ul>
             </li>
@@ -79,11 +76,11 @@
         <% if can? :read, Logbook %>
         <% logbooks_menu = @menu[:logbooks] ? 'mobile_nav__subitem--active' : '' %>
         <li class="mobile_nav__subitem <%= logbooks_menu %>">
-          <a href="#" class="mobile_nav__sublink">logbooks</a>
+          <a href="#" class="mobile_nav__sublink"><%= t(:logbook, scope: [:activerecord, :models]).pluralize.downcase %></a>
           <ul class="mobile_nav__submenu-list">
             <% active = @menu[:logbooks] && @menu[:action] %>
-            <li class="mobile_nav__subitem <%= active == 'edit' && 'mobile_nav__subitem--active' %>"><%= link_to 'logbook', logbook_plant_path(@plant), class: 'mobile_nav__sublink' %></li>
-            <li class="mobile_nav__subitem <%= active == 'index' && 'mobile_nav__subitem--active' %>"><%= link_to 'logbook history', plant_logbooks_path(@plant), class: 'mobile_nav__sublink' %></li>
+            <li class="mobile_nav__subitem <%= active == 'edit' && 'mobile_nav__subitem--active' %>"><%= link_to t(:logbook, scope: [:activerecord, :models]).downcase, logbook_plant_path(@plant), class: 'mobile_nav__sublink' %></li>
+            <li class="mobile_nav__subitem <%= active == 'index' && 'mobile_nav__subitem--active' %>"><%= link_to t(:history, scope: :logbook).downcase, plant_logbooks_path(@plant), class: 'mobile_nav__sublink' %></li>
           </ul>
         </li>
         <% end %>
@@ -95,7 +92,7 @@
     <% if can? :read, User %>
     <% users_menu = @menu[:users] ? 'mobile_nav__item--active' : '' %>
     <li class="mobile_nav__item <%= users_menu %>">
-      <%= link_to 'users', users_path, class: 'mobile_nav__link' %>
+      <%= link_to t(:users, scope: [:header, :menu]), users_path, class: 'mobile_nav__link' %>
       <ul class="mobile_nav__submenu-list">
         <li class="mobile_nav__subitem"><%= link_to 'all users', users_path, class: 'mobile_nav__sublink' %></li>
         <% if can? :create, User %>

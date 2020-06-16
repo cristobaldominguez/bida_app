@@ -10,6 +10,7 @@ en:
       incident_type: 'Incident Type'
       industry: 'Industry'
       inspection: 'Inspection'
+      logbook: 'Logbook'
       odor: 'Odor'
       piping: 'Piping'
       plant: 'Plant'
