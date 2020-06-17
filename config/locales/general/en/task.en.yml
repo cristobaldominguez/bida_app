@@ -27,3 +27,7 @@ en:
       COD: 'COD'
       _%: '%'
       inches: 'Inches'
+      trucks: 'Truck'
+      loads: 'Loads'
+      yards: 'Yards'
+      hours: 'Hours'

@@ -27,3 +27,7 @@ es:
       COD: 'COD'
       _%: '%'
       inches: 'Pulgadas'
+      trucks: 'Camiones'
+      loads: 'Cargas'
+      yards: 'Yardas'
+      hours: 'Horas'
