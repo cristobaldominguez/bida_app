@@ -36,7 +36,7 @@ class ApplicationController < ActionController::Base
   def set_user_plants
     plant = set_plant
     plant_id = plant ? plant.id : 0
-    @user_plants = current_user.plants.filter_by_id(plant_id) if current_user.present?
+    @user_plants = current_user.plants.filter_by_id(plant_id).sort if current_user.present?
   end
 
   def user_plants_associated
