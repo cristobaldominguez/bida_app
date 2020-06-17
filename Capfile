@@ -14,6 +14,8 @@ require 'capistrano/ssh_doctor'
 require 'capistrano/puma'
 require 'capistrano/puma/workers'
 require 'capistrano/puma/nginx'
+install_plugin Capistrano::Puma  # Default puma tasks
+install_plugin Capistrano::Puma::Nginx  # if you want to upload a nginx site template
 
 require 'whenever/capistrano'
 
