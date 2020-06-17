@@ -144,10 +144,11 @@ class PlantsController < ApplicationController
   end
 
   def set_weekdays
+    days_eng = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
     days = I18n.t('date.day_names').map { |day| I18n.transliterate(day) }
     days << days.shift
 
-    @days = days.map { |day| [day[0..2].capitalize, day[3..-1]] }
+    @days = days.map.with_index { |day, index| [day[0..2].capitalize, day[3..-1], days_eng[index]] }
   end
 
   def set_company

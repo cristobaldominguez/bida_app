@@ -7,12 +7,13 @@
   <% @days.each_with_index do |day, index|
       day_short = day.first
       rest = day.second
+      data_day = day.third
     %>
     <li class="<%= block_class %>__day">
       <a
         href="#"
         class="<%= block_class %>__day-link" <%= data_week.present? ? "data-week=#{data_week}" : '' %>
-        data-day="<%= day_short.downcase %>" <%= data_week.present? ? "data-num=#{((data_week - 1) * 7) + (index + 1)}" : '' %>
+        data-day="<%= data_day %>" <%= data_week.present? ? "data-num=#{((data_week - 1) * 7) + (index + 1)}" : '' %>
       >
         <%= data_week.present? && block_class != 'select_week' ? data_week : '' %><sup class="select_month__sup"><%= day_th[data_week.to_i - 1] + ' ' if data_week.present? && block_class != 'select_week' %></sup><%= day_short %>
         <span class="d-lg-inline"> <%= rest %></span>
