@@ -21,11 +21,11 @@ class PlantsController < ApplicationController
     @supports = @plant.supports.active
     @inspections = @plant.inspections.active
     # @standards = @plant.standards.includes(:option, :bounds).sort_by(&:option_id)
-    @standards = @plant.standards.sort_by(&:option_id)
-    @sampling_lists = @plant.sampling_lists.includes(:access, samplings: [standard: %i[option]]).group_by { |k| k.access.name }.map { |_, v| v.max_by(&:created_at) }
-    @samplings = @sampling_lists.map { |sl| { sl.access.name => sl.samplings.group_by { |s| s.standard.option.name }.map { |_, v| v.max_by(&:created_at) } } }
+    # @standards = @plant.standards.sort_by(&:option_id)
+    # @sampling_lists = @plant.sampling_lists.includes(:access, samplings: [standard: %i[option]]).group_by { |k| k.access.name }.map { |_, v| v.max_by(&:created_at) }
+    # @samplings = @sampling_lists.map { |sl| { sl.access.name => sl.samplings.group_by { |s| s.standard.option.name }.map { |_, v| v.max_by(&:created_at) } } }
+    # @graph_standards = @plant.graph_standards.includes(:chart)
     @task_lists = @plant.task_lists.includes(:tasks)
-    @graph_standards = @plant.graph_standards.includes(:chart)
     @task_list = @task_lists.last.tasks.sort
 
     @system_size = @plant.system_size.sum
@@ -82,9 +82,9 @@ class PlantsController < ApplicationController
   def edit
     @plant = Plant.find(params[:id])
     @company = @plant.company
-    @standards = @plant.standards.sort_by(&:option_id)
-    @graph_standards = @plant.graph_standards.includes(:chart)
-    @sampling_lists_filtered = @plant.sampling_lists.includes(:access).select { |sampling_list| sampling_list.access.name == 'External' }.last
+    # @standards = @plant.standards.sort_by(&:option_id)
+    # @graph_standards = @plant.graph_standards.includes(:chart)
+    # @sampling_lists_filtered = @plant.sampling_lists.includes(:access).select { |sampling_list| sampling_list.access.name == 'External' }.last
 
     @task_list = @plant.task_lists.last
     @tasks = @task_list.tasks.sort
@@ -95,7 +95,7 @@ class PlantsController < ApplicationController
     @plant.cover.attach(params[:plant][:cover]) if params[:plant][:cover].present?
     @plant.discharge_permit.attach(params[:plant][:discharge_permit]) if params[:plant][:discharge_permit].present?
 
-    SamplingListGenerator.new(@plant).edit(with_params: params[:plant][:standards_attributes])
+    # SamplingListGenerator.new(@plant).edit(with_params: params[:plant][:standards_attributes])
 
     respond_to do |format|
       if @plant.update(plant_params)
