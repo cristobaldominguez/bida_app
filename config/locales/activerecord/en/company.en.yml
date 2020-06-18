@@ -1,8 +1,6 @@
 en:
   activerecord:
     attributes:
-      contact_id: 'Company Contact'
-      bf_contact_id: 'Biofiltro Contact'
       company:
         name: 'Name'
         taxid: 'Tax Id'

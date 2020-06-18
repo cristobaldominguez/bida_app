@@ -12,27 +12,27 @@
 
 <div class="view_info">
   <p class="view_info__data"><%= @company.name %></p>
-  <p class="view_info__title"><%= t(:name, scope: [:activerecord, :attributes]) %></p>
+  <p class="view_info__title"><%= t(:name, scope: [:activerecord, :attributes, :company]) %></p>
 </div>
 
 <div class="view_info">
   <p class="view_info__data"><%= @company.taxid %></p>
-  <p class="view_info__title"><%= t(:taxid, scope: [:activerecord, :attributes]) %></p>
+  <p class="view_info__title"><%= t(:taxid, scope: [:activerecord, :attributes, :company]) %></p>
 </div>
 
 <div class="view_info">
   <p class="view_info__data"><%= @company.industry.name %></p>
-  <p class="view_info__title"><%= t(:industry_id, scope: [:activerecord, :attributes]) %></p>
+  <p class="view_info__title"><%= t(:industry_id, scope: [:activerecord, :attributes, :company]) %></p>
 </div>
 
 <div class="view_info">
   <p class="view_info__data"><%= @company.contact&.full_name  %></p>
-  <p class="view_info__title"><%= t(:contact_id, scope: [:activerecord, :attributes]) %></p>
+  <p class="view_info__title"><%= t(:contact_id, scope: [:activerecord, :attributes, :company]) %></p>
 </div>
 
 <div class="view_info">
   <p class="view_info__data"><%= @company.bf_contact&.full_name  %></p>
-  <p class="view_info__title"><%= t(:bf_contact_id, scope: [:activerecord, :attributes]) %></p>
+  <p class="view_info__title"><%= t(:bf_contact_id, scope: [:activerecord, :attributes, :company]) %></p>
 </div>
 
 <div class="space"></div>
