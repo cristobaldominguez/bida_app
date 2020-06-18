@@ -304,7 +304,7 @@ document.addEventListener('turbolinks:load', function() {
         data_type: element.find('.data_type').val(),
         input_type: element.find('.input_type').val(),
 
-        responsible: parseInt(element.find('.responsible').val())
+        responsible: element.find('.responsible').val()
       }
 
       state.data = {

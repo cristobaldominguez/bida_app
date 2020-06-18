@@ -4,6 +4,7 @@ class Plant < ApplicationRecord
   # validations
   validates :name, presence: true, uniqueness: true
   validates :code, presence: true, uniqueness: true
+  validates :flow_design, numericality: { greater_than: 0 }
 
   belongs_to :company
   belongs_to :country
