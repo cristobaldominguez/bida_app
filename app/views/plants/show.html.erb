@@ -147,7 +147,7 @@
   </table>
 </div> -->
 
-<h2 class="cell_division">Logbook</h2>
+<h2 class="cell_division"><%= t(:logbook, scope: [:activerecord, :models]) %></h2>
 
 <%= render 'shared/tables/elements_list', headers: [t(:task, scope: [:activerecord, :models]).pluralize, t(:responsible, scope: [:activerecord, :attributes, :plant])] do %>
 <% @task_list.each do |task| %>
