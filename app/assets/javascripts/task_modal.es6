@@ -309,8 +309,7 @@ document.addEventListener('turbolinks:load', function() {
 
       state.data = {
         ..._data,
-        cycles: _data.cycles ? JSON.parse(_data.cycles) : { days: [], months: [] },
-        responsible: isNaN(_data.responsible) ? '' : _data.responsible
+        cycles: _data.cycles ? JSON.parse(_data.cycles) : { days: [], months: [] }
       }
 
       state.data_comparison = JSON.stringify({...state.data})
