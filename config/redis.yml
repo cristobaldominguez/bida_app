@@ -1,5 +1,5 @@
 default: &default
-  url: localhost
+  host: localhost
   port: 6379
 
 development:
