@@ -18,6 +18,7 @@
 # end
 # Learn more: http://github.com/javan/whenever
 
+env :PATH, ENV['PATH']
 set :output, 'log/cron.log'
 
 every '30 0 1 * *' do
