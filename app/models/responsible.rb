@@ -4,7 +4,11 @@ class Responsible
   end
 
   def self.get_list(plant)
-    [[-1, 'BioFiltro'], [0, plant.company.name]] + User.filtered_by(plant).map {|u| [u.id, u.full_name] }
+    [[-1, 'BioFiltro'], [0, plant.company.name]] + User.filtered_by(plant).sort.map {|u| [u.id, u.full_name] }
+  end
+
+  def self.get_complete_list(plant)
+    [[-1, 'BioFiltro'], [0, plant.company.name]] + User.filtered.sort.map {|u| [u.id, u.full_name] }
   end
 
   def self.name(task)

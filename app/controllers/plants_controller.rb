@@ -42,7 +42,7 @@ class PlantsController < ApplicationController
 
     @task_list = @plant.task_lists.build
     @task_list.tasks.build
-    @responsibles = [[-1, 'BioFiltro'], [0, @plant.company.name]]
+    @responsibles = Responsible.get_complete_list(@plant)
   end
 
   def create
@@ -177,7 +177,7 @@ class PlantsController < ApplicationController
 
   def set_responsibles
     @company = params[:company_id].present? ? Company.find(params[:company_id]) : Plant.find(params[:id]).company
-    @responsibles = Responsible.get_list(@plant)
+    @responsibles = Responsible.get_complete_list(@plant)
   end
 
   def set_value_types
