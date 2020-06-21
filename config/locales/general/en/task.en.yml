@@ -32,3 +32,5 @@ en:
       loads: 'Loads'
       yards: 'Yards'
       hours: 'Hours'
+      temperature: 'Temperature'
+      moisture: 'Moisture'
