@@ -12,6 +12,6 @@ class Responsible
   end
 
   def self.name(task)
-    get_list(task.task_list.plant).select {|r| r.first == task.responsible }.last.last
+    get_complete_list(task.task_list.plant).select {|r| r.first == task.responsible }.last.last
   end
 end
