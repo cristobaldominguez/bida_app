@@ -6,3 +6,4 @@ es:
     index: 'Usuarios'
     new: 'Nuevo Usuario'
     edit: 'Editando Usuario'
+    resend: 'Reenviar Confirmación'

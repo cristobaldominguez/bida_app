@@ -22,7 +22,7 @@
         <% if can? :edit, User %><li class="options_menu__item"><%= link_to t(:edit, scope: :global), edit_user_path(user), class: 'options_menu__link' %></li><% end %>
         <% if user.active? %>
         <% if can? :destroy, User %><li class="options_menu__item"><%= link_to t(:destroy, scope: :global), user, class: 'options_menu__link', method: :delete, data: { confirm: t(:confirm, scope: :global) } %></li><% end %>
-        <% if !user.confirmed? %><li class="options_menu__item"><%= button_to t(:resend, scope: :user), user_confirmation_path, params: { user: {email: user.email} }, method: :post, remote: true, class: 'options_menu__link' %></li><% end %>
+        <% if !user.confirmed? %><li class="options_menu__item"><%= button_to t(:resend, scope: :user).downcase, user_confirmation_path, params: { user: {email: user.email} }, method: :post, remote: true, class: 'options_menu__link' %></li><% end %>
         <% end %>
       </ul>
       <div class="unclick"></div>
