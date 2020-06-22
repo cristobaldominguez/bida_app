@@ -45,7 +45,7 @@
             <li class="main_nav__item <%= 'main_nav__item--active' if @plant %>">
               <% _text = @plant.present? && @plant.persisted? ? @plant.name : t(:plants, scope: [:header, :menu]) %>
               <%= link_to _text, '#', class: 'main_nav__link-dropdown' %>
-              <div class="options_menu">
+              <div class="options_menu <%= current_user.admin? || 'right' %>">
                 <ul class="main_nav__plants">
                   <% @user_plants.each do |plant| %>
                   <li class="main_nav__plant"><%= link_to plant.name, plant_path(plant), class: 'options_menu__link' %></li>
