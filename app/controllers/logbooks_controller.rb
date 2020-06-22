@@ -16,7 +16,7 @@ class LogbooksController < ApplicationController
     @filtered_logs = @logbook.logs.includes(:task).order('date DESC').reject { |log| log.date > @current_date }
 
   rescue ActiveRecord::RecordNotFound => _e
-    redirect_to pages_no_permission_path, notice: 'Access not Allowed'
+    redirect_to pages_no_permission_path, notice: t(:access_not_allowed, scope: :global)
   end
 
   # GET /logbooks/1/edit
@@ -31,7 +31,7 @@ class LogbooksController < ApplicationController
     @filtered_logs = ordered_logs.map { |block| block.second.max_by(&:date) }.sort_by(&:date).reverse
 
   rescue ActiveRecord::RecordNotFound => _e
-    redirect_to pages_no_permission_path, notice: 'Access not Allowed'
+    redirect_to pages_no_permission_path, notice: t(:access_not_allowed, scope: :global)
   end
 
   # PATCH/PUT /logbooks/1

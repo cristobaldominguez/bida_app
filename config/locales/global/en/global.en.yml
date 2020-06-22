@@ -23,6 +23,7 @@ en:
     next: 'Next'
     previous: 'Previous'
     per_day: 'per day'
+    access_not_allowed: 'Access not Allowed'
     ordinal:
       first: 'st'
       second: 'nd'
