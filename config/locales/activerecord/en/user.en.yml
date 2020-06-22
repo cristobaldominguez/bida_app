@@ -2,8 +2,21 @@ en:
   activerecord:
     attributes:
       user:
+        name: 'Name'
+        lastname: 'Lastname'
+        email: 'Email'
+        password: 'Password'
+        password_confirmation: 'Password Confirmation'
         address01: 'Address'
         address02: 'Address'
+        phone: 'Phone'
+        mobile: 'Mobile'
+        employee: 'Employee'
+        role: 'Role'
+        remember_me: 'Remember me'
+        forgot_password: 'Forgot your Password?'
+        login: 'Login'
+        interface_color: 'Interface color'
         filtered: 'Filtered from search?'
         not_allowed_admin_creation: 'Only Admins can assign Admin Users'
         current_password: 'Current Password'
