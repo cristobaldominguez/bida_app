@@ -56,7 +56,7 @@
             <% end %>
             <% end %>
 
-            <% if can? :read, User %>
+            <% if can? :read, User && (current_user.admin? || current_user.operations_manager? ) %>
             <li class="main_nav__item <%= 'main_nav__item--active' if @users %>"><%= link_to t(:users, scope: [:header, :menu]), users_path, class: 'main_nav__link' %></li>
             <% end %>
           </ul>

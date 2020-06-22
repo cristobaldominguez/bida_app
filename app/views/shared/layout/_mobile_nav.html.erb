@@ -89,7 +89,7 @@
     <% end %>
     <% end %>
 
-    <% if can? :read, User %>
+    <% if can? :read, User && (current_user.admin? || current_user.operations_manager? ) %>
     <% users_menu = @menu[:users] ? 'mobile_nav__item--active' : '' %>
     <li class="mobile_nav__item <%= users_menu %>">
       <%= link_to t(:users, scope: [:header, :menu]), users_path, class: 'mobile_nav__link' %>

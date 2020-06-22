@@ -28,7 +28,9 @@ class Ability
       can %i[read create update], User
     elsif user.operator?
       can :read, Plant
+      can :logbook, Plant
       can %i[read update], Logbook
+      can %i[read update], User, id: user.id
     elsif user.client?
       can %i[read update], Logbook
       can :read, [Report, Alert, Support, Inspection, Plant]
