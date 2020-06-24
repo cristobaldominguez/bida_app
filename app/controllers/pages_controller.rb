@@ -1,7 +1,5 @@
 class PagesController < ApplicationController
-  def index
-    @locale = set_locale
-  end
+  def index; end
 
   def no_permission; end
 end

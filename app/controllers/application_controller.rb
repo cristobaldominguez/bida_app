@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action :authenticate_user!
-  before_action :set_locale
+  before_action :set_locale, :set_locale_var
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_user_plants, :set_plant, :user_plants_associated, :set_nav_variables
 
@@ -16,6 +16,10 @@ class ApplicationController < ActionController::Base
 
   def set_locale
     I18n.locale = extract_locale || I18n.default_locale
+  end
+
+  def set_locale_var
+    @locale = set_locale
   end
 
   def extract_locale
