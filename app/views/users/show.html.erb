@@ -43,9 +43,26 @@
 </div>
 
 <div class="view_info">
+  <p class="view_info__data"><%= User.human_enum_name(:locale, @user.locale) %></p>
+  <p class="view_info__title"><%= t(:locale, scope: [:activerecord, :attributes, :user]) %></p>
+</div>
+
+<div class="view_info">
+  <p class="view_info__data"><%= User.human_enum_name(:employee, @user.employee) %></p>
+  <p class="view_info__title"><%= t(:employee, scope: [:activerecord, :attributes, :user]) %></p>
+</div>
+
+<div class="view_info">
   <p class="view_info__data"><%= User.human_enum_name(:roles, @user.role) %></p>
   <p class="view_info__title"><%= t(:role, scope: [:activerecord, :attributes, :user]) %></p>
 </div>
+
+<p><strong><%= t(:plant, scope: [:activerecord, :models]).pluralize %></strong></p>
+<ul>
+  <% @user.plants.each do |plant| %>
+    <li><%= link_to plant.name, plant %></li>
+  <% end %>
+</ul>
 
 <div class="view_info">
   <p class="view_info__data"><%= User.human_enum_name(:interface_colors, @user.interface_color) %></p>
@@ -56,10 +73,3 @@
   <p class="view_info__data"><%= User.human_enum_name(:filtered, @user.filtered) %></p>
   <p class="view_info__title"><%= t(:filtered, scope: [:activerecord, :attributes, :user]) %></p>
 </div>
-
-<p><strong>Plants:</strong></p>
-<ul>
-  <% @user.plants.each do |plant| %>
-    <li><%= link_to plant.name, plant %></li>
-  <% end %>
-</ul>

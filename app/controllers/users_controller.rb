@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   before_action :set_employees, only: [:new, :create, :edit, :update]
   before_action :grouped_plants, :set_roles, :set_interface_colors, only: [:new, :create, :edit, :update]
   before_action :check_user_ability, only: [:create, :update]
+  before_action :set_locales
   authorize_resource
   skip_authorize_resource only: :uicolor
 
@@ -89,6 +90,10 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def set_locales
+    @locales = I18n.available_locales.map {|locale| [locale, User.human_enum_name(:locales, locale)] }
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_user

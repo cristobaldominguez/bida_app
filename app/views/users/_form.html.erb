@@ -57,6 +57,11 @@
   </div>
 
   <div class="field no-border">
+    <%= form.label :locale %>
+    <%= form.collection_select(:locale, @locales, :first, :second) %>
+  </div>
+
+  <div class="field no-border">
     <%= form.label :employee %>
     <%= form.collection_select(:employee, @employees, :first, :second) %>
   </div>
