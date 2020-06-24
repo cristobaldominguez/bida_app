@@ -46,6 +46,7 @@ class SupportsController < ApplicationController
   def edit
     @plant = Plant.find(params[:plant_id])
     @support = @plant.supports.find(params[:id])
+    @users = User.filtered_by(@plant)
     @support.work_summaries = @support.work_summaries.select(&:active)
     @work_summary = @support.work_summaries.build if @support.work_summaries.empty?
   rescue ActiveRecord::RecordNotFound => _e
