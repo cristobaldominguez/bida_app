@@ -31,7 +31,7 @@
   <div class="field">
     <%= form.label :notify %>
     <ul>
-    <%= form.collection_check_boxes(:user_ids, @users, :id, :full_name) do |user| %>
+    <%= form.collection_check_boxes(:user_ids, @users, :id, :full_name, include_hidden: false) do |user| %>
       <li><%= user.check_box %> <%= user.label %></li>
     <% end %>
     </ul>
