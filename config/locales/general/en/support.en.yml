@@ -8,3 +8,6 @@ en:
     support_number: 'Support Number'
     all: 'All Support Tickets'
     title: "Support %{text}"
+    notification_subject: "[BIDA] › Ticket Support: %{text}"
+    notification_title: "New Support %{text}"
+    review_ticket: 'Review this Ticket Support'

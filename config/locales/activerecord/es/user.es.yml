@@ -23,6 +23,10 @@ es:
         current_password_text: '(necesitamos tu actual clave para confirmar los cambios)'
         minimum_chars: 'caracteres mínimos'
         language: 'Idioma'
+        locale: 'Idioma'
+        locales:
+          en: 'Inglés'
+          es: 'Español'
         roles:
           no_role: 'Sin Rol'
           admin: 'Administrador'

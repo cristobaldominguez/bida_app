@@ -25,6 +25,10 @@ en:
         forgot_password: 'Forgot your password?'
         login: 'Log in'
         language: 'Language'
+        locale: 'Language'
+        locales:
+          en: 'English'
+          es: 'Spanish'
         roles:
           no_role: 'No Role'
           admin: 'Admin'

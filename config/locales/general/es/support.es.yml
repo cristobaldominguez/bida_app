@@ -8,3 +8,6 @@ es:
     support_number: 'Número de Soporte'
     all: 'Todos los Ticket de Soporte'
     title: "%{text} de Soporte"
+    notification_subject: "[BIDA] › Ticket de Soporte: %{text}"
+    notification_title: "Nuevo Soporte %{text}"
+    review_ticket: 'Revisa este ticket de soporte'

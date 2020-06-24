@@ -19,3 +19,6 @@ es:
     number: 'Número de Inspección'
     general_info: 'Información General'
     sample_comments: 'Comentarios de la muestra'
+    notification_subject: "[BIDA] › Ticket de Inspección: %{text}"
+    notification_title: "Nueva Inspección %{text}"
+    review_ticket: 'Revisa esta Inspección'

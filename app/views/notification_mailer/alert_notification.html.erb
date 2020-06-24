@@ -1,2 +1,2 @@
-<h1>New Alert <%= @alert.subject %></h1>
-<p><%= link_to 'Review this Alert', plant_alert_url(@alert.plant, @alert) %></p>
+<h1><%= t(:notification_title, scope: :alert, text: @alert.subject) %></h1>
+<p><%= link_to t(:review_ticket, scope: :alert), plant_alert_url(@alert.plant, @alert) %></p>

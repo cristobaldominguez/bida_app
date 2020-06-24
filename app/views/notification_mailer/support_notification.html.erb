@@ -1,2 +1,2 @@
-<h1>New Support <%= @support.number %></h1>
-<p><%= link_to 'Review this Ticket Support', plant_support_url(@support.plant, @support) %></p>
+<h1><%= t(:notification_title, scope: :support, text: @support.number) %></h1>
+<p><%= link_to t(:review_ticket, scope: :support), plant_support_url(@user.locale, @support.plant, @support) %></p>

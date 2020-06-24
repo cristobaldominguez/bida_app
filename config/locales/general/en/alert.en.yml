@@ -7,3 +7,6 @@ en:
     incident_type: 'Select a Incident Type'
     status: 'Select a Status'
     priority: 'Select a Priority'
+    notification_subject: "[BIDA] › Alert Ticket: %{text}"
+    notification_title: "New Alert %{text}"
+    review_ticket: 'Review this Alert'
