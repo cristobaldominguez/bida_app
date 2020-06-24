@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   require 'sidekiq/web'
 
-  scope '(:locale)', locale: /#{I18n.available_locales.join('|')}/ do
+  scope '(:locale)', locale: "/#{I18n.available_locales.join('|')}/" do
     get 'pages/index'
     get 'pages/no_permission'
 
