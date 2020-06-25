@@ -2,6 +2,17 @@
 en:
   activerecord:
     attributes:
+      alert:
+        attention: 'Attention'
+        incident_type_id: 'Incident Type'
+        status_id: 'Status'
+        priority_id: 'Solution Priority'
+        incident_description: 'Incident Description'
+        incident_resolution: 'Incident Resolution'
+        negative_impact: 'Negative Impact to System Description'
+        solution: 'Solution'
+        solution_target_date: 'Solution Target Date'
+        technician_hours_required: 'Technician Hours Required'
       bed_compaction:
         bed_compactions:
           normal: 'Normal'
