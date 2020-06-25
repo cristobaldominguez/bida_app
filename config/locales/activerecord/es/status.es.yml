@@ -1,8 +1,0 @@
-es:
-  activerecord:
-    attributes:
-      status:
-        statuses:
-          open: 'Abierto'
-          fixed: 'Solucionado'
-          being_remedied: 'En proceso de solución'

@@ -1,0 +1,283 @@
+---
+es:
+  activerecord:
+    attributes:
+      bed_compaction:
+        bed_compactions:
+          normal: 'Normal'
+          compaction_need_rototill: 'Compacta (es necesario arar)'
+      collection_bin:
+        collection_bins:
+          normal: 'Normal'
+          full: 'Lleno'
+          spillage: 'Rebalsado'
+      color:
+        colors:
+          typical: 'Típico'
+          no_typical_describe: 'Atípico (Describe)'
+      company:
+        name: 'Nombre'
+        taxid: 'Tax Id'
+        industry: 'Industria'
+        industry_id: 'Industria'
+        contact: 'Contacto de la Empresa'
+        bf_contact: 'Contacto de Biofiltro'
+        contact_id: 'Contacto de la Empresa'
+        bf_contact_id: 'Contacto de Biofiltro'
+      discharge_point:
+        discharge_points:
+          infiltration: 'Infiltración'
+          irrigation: 'Riego'
+          land_application: 'Aplicación en Tierra'
+          other: 'Otro'
+          pond: 'Estanque'
+          sewer: 'Alcantarillado'
+          stream: 'Torrente'
+      fluent:
+        cod: 'COD'
+        ec: 'EC'
+        bod: 'BOD'
+        tss: 'TSS'
+        tn: 'TN'
+        tp: 'TP'
+        sample_comments: 'Comentarios de la Muestra'
+      fly:
+        flies:
+          no_flies: 'Sin moscas'
+          low: 'Pocas'
+          high: 'Muchas'
+      frecuency:
+        frecuencies:
+          daily: 'Diariamente'
+          weekly: 'Semanalmente'
+          every_2_weeks: 'Cada 2 semanas'
+          monthly: 'Mensualmente'
+          annualy: 'Anualmente'
+          every_x_months: 'Cada x Meses'
+      incident_type:
+        incident_types:
+          ph_imbalance: 'pH Desbalanceado'
+          flooding: 'Inundación'
+          odors: 'Olores'
+          run_off_chemicals: 'No quedan químicos'
+          worms_mortality: 'Mortalidad de Lombrices'
+      industry:
+        industries:
+          beverage: 'Bebidas'
+          brewery: 'Cervecería'
+          dairy: 'Lácteos'
+          domestic_sewage: 'Alcantarillado Doméstico'
+          energy: 'Energía'
+          food_processor: 'Procesadora de Alimentos'
+          government: 'Gobierno'
+          grower: 'Cultivador'
+          milk_processor: 'Procesadora de Lácteos'
+          municipality: 'Municipalidad'
+          real_state: 'Bienes Raíces'
+          real_state_households_hotels: 'Inmobiliario, Condominios y Hoteles'
+          seafood_processor: 'Procesadora de Mariscos'
+          slaughterhouse: 'Matadero'
+          university: 'Universidad'
+          wwt_provider: 'Proveedor de servicio de saneamiento'
+          waste_management: 'Manejo de Basura'
+          winery: 'Viña'
+      input_types:
+        checkbox: '✓'
+        number: 'Número'
+        date: 'Fecha'
+        yes/no: 'Si/No'
+        Low/Medium/High Density: 'Baja/Media/Alta Densidad'
+        Low/Medium/Strong Odor: 'Bajo/Media/Fuerte Olor'
+      inspection:
+        on_site_client: 'Cliente en el Lugar'
+        on_site_user_id: 'Nombre del Cliente'
+        report_technician_id: 'Técnico en el Lugar *'
+        notify: 'Notificar a:'
+        date: 'Fecha de la Inspección'
+        fluent_sampling: "Muestra Ph de %{fluent}"
+        sampling_color: "Muestra de Color de %{fluent}"
+        color_description: "Descripción del Color del %{fluent}"
+        sampling_odor: "Muestra de Olor de %{fluent}"
+        odor_description: "Descripción del Olor de %{fluent}"
+        screen_id: 'Pantalla'
+        collection_bin_id: 'Recolector'
+        screen_comments: 'Comentarios de la pantalla'
+        noise_id: 'Ruido de las bombas'
+        pumps_noise_description: 'Descripción del ruido de las bombas'
+        pumps_psi: 'Presión de las Bombas'
+        sprinklers_pressure_id: 'Presión de los Aspersores'
+        sprinklers_head_id: 'Cabeza de los Aspersores'
+        piping_id: 'Tuberías'
+        pumps_comments: 'Comentarios de las Bombas'
+        system_surface_id: 'Superficie de BIDA'
+        worms_color_id: 'Color de las Lombrices'
+        worms_color_description: 'Descripción del color de las Lombrices'
+        worms_activity_id: 'Actividad de las Lombrices'
+        worms_activity_description: 'Descripciñón de la Actividad de las Lombrices'
+        worms_density_id: 'Densidad de Lombrices'
+        bed_compaction_id: 'Compactación de la cama'
+        ponding_id: 'Apozamiento'
+        bida_comments: 'Comentarios sobre BIDA'
+        odor_id: 'Olor'
+        plant_odor_description: 'Descripción del Olor de la Planta'
+        birds: 'Pájaros'
+        fly_id: 'Moscas'
+        summary_comments: '¿Algún comentario?'
+      metrics:
+        volume: 'Galón'
+        volumes: 'Galones'
+      noise:
+        noises:
+          normal: 'Normal'
+          unnormal_describe: 'Anormal (Describe)'
+      odor:
+        odors:
+          typical: 'Típico'
+          no_typical_describe: 'Atípico (Describe)'
+      piping:
+        pipings:
+          normal: 'Normal'
+          leaking: 'Goteando'
+          broken: 'Quebradas'
+      plant:
+        cover: 'Imagen de la Planta'
+        name: 'Nombre'
+        code: 'Código de Planta'
+        address01: 'Dirección'
+        address02: 'Dirección'
+        state: 'Estado'
+        zip: 'Código Zip'
+        country_id: 'País'
+        phone: 'Teléfono'
+        startup_date: 'Fecha de inicio de la Planta'
+        contact_id: 'Contacto de la Planta'
+        bf_contact_id: 'Contacto de Biofiltro'
+        total_modules_size: 'Tamaño total de los Módulos'
+        system_size: 'Tamaño del Sistema'
+        flow_design: 'Diseño de Flujo'
+        discharge_point_id: 'Punto de Descarga'
+        system_purpose: 'Propósito del Sistema'
+        report_preface: 'Introducción del Reporte'
+        high_season: 'Temporada Alta'
+        responsible: 'Responsable'
+        logbook_bf_responsible_id: 'Operador del Logbook por parte de Biofiltro'
+        logbook_bf_supervisor_id: 'Supervisor del Logbook por parte de Biofiltro'
+        logbook_company_responsible_id: 'Administrador del Logbook por parte de la empresa'
+      ponding:
+        pondings:
+          no_ponding: 'Sin pozas'
+          high_ponding_urgent_rototill: 'Muy apozado (es necesario arar)'
+      priority:
+        priorities:
+          within_24_hours: 'Dentro de 24 horas'
+          within_3_days: 'Dentro de 3 días'
+          within_7_days: 'Dentro de 7 días'
+          within_30_days: 'Dentro de 30 días'
+      screen:
+        screens:
+          normal: 'Normal'
+          clogged: 'Obstruida'
+          film_has_formed: 'Se ha formado una película'
+      season:
+        seasons:
+          _no: 'No'
+          in_season: 'Mostrar en temporada'
+          out_season: 'Mostrar fuera de temporada'
+      sprinklers_head:
+        sprinklers_heads:
+          normal: 'Normal'
+          clogged: 'Obstruida'
+          missing: 'Perdida'
+      sprinklers_pressure:
+        sprinklers_pressures:
+          low: 'Baja'
+          normal: 'Normal'
+          high: 'Alta'
+      status:
+        statuses:
+          open: 'Abierto'
+          fixed: 'Solucionado'
+          being_remedied: 'En proceso de solución'
+      support:
+        attention: 'Atención'
+        start_date: 'Fecha de Inicio'
+        end_date: 'Fecha de Término'
+        client_onsite: 'Cliente en el Lugar'
+        name_client_onsite: 'Nombre del Cliente'
+        bf_technician_id: 'Técnico de Biofiltro'
+      system_surface:
+        system_surfaces:
+          normal: 'Normal'
+          vegetation_growing: 'Con vegetación creciendo alrededor'
+          trash: 'Contiene basura'
+      task:
+        name: 'Nombre'
+        comment: 'Comentario'
+        responsible: 'Responsable'
+        season: '¿Afecto a las temporadas?'
+        frecuency: 'Frecuencia'
+        select_day: 'Selecciona el(los) día(s) de la semana'
+        select_day_week: 'Selecciona el(los) día(s) y la semana'
+        select_day_week_month: 'Selecciona día(s), semana(s) y mes(es)'
+        value_type: 'Tipo de valor'
+        number_type: 'Tipo de número'
+      user:
+        name: 'Nombre'
+        lastname: 'Apellido'
+        email: 'Email'
+        password: 'Clave'
+        password_confirmation: 'Confirmación de la clave'
+        address01: 'Dirección'
+        address02: 'Dirección'
+        phone: 'Teléfono'
+        mobile: 'Teléfono celular'
+        employee: 'Empresa a la que pertenece'
+        role: 'Rol'
+        remember_me: 'Recordarme'
+        forgot_password: '¿Olvidó su clave?'
+        login: 'Entrar'
+        interface_color: 'Color de la Interfaz'
+        filtered: '¿Filtrar de las listas de usuarios?'
+        not_allowed_admin_creation: 'Solo usuarios Admin pueden asignar a otro usuario como Admin'
+        current_password: 'Clave actual'
+        current_password_text: '(necesitamos tu actual clave para confirmar los cambios)'
+        minimum_chars: 'caracteres mínimos'
+        language: 'Idioma'
+        locale: 'Idioma'
+        locales:
+          en: 'Inglés'
+          es: 'Español'
+        roles:
+          no_role: 'Sin Rol'
+          admin: 'Administrador'
+          client: 'Cliente'
+          operator: 'Operador'
+          operations_manager: 'Gerente de Operaciones'
+          viewer: 'Invitado'
+        interface_colors:
+          dark: 'Oscuro'
+          light: 'Claro'
+        employees:
+          company: 'De la empresa'
+          biofiltro: 'Biofiltro'
+        filtereds:
+          true: 'Si'
+          false: 'No'
+      worms_activity:
+        worms_activities:
+          active: 'Activas'
+          no_active_describe: 'Sin actividad (Describe)'
+      worms_color:
+        worms_colors:
+          normal: 'Normal'
+          unnormal_describe: 'Anormal (Describe)'
+      worms_density:
+        worms_densities:
+          low: 'Baja'
+          normal: 'Normal'
+          high: 'Alta'
+      work_summary:
+        title: 'Resumen del trabajo'
+        description: 'Descripción'
+        hours: 'Horas'
+        materials: 'Materiales'

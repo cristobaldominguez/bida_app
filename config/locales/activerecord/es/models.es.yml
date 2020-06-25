@@ -1,6 +1,7 @@
 es:
   activerecord:
     models:
+      alert: 'Alerta'
       bed_compaction: 'Compactación de la cama'
       collection_bin: 'Recolector'
       color: 'Color'
@@ -20,7 +21,9 @@ es:
       sprinklers_head: 'Cabezal de los aspersores'
       sprinklers_pressure: 'Presión de los aspersores'
       status: 'Status'
+      support: 'Soporte'
       system_surface: 'Superficie de BIDA'
+      task: 'Tarea'
       user: 'Usuario'
       work_summary: 'Resumen del trabajo'
       worms_activity: 'Actividad de las Lombrices'

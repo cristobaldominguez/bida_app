@@ -1,8 +1,0 @@
-es:
-  activerecord:
-    attributes:
-      season:
-        seasons:
-          _no: 'No'
-          in_season: 'Mostrar en temporada'
-          out_season: 'Mostrar fuera de temporada'

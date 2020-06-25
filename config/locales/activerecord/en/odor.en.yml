@@ -1,7 +1,0 @@
-en:
-  activerecord:
-    attributes:
-      odor:
-        odors:
-          typical: 'Typical'
-          no_typical_describe: 'No Typical (Describe)'

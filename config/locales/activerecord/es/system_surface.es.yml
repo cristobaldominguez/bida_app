@@ -1,8 +1,0 @@
-es:
-  activerecord:
-    attributes:
-      system_surface:
-        system_surfaces:
-          normal: 'Normal'
-          vegetation_growing: 'Con vegetación creciendo alrededor'
-          trash: 'Contiene basura'

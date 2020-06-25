@@ -1,8 +1,0 @@
-en:
-  activerecord:
-    attributes:
-      fly:
-        flies:
-          no_flies: 'No flies'
-          low: 'Low'
-          high: 'High'

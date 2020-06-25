@@ -1,8 +1,0 @@
-es:
-  activerecord:
-    attributes:
-      fly:
-        flies:
-          no_flies: 'Sin moscas'
-          low: 'Pocas'
-          high: 'Muchas'

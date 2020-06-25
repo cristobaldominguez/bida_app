@@ -1,8 +1,0 @@
-en:
-  activerecord:
-    attributes:
-      collection_bin:
-        collection_bins:
-          normal: 'Normal'
-          full: 'Full'
-          spillage: 'Spillage'

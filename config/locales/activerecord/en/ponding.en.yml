@@ -1,7 +1,0 @@
-en:
-  activerecord:
-    attributes:
-      ponding:
-        pondings:
-          no_ponding: 'No Ponding'
-          high_ponding_urgent_rototill: 'High Ponding (Urgent Rototill)'

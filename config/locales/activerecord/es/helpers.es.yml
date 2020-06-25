@@ -1,8 +1,6 @@
 es:
-  activerecord:
-    models:
-      alert: 'Alerta'
-    attributes:
+  helpers:
+    label:
       alert:
         attention: 'Atención'
         incident_type_id: 'Tipo de Incidente'
@@ -14,4 +12,3 @@ es:
         incident_resolution: 'Resolución del Incidente'
         solution_target_date: 'Fecha de Resolución'
         technician_hours_required: 'Horas Requeridas del Técnico'
-    errors:

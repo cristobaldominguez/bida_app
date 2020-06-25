@@ -1,7 +1,0 @@
-es:
-  activerecord:
-    attributes:
-      worms_color:
-        worms_colors:
-          normal: 'Normal'
-          unnormal_describe: 'Anormal (Describe)'

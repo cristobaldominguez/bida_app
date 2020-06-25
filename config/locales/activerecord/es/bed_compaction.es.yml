@@ -1,7 +1,0 @@
-es:
-  activerecord:
-    attributes:
-      bed_compaction:
-        bed_compactions:
-          normal: 'Normal'
-          compaction_need_rototill: 'Compacta (es necesario arar)'

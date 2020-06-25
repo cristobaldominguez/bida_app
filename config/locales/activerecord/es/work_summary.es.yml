@@ -1,9 +1,0 @@
-es:
-  activerecord:
-    attributes:
-      work_summary:
-        title: 'Resumen del trabajo'
-        description: 'Descripción'
-        hours: 'Horas'
-        materials: 'Materiales'
-    errors:

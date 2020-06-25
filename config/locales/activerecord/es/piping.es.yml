@@ -1,8 +1,0 @@
-es:
-  activerecord:
-    attributes:
-      piping:
-        pipings:
-          normal: 'Normal'
-          leaking: 'Goteando'
-          broken: 'Quebradas'

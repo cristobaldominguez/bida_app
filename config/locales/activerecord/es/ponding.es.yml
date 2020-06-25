@@ -1,7 +1,0 @@
-es:
-  activerecord:
-    attributes:
-      ponding:
-        pondings:
-          no_ponding: 'Sin pozas'
-          high_ponding_urgent_rototill: 'Muy apozado (es necesario arar)'

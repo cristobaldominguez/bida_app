@@ -1,7 +1,0 @@
-es:
-  activerecord:
-    attributes:
-      color:
-        colors:
-          typical: 'Típico'
-          no_typical_describe: 'Atípico (Describe)'

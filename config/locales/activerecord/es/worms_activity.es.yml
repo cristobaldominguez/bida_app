@@ -1,7 +1,0 @@
-es:
-  activerecord:
-    attributes:
-      worms_activity:
-        worms_activities:
-          active: 'Activas'
-          no_active_describe: 'Sin actividad (Describe)'

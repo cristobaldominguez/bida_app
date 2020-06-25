@@ -1,7 +1,0 @@
-en:
-  activerecord:
-    attributes:
-      incident_type:
-        incident_types:
-          typical: 'Typical'
-          no_typical_describe: 'No Typical (Describe)'
