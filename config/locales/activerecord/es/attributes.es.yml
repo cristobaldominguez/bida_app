@@ -3,7 +3,7 @@ es:
   activerecord:
     attributes:
       alert:
-        attention: 'Atención'
+        attention: 'Notificar a'
         incident_type_id: 'Tipo de Incidente'
         status_id: 'Estado del Incidente'
         priority_id: 'Prioridad de la Solución'
@@ -210,7 +210,7 @@ es:
           fixed: 'Solucionado'
           being_remedied: 'En proceso de solución'
       support:
-        attention: 'Atención'
+        attention: 'Notificar a'
         start_date: 'Fecha de Inicio'
         end_date: 'Fecha de Término'
         client_onsite: 'Cliente en el Lugar'
@@ -249,9 +249,9 @@ es:
         login: 'Entrar'
         interface_color: 'Color de la Interfaz'
         filtered: '¿Filtrar de las listas de usuarios?'
-        not_allowed_admin_creation: 'Solo usuarios Admin pueden asignar a otro usuario como Admin'
+        not_allowed_admin_creation: 'Solo Admins pueden asignar a otro como Admin'
         current_password: 'Clave actual'
-        current_password_text: '(necesitamos tu actual clave para confirmar los cambios)'
+        current_password_text: '(necesitamos tu clave para confirmar los cambios)'
         minimum_chars: 'caracteres mínimos'
         language: 'Idioma'
         locale: 'Idioma'

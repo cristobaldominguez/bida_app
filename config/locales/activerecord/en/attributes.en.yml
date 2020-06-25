@@ -3,7 +3,7 @@ en:
   activerecord:
     attributes:
       alert:
-        attention: 'Attention'
+        attention: 'Notify to'
         incident_type_id: 'Incident Type'
         status_id: 'Status'
         priority_id: 'Solution Priority'
@@ -193,7 +193,7 @@ en:
           fixed: 'Fixed'
           being_remedied: 'Being Remedied'
       support:
-        attention: 'Attention'
+        attention: 'Notify to'
         client_onsite: 'Client on Site'
         name_client_onsite: 'Name of the Client on Site'
         bf_technician_id: 'Biofiltro Technician'
