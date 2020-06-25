@@ -110,7 +110,7 @@ en:
         pumps_psi: 'Pumps Pressure'
         on_site_client: 'On Site Client'
         on_site_user_id: 'Name of the Client'
-        report_technician_id: 'Technician en el Lugar *'
+        report_technician_id: 'On Site Technician *'
         screen_id: 'Screen'
         collection_bin_id: 'Collection Bin'
         screen_comments: 'Screen Comments'
