@@ -30,7 +30,7 @@ class SamplingListsController < ApplicationController
     @accesses = Access.all
     @plant = Plant.find(params[:plant_id])
 
-    @samplings = @sampling_list.samplings.includes(standard: :option).select(&:active)
+    @samplings = @sampling_list.samplings.includes(standard: :option).active
 
   rescue ActiveRecord::RecordNotFound => _e
     redirect_to pages_no_permission_path, notice: 'Access not Allowed'

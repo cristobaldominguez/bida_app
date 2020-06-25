@@ -126,11 +126,11 @@ class PlantsController < ApplicationController
   end
 
   def logbook
-    redirect_to edit_plant_logbook_path(@plant, @plant.logbooks.last)
+    redirect_to edit_plant_logbook_path(@plant, @plant.logbooks.active.last)
   end
 
   def self.generate_plants_logbooks
-    plants = Plant.all.select(&:active)
+    plants = Plant.active
     plants.each do |plant|
       logbook = plant.logbooks.create
       LogsController.generate_monthly_logs(logbook, Date.today)

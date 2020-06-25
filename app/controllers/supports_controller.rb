@@ -13,7 +13,7 @@ class SupportsController < ApplicationController
   # GET /supports/1
   # GET /supports/1.json
   def show
-    @support.work_summaries = @support.work_summaries.select(&:active)
+    @support.work_summaries = @support.work_summaries.active
   rescue ActiveRecord::RecordNotFound => _e
     redirect_to pages_no_permission_path, notice: 'Access not Allowed'
   end
