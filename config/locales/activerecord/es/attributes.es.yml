@@ -124,7 +124,7 @@ es:
         worms_color_id: 'Color de las Lombrices'
         worms_color_description: 'Descripción del color de las Lombrices'
         worms_activity_id: 'Actividad de las Lombrices'
-        worms_activity_description: 'Descripciñón de la Actividad de las Lombrices'
+        worms_activity_description: 'Descripción de la Actividad de las Lombrices'
         worms_density_id: 'Densidad de Lombrices'
         bed_compaction_id: 'Compactación de la cama'
         ponding_id: 'Apozamiento'
