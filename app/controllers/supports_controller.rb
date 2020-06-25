@@ -1,5 +1,6 @@
 class SupportsController < ApplicationController
   before_action :set_create_assignment, only: :create
+  before_action :generate_users, only: [:new, :create, :edit, :update]
   load_and_authorize_resource
 
   # GET /supports
@@ -23,7 +24,6 @@ class SupportsController < ApplicationController
   def new
     @plant = Plant.find(params[:plant_id])
     @support = @plant.supports.build
-    @users = User.filtered_by(@plant)
     @support.work_summaries.build
   end
 
@@ -46,7 +46,6 @@ class SupportsController < ApplicationController
   def edit
     @plant = Plant.find(params[:plant_id])
     @support = @plant.supports.find(params[:id])
-    @users = User.filtered_by(@plant)
     @support.work_summaries = @support.work_summaries.select(&:active)
     @work_summary = @support.work_summaries.build if @support.work_summaries.empty?
   rescue ActiveRecord::RecordNotFound => _e
@@ -90,6 +89,12 @@ class SupportsController < ApplicationController
     @support = Support.new(support_params)
     @support.plant = Plant.find(params[:plant_id])
     @support.user = current_user
+  end
+
+  def generate_users
+    @users = User.filtered_by(@plant).sort
+    @company_users = User.from_company.sort
+    @biofiltro_users = User.filtered_by(@plant).from_biofiltro.sort
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

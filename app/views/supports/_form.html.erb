@@ -14,7 +14,7 @@
   <div class="field">
     <%= form.label :attention %>
     <ul>
-    <%= form.collection_check_boxes(:user_ids, @users, :id, :full_name, include_hidden: false) do |user| %>
+    <%= form.collection_check_boxes(:user_ids, @company_users + @biofiltro_users, :id, :full_name, include_hidden: false) do |user| %>
       <li><%= user.check_box %> <%= user.label %></li>
     <% end %>
     </ul>
@@ -37,12 +37,12 @@
 
   <div class="field no-border">
     <%= form.label :name_client_onsite %>
-    <%= form.collection_select(:client_id, @users, :id, :full_name, {prompt: t(:select_client, scope: :support)})  %>
+    <%= form.collection_select(:client_id, @company_users, :id, :full_name, {prompt: t(:select_client, scope: :support)})  %>
   </div>
 
   <div class="field no-border">
     <%= form.label :bf_technician_id %>
-    <%= form.collection_select(:bf_technician_id, @users, :id, :full_name, {prompt: t(:select_technician, scope: :support)})  %>
+    <%= form.collection_select(:bf_technician_id, @biofiltro_users, :id, :full_name, {prompt: t(:select_technician, scope: :support)})  %>
   </div>
 
   <h2 class="cell_division"><%= t(:work_summary, scope: [:activerecord, :models]) %></h2>

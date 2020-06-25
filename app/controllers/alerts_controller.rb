@@ -1,5 +1,6 @@
 class AlertsController < ApplicationController
   before_action :set_create_assignment, only: :create
+  before_action :generate_users, only: [:new, :create, :edit, :update]
   before_action :set_incident_type, :set_status, :set_priority, only: [:new, :edit, :create, :update]
   load_and_authorize_resource
 
@@ -23,7 +24,6 @@ class AlertsController < ApplicationController
   def new
     @plant = Plant.find(params[:plant_id])
     @alert = @plant.alerts.build
-    @users = User.filtered_by(@plant)
   end
 
   # POST /alerts
@@ -45,7 +45,6 @@ class AlertsController < ApplicationController
   def edit
     @plant = Plant.find(params[:plant_id])
     @alert = @plant.alerts.find(params[:id])
-    @users = User.filtered_by(@plant)
   rescue ActiveRecord::RecordNotFound => _e
     redirect_to pages_no_permission_path, notice: 'Access not Allowed'
   end
@@ -94,6 +93,12 @@ class AlertsController < ApplicationController
     @alert = Alert.new(alert_params)
     @alert.user = current_user
     @alert.plant = Plant.find(params[:plant_id])
+  end
+
+  def generate_users
+    @users = User.filtered_by(@plant).sort
+    @company_users = User.from_company.sort
+    @biofiltro_users = User.filtered_by(@plant).from_biofiltro.sort
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

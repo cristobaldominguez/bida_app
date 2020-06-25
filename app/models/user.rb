@@ -34,6 +34,9 @@ class User < ApplicationRecord
   enum employee: %i[company biofiltro]
   enum role: %i[no_role admin client operator operations_manager viewer]
 
+  scope :from_company, -> { where employee: 'company' }
+  scope :from_biofiltro, -> { where employee: 'biofiltro' }
+
   def full_name
     "#{name} #{lastname}"
   end

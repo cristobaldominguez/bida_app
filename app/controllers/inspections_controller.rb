@@ -1,5 +1,6 @@
 class InspectionsController < ApplicationController
   before_action :set_create_assignment, only: :create
+  before_action :generate_users, only: [:new, :create, :edit, :update]
   prepend_before_action :set_variables, only: %i[new create edit update]
   load_and_authorize_resource
 
@@ -89,7 +90,6 @@ class InspectionsController < ApplicationController
 
   def set_variables
     @plant = Plant.find(params[:plant_id])
-    @users = User.filtered_by(@plant)
     @screens = Screen.all_options
     @collectionbins = CollectionBin.all_options
     @noises = Noise.all_options
@@ -107,6 +107,12 @@ class InspectionsController < ApplicationController
     @worms_density = WormsDensity.all_options
     @colors = Color.all_options
     @odors = Odor.all_options
+  end
+
+  def generate_users
+    @users = User.filtered_by(@plant).sort
+    @company_users = User.from_company.sort
+    @biofiltro_users = User.filtered_by(@plant).from_biofiltro.sort
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
