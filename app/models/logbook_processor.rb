@@ -1,121 +1,35 @@
-require 'json'
-
 class LogbookProcessor
-  def initialize(logbook)
-    @logs = logbook.logs.includes(task: [:task_list]).order('date DESC')
-    @task_list = logbook.task_list
+  def self.get_logs_from(logbook, current_user)
     @plant = logbook.plant
-    @current_date = Date.today
-    @prev_month = @current_date.beginning_of_month.prev_month
-  end
+    @current_user = current_user
+    @responsibles_ids = (@plant.users.all_operations_managers.pluck(:id) + [ current_user.id ]).uniq
 
-  def valid_logs(current_user)
-    list_valid_logs = @task_list.tasks.map do |task|
-      @task = task
-      date = generate_cycle_dates(task)
-      next if date.nil?
-      next if plant_in_season?(task)
-      next unless employee_can_execute?(current_user)
+    tasks_ids = logbook.task_list.tasks.pluck(:id)
+    @from_db = Log.includes(task: :task_list).where(task_id: tasks_ids).active.until_date(Date.today.next).last_of_every_task
 
-      log_on_date(date, task)
-    end
-
-    list_valid_logs.flatten.reject(&:nil?)
+    validate_logs_from_db
   end
 
   private
 
-  def generate_cycle_dates(cls)
-    return @current_date if cls.daily?
-    return weekly_period if cls.weekly?
-    return every_2_weeks_period if cls.every_2_weeks?
-    return monthly_period if cls.monthly?
-    return every_x_months_period if cls.every_x_months?
+  def self.validate_logs_from_db
+    @from_db.select {|log| valid_log?(log) }
   end
 
-  def log_on_date(date, task)
-    @logs.select { |log| log.date == date && log.task_id == task.id }
+  def self.valid_log?(log)
+    return false if log.date.nil?
+    return false if log.value.present?
+    return false if is_cross_season?(log.task)
+    return false unless employee_can_execute?(@current_user)
+
+    log
   end
 
-  def weekly_period
-    cycle = JSON.parse(@task.cycle)
-    weeks = last_two_weeks
-    dates = array_of_dates(cycle['days'], weeks)
-
-    dates.reject(&:nil?).empty? ? nil : closest_day(dates)
-  end
-
-  def every_2_weeks_period
-    cycle = JSON.parse(@task.cycle)
-    days = weeks_dates
-    dates = array_of_dates(cycle['days'], days)
-
-    dates.reject(&:nil?).empty? ? nil : closest_day(dates)
-  end
-
-  def monthly_period
-    cycle = JSON.parse(@task.cycle)
-    dates = cycle['days'].map { |day| [@prev_month.public_send(method_in_string(day)), @current_date.public_send(method_in_string(day))] }.flatten
-
-    dates.reject(&:nil?).empty? ? nil : closest_day(dates)
-  end
-
-  def every_x_months_period
-    cycle = JSON.parse(@task.cycle)
-    months = months_in_period(cycle['months'])
-    dates = cycle['days'].map { |day| months.map { |month| month.public_send(method_in_string(day)) } }.flatten
-
-    dates.reject(&:nil?).empty? ? nil : closest_day(dates)
-  end
-
-  def closest_day(dates)
-    dates.reject { |date| date > @current_date }.max
-  end
-
-  def even_week?
-    @current_date.strftime('%W').to_i.even? || false
-  end
-
-  def odd_week?
-    @current_date.strftime('%W').to_i.odd? || false
-  end
-
-  def last_two_weeks
-    @current_date.prev_week.all_week.to_a + @current_date.all_week.to_a
-  end
-
-  def two_weeks_ago(date)
-    date.prev_week.prev_week.all_week.to_a + date.all_week.to_a
-  end
-
-  def months_in_period(months)
-    months.map { |month| [Date.new(@current_date.year, month['month'], 1) - 1.year, Date.new(@current_date.year, month['month'], 1)] }.flatten
-  end
-
-  def weeks_dates
-    { even: even_week? ? two_weeks_ago(@current_date) : two_weeks_ago(@current_date - 1.week),
-      odd: odd_week? ? two_weeks_ago(@current_date) : two_weeks_ago(@current_date - 1.week) }
-  end
-
-  def array_of_dates(days, dates)
-    weeks = dates
-    days.map do |day|
-      if dates.is_a?(Hash)
-        weeks = day['week'].even? ? dates[:even] : dates[:odd]
-      end
-      weeks.select { |week_day| week_day.public_send(Day.new(day['day']).fullname + '?') }
-    end.flatten
-  end
-
-  def method_in_string(day)
-    "#{Day.new(day['week']).day_in_words}_#{Day.new(day['day']).fullname}_in_month"
-  end
-
-  def plant_in_season?(cls)
+  def self.is_cross_season?(cls)
     true if @plant.high_season && cls.out_season? || !@plant.high_season && cls.in_season?
   end
 
-  def employee_can_execute?(current_user)
+  def self.employee_can_execute?(current_user)
     return true if current_user.admin? # Todos los administradores podran ver todos los Logs
     return true if is_in_charge?(current_user) # Se revisa si es el encargado directo o el gerente de operaciones de la planta
 
@@ -123,8 +37,7 @@ class LogbookProcessor
     current_task && current_user.company? || !current_task && current_user.biofiltro?
   end
 
-  def is_in_charge?(current_user)
-    responsibles_ids = (@task.task_list.plant.users.select(&:operations_manager?).pluck(:id) + [ current_user.id ]).uniq
-    responsibles_ids.include? @task.responsible
+  def self.is_in_charge?(current_user)
+    @responsibles_ids.include? @task.responsible
   end
 end

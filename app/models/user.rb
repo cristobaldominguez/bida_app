@@ -36,6 +36,7 @@ class User < ApplicationRecord
 
   scope :from_company, -> { where employee: 'company' }
   scope :from_biofiltro, -> { where employee: 'biofiltro' }
+  scope :all_operations_managers, -> { where role: 'operations_manager' }
 
   def full_name
     "#{name} #{lastname}"
