@@ -25,10 +25,7 @@ class LogbooksController < ApplicationController
     @logbook = @plant.logbooks.find(params[:id])
 
     lgs = LogbookProcessor.new(@logbook).valid_logs(current_user)
-
-    empty_logs = lgs.reject { |log| log.value.present? }
-    ordered_logs = empty_logs.group_by { |log| log.task.name }
-    @filtered_logs = ordered_logs.map { |block| block.second.max_by(&:date) }.sort_by(&:date).reverse
+    @filtered_logs = lgs.sort_by(&:date).reverse
 
   rescue ActiveRecord::RecordNotFound => _e
     redirect_to pages_no_permission_path, notice: t(:access_not_allowed, scope: :global)
