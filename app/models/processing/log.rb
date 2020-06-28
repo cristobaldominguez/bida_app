@@ -1,6 +1,6 @@
 require 'json'
 
-class LogCheck
+class Processing::Log
   def initialize(log, current_date = Date.today)
     @log = log
     @current_date = current_date

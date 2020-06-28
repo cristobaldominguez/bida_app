@@ -15,7 +15,7 @@ class LogsController < ApplicationController
   def self.generate_log(actual_date)
     @@tasks.map do |task|
       log = Log.new(logbook: @@logbook, value: '', date: actual_date, task: task)
-      LogCheck.new(log, actual_date).generate? ? log : nil
+      Processing::Log.new(log, actual_date).generate? ? log : nil
     end
   end
 

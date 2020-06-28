@@ -222,7 +222,7 @@ class PlantsController < ApplicationController
   def log_creation(logbook, actual_date)
     new_logs = @plant.current_log_standards.map do |cls|
       log = Log.new(logbook: logbook, value: '', date: actual_date, current_log_standard: cls)
-      LogCheck.new(log, actual_date).generate? ? log : nil
+      Processing::Log.new(log, actual_date).generate? ? log : nil
     end
 
     new_logs.reject(&:nil?)
