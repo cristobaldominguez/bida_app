@@ -26,7 +26,7 @@ class LogbookProcessor
   end
 
   def self.is_cross_season?(cls)
-    true if @plant.high_season && cls.out_season? || !@plant.high_season && cls.in_season?
+    @plant.high_season && cls.out_season? || !@plant.high_season && cls.in_season?
   end
 
   def self.employee_can_execute?(current_user)
