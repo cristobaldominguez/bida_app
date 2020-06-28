@@ -13,7 +13,7 @@ class LogbooksController < ApplicationController
   def show
     @plant = Plant.find(params[:plant_id])
     @logbook = @plant.logbooks.find(params[:id])
-    @filtered_logs = @logbook.logs.includes(:task).order('date DESC').reject { |log| log.date > @current_date }
+    @filtered_logs = @logbook.logs.includes(:task).order('date DESC')
 
   rescue ActiveRecord::RecordNotFound => _e
     redirect_to pages_no_permission_path, notice: t(:access_not_allowed, scope: :global)
@@ -53,6 +53,7 @@ class LogbooksController < ApplicationController
   # DELETE /logbooks/1
   # DELETE /logbooks/1.json
   def destroy
+    @logbook.logs.update_all(active: false)
     @logbook.inactive!
     respond_to do |format|
       format.html { redirect_to plant_logbooks_path(@logbook.plant), notice: 'Logbook was successfully destroyed.' }
