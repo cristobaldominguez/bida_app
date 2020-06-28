@@ -1,4 +1,4 @@
-class LogbookProcessor
+class Processing::Logbook
   def self.get_logs_from(logbook, current_user)
     @plant = logbook.plant
     @current_user = current_user

@@ -24,7 +24,7 @@ class LogbooksController < ApplicationController
     @plant = Plant.find(params[:plant_id])
     @logbook = @plant.logbooks.find(params[:id])
 
-    lgs = LogbookProcessor.get_logs_from(@logbook, current_user)
+    lgs = Processing::Logbook.get_logs_from(@logbook, current_user)
     @filtered_logs = lgs.sort_by(&:date).reverse
 
   rescue ActiveRecord::RecordNotFound => _e
