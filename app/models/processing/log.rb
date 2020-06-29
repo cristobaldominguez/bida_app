@@ -55,6 +55,8 @@ class Processing::Log
   end
 
   def monthly_validate?
+    return false unless is_same_week?
+
     @cycle['days'].map { |day| current_day?(day) }.include? true
   end
 
@@ -116,5 +118,9 @@ class Processing::Log
 
   def month_present?
     @cycle['months'].select { |month| month['month'] == @current_date.month }.present?
+  end
+
+  def is_same_week?
+    @cycle['days'].map {|d| d['week'] }.include? @current_date.week_of_month
   end
 end
