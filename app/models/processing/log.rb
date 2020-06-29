@@ -107,10 +107,11 @@ class Processing::Log
 
   def check_day(this_week, next_week, day_pos)
     doit_this_week = this_week[day_pos]
-    has_day_next_week = next_week.present? && next_week[day_pos].present?
-    doit_next_week = has_day_next_week ? next_week[day_pos] : false
 
-    this_week[day_pos].present? ? doit_this_week : doit_next_week
+    return doit_this_week if doit_this_week.present?
+
+    has_day_next_week = next_week.present? && next_week[day_pos].present?
+    has_day_next_week ? next_week[day_pos] : false
   end
 
   def month_present?
