@@ -39,3 +39,4 @@ es:
       arrow_keys: 'Usa los botones ←↑→ para elegir una fecha'
       previous_month: 'Próximo Mes'
       next_month: 'Mes Previo'
+    hi: "¡Hola %{name}!"

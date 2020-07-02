@@ -15,6 +15,7 @@
       </a>
       <div class="options_menu">
         <ul class="options_menu__list">
+          <li class="options_menu__item"><div class="options_menu__link"><%= t(:hi, scope: :global, name: current_user.name) %></div></li>
           <li class="options_menu__item"><%= link_to t(:edit_profile, scope: :global), edit_user_path(current_user.id), class: 'options_menu__link' %></li>
           <li class="options_menu__item"><%= link_to t(:change_password, scope: :global), edit_user_registration_path, class: 'options_menu__link' %></li>
           <li class="options_menu__separator"></li>
