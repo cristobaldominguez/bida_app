@@ -20,22 +20,22 @@ class Processing::Logbook
 
     return false if log.date.nil?
     return false if log.value.present?
-    return false if cross_season?(log.task)
-    return false unless employee_can_execute?(@current_user)
+    return false if cross_season?
+    return false unless employee_can_execute?
 
     log
   end
 
-  def self.cross_season?(cls)
-    @plant.high_season && cls.out_season? || !@plant.high_season && cls.in_season?
+  def self.cross_season?
+    @plant.high_season && @task.out_season? || !@plant.high_season && @task.in_season?
   end
 
-  def self.employee_can_execute?(current_user)
-    return true if current_user.admin? # Todos los administradores podran ver todos los Logs
+  def self.employee_can_execute?
+    return true if @current_user.admin? # Todos los administradores podran ver todos los Logs
     return true if in_charge? # Se revisa si es el encargado directo o el gerente de operaciones de la planta
 
     current_task = @task.responsible.zero? # Si responsible == 0, la empresa se hace responsable. responsible == -1 se hace responsable Biofiltro
-    current_task && current_user.company? || !current_task && current_user.biofiltro?
+    current_task && @current_user.company? || !current_task && @current_user.biofiltro?
   end
 
   def self.in_charge?
