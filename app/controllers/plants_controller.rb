@@ -144,7 +144,7 @@ class PlantsController < ApplicationController
   end
 
   def set_weekdays
-    days_eng = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
+    days_eng = %w[mon tue wed thu fri sat sun]
     days = I18n.t('date.day_names').map { |day| I18n.transliterate(day) }
     days << days.shift
 
@@ -181,8 +181,8 @@ class PlantsController < ApplicationController
   end
 
   def set_value_types
-    @input_types = Task.input_types.map { |key, val| [key, t(key, scope: [:task, :input_types])] }
-    @data_types = Task.data_types.map { |key, val| [key, t(key == '%' ? '_%' : key, scope: [:task, :data_types])] }
+    @input_types = Task.input_types.map { |key, _| [key, t(key, scope: %i[task input_types])] }
+    @data_types = Task.data_types.map { |key, _| [key, t(key == '%' ? '_%' : key, scope: %i[task data_types])] }
   end
 
   # def build_samplings(sampling_lists, standards)
@@ -200,15 +200,15 @@ class PlantsController < ApplicationController
 
   def set_season
     @seasons = Task.seasons.map do |season, _|
-      _season = season == 'no' ? '_no' : season
-      [season, t(_season, scope: [:activerecord, :attributes, :season, :seasons])]
+      ssn = season == 'no' ? '_no' : season
+      [season, t(ssn, scope: %i[activerecord attributes season seasons])]
     end
   end
 
   def set_log_frecuency
     @log_frecuency = Task.frecuencies.map do |frecuency|
-      _frecuency = frecuency.first.parameterize(separator: '_')
-      [_frecuency, t(_frecuency, scope: [:activerecord, :attributes, :frecuency, :frecuencies])]
+      freq = frecuency.first.parameterize(separator: '_')
+      [freq, t(freq, scope: %i[activerecord attributes frecuency frecuencies])]
     end
   end
 

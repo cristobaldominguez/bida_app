@@ -4,8 +4,9 @@ class Processing::Logbook
     @current_user = current_user
     @responsibles_ids = (@plant.users.all_operations_managers.pluck(:id) + [ current_user.id ]).uniq
 
-    tasks_ids = logbook.task_list.tasks.pluck(:id)
-    @from_db = ::Log.includes(task: :task_list).where(task_id: tasks_ids).active.until_date(Date.today.next).last_of_every_task
+    tasks_ids = @plant.task_lists.last.tasks.pluck(:id)
+    logbooks = @plant.logbooks.pluck(:id)
+    @from_db = ::Log.includes(task: :task_list).where(task_id: tasks_ids).where(logbook_id: logbooks).active.until_date(Date.today.next).last_of_every_task
 
     validate_logs_from_db
   end

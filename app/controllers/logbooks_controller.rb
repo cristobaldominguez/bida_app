@@ -72,8 +72,6 @@ class LogbooksController < ApplicationController
   end
 
   def check_date
-    # the_date = Date.new(@logbook.created_at.year, @logbook.created_at.month, 1)
-    # @current_date == the_date ? @current_date : the_date.end_of_month
     @current_date
   end
 
