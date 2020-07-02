@@ -2,6 +2,7 @@ document.addEventListener('turbolinks:load', function() {
   const TaskModal = (() => {
 
     const state = {
+        i18n: {},
         steps: 0,
         step: 0,
         svg: '',
@@ -62,6 +63,10 @@ document.addEventListener('turbolinks:load', function() {
     steps.each((index, el) => state.validations[index] = $(el).find('[data-required="true"]'))
     $('body').on('click', '.options_menu__link--modal-edit', editOnModal)
 
+    function setup() {
+      APITranslations()
+    }
+
     function init() {
       Events.emit('taskmodal/state/stepsHeight', null)
       state.steps = $('.steps__trail > [class^="step-"]').length - 1
@@ -75,6 +80,22 @@ document.addEventListener('turbolinks:load', function() {
       Events.emit('taskmodal/render/buttons', null)
       Events.emit('taskmodal/render/stepsHeight', 0)
       Events.emit('taskmodal/init/addListeners', null)
+    }
+
+    function APITranslations() {
+      const locale = $('html').attr('lang')
+
+      $.ajax({
+        url: `/${locale}/locales.json?i18n=[global.show,global.edit,global.destroy,global.confirm]`,
+        type: 'GET',
+        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))}
+      })
+      .done(function(data) {
+        state.i18n = data
+      })
+      .fail(function(error) {
+        console.log(error);
+      })
     }
 
     function calculateStepsHeight() {
@@ -437,7 +458,7 @@ document.addEventListener('turbolinks:load', function() {
     }
 
     return {
-        init, state
+        setup, init, state
     }
   })()
 
@@ -517,7 +538,6 @@ document.addEventListener('turbolinks:load', function() {
     }
 
     function create({ id, task_list_id, plant_id }) {
-
       const _tr = tr('table_main__table-row')
       const td_01 = td('table_main__table-data--left-text')
       td_01.innerHTML = `<input name="plant[task_lists_attributes][0][tasks_attributes][${ id }][active]" type="hidden" value="0">
@@ -547,11 +567,11 @@ document.addEventListener('turbolinks:load', function() {
       const div_options = div('options_menu')
       const ul_options = ul('options_menu__list')
       const li_options_01 = li('options_menu__item')
-      const link_options_01 = link({ href: '#', _class: 'options_menu__link--modal-show', text: 'show' })
+      const link_options_01 = link({ href: '#', _class: 'options_menu__link--modal-show', text: TaskModal.state.i18n.show })
       const li_options_02 = li('options_menu__item')
-      const link_options_02 = link({ href: '#', _class: 'options_menu__link--modal-edit', text: 'edit' })
+      const link_options_02 = link({ href: '#', _class: 'options_menu__link--modal-edit', text: TaskModal.state.i18n.edit })
       const li_options_03 = li('options_menu__item')
-      const link_options_03 = link({ href: '#', _class: 'options_menu__link--modal-destroy', text: 'destroy', confirm: 'Are you sure?' })
+      const link_options_03 = link({ href: '#', _class: 'options_menu__link--modal-destroy', text: TaskModal.state.i18n.destroy, confirm: TaskModal.state.i18n.confirm })
       const unclick = div('unclick')
 
 
@@ -592,6 +612,8 @@ document.addEventListener('turbolinks:load', function() {
       create
     }
   })()
+
+  TaskModal.setup()
 
   // Event triggered before modal will be show
   $('#plant_logbook').on('shown.bs.modal', function (e) {
