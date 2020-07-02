@@ -1,0 +1,46 @@
+@font-face {
+  font-family: 'update';
+  src: url(<%= asset_path('biofiltro_update.eot?42945658') %>);
+  src: url(<%= asset_path('biofiltro_update.eot?42945658#iefix') %>) format('embedded-opentype'),
+       url(<%= asset_path('biofiltro_update.woff2?42945658') %>) format('woff2'),
+       url(<%= asset_path('biofiltro_update.woff?42945658') %>) format('woff'),
+       url(<%= asset_path('biofiltro_update.ttf?42945658') %>) format('truetype'),
+       url(<%= asset_path('biofiltro_update.svg?42945658#biofiltro_update') %>) format('svg');
+
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+  font-family: 'update';
+  font-style: normal;
+  font-weight: normal;
+  speak: never;
+
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: .2em;
+  text-align: center;
+
+  /* For safety - reset parent styles, that can break glyph codes*/
+  font-variant: normal;
+  text-transform: none;
+
+  /* fix buttons height, for twitter bootstrap */
+  line-height: 1em;
+
+  /* Animation center compensation - margins should be symmetric */
+  /* remove if not needed */
+  margin-left: .2em;
+
+  /* Font smoothing. That was taken from TWBS */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.update {
+  &-error:before { content: '\e800'; }
+  &-done:before { content: '\e801'; }
+}

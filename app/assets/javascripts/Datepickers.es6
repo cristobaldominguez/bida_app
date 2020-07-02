@@ -1,6 +1,8 @@
 document.addEventListener('turbolinks:load', function() {
   'use strict'
 
+  const options = typeof pikaday_locale !== 'undefined' ? pikaday_locale : {}
+
   const DatePicker = (() => {
     const state = {}
     function init() {
@@ -10,6 +12,7 @@ document.addEventListener('turbolinks:load', function() {
       if (datepickers.length > 0) {
         datepickers.forEach(function(datepicker){
           let picker = new Pikaday({
+            ...options,
             field: datepicker,
             format: 'DD/MM/YYYY',
             toString(date, format) {
@@ -19,7 +22,6 @@ document.addEventListener('turbolinks:load', function() {
                 return `${year}-${month}-${day}`;
             },
             parse(dateString, format) {
-                // dateString is the result of `toString` method
                 const parts = dateString.split('/');
                 const day = parseInt(parts[0], 10);
                 const month = parseInt(parts[1], 10) - 1;
@@ -29,7 +31,6 @@ document.addEventListener('turbolinks:load', function() {
           });
         })
       }
-
     }
     return { init, state}
   })()

@@ -35,3 +35,7 @@ en:
       eighth: 'th'
       ninth: 'th'
       tenth: 'th'
+    datepicker:
+      arrow_keys: 'Use the arrow keys to pick a date'
+      previous_month: 'Next Month'
+      next_month: 'Prev Month'

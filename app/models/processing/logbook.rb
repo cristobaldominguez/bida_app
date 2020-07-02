@@ -1,6 +1,6 @@
 class Processing::Logbook
-  def self.get_logs_from(logbook, current_user)
-    @plant = logbook.plant
+  def self.get_logs_from(plant, current_user)
+    @plant = plant
     @current_user = current_user
     @responsibles_ids = (@plant.users.all_operations_managers.pluck(:id) + [ current_user.id ]).uniq
 

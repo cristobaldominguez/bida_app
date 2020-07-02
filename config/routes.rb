@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     get 'pages/no_permission'
 
     resources :log_standards, :tasks, :bounds, :standards, :charts
+    resources :logs, only: [:update]
 
     resources :companies do
       resources :plants, only: %i[index new create update destroy]

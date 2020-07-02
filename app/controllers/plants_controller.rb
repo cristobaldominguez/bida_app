@@ -126,7 +126,23 @@ class PlantsController < ApplicationController
   end
 
   def logbook
-    redirect_to edit_plant_logbook_path(@plant, @plant.logbooks.active.last)
+    @current_date = Date.today
+    @plant = Plant.find(params[:id])
+    @logs = Processing::Logbook.get_logs_from(@plant, current_user).sort_by(&:date).reverse
+    @densities = [['Low', t(:low, scope: :density)], ['Medium', t(:medium, scope: :density)], ['High Density', t(:high, scope: :density)]]
+    @odor = [['Low', t(:low, scope: :odor)], ['Medium', t(:medium, scope: :odor)], ['Strong Odor', t(:strong, scope: :odor)]]
+    @pikaday = {
+      firstDay: first_day_of_week,
+      i18n: {
+        previousMonth: I18n.t(:previous_month, scope: %i[global datepicker]),
+        nextMonth: I18n.t(:next_month, scope: %i[global datepicker]),
+        months: I18n.t('date.month_names').reject(&:nil?).map(&:capitalize),
+        weekdays: I18n.t('date.day_names').reject(&:nil?).map(&:capitalize),
+        weekdaysShort: I18n.t('date.abbr_day_names').reject(&:nil?).map(&:capitalize)
+      }
+    }
+  rescue ActiveRecord::RecordNotFound => _e
+    redirect_to pages_no_permission_path, notice: t(:access_not_allowed, scope: :global)
   end
 
   def self.generate_plants_logbooks
@@ -230,6 +246,11 @@ class PlantsController < ApplicationController
 
   def accesses_without_external
     Access.where.not(name: 'External')
+  end
+
+  def first_day_of_week
+    monday_as_first_day_of_month = [:es]
+    monday_as_first_day_of_month.include?(I18n.locale) ? 1 : 0
   end
 
   def plant_params

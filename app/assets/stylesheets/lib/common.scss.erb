@@ -566,6 +566,7 @@ a:visited {
 			&-row {
 				height: 5em;
 				border-bottom: 1px solid var(--color-line);
+				position: relative;
 
 				&:last-child {
 					border: none;
@@ -1497,5 +1498,42 @@ button.modal-footer {
 
 	&.round:before {
 		border-radius: 50%;
+	}
+}
+
+.pika {
+	&-single {
+		background: var(--background-pick);
+		border-color: var(--background-border);
+		border-radius: var(--border-radius);
+		color: var(--text);
+	}
+
+	&-label {
+		background-color: transparent;
+	}
+
+	&-button {
+		background-color: var(--background-dates);
+		text-align: center;
+	}
+}
+
+.form__inline {
+	display: inline-block;
+	margin: 0 10px;
+}
+
+.updated {
+
+	&__red,
+	&__green {
+		color: var(--log-updated-done);
+		font-family: 'update';
+		margin: 0 5px;
+	}
+
+	&__red {
+		color: var(--log-updated-error);
 	}
 }

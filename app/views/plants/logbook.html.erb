@@ -1,0 +1,73 @@
+<h2 class="main__title"><%= t(:edit, scope: :logbook, plant: @plant.name) %></h2>
+
+<%#= form_with(model: @logs, remote: true) do |form| %>
+
+<!-- <div class="actions">
+  <%#= form.submit class: 'action-btn' %>
+</div> -->
+<%# end %>
+
+<% date = nil %>
+<%= render 'shared/tables/elements_list', headers: [t(:task, scope: :logbook), '', t(:value, scope: :logbook)] do %>
+<% if @logs.any? %>
+  <% @logs.each do |log| %>
+  <% if date.nil? || log.date != date %>
+  <tr class="table_main__table-row--no-height">
+    <td colspan="3" class="table_main__table-data--date">
+      <% if log.date == @current_date %>
+      <%= t(:today, scope: :global) %>
+      <% else %>
+      <%= l(log.date, format: :long) %>
+      <% end %>
+    </td>
+  </tr>
+  <% end %>
+  <% date = log.date %>
+  <tr class="table_main__table-row">
+    <td class="table_main__table-data--left-text">
+      <%= log.task.name %>
+      <% if log.task.comment.present? %>
+      <span class="table_main__table-data-span"><%= log.task.comment %><span>
+      <% end %>
+    </td>
+    <td class="table_main__api-response">
+
+    </td>
+    <% input_type = log.task.input_type %>
+    <% class_name = input_type == 'number' ? 'field-wrap' : '' %>
+    <td class="table_main__table-data <%= class_name %>">
+      <% if input_type == 'checkbox' %>
+      <input class="check-input form__checkbox" type="checkbox" value="<%= log.value %>" data-id="<%= log.id %>" />
+      <% elsif ['number'].include?(input_type) %>
+      <div class="field__value">
+        <input step="any" class="number-input form__input" type="number" value="<%= log.value %>" data-id="<%= log.id %>" />
+        <span class="field__value-span"><%= t(log.task.data_type, scope: [:activerecord, :attributes, :task, :data_types]) %></span>
+      </div>
+      <% elsif input_type == 'date' %>
+      <input class="datepicker datepicker-input form__input" type="text" aria-label="<%= t(:arrow_keys, scope: [:global, :datepicker]) %>" value="<%= log.value %>" data-id="<%= log.id %>" />
+      <% elsif input_type == 'yes/no' %>
+      <div class="form__inline">
+        <input type="radio" class="form__radio-button" name="logbook[log][<%= log.id %>][value]" value="Yes" data-id="<%= log.id %>" />
+        <label for="logbook[log][<%= log.id %>][value]"><%= t(:_yes, scope: :global) %></label>
+      </div>
+      <div class="form__inline">
+        <input type="radio" class="form__radio-button" name="logbook[log][<%= log.id %>][value]" value="No" data-id="<%= log.id %>" />
+        <label for="logbook[log][<%= log.id %>][value]"><%= t(:_no, scope: :global) %></label>
+      </div>
+      <% elsif input_type == 'Low/Medium/High Density' %>
+      <%= collection_select(:log, :value, @densities, :first, :second, {prompt: t(:select_alt, scope: :global)}, class: 'form__select', data: {id: log.id}) %>
+      <% elsif input_type == 'Low/Medium/Strong Odor' %>
+      <%= collection_select(:log, :value, @odor, :first, :second, {prompt: t(:select_alt, scope: :global)}, class: 'form__select', data: {id: log.id}) %>
+      <% end %>
+      <div class="table_main__table-data-ok"></div>
+    </td>
+  </tr>
+  <% end %>
+<% else %>
+<tr class="table_main__table-row"><td colspan="2" class="table_main__table-data"><%= t(:no_tasks_to_do, scope: :task) %></td></tr>
+<% end %>
+<% end %>
+
+<%= javascript_tag do %>
+    const pikaday_locale = <%= @pikaday.to_json.html_safe %>;
+<% end %>

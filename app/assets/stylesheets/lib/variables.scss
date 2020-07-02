@@ -35,6 +35,7 @@ $lg: 1200;
 	--orange: rgb(241,143,28);
 	--blue: rgb(24,117,240);
 	--green: rgb(80,209,102);
+	--green-light: rgb(97,255,123);
 	--purple: rgb(85,83,206);
 	--dark-green: rgb(40,104,50);
 	--dark-blue: rgb(13,34,51);
@@ -128,6 +129,15 @@ $lg: 1200;
 	--high-season-text: var(--white);
 	--high-season-input-bg: var(--gray80);
 
+	/* DatePicker */
+	--background-pick: var(--gray98);
+	--background-border: var(--gray80);
+	--background-dates: var(--gray95);
+
+	/* Logbook */
+	--log-updated-done: var(--green);
+	--log-updated-error: var(--red);
+
 	.main_header--high-season {
 		--header-icon-gray: var(--black);
 		--menu-text: var(--black);
@@ -205,6 +215,15 @@ $lg: 1200;
 	--high-season: var(--dark-green);
 	--high-season-text: var(--black);
 	--high-season-input-bg: var(--gray20);
+
+	/* DatePicker */
+	--background-pick: var(--gray20);
+	--background-border: var(--gray15);
+	--background-dates: var(--gray12);
+
+	/* Logbook */
+	--log-updated-done: var(--green-light);
+	--log-updated-error: var(--red);
 
 	.main_header--high-season {
 		--header-icon-gray: var(--white);

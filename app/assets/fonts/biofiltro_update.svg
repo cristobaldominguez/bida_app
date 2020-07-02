@@ -1,0 +1,14 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg">
+<metadata>Copyright (C) 2020 by original authors @ fontello.com</metadata>
+<defs>
+<font id="biofiltro_update" horiz-adv-x="1000" >
+<font-face font-family="biofiltro_update" font-weight="400" font-stretch="normal" units-per-em="1000" ascent="850" descent="-150" />
+<missing-glyph horiz-adv-x="1000" />
+<glyph glyph-name="error" unicode="&#xe800;" d="M500 834c-268 0-484-216-484-484s216-484 484-484 484 216 484 484-216 484-484 484z m238-611c9-9 9-24 0-33l-78-77c-9-10-24-10-33 0l-127 128-127-128c-9-10-24-10-33 0l-77 77c-10 9-10 24 0 33l128 127-128 127c-10 9-10 24 0 33l77 78c9 9 24 9 33 0l127-129 127 129c9 9 24 9 33 0l78-78c9-9 9-24 0-33l-129-127 129-127z" horiz-adv-x="1000" />
+
+<glyph glyph-name="done" unicode="&#xe801;" d="M984 350c0-267-216-484-484-484s-484 217-484 484 217 484 484 484 484-216 484-484z m-540-256l359 359c13 12 13 32 0 44l-44 44c-12 13-32 13-44 0l-293-293-137 137c-12 12-32 12-44 0l-44-44c-13-12-13-32 0-44l203-203c12-13 32-13 44 0z" horiz-adv-x="1000" />
+</font>
+</defs>
+</svg>

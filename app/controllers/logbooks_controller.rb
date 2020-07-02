@@ -23,9 +23,7 @@ class LogbooksController < ApplicationController
   def edit
     @plant = Plant.find(params[:plant_id])
     @logbook = @plant.logbooks.find(params[:id])
-
-    lgs = Processing::Logbook.get_logs_from(@logbook, current_user)
-    @filtered_logs = lgs.sort_by(&:date).reverse
+    @filtered_logs = @logbook.logs.includes(task: [:task_list])
 
   rescue ActiveRecord::RecordNotFound => _e
     redirect_to pages_no_permission_path, notice: t(:access_not_allowed, scope: :global)

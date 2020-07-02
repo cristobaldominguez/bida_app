@@ -1,4 +1,6 @@
 class LogsController < ApplicationController
+  load_and_authorize_resource
+
   def self.generate_monthly_logs(logbook, current_date)
     @@logbook = logbook
     @@tasks = @@logbook.task_list.tasks
@@ -31,5 +33,23 @@ class LogsController < ApplicationController
     new_logs = @@tasks.map do |task|
       log = generate_log(actual_date).reject(&:nil?)
     end
+  end
+
+  def update
+    respond_to do |format|
+      if @log.update(alert_params)
+        format.html { redirect_to @log, notice: 'Log was successfully updated.' }
+        format.json { render json: @log.id, status: :ok }
+      else
+        format.html { render :edit }
+        format.json { render json: @log.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  private
+
+  def alert_params
+    params.require(:log).permit(:id, :logbook_id, :active, :value, :document, :date)
   end
 end
