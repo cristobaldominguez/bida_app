@@ -24,12 +24,12 @@ class Ability
     if user.admin?
       can :manage, :all
     elsif user.operations_manager?
-      can :manage, [Alert, Support, Inspection, Logbook, Sampling, SamplingList, Report, Plant, GraphStandard, FlowReport, Flow]
+      can :manage, [Alert, Support, Inspection, Logbook, Log, Sampling, SamplingList, Report, Plant, GraphStandard, FlowReport, Flow]
       can %i[read create update], User
     elsif user.operator?
       can :read, Plant
       can :logbook, Plant
-      can %i[read update], Logbook
+      can %i[read update], [Logbook, Log]
       can %i[read update], User, id: user.id
     elsif user.client?
       can %i[read update], Logbook
