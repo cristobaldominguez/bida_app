@@ -307,6 +307,7 @@ document.addEventListener('turbolinks:load', function() {
       modal.modal('show')
       Events.emit('taskmodal/state/step', 0)
       Events.emit('taskmodal/render/data_modal', null)
+      Events.emit('app/options/unclick', null)
     }
 
     function getFormData(e) {

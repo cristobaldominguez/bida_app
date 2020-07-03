@@ -12,6 +12,8 @@ document.addEventListener('turbolinks:load', function() {
     const unclick_desktop_menu = $('.unclick--desktop_menu')
     const desktop_nav_link = $('.desktop_nav__link')
 
+    Events.on('app/options/unclick', unclick_specific_options)
+
     // EventBinding
     general_option_btn.on('click', general_option_btn_click)
     $('body').on('click', '.table_main__link--options', element_option_btn_click)
@@ -95,7 +97,7 @@ document.addEventListener('turbolinks:load', function() {
 
     function unclick_specific_options() {
       event.preventDefault()
-      $(this).parent().attr('class', 'options_menu')
+      $('.options_menu--show').attr('class', 'options_menu')
       $('.table_main__link--options-open').attr('class', 'table_main__link--options')
     }
 
