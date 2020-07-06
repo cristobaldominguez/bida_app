@@ -5,9 +5,15 @@ Rails.application.routes.draw do
     get 'pages/index'
     get 'pages/no_permission'
 
-    resources :log_standards, :tasks, :bounds, :standards, :charts
+    resources :log_standards, :bounds, :standards, :charts
     resources :logs, only: [:update]
     get 'locales/', to: 'locales#index'
+
+    resources :tasks do
+      collection do
+        get 'defaults/:lang', to: 'tasks#defaults'
+      end
+    end
 
     resources :companies do
       resources :plants, only: %i[index new create update destroy]

@@ -1,3 +1,4 @@
+---
 es:
   task:
     responsible: 'Selecciona un responsable'
@@ -34,3 +35,4 @@ es:
       hours: 'Horas'
       temperature: 'Temperatura'
       moisture: 'Humedad'
+    add_default_tasks: "<span>Agrega</span> <span>tareas</span>"

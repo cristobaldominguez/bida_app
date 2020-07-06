@@ -1,3 +1,4 @@
+---
 en:
   task:
     responsible: 'Select a Responsible Party'
@@ -34,3 +35,4 @@ en:
       hours: 'Hours'
       temperature: 'Temperature'
       moisture: 'Moisture'
+    add_default_tasks: "<span>Add</span> <span>Tasks</span>"

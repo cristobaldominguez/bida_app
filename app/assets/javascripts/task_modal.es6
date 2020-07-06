@@ -471,7 +471,10 @@ document.addEventListener('turbolinks:load', function() {
     Events.on('taskmodal/render/idChecker', idChecker)
 
     function create({ id, task_list_id, plant_id, task_id, name, season, comment, responsible, input_type, data_type, frecuency, cycle }) {
+      task_list_id = task_list_id ? ` value="${task_list_id}"` : ''
+      plant_id = plant_id ? ` value="${plant_id}"` : ''
       task_id = task_id ? ` value="${task_id}"` : ''
+      cycle = cycle ? ` value='${cycle}'` : ''
 
       const _tr = document.createElement('tr')
       _tr.classList.add('table_main__table-row')
@@ -492,9 +495,9 @@ document.addEventListener('turbolinks:load', function() {
           <input class="input_type" type="hidden" name="plant[task_lists_attributes][0][tasks_attributes][0][input_type]" value="${ input_type || '' }">
           <input class="data_type" type="hidden" name="plant[task_lists_attributes][0][tasks_attributes][0][data_type]" value="${ data_type || '' }">
           <input class="frecuency" type="hidden" name="plant[task_lists_attributes][0][tasks_attributes][0][frecuency]" value="${ frecuency || '' }">
-          <input class="cycle" type="hidden" name="plant[task_lists_attributes][0][tasks_attributes][0][cycle]" value="${ cycle || '' }">
+          <input class="cycle" type="hidden" name="plant[task_lists_attributes][0][tasks_attributes][0][cycle]"${ cycle }>
 
-          <span class="span_name"></span>
+          <span class="span_name">${ name || '' }</span>
         </td>
         <td class="table_main__table-data--options">
           <a href="#" class="table_main__link--options"></a>
@@ -524,9 +527,80 @@ document.addEventListener('turbolinks:load', function() {
       });
     }
 
-    return {
-      create
+    function create_from_array(tasks) {
+      const html_tasks = tasks.map(task => create(task))
+      console.log(html_tasks)
+      return html_tasks
     }
+
+    return { create, create_from_array }
+  })()
+
+  const DefaultTasks = (() => {
+
+    let state = {}
+
+    Events.on('state/default_tasks/render', renderTasks)
+
+    // DomCache
+    const table_logbook_edit = $('table.logbook')
+    const tasks_default = $('.add_task__default')
+
+    tasks_default.on('click', init)
+
+    function init(e) {
+      e.preventDefault()
+
+      APITasks()
+    }
+
+    function setState(data) {
+      state = {...state, tasks: data}
+      Events.emit('state/default_tasks/render', null)
+    }
+
+    function APITasks() {
+      const locale = $('html').attr('lang')
+      const country = $('#plant_country_id').children('option:selected').text()
+      const tasks_locale = get_locale_from(country)
+
+      $.ajax({
+        url: `/${locale}/tasks/defaults/${tasks_locale}`,
+        type: 'GET',
+        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))}
+      })
+      .done(function(data) {
+        setState(data)
+      })
+      .fail(function(error) {
+        console.log(error);
+      })
+    }
+
+    function get_locale_from(country) {
+      switch(country) {
+        case 'United States':
+        case 'Australia':
+        case 'New Zealand':
+          return 'en'
+          break;
+        case 'Chile':
+        case 'Peru':
+          return 'es'
+          break;
+        default:
+          return 'en'
+      }
+    }
+
+    function renderTasks() {
+      const list = table_logbook_edit.find('tbody')
+      const html = Task.create_from_array(state.tasks)
+      list.append(html)
+      Events.emit('taskmodal/render/idChecker', null)
+    }
+
+    return { init }
   })()
 
   TaskModal.setup()

@@ -920,9 +920,16 @@ a:visited {
 		}
 	}
 
+	&__bottom {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
 
+	&__default,
 	&__plus {
 		@extend .work_summary__plus;
+		margin: 1em .5em 3em .5em;
 
 		&:visited {
 			color: var(--white);
@@ -931,6 +938,11 @@ a:visited {
 		&:hover {
 			color: var(--blue);
 		}
+	}
+
+	&__default {
+		display: flex;
+		flex-direction: column;
 	}
 }
 

@@ -63,6 +63,14 @@ class TasksController < ApplicationController
     end
   end
 
+  def defaults
+    @tasks = Generator::Task.defaults(params[:lang])
+
+    respond_to do |f|
+      f.json { render json: @tasks, status: :ok }
+    end
+  end
+
   private
 
   def set_variables

@@ -221,6 +221,9 @@
     <% end %>
 
     <div class="add_task__bottom">
+      <% if params[:action] === 'new' %>
+      <a href="#" class="add_task__default"><%= t(:add_default_tasks, scope: [:task]).html_safe %></a>
+      <% end %>
       <a href="#" class="add_task__plus">+</a>
     </div>
 
