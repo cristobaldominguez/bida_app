@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Maintenance of the float pump",
+    "comment": "",
+    "responsible": "0",
+    "season": "no",
+    "frecuency": "every_x_months",
+    "cycle": "{\"months\":[{\"month\":\"12\"},{\"month\":\"6\"}],\"days\":[{\"day\":\"mon\",\"week\":\"1\",\"num\":\"1\"}]}",
+    "input_type": "number",
+    "data_type": "hours"
+  },
+  {
+    "name": "Check correct operation",
+    "comment": "1 wash cycle",
+    "responsible": "-1",
+    "season": "no",
+    "frecuency": "weekly",
+    "cycle": "{\"days\":[{\"day\":\"mon\",\"week\":1,\"num\":1},{\"day\":\"fri\",\"week\":1,\"num\":5}],\"months\":[]}",
+    "input_type": "checkbox",
+    "data_type": "other"
+  }
+]

@@ -1,0 +1,21 @@
+[
+  {
+    "name": "Aspirar sólidos de la línea",
+    "comment": "Disposse in DRY AREA",
+    "responsible": "-1",
+    "season": "no",
+    "frecuency": "daily",
+    "cycle": "{\"days\":[],\"months\":[]}",
+    "input_type": "number",
+    "data_type": "trucks"
+  },
+  {
+    "name": "Arar la cama completa",
+    "comment": "",
+    "responsible": "0",
+    "season": "in_season",
+    "frecuency": "every_2_weeks",
+    "cycle": "{\"days\":[{\"day\":\"mon\",\"week\":1,\"num\":1}],\"months\":[]}",
+    "input_type": "yes/no", "data_type": "other"
+  }
+]
