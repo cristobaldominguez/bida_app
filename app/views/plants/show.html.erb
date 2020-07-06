@@ -152,7 +152,13 @@
 <%= render 'shared/tables/elements_list', headers: [t(:task, scope: [:activerecord, :models]).pluralize, t(:responsible, scope: [:activerecord, :attributes, :plant])] do %>
 <% @task_list.each do |task| %>
 <tr class="table_main__table-row">
-  <td class="table_main__table-data--left-text"><input type="checkbox" name="active" value="Boat" <%= 'checked' if task.active %> disabled> <%= task.name %></td>
+  <td class="table_main__table-data--left-text">
+    <input type="checkbox" name="active" value="Boat" <%= 'checked' if task.active %> disabled>
+    <%= task.name %>
+    <% if task.comment %>
+    <span class="table_main__table-data-span"><%= task.comment %></span>
+    <% end %>
+  </td>
   <td class="table_main__table-data"><%= Responsible.name(task) %></td>
 </tr>
 <% end %>

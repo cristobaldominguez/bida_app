@@ -6,7 +6,7 @@ class Processing::Logbook
 
     tasks_ids = @plant.task_lists.last.tasks.pluck(:id)
     logbooks = @plant.logbooks.pluck(:id)
-    @from_db = ::Log.includes(task: :task_list).where(task_id: tasks_ids).where(logbook_id: logbooks).active.until_date(Date.today.next).last_of_every_task
+    @from_db = ::Log.includes(:task).where(task_id: tasks_ids).where(logbook_id: logbooks).active.until_date(Date.today.next).last_of_every_task
 
     validate_logs_from_db
   end
