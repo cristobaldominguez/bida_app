@@ -425,6 +425,8 @@ document.addEventListener('turbolinks:load', function() {
       element.find('.span_name').text(name)
       element.find('.input_type').val(input_type ? input_type : '')
       element.find('.data_type').val(data_type && input_type === 'number' ? data_type : 'other')
+
+      Events.emit('taskmodal/render/idChecker', null)
     }
 
     function removeTaskIds() {
@@ -450,6 +452,7 @@ document.addEventListener('turbolinks:load', function() {
       const html = Task.create(state.tasks)
 
       list.append(html)
+      Events.emit('taskmodal/render/idChecker', null)
     }
 
     function deleteTask(e) {
@@ -465,148 +468,60 @@ document.addEventListener('turbolinks:load', function() {
 
   const Task = (() => {
 
-    function tr(_class) {
+    Events.on('taskmodal/render/idChecker', idChecker)
+
+    function create({ id, task_list_id, plant_id, task_id, name, season, comment, responsible, input_type, data_type, frecuency, cycle }) {
+      task_id = task_id ? ` value="${task_id}"` : ''
+
       const _tr = document.createElement('tr')
-      const cl_array = _class.split(' ')
-      cl_array.forEach((cl, i) => _tr.classList.add(cl) )
+      _tr.classList.add('table_main__table-row')
+      _tr.innerHTML = `
+        <td class="table_main__table-data--left-text">
+          <input name="plant[task_lists_attributes][0][tasks_attributes][0][active]" type="hidden" value="1">
+          <input type="checkbox" checked="checked" name="plant[task_lists_attributes][0][tasks_attributes][0][active]">
+        </td>
+        <td class="table_main__table-data--left-text">
+          <input class="task_list_id" type="hidden" name="plant[task_lists_attributes][0][id]" value="${ task_list_id }">
+          <input class="plant_id" type="hidden" name="plant[task_lists_attributes][0][plant_id]" value="${ plant_id }">
+
+          <input class="task_id" type="hidden" name="plant[task_lists_attributes][0][tasks_attributes][0][id]"${ task_id }>
+          <input class="name" type="hidden" name="plant[task_lists_attributes][0][tasks_attributes][0][name]" value="${ name || '' }">
+          <input class="season" type="hidden" name="plant[task_lists_attributes][0][tasks_attributes][0][season]" value="${ season || '' }">
+          <input class="comment" type="hidden" name="plant[task_lists_attributes][0][tasks_attributes][0][comment]" value="${ comment || '' }">
+          <input class="responsible" type="hidden" name="plant[task_lists_attributes][0][tasks_attributes][0][responsible]" value="${ responsible || '' }">
+          <input class="input_type" type="hidden" name="plant[task_lists_attributes][0][tasks_attributes][0][input_type]" value="${ input_type || '' }">
+          <input class="data_type" type="hidden" name="plant[task_lists_attributes][0][tasks_attributes][0][data_type]" value="${ data_type || '' }">
+          <input class="frecuency" type="hidden" name="plant[task_lists_attributes][0][tasks_attributes][0][frecuency]" value="${ frecuency || '' }">
+          <input class="cycle" type="hidden" name="plant[task_lists_attributes][0][tasks_attributes][0][cycle]" value="${ cycle || '' }">
+
+          <span class="span_name"></span>
+        </td>
+        <td class="table_main__table-data--options">
+          <a href="#" class="table_main__link--options"></a>
+          <div class="options_menu">
+            <ul class="options_menu__list">
+              <li class="options_menu__item"><a class="options_menu__link--modal-show" href="#">${ TaskModal.state.i18n.show }</a></li>
+              <li class="options_menu__item"><a class="options_menu__link--modal-edit" href="#">${ TaskModal.state.i18n.edit }</a></li>
+              <li class="options_menu__item"><a class="options_menu__link--modal-destroy" data-confirm="${ TaskModal.state.i18n.confirm }" href="#">${ TaskModal.state.i18n.destroy }</a></li>
+            </ul>
+            <div class="unclick"></div>
+          </div>
+        </td>`
 
       return _tr
     }
 
-    function td(_class) {
-      const _td = document.createElement('td')
-      const cl_array = _class.split(' ')
-      cl_array.forEach((cl, i) => _td.classList.add(cl) )
+    function idChecker() {
+      const regex_id   = /[\d]+/g
+      const regex_name = /\[[\d]+\]/g
 
-      return _td
-    }
-
-    function input({ name, type, value, checked, id, _class }) {
-      const _input = document.createElement('input')
-
-      if (id) { _input.id = id }
-      if (type) { _input.type = type }
-      if (name) { _input.name = name }
-      if (value) { _input.value = value }
-      if (_class) { _class.split(' ').forEach((cl, i) => _input.classList.add(cl) ) }
-      if (typeof checked !== 'undefined') { _input.checked = checked }
-
-      return _input
-    }
-
-    function span(_class) {
-      const _span = document.createElement('span')
-      const cl_array = _class.split(' ')
-      cl_array.forEach((cl, i) => _span.classList.add(cl) )
-
-      return _span
-    }
-
-    function link({ href, _class, text, confirm }) {
-      const _link = document.createElement('a')
-      _link.href = href
-      const cl_array = _class.split(' ')
-      cl_array.forEach((cl, i) => _link.classList.add(cl) )
-
-      if (text) { _link.innerText = text }
-      if (confirm) { _link.dataset.confirm = confirm }
-
-      return _link
-    }
-
-    function div(_class) {
-      const _div = document.createElement('div')
-      const cl_array = _class.split(' ')
-      cl_array.forEach((cl, i) => _div.classList.add(cl) )
-
-      return _div
-    }
-
-    function ul(_class) {
-      const _ul = document.createElement('ul')
-      const cl_array = _class.split(' ')
-      cl_array.forEach((cl, i) => _ul.classList.add(cl) )
-
-      return _ul
-    }
-
-    function li(_class) {
-      const _li = document.createElement('li')
-      const cl_array = _class.split(' ')
-      cl_array.forEach((cl, i) => _li.classList.add(cl) )
-
-      return _li
-    }
-
-    function create({ id, task_list_id, plant_id }) {
-      const _tr = tr('table_main__table-row')
-      const td_01 = td('table_main__table-data--left-text')
-      td_01.innerHTML = `<input name="plant[task_lists_attributes][0][tasks_attributes][${ id }][active]" type="hidden" value="0">
-      <input type="checkbox" value="1" checked="checked" name="plant[task_lists_attributes][0][tasks_attributes][${ id }][active]" id="plant_task_lists_attributes_0_tasks_attributes_${ id }_active">`
-
-      const td_02 = td('table_main__table-data--left-text')
-      td_02.innerHTML = `<input type="hidden" value="${ task_list_id }" name="plant[task_lists_attributes][0][id]" id="plant_task_lists_attributes_0_id">
-      <input type="hidden" value="${ plant_id }" name="plant[task_lists_attributes][0][plant_id]" id="plant_task_lists_attributes_0_plant_id">`
-
-
-      const input_02_03 = input({ type: 'hidden', name: `plant[task_lists_attributes][0][tasks_attributes][${ id }][id]`, id: `plant_task_lists_attributes_0_tasks_attributes_${ id }_id` })
-      const input_02_04 = input({ type: 'hidden', name: `plant[task_lists_attributes][0][tasks_attributes][${ id }][task_list_id]`, id: `plant_task_lists_attributes_0_tasks_attributes_${ id }_task_list_id`, value: task_list_id.toString() })
-
-      const input_02_05 = input({ type: 'hidden', _class: 'name', name: `plant[task_lists_attributes][0][tasks_attributes][${ id }][name]`, id: `plant_task_lists_attributes_0_tasks_attributes_${ id }_name` })
-      const input_02_06 = input({ type: 'hidden', _class: 'season', name: `plant[task_lists_attributes][0][tasks_attributes][${ id }][season]`, id: `plant_task_lists_attributes_0_tasks_attributes_${ id }_season`})
-      const input_02_07 = input({ type: 'hidden', _class: 'comment', name: `plant[task_lists_attributes][0][tasks_attributes][${ id }][comment]`, id: `plant_task_lists_attributes_0_tasks_attributes_${ id }_comment`})
-      const input_02_08 = input({ type: 'hidden', _class: 'responsible', name: `plant[task_lists_attributes][0][tasks_attributes][${ id }][responsible]`, id: `plant_task_lists_attributes_0_tasks_attributes_${ id }_responsible`})
-      const input_02_09 = input({ type: 'hidden', _class: 'input_type', name: `plant[task_lists_attributes][0][tasks_attributes][${ id }][input_type]`, id: `plant_task_lists_attributes_0_tasks_attributes_${ id }_input_type`})
-      const input_02_10 = input({ type: 'hidden', _class: 'data_type', name: `plant[task_lists_attributes][0][tasks_attributes][${ id }][data_type]`, id: `plant_task_lists_attributes_0_tasks_attributes_${ id }_data_type`})
-      const input_02_11 = input({ type: 'hidden', _class: 'frecuency', name: `plant[task_lists_attributes][0][tasks_attributes][${ id }][frecuency]`, id: `plant_task_lists_attributes_0_tasks_attributes_${ id }_frecuency`})
-      const input_02_12 = input({ type: 'hidden', _class: 'cycle', name: `plant[task_lists_attributes][0][tasks_attributes][${ id }][cycle]`, id: `plant_task_lists_attributes_0_tasks_attributes_${ id }_cycle`})
-      const span_name = span('span_name')
-
-      const td_03 = td('table_main__table-data--options')
-      const link_options = link({ href: '#', _class: 'table_main__link--options' })
-
-      const div_options = div('options_menu')
-      const ul_options = ul('options_menu__list')
-      const li_options_01 = li('options_menu__item')
-      const link_options_01 = link({ href: '#', _class: 'options_menu__link--modal-show', text: TaskModal.state.i18n.show })
-      const li_options_02 = li('options_menu__item')
-      const link_options_02 = link({ href: '#', _class: 'options_menu__link--modal-edit', text: TaskModal.state.i18n.edit })
-      const li_options_03 = li('options_menu__item')
-      const link_options_03 = link({ href: '#', _class: 'options_menu__link--modal-destroy', text: TaskModal.state.i18n.destroy, confirm: TaskModal.state.i18n.confirm })
-      const unclick = div('unclick')
-
-
-      td_02.appendChild(input_02_03)
-      td_02.appendChild(input_02_04)
-
-      td_02.appendChild(input_02_05)
-      td_02.appendChild(input_02_06)
-      td_02.appendChild(input_02_07)
-      td_02.appendChild(input_02_08)
-      td_02.appendChild(input_02_09)
-      td_02.appendChild(input_02_10)
-      td_02.appendChild(input_02_11)
-      td_02.appendChild(input_02_12)
-      td_02.appendChild(span_name)
-
-      td_03.appendChild(link_options)
-      td_03.appendChild(div_options)
-
-      li_options_01.appendChild(link_options_01)
-      ul_options.appendChild(li_options_01)
-      li_options_02.appendChild(link_options_02)
-      ul_options.appendChild(li_options_02)
-      li_options_03.appendChild(link_options_03)
-      ul_options.appendChild(li_options_03)
-      div_options.appendChild(ul_options)
-      div_options.appendChild(unclick)
-
-
-      _tr.appendChild(td_01)
-      _tr.appendChild(td_02)
-      _tr.appendChild(td_03)
-
-      return _tr
+      const list = document.querySelectorAll('.table_main__table.logbook .table_main__table-row')
+      list.forEach((task, i) => {
+        const inputs = task.querySelectorAll('input:not(.plant_id)')
+        inputs.forEach((input, _) => {
+          input.name = input.name.replace(regex_name, (match, ind) => ind === 49 ? `[${i}]` : match)
+        });
+      });
     }
 
     return {
