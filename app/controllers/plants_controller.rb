@@ -257,7 +257,7 @@ class PlantsController < ApplicationController
     params.require(:plant).permit(
       :name, :code, :company_id, :address01, :address02, :state, :zip, :phone, :flow_design, :startup_date, :system_purpose,
       :report_preface, :country_id, :discharge_point_id, :contact_id, :bf_contact_id, :cover, :discharge_permit,
-      :logbook_bf_responsible_id, :logbook_bf_supervisor_id, :logbook_company_responsible_id, system_size: [],
+      :logbook_bf_responsible_id, :logbook_bf_supervisor_id, :logbook_company_responsible_id, :unit_number, system_size: [],
       standards_attributes: [:id, :option_id, :plant_id, :isRange, :enabled,
                              bounds_attributes: [:id, :standard_id, :outlet_id, :from, :to, outlet_attributes: [:id]],
                              option_attributes: %i[id name],

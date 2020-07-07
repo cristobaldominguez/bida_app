@@ -161,6 +161,7 @@ en:
         contact_id: 'Company Contact'
         bf_contact_id: 'Biofiltro Contact'
         code: 'Code'
+        unit_number: 'Unit Nº'
         address01: 'Address'
         address02: 'Address'
         state: 'State'

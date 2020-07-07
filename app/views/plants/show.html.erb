@@ -21,6 +21,12 @@
   <p class="view_info__data"><%= @plant.code %></p>
   <p class="view_info__title"><%= t(:code, scope: [:activerecord, :attributes, :plant]) %></p>
 </div>
+<% if @plant.unit_number.present? %>
+<div class="view_info">
+  <p class="view_info__data"><%= @plant.unit_number %></p>
+  <p class="view_info__title"><%= t(:unit_number, scope: [:activerecord, :attributes, :plant]) %></p>
+</div>
+<% end %>
 
 <div class="view_info">
   <% if @plant.address02.present? %>

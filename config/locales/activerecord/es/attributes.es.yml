@@ -154,6 +154,7 @@ es:
         cover: 'Imagen de la Planta'
         name: 'Nombre'
         code: 'Código de Planta'
+        unit_number: 'Número de Unidad'
         address01: 'Dirección'
         address02: 'Dirección'
         state: 'Estado'
