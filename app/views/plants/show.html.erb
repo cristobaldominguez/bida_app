@@ -14,13 +14,18 @@
   <% end %>
 <% end %>
 
+<% if @plant.name.present? %>
 <h2 class="main__titles"><%= @plant.name %></h2>
 <h3 class="main__subtitle"><%= t(:plant, scope: [:activerecord, :models]) %></h3>
+<% end %>
 
+<% if @plant.code.present? %>
 <div class="view_info">
   <p class="view_info__data"><%= @plant.code %></p>
   <p class="view_info__title"><%= t(:code, scope: [:activerecord, :attributes, :plant]) %></p>
 </div>
+<% end %>
+
 <% if @plant.unit_number.present? %>
 <div class="view_info">
   <p class="view_info__data"><%= @plant.unit_number %></p>
@@ -38,55 +43,75 @@
   <p class="view_info__title"><%= t(:address01, scope: [:activerecord, :attributes, :plant]) %></p>
 </div>
 
+<% if @plant.state.present? %>
 <div class="view_info">
   <p class="view_info__data"><%= @plant.state %></p>
   <p class="view_info__title"><%= t(:state, scope: [:activerecord, :attributes, :plant]) %></p>
 </div>
+<% end %>
 
+<% if @plant.zip.present? %>
 <div class="view_info">
   <p class="view_info__data"><%= @plant.zip %></p>
   <p class="view_info__title"><%= t(:zip, scope: [:activerecord, :attributes, :plant]) %></p>
 </div>
+<% end %>
 
+<% if @plant.country.present? %>
 <div class="view_info">
   <p class="view_info__data"><%= @plant.country.name %></p>
   <p class="view_info__title"><%= t(:country_id, scope: [:activerecord, :attributes, :plant]) %></p>
 </div>
+<% end %>
 
+<% if @plant.phone.present? %>
 <div class="view_info">
   <p class="view_info__data"><%= @plant.phone %></p>
   <p class="view_info__title"><%= t(:phone, scope: [:activerecord, :attributes, :plant]) %></p>
 </div>
+<% end %>
 
+<% if @plant.startup_date.present? %>
 <div class="view_info">
   <p class="view_info__data"><%= l(@plant.startup_date, format: :long) %></p>
   <p class="view_info__title"><%= t(:startup_date, scope: [:activerecord, :attributes, :plant]) %></p>
 </div>
+<% end %>
 
+<% if @plant.contact.present? %>
 <div class="view_info">
   <p class="view_info__data"><%= @plant.contact&.full_name %></p>
   <p class="view_info__title"><%= t(:contact_id, scope: [:activerecord, :attributes, :plant]) %></p>
 </div>
+<% end %>
 
+<% if @plant.bf_contact.present? %>
 <div class="view_info">
   <p class="view_info__data"><%= @plant.bf_contact&.full_name %></p>
   <p class="view_info__title"><%= t(:bf_contact_id, scope: [:activerecord, :attributes, :plant]) %></p>
 </div>
+<% end %>
 
+<% if @plant.discharge_point.present? %>
 <div class="view_info">
   <p class="view_info__data"><%= t(@plant.discharge_point.name.parameterize(separator: '_'), scope: [:activerecord, :attributes, :discharge_point, :discharge_points]) %></p>
   <p class="view_info__title"><%= t(:discharge_point_id, scope: [:activerecord, :attributes, :plant]) %></p>
 </div>
+<% end %>
 
+<% if @plant.system_size.present? %>
 <div class="view_info">
   <p class="view_info__data"><%= @plant.system_size.sum %> <%= @plant.metrics.area.pluralize(@plant.system_size.sum) %></p>
   <p class="view_info__title"><%= t(:system_size, scope: [:activerecord, :attributes, :plant]) %></p>
 </div>
+<% end %>
 
+<% if @plant.flow_design.present? %>
 <div class="view_info">
   <p class="view_info__data"><%= @plant.flow_design %> <%= @plant.flow_design.present? && @plant.flow_design > 1 ? t(:volumes, scope: [:activerecord, :attributes, :metrics]) : t(:volume, scope: [:activerecord, :attributes, :metrics]) %> <%= t(:per_day, scope: :global) %></p>
   <p class="view_info__title"><%= t(:flow_design, scope: [:activerecord, :attributes, :plant]) %></p>
 </div>
+<% end %>
 
 <%# <% if @plant.discharge_permit.attached? %>
 <!-- <div class="view_info">
@@ -100,15 +125,19 @@
 </div> -->
 <%# end %>
 
+<% if @plant.system_purpose.present? %>
 <div class="view_info">
   <p class="view_info__data"><%= @plant.system_purpose %></p>
   <p class="view_info__title"><%= t(:system_purpose, scope: [:activerecord, :attributes, :plant]) %></p>
 </div>
+<% end %>
 
+<% if @plant.report_preface.present? %>
 <div class="view_info">
   <p class="view_info__data"><%= @plant.report_preface %></p>
   <p class="view_info__title"><%= t(:report_preface, scope: [:activerecord, :attributes, :plant]) %></p>
 </div>
+<% end %>
 
 <div class="space"></div>
 
