@@ -33,6 +33,9 @@ es:
       loads: 'Cargas'
       yards: 'Yardas'
       hours: 'Horas'
+      celcius: 'ºC'
+      fahrenheit: 'ºF'
       temperature: 'Temperatura'
       moisture: 'Humedad'
+      GPM: 'GPM'
     add_default_tasks: "<span>Agrega</span> <span>tareas</span>"

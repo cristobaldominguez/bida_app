@@ -33,6 +33,9 @@ en:
       loads: 'Loads'
       yards: 'Yards'
       hours: 'Hours'
+      celcius: 'Celcius'
+      fahrenheit: 'Fahrenheit'
       temperature: 'Temperature'
       moisture: 'Moisture'
+      GPM: 'GPM'
     add_default_tasks: "<span>Add</span> <span>Tasks</span>"

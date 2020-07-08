@@ -247,6 +247,9 @@ en:
           hours: 'Hours'
           temperature: 'Temperature'
           moisture: 'Moisture'
+          celcius: 'ºC'
+          fahrenheit: 'ºF'
+          GPM: 'GPM'
       user:
         name: 'Name'
         lastname: 'Lastname'
