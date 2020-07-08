@@ -459,6 +459,7 @@ document.addEventListener('turbolinks:load', function() {
       e.preventDefault()
       const _parent = $(e.target).closest('.table_main__table-row')
       _parent.remove()
+      Events.emit('taskmodal/render/idChecker', null)
     }
 
     return {
