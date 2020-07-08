@@ -41,7 +41,7 @@ class PlantsController < ApplicationController
     # @graph_standards = Chart.all.map { |chart| @plant.graph_standards.build(chart: chart) }
 
     @task_list = @plant.task_lists.build
-    @task_list.tasks.build
+    # @task_list.tasks.build
     @responsibles = Responsible.get_complete_list(@plant)
   end
 
