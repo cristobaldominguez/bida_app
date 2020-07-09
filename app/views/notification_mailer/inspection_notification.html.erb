@@ -1,2 +1,2 @@
 <h1><%= t(:notification_title, scope: :inspection, text: @inspection.title) %></h1>
-<p><%= link_to t(:review_ticket, scope: :inspection), plant_inspection_url(@inspection.plant, @inspection) %></p>
+<p><%= link_to t(:review_ticket, scope: :inspection), plant_inspection_url(@user.locale, @inspection.plant, @inspection) %></p>

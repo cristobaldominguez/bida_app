@@ -1,2 +1,2 @@
 <h1><%= t(:notification_title, scope: :alert, text: @alert.subject) %></h1>
-<p><%= link_to t(:review_ticket, scope: :alert), plant_alert_url(@alert.plant, @alert) %></p>
+<p><%= link_to t(:review_ticket, scope: :alert), plant_alert_url(@user.locale, @alert.plant, @alert) %></p>
