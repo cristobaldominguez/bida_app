@@ -4,7 +4,7 @@ class NotificationMailer < ApplicationMailer
     @alert = alert
 
     I18n.with_locale(@user.locale) do
-      mail( to: @user.email, subject: I18n.t(:notification_subject, scope: :alert, text: @alert.subject) )
+      mail(to: @user.email, subject: I18n.t(:notification_subject, scope: :alert, text: @alert.subject))
     end
   end
 
@@ -22,7 +22,7 @@ class NotificationMailer < ApplicationMailer
     @inspection = alert
 
     I18n.with_locale(@user.locale) do
-      mail( to: @user.email, subject: I18n.t(:notification_subject, scope: :inspection, text: @inspection.title) )
+      mail(to: @user.email, subject: I18n.t(:notification_subject, scope: :inspection, text: @inspection.title))
     end
   end
 end
