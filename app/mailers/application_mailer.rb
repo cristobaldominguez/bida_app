@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'bida@biofiltro.com'
+  default from: 'BIDA Software <bida@biofiltro.com>'
   layout 'mailer'
 end

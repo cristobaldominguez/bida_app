@@ -2,27 +2,30 @@ class NotificationMailer < ApplicationMailer
   def alert_notification(user, alert)
     @user = user
     @alert = alert
+    email_with_name = "#{@user.full_name} <#{@user.email}>"
 
     I18n.with_locale(@user.locale) do
-      mail(to: @user.email, subject: I18n.t(:notification_subject, scope: :alert, text: @alert.subject))
+      mail(to: email_with_name, subject: I18n.t(:notification_subject, scope: :alert, text: @alert.subject))
     end
   end
 
   def support_notification(user, support)
     @user = user
     @support = support
+    email_with_name = "#{@user.full_name} <#{@user.email}>"
 
     I18n.with_locale(@user.locale) do
-      mail(to: @user.email, subject: I18n.t(:notification_subject, scope: :support, text: @support.number))
+      mail(to: email_with_name, subject: I18n.t(:notification_subject, scope: :support, text: @support.number))
     end
   end
 
   def inspection_notification(user, alert)
     @user = user
     @inspection = alert
+    email_with_name = "#{@user.full_name} <#{@user.email}>"
 
     I18n.with_locale(@user.locale) do
-      mail(to: @user.email, subject: I18n.t(:notification_subject, scope: :inspection, text: @inspection.title))
+      mail(to: email_with_name, subject: I18n.t(:notification_subject, scope: :inspection, text: @inspection.title))
     end
   end
 end
