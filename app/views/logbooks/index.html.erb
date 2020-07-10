@@ -3,7 +3,7 @@
 <%= render 'shared/tables/elements_list', headers: [t(:title, scope: :plant), t(:options, scope: :global).capitalize] do %>
 <% @logbooks.each do |logbook| %>
   <tr class="table_main__table-row">
-    <td class="table_main__table-data--left-text"><%= link_to logbook.created_at.to_date.strftime('%B, %Y'), edit_plant_logbook_path(@plant, logbook), class: 'table_main__link-show' %></td>
+    <td class="table_main__table-data--left-text"><%= link_to logbook.created_at.to_date.strftime('%B, %Y'), plant_logbook_path(@plant, logbook), class: 'table_main__link-show' %></td>
     <td class="table_main__table-data--options">
       <a href="#" class="table_main__link--options"></a>
       <div class="options_menu">
