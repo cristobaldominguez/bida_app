@@ -1,5 +1,6 @@
 class Plant < ApplicationRecord
   after_create_commit :generate_logbook
+  before_save :filter_unit_number
 
   # validations
   validates :name, presence: true, uniqueness: true
@@ -42,6 +43,8 @@ class Plant < ApplicationRecord
   accepts_nested_attributes_for :logbooks, allow_destroy: false
   accepts_nested_attributes_for :graph_standards, allow_destroy: true
 
+  serialize :unit_number, Array
+
   enum frecuency: %w[daily weekly every_2_weeks monthly every_x_months]
 
   scope :filter_by_id, ->(id) { where.not(id: id) }
@@ -49,6 +52,10 @@ class Plant < ApplicationRecord
   def generate_logbook
     logbook = logbooks.create(task_list: task_lists.last)
     GenerateLogsJob.perform_later(logbook)
+  end
+
+  def filter_unit_number
+    self.unit_number = unit_number.reject(&:empty?)
   end
 
   def metrics

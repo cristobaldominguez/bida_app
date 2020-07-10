@@ -94,7 +94,7 @@ class PlantsController < ApplicationController
     @plant.system_size = params[:plant][:system_size].split(' ').map(&:to_i)
     @plant.cover.attach(params[:plant][:cover]) if params[:plant][:cover].present?
     @plant.discharge_permit.attach(params[:plant][:discharge_permit]) if params[:plant][:discharge_permit].present?
-
+    @plant.unit_number = params[:plant][:unit_number].reject(&:empty?)
     # SamplingListGenerator.new(@plant).edit(with_params: params[:plant][:standards_attributes])
 
     respond_to do |format|
@@ -257,7 +257,7 @@ class PlantsController < ApplicationController
     params.require(:plant).permit(
       :name, :code, :company_id, :address01, :address02, :state, :zip, :phone, :flow_design, :startup_date, :system_purpose,
       :report_preface, :country_id, :discharge_point_id, :contact_id, :bf_contact_id, :cover, :discharge_permit,
-      :logbook_bf_responsible_id, :logbook_bf_supervisor_id, :logbook_company_responsible_id, :unit_number, system_size: [],
+      :logbook_bf_responsible_id, :logbook_bf_supervisor_id, :logbook_company_responsible_id, unit_number: [], system_size: [],
       standards_attributes: [:id, :option_id, :plant_id, :isRange, :enabled,
                              bounds_attributes: [:id, :standard_id, :outlet_id, :from, :to, outlet_attributes: [:id]],
                              option_attributes: %i[id name],

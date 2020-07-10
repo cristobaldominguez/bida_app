@@ -28,7 +28,9 @@
 
 <% if @plant.unit_number.present? %>
 <div class="view_info">
-  <p class="view_info__data"><%= @plant.unit_number %></p>
+  <% @plant.unit_number.each do |unit_n| %>
+  <p class="view_info__data"><%= unit_n %></p>
+  <% end %>
   <p class="view_info__title"><%= t(:unit_number, scope: [:activerecord, :attributes, :plant]) %></p>
 </div>
 <% end %>

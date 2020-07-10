@@ -33,8 +33,17 @@
   </div>
 
   <div class="field">
+    <div class="unit_number__wrapper">
+      <div class="unit_number__band"><a href="#" class="unit_number__plus">+</a></div>
     <%= form.label :unit_number %>
-    <%= form.text_field :unit_number %>
+    <% if plant.unit_number.present? && plant.unit_number.class == Array %>
+    <% plant.unit_number.each_with_index do |number, index| %>
+      <input type="text" name="plant[unit_number][]" class="unit_number__input" value="<%= number %>">
+    <% end %>
+    <% else %>
+    <%= form.text_field :unit_number, name: 'plant[unit_number][]', class: 'unit_number__input' %>
+    <% end %>
+    </div>
   </div>
 
   <div class="field">
