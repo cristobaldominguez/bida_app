@@ -459,6 +459,12 @@ document.addEventListener('turbolinks:load', function() {
       e.preventDefault()
       const _parent = $(e.target).closest('.table_main__table-row')
       _parent.remove()
+
+      const recently_edited = JSON.stringify({...state.data}) !== state.data_comparison
+      if (state.never_been_edited && recently_edited) {
+        Events.emit('taskmodal/render/removeTaskIds', null)
+        state.never_been_edited = true
+      }
       Events.emit('taskmodal/render/idChecker', null)
     }
 
