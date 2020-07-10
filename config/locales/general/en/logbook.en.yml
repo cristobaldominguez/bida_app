@@ -6,4 +6,5 @@ en:
     task: 'Task'
     value: 'Value'
     date: 'Date'
+    responsible: 'Responsible Party'
     logbook_task: 'Logbook Task'

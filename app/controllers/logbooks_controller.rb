@@ -13,7 +13,7 @@ class LogbooksController < ApplicationController
   def show
     @plant = Plant.find(params[:plant_id])
     @logbook = @plant.logbooks.find(params[:id])
-    @filtered_logs = @logbook.logs.includes(:task).order('date DESC')
+    @filtered_logs = @logbook.logs.includes(task: [:task_list]).order('date DESC')
 
   rescue ActiveRecord::RecordNotFound => _e
     redirect_to pages_no_permission_path, notice: t(:access_not_allowed, scope: :global)

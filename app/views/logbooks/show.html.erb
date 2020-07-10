@@ -6,12 +6,13 @@
 
 <h2 class="main__title">Logbook</h2>
 
-<%= render 'shared/tables/elements_list', headers: [t(:task, scope: :logbook), t(:value, scope: :logbook), t(:date, scope: :logbook)], title: 'Logbook' do %>
+<%= render 'shared/tables/elements_list', headers: [t(:task, scope: :logbook), t(:value, scope: :logbook), t(:date, scope: :logbook), t(:responsible, scope: :logbook)], title: 'Logbook' do %>
   <% @filtered_logs.each do |log| %>
   <tr class="table_main__table-row">
     <td class="table_main__table-data--left-text"><%= log.task.name %></td>
     <td class="table_main__table-data"><%= log.value %></td>
     <td class="table_main__table-data"><%= l(log.date, format: :day_month) %></td>
+    <td class="table_main__table-data"><%= Responsible.name(log.task) %></td>
   </tr>
   <% end %>
 <% end %>
