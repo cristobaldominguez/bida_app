@@ -4,7 +4,7 @@ document.addEventListener('turbolinks:load', function() {
 
     // DomCache
     const plus = document.querySelector('.unit_number__plus')
-    plus.addEventListener('click', (e) => {
+    plus && plus.addEventListener('click', (e) => {
       e.preventDefault()
       e.stopPropagation()
       const target = e.target.closest('.unit_number__wrapper')
@@ -16,13 +16,5 @@ document.addEventListener('turbolinks:load', function() {
       target.append(input)
     })
 
-
-    function init() {
-
-    }
-
-    return { init }
   })()
-
-  UnitNumber.init()
 })
