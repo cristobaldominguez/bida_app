@@ -31,6 +31,7 @@ document.addEventListener('turbolinks:load', function() {
     Events.on('taskmodal/render/modal_number_type', modalNumberType)
     Events.on('taskmodal/render/removeTaskIds', removeTaskIds)
 
+    const body = document.querySelector('body')
     const week_days = $('.select_week__day-link, .select_week__day-link--selected')
     const month_days = $('.select_month__day-link, .select_month__day-link--selected')
     const month_months = $('.select_months__month-link, .select_months__month-link--selected')
@@ -84,6 +85,7 @@ document.addEventListener('turbolinks:load', function() {
 
     function APITranslations() {
       const locale = $('html').attr('lang')
+      if (body.dataset.controller == 'plants' && (body.dataset.action === 'edit' || body.dataset.action === 'update')) { return 0 }
 
       $.ajax({
         url: `/${locale}/locales.json?i18n=[global.show,global.edit,global.destroy,global.confirm]`,
