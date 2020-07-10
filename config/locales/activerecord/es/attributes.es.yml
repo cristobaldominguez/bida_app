@@ -248,7 +248,7 @@ es:
           yards: 'Yardas'
           hours: 'Horas'
           temperature: 'Temperatura'
-          moisture: 'Humedad'
+          moisture: '%'
           celcius: 'ºC'
           fahrenheit: 'ºF'
           GPM: 'GPM'
