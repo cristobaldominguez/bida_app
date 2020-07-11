@@ -85,7 +85,7 @@ document.addEventListener('turbolinks:load', function() {
 
     function APITranslations() {
       const locale = $('html').attr('lang')
-      if (body.dataset.controller == 'plants' && (body.dataset.action === 'edit' || body.dataset.action === 'update')) { return 0 }
+      if (!(['edit','new'].includes(body.dataset.action) && ['plants'].includes(body.dataset.controller))) { return 0 }
 
       $.ajax({
         url: `/${locale}/locales.json?i18n=[global.show,global.edit,global.destroy,global.confirm]`,
@@ -96,7 +96,7 @@ document.addEventListener('turbolinks:load', function() {
         state.i18n = data
       })
       .fail(function(error) {
-        console.log(error);
+        console.log(error)
       })
     }
 
@@ -538,7 +538,6 @@ document.addEventListener('turbolinks:load', function() {
 
     function create_from_array(tasks) {
       const html_tasks = tasks.map(task => create(task))
-      console.log(html_tasks)
       return html_tasks
     }
 
