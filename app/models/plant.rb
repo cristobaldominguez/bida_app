@@ -3,7 +3,6 @@ class Plant < ApplicationRecord
   before_save :filter_unit_number
 
   # validations
-  validates :name, presence: true, uniqueness: true
   validates :code, presence: true, uniqueness: true
   validates :flow_design, numericality: { greater_than: 0 }
 

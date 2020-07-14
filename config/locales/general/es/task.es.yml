@@ -1,6 +1,7 @@
 ---
 es:
   task:
+    name_required: 'El nombre es obligatorio'
     responsible: 'Selecciona un responsable'
     responsible_error: 'Debes agregar un responsable'
     season: 'Selecciona una opción'

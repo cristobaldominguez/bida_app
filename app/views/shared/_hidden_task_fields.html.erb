@@ -2,9 +2,13 @@
 <%= task_list.hidden_field :plant_id, id: nil, class: 'plant_id' %>
 
 <%= task.hidden_field :id, id: nil, class: 'task_id' %>
-<%= task.hidden_field :name, id: nil, class: 'name' %>
+
+<% I18n.available_locales.each do |locale| %>
+<input class="i18n_name_<%= locale %>" type="hidden" name="plant[task_lists_attributes][0][tasks_attributes][0][i18n_name][<%= locale %>]" value="<%= task.object.i18n_name[locale] %>">
+<input class="i18n_comment_<%= locale %>" type="hidden" name="plant[task_lists_attributes][0][tasks_attributes][0][i18n_comment][<%= locale %>]" value="<%= task.object.i18n_comment[locale] %>">
+<% end %>
+
 <%= task.hidden_field :season, id: nil, class: 'season' %>
-<%= task.hidden_field :comment, id: nil, class: 'comment' %>
 <%= task.hidden_field :responsible, id: nil, class: 'responsible' %>
 <%= task.hidden_field :input_type, id: nil, class: 'input_type' %>
 <%= task.hidden_field :data_type, id: nil, class: 'data_type' %>

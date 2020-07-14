@@ -216,7 +216,7 @@
         <td class="table_main__table-data--left-text"><%= task.check_box :active %></td>
         <td class="table_main__table-data--left-text">
           <%= render 'shared/hidden_task_fields', task: task, task_list: task_list %>
-          <span class="span_name"><%= task.object.name %></span>
+          <span class="span_name"><%= localize(task.object.i18n_name) %></span>
         </td>
         <td class="table_main__table-data--options">
           <a href="#" class="table_main__link--options"></a>

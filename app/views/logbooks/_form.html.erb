@@ -32,9 +32,9 @@
     <% date = log.object.date %>
     <tr class="table_main__table-row">
       <td class="table_main__table-data--left-text">
-        <%= task.object.name %>
-        <% if task.object.comment != '' %>
-        <span class="table_main__table-data-span"><%= task.object.comment %><span>
+        <%= localize(task.object.i18n_name) %>
+        <% if any_locale?(task.object.i18n_comment) %>
+        <span class="table_main__table-data-span"><%= localize(task.object.i18n_comment) %><span>
         <% end %>
       </td>
       <% input_type = task.object.input_type %>
@@ -46,7 +46,7 @@
         <%= log.hidden_field :logbook_id %>
         <%= task.hidden_field :id %>
         <%= task.hidden_field :task_list_id %>
-        <%= task.hidden_field :name %>
+        <%= task.hidden_field :i18n_name %>
         <%= task.hidden_field :comment %>
         <%= task_list.hidden_field :plant_id %>
 

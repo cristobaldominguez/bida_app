@@ -25,9 +25,9 @@
   <% date = log.date %>
   <tr class="table_main__table-row">
     <td class="table_main__table-data--left-text">
-      <%= log.task.name %>
-      <% if log.task.comment.present? %>
-      <span class="table_main__table-data-span"><%= log.task.comment %><span>
+      <%= localize(log.task.i18n_name) %>
+      <% if any_locale?(log.task.i18n_comment) %>
+      <span class="table_main__table-data-span"><%= localize(log.task.i18n_comment) %><span>
       <% end %>
     </td>
     <td class="table_main__api-response">

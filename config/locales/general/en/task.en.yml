@@ -1,6 +1,7 @@
 ---
 en:
   task:
+    name_required: 'Name is required'
     responsible: 'Select a Responsible Party'
     responsible_error: 'Responsible Party is required'
     season: 'Select an option'

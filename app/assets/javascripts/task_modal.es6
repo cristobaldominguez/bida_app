@@ -84,11 +84,11 @@ document.addEventListener('turbolinks:load', function() {
     }
 
     function APITranslations() {
-      const locale = $('html').attr('lang')
+      state.current_locale = $('html').attr('lang')
       if (!(['edit','new'].includes(body.dataset.action) && ['plants'].includes(body.dataset.controller))) { return 0 }
 
       $.ajax({
-        url: `/${locale}/locales.json?i18n=[global.show,global.edit,global.destroy,global.confirm]`,
+        url: `/${state.current_locale}/locales/show.json?i18n=[global.show,global.edit,global.destroy,global.confirm]`,
         type: 'GET',
         beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))}
       })
@@ -96,7 +96,19 @@ document.addEventListener('turbolinks:load', function() {
         state.i18n = data
       })
       .fail(function(error) {
-        console.log(error)
+        console.error(error)
+      })
+
+      $.ajax({
+        url: `/${state.current_locale}/locales/all.json`,
+        type: 'GET',
+        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))}
+      })
+      .done(function(data) {
+        state.locales = data
+      })
+      .fail(function(error) {
+        console.error(error)
       })
     }
 
@@ -240,7 +252,23 @@ document.addEventListener('turbolinks:load', function() {
 
     function inputsListeners(e) {
       e.preventDefault()
-      state.data[$(this).data('target')] = $(this).val()
+      const data_target = $(this).data('target')
+      const is_translation = data_target.startsWith('i18n_')
+      if (is_translation) {
+        const {target, locale} = shortTranslationText(data_target)
+        state.data[target][locale] = $(this).val()
+
+      } else {
+        state.data[data_target] = $(this).val()
+      }
+    }
+
+    function shortTranslationText(text) {
+      const txt = text.split('_')
+      const locale = txt.pop()
+      const target = txt.join('_')
+
+      return {target, locale}
     }
 
     function onSubmit(e) {
@@ -320,10 +348,8 @@ document.addEventListener('turbolinks:load', function() {
       state.selected_task = element
 
       const _data = {
-        name: element.find('.name').val(),
         cycles: element.find('.cycle').val(),
         season: element.find('.season').val(),
-        comment: element.find('.comment').val(),
         frecuency: element.find('.frecuency').val(),
         data_type: element.find('.data_type').val(),
         input_type: element.find('.input_type').val(),
@@ -331,8 +357,16 @@ document.addEventListener('turbolinks:load', function() {
         responsible: element.find('.responsible').val()
       }
 
+      const name_locales = {}
+      state.locales.map(locale => name_locales[locale] = element.find(`.i18n_name_${locale}`).val())
+
+      const comment_locales = {}
+      state.locales.map(locale => comment_locales[locale] = element.find(`.i18n_comment_${locale}`).val())
+
       state.data = {
         ..._data,
+        i18n_name: name_locales,
+        i18n_comment: comment_locales,
         cycles: _data.cycles ? JSON.parse(_data.cycles) : { days: [], months: [] }
       }
 
@@ -345,12 +379,13 @@ document.addEventListener('turbolinks:load', function() {
     function renderDataOnModal() {
       if (!state.data) { return 0 }
 
-      const { name, season, comment, frecuency, cycles, responsible, input_type, data_type } = state.data
-      $('#task_name').val(name)
-      $('#task_comment').val(comment)
+      const { name, season, comment, frecuency, cycles, responsible, input_type, data_type, i18n_name, i18n_comment } = state.data
       $('#responsible_responsible_id').val(responsible)
       $('#data_type_data_type').val(data_type)
       $('#season_modal_season').val(season)
+      state.locales.map((locale) => $(`#i18n_name_${locale}`).val(i18n_name[locale]))
+      state.locales.map((locale) => $(`#i18n_comment_${locale}`).val(i18n_comment[locale]))
+
       select_frecuency.val(frecuency)
       value_type.val(input_type)
 
@@ -415,18 +450,18 @@ document.addEventListener('turbolinks:load', function() {
         state.never_been_edited = false
       }
 
-      const { name, season, comment, frecuency, cycles, responsible, input_type, data_type } = state.data
+      const { name, comment, season, frecuency, cycles, responsible, input_type, data_type, i18n_name, i18n_comment } = state.data
       const cycles_json = JSON.stringify(cycles)
 
-      element.find('.name').val(name)
       element.find('.season').val(season)
-      element.find('.comment').val(comment)
       element.find('.cycle').val(cycles_json)
       element.find('.frecuency').val(frecuency ? frecuency : '')
       element.find('.responsible').val(responsible ? responsible : '')
-      element.find('.span_name').text(name)
+      element.find('.span_name').text(i18n_name[state.current_locale])
       element.find('.input_type').val(input_type ? input_type : '')
       element.find('.data_type').val(data_type && input_type === 'number' ? data_type : 'other')
+      state.locales.map(locale => element.find(`.i18n_name_${locale}`).val(i18n_name[locale]))
+      state.locales.map(locale => element.find(`.i18n_comment_${locale}`).val(i18n_comment[locale]))
 
       Events.emit('taskmodal/render/idChecker', null)
     }
@@ -479,11 +514,16 @@ document.addEventListener('turbolinks:load', function() {
 
     Events.on('taskmodal/render/idChecker', idChecker)
 
-    function create({ id, task_list_id, plant_id, task_id, name, season, comment, responsible, input_type, data_type, frecuency, cycle }) {
+    function create({ id, task_list_id, plant_id, task_id, season, responsible, input_type, data_type, frecuency, cycle, i18n_name, i18n_comment }) {
       task_list_id = task_list_id ? ` value="${task_list_id}"` : ''
       plant_id = plant_id ? ` value="${plant_id}"` : ''
       task_id = task_id ? ` value="${task_id}"` : ''
       cycle = cycle ? ` value='${cycle}'` : ''
+      i18n_name = i18n_name ? i18n_name : ''
+      i18n_comment = i18n_comment ? i18n_comment : ''
+
+      const name_locales = TaskModal.state.locales.map((locale) => `<input class="i18n_name_${locale}" type="hidden" name="plant[task_lists_attributes][0][tasks_attributes][0][i18n_name][${locale}]" value="${ i18n_name[locale] || '' }">`)
+      const comment_locales = TaskModal.state.locales.map((locale) => `<input class="i18n_comment_${locale}" type="hidden" name="plant[task_lists_attributes][0][tasks_attributes][0][i18n_comment][${locale}]" value="${ i18n_comment[locale] || '' }">`)
 
       const _tr = document.createElement('tr')
       _tr.classList.add('table_main__table-row')
@@ -497,9 +537,9 @@ document.addEventListener('turbolinks:load', function() {
           <input class="plant_id" type="hidden" name="plant[task_lists_attributes][0][plant_id]" value="${ plant_id }">
 
           <input class="task_id" type="hidden" name="plant[task_lists_attributes][0][tasks_attributes][0][id]"${ task_id }>
-          <input class="name" type="hidden" name="plant[task_lists_attributes][0][tasks_attributes][0][name]" value="${ name || '' }">
+          ${ name_locales.join(' ') }
           <input class="season" type="hidden" name="plant[task_lists_attributes][0][tasks_attributes][0][season]" value="${ season || '' }">
-          <input class="comment" type="hidden" name="plant[task_lists_attributes][0][tasks_attributes][0][comment]" value="${ comment || '' }">
+          ${ comment_locales.join(' ') }
           <input class="responsible" type="hidden" name="plant[task_lists_attributes][0][tasks_attributes][0][responsible]" value="${ responsible || '' }">
           <input class="input_type" type="hidden" name="plant[task_lists_attributes][0][tasks_attributes][0][input_type]" value="${ input_type || '' }">
           <input class="data_type" type="hidden" name="plant[task_lists_attributes][0][tasks_attributes][0][data_type]" value="${ data_type || '' }">
@@ -532,8 +572,8 @@ document.addEventListener('turbolinks:load', function() {
         const inputs = task.querySelectorAll('input:not(.plant_id)')
         inputs.forEach((input, _) => {
           input.name = input.name.replace(regex_name, (match, ind) => ind === 49 ? `[${i}]` : match)
-        });
-      });
+        })
+      })
     }
 
     function create_from_array(tasks) {
@@ -581,7 +621,7 @@ document.addEventListener('turbolinks:load', function() {
         setState(data)
       })
       .fail(function(error) {
-        console.log(error);
+        console.error(error)
       })
     }
 

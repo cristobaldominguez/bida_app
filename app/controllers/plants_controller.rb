@@ -268,8 +268,8 @@ class PlantsController < ApplicationController
                                                                                option_attributes: %i[id name]]],
                                   access_attributes: %i[id name]],
       task_lists_attributes: [:id, :active, :plant_id,
-                              tasks_attributes: [:id, :active, :name, :cycle, :season, :comment, :frecuency, :responsible,
-                                                 :task_list_id, :input_type, :data_type,
+                              tasks_attributes: [:id, :active, :cycle, :season, :frecuency, :responsible,
+                                                 :task_list_id, :input_type, :data_type, i18n_name: {}, i18n_comment: {},
                                                  logs_attributes: %i[id date task_id logbook_id]]],
       graph_standards_attributes: %i[id show chart_id])
   end
