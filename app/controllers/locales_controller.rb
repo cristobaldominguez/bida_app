@@ -1,6 +1,5 @@
 class LocalesController < ApplicationController
-
-  def index
+  def show
     locales_array = params[:i18n].scan(/[\w.]+/)
 
     @locale = {}
@@ -11,6 +10,14 @@ class LocalesController < ApplicationController
 
     respond_to do |f|
       f.json { render json: @locale, status: :ok }
+    end
+  end
+
+  def index
+    @locales = I18n.available_locales
+
+    respond_to do |f|
+      f.json { render json: @locales, status: :ok }
     end
   end
 end

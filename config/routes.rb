@@ -7,7 +7,9 @@ Rails.application.routes.draw do
 
     resources :log_standards, :bounds, :standards, :charts
     resources :logs, only: [:update]
-    get 'locales/', to: 'locales#index'
+
+    get 'locales/show', to: 'locales#show'
+    get 'locales/all', to: 'locales#index'
 
     resources :tasks do
       collection do
