@@ -5,6 +5,7 @@ class Task < ApplicationRecord
   accepts_nested_attributes_for :task_list
 
   serialize :i18n_name
+  serialize :i18n_comment
 
   enum season: %i[no in_season out_season]
   enum frecuency: %w[daily weekly every_2_weeks monthly every_x_months]
