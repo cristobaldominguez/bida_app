@@ -147,6 +147,14 @@ $lg: 1200;
 	/* Menu buttons */
 	--menu-button-color: var(--gray-dark);
 
+	/* Priorities Color */
+	--label-red:    #FF0900;
+	--label-orange: #FF7F00;
+	--label-yellow: #FFEF00;
+	--label-green:  #00F11D;
+	--label-blue:   #0079FF;
+	--label-purple: #A800FF;
+
 }
 
 .dark-ui {
@@ -233,5 +241,13 @@ $lg: 1200;
 
 	/* Menu buttons */
 	--menu-button-color: var(--gray-light);
+
+	/* Priorities Color */
+	--label-red:    #FF583A;
+	--label-orange: #FF9032;
+	--label-yellow: #FEDD0F;
+	--label-green:  #4B963E;
+	--label-blue:   #23439F;
+	--label-purple: #561475;
 
 }

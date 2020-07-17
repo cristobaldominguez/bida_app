@@ -1,0 +1,24 @@
+---
+es:
+  todo:
+    title: 'To-Do'
+    title_plural: 'To-Dos'
+    new_todo: 'Nuevo To-Do'
+    related_todo: 'To-Do Relacionado'
+    my_todo: 'Mis To-Dos'
+    new: 'Nuevo To-Do'
+    edit: 'Editar To-Do'
+    index: 'To-Dos'
+    all: 'To-Dos'
+    history: Historial de To-Dos
+    select_responsible: 'Selecciona un responsable'
+    successfully_created: 'El To-Do fue exitosamente creado.'
+    successfully_updated: 'El To-Do fue exitosamente actualizado.'
+    successfully_deleted: 'El To-Do fue exitosamente eliminado.'
+    labels:
+      red: 'Rojo'
+      orange: 'Naranjo'
+      yellow: 'Amarillo'
+      green: 'Verde'
+      blue: 'Azul'
+      purple: 'Morado'

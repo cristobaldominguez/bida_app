@@ -28,7 +28,7 @@ Rails.application.routes.draw do
         end
       end
       resources :logbooks, except: %i[new create]
-      resources :inspections, :alerts, :flows, :graphs, :graph_standards
+      resources :inspections, :alerts, :flows, :graphs, :graph_standards, :todos
       resources :flow_reports do
         collection do
           get 'custom'
@@ -84,7 +84,5 @@ Rails.application.routes.draw do
     authenticate :user, ->(u) { u.admin? } do
       mount Sidekiq::Web => '/sidekiq'
     end
-
   end
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

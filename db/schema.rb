@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_14_230719) do
+ActiveRecord::Schema.define(version: 2020_07_17_171333) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -539,9 +539,28 @@ ActiveRecord::Schema.define(version: 2020_07_14_230719) do
     t.datetime "updated_at", null: false
     t.jsonb "i18n_name", default: {}
     t.jsonb "i18n_comment", default: {}
+    t.integer "sort", default: 1
     t.index ["i18n_comment"], name: "index_tasks_on_i18n_comment", using: :gin
     t.index ["i18n_name"], name: "index_tasks_on_i18n_name", using: :gin
     t.index ["task_list_id"], name: "index_tasks_on_task_list_id"
+  end
+
+  create_table "todos", force: :cascade do |t|
+    t.string "title", null: false
+    t.text "description"
+    t.boolean "completed", default: false, null: false
+    t.integer "label", default: 0, null: false
+    t.date "deadline"
+    t.integer "responsible_id", null: false
+    t.integer "created_by_id"
+    t.integer "sort", default: 1
+    t.boolean "active", default: true, null: false
+    t.jsonb "detail", default: {}
+    t.bigint "plant_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["detail"], name: "index_todos_on_detail", using: :gin
+    t.index ["plant_id"], name: "index_todos_on_plant_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -657,5 +676,6 @@ ActiveRecord::Schema.define(version: 2020_07_14_230719) do
   add_foreign_key "supports", "users"
   add_foreign_key "task_lists", "plants"
   add_foreign_key "tasks", "task_lists"
+  add_foreign_key "todos", "plants"
   add_foreign_key "work_summaries", "supports"
 end

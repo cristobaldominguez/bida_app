@@ -1,0 +1,70 @@
+<% if can? :create, Todo %>
+  <%= render 'shared/buttons/option_button', alt: 'header' do %>
+    <li class="option-button__option"><%= link_to t(:new, scope: :todo), new_plant_todo_path(@plant), class: 'option-button__option-link' %></li>
+  <% end %>
+<% end %>
+
+<h2 class="main__title"><%= t(:index, scope: :todo) %></h2>
+
+<%= render 'shared/tables/elements_list', headers: [t(:completed, scope: [:activerecord, :attributes, :todo]), t(:title, scope: [:activerecord, :attributes, :todo])], tbody_class: 'todos_draggable_list' do %>
+  <% if @todos[:undone].present? %>
+  <tr class="table_main__table-row--no-height">
+    <td colspan="3" class="table_main__table-data--date">
+      <%= t(:undone, scope: :global) %>
+    </td>
+  </tr>
+  <% end %>
+<% @labels.each do |label| %>
+<% data = @todos[:undone][label] %>
+<% if data.present? %>
+
+<% data.each do |todo| %>
+<tr class="table_main__table-row">
+  <td class="table_main__table-data">
+    <span class="table_main__table-label--<%= label %>"></span>
+    <input type="checkbox" name="completed" value="Completed" <%= 'checked' if todo.completed %> disabled>
+  </td>
+  <td class="table_main__table-data--left-text"><%= todo.title %></td>
+  <td class="table_main__table-data--options">
+    <a href="#" class="table_main__link--options"></a>
+    <div class="options_menu">
+      <ul class="options_menu__list">
+        <% if can? :read, Todo %><li class="options_menu__item"><%= link_to t(:show, scope: :global), [@plant, todo], class: 'options_menu__link' %></li><% end %>
+        <% if can? :edit, Todo %><li class="options_menu__item"><%= link_to t(:edit, scope: :global), edit_plant_todo_path(@plant, todo), class: 'options_menu__link' %></li><% end %>
+        <% if can? :destroy, Todo %><li class="options_menu__item"><%= link_to t(:destroy, scope: :global), [@plant, todo], class: 'options_menu__link', method: :delete, data: { confirm: t(:confirm, scope: :global) } %></li><% end %>
+      </ul>
+      <div class="unclick"></div>
+    </div>
+</tr>
+<% end %>
+
+<% end %>
+<% end %>
+
+<% if @todos[:done].present? %>
+<tr class="table_main__table-row--no-height">
+  <td colspan="3" class="table_main__table-data--date">
+    <%= t(:done, scope: :global) %>
+  </td>
+</tr>
+<% end %>
+<% @todos[:done].each do |todo| %>
+<tr class="table_main__table-row">
+  <td class="table_main__table-data--left-text">
+    <input type="checkbox" name="completed" value="Completed" <%= 'checked' if todo.completed %> disabled>
+  </td>
+  <td class="table_main__table-data--left-text"><%= todo.title %></td>
+  <td class="table_main__table-data--options">
+    <a href="#" class="table_main__link--options"></a>
+    <div class="options_menu">
+      <ul class="options_menu__list">
+        <% if can? :read, Todo %><li class="options_menu__item"><%= link_to t(:show, scope: :global), [@plant, todo], class: 'options_menu__link' %></li><% end %>
+        <% if can? :edit, Todo %><li class="options_menu__item"><%= link_to t(:edit, scope: :global), edit_plant_todo_path(@plant, todo), class: 'options_menu__link' %></li><% end %>
+        <% if can? :destroy, Todo %><li class="options_menu__item"><%= link_to t(:destroy, scope: :global), [@plant, todo], class: 'options_menu__link', method: :delete, data: { confirm: t(:confirm, scope: :global) } %></li><% end %>
+      </ul>
+      <div class="unclick"></div>
+    </div>
+</tr>
+<% end %>
+
+<% end %>

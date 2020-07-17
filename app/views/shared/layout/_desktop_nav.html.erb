@@ -1,7 +1,7 @@
 <% if @plant.persisted? %>
 <nav class="desktop_nav">
   <ul class="desktop_nav__list">
-    <% plant_menu = @menu[:plants] ? 'desktop_nav__item--active' : '' %>
+    <% plant_menu = @menu[:plants] && @menu[:action] != 'logbook' ? 'desktop_nav__item--active' : '' %>
     <li class="desktop_nav__item <%= plant_menu %>"><%= link_to t(:plant, scope: [:activerecord, :models]), plant_path(plant), class: 'desktop_nav__link nav_icon nav_icon_plant' %></li>
 
     <% ticket_menu = @menu[:tickets] ? 'desktop_nav__item--active' : '' %>
@@ -53,14 +53,30 @@
     </li>
 
     <% if can? :read, Logbook %>
-    <% logbook_menu = @menu[:logbooks] ? 'desktop_nav__item--active' : '' %>
+    <% logbook_menu = @menu[:logbooks] || (@menu[:plants] && @menu[:action] == 'logbook') ? 'desktop_nav__item--active' : '' %>
     <li class="desktop_nav__item <%= logbook_menu %>">
       <%= link_to t(:logbook, scope: [:activerecord, :models]).pluralize, '#', class: 'desktop_nav__link nav_icon nav_icon_logbooks' %>
       <div class="desktop_nav__submenu">
         <ul class="desktop_nav__subul">
+          <% active = @menu[:plants] && @menu[:action] == 'logbook' %>
+          <li class="desktop_nav__subli <%= active && 'desktop_nav__subli--active' %>"><%= link_to t(:title, scope: :logbook), logbook_plant_path(plant), class: 'desktop_nav__sublink' %></li>
           <% active = @menu[:logbooks] && @menu[:action] %>
-          <li class="desktop_nav__subli <%= active == 'edit' && 'desktop_nav__subli--active' %>"><%= link_to t(:title, scope: :logbook), logbook_plant_path(plant), class: 'desktop_nav__sublink' %></li>
           <li class="desktop_nav__subli <%= active == 'index' && 'desktop_nav__subli--active' %>"><%= link_to t(:history, scope: :logbook), plant_logbooks_path(plant), class: 'desktop_nav__sublink' %></li>
+          <div class="unclick--desktop_menu"></div>
+        </ul>
+      </div>
+    </li>
+    <% end %>
+
+    <% if can? :read, Todo %>
+    <% todo_menu = @menu[:todos] ? 'desktop_nav__item--active' : '' %>
+    <li class="desktop_nav__item <%= todo_menu %>">
+      <%= link_to t(:todo, scope: [:activerecord, :models]).pluralize, '#', class: 'desktop_nav__link nav_icon nav_icon_todos' %>
+      <div class="desktop_nav__submenu">
+        <ul class="desktop_nav__subul">
+          <% active = @menu[:todos] && @menu[:action] %>
+          <li class="desktop_nav__subli <%= active == 'index' ? 'desktop_nav__subli--active' : '' %>"><%= link_to t(:history, scope: :todo), plant_todos_path(plant), class: 'desktop_nav__sublink' %></li>
+          <li class="desktop_nav__subli <%= active == 'new' ? 'desktop_nav__subli--active' : '' %>"><%= link_to t(:new, scope: :todo), new_plant_todo_path(plant), class: 'desktop_nav__sublink' %></li>
           <div class="unclick--desktop_menu"></div>
         </ul>
       </div>

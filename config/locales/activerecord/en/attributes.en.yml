@@ -250,6 +250,15 @@ en:
           celcius: 'ºC'
           fahrenheit: 'ºF'
           GPM: 'GPM'
+      todo:
+        completed: 'Completed'
+        title: 'Title'
+        description: 'Description'
+        label: 'Label'
+        deadline: 'Dead Line'
+        responsible_id: 'Responsible'
+        created_by_id: 'Created By'
+        detail: 'Detail'
       user:
         name: 'Name'
         lastname: 'Lastname'

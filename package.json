@@ -1,5 +1,8 @@
 {
   "name": "BIDA_App",
   "private": true,
-  "dependencies": {}
+  "dependencies": {},
+  "devDependencies": {
+    "sortablejs": "^1.10.2"
+  }
 }

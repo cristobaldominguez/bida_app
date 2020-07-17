@@ -74,13 +74,26 @@
         </li>
 
         <% if can? :read, Logbook %>
-        <% logbooks_menu = @menu[:logbooks] ? 'mobile_nav__subitem--active' : '' %>
+        <% logbooks_menu = @menu[:logbooks] || (@menu[:plants] && @menu[:action] == 'logbook') ? 'mobile_nav__subitem--active' : '' %>
         <li class="mobile_nav__subitem <%= logbooks_menu %>">
           <a href="#" class="mobile_nav__sublink"><%= t(:logbook, scope: [:activerecord, :models]).pluralize.downcase %></a>
           <ul class="mobile_nav__submenu-list">
+            <% active = @menu[:plants] && @menu[:action] == 'logbook' %>
+            <li class="mobile_nav__subitem <%= active && 'mobile_nav__subitem--active' %>"><%= link_to t(:logbook, scope: [:activerecord, :models]).downcase, logbook_plant_path(@plant), class: 'mobile_nav__sublink' %></li>
             <% active = @menu[:logbooks] && @menu[:action] %>
-            <li class="mobile_nav__subitem <%= active == 'edit' && 'mobile_nav__subitem--active' %>"><%= link_to t(:logbook, scope: [:activerecord, :models]).downcase, logbook_plant_path(@plant), class: 'mobile_nav__sublink' %></li>
             <li class="mobile_nav__subitem <%= active == 'index' && 'mobile_nav__subitem--active' %>"><%= link_to t(:history, scope: :logbook).downcase, plant_logbooks_path(@plant), class: 'mobile_nav__sublink' %></li>
+          </ul>
+        </li>
+        <% end %>
+
+        <% if can? :read, Todo %>
+        <% todos_menu = @menu[:todos] ? 'mobile_nav__subitem--active' : '' %>
+        <li class="mobile_nav__subitem <%= todos_menu %>">
+          <a href="#" class="mobile_nav__sublink"><%= t(:todo, scope: [:activerecord, :models]).pluralize %></a>
+          <ul class="mobile_nav__submenu-list">
+            <% active = @menu[:todos] && @menu[:action] %>
+            <li class="mobile_nav__subitem <%= active == 'index' && 'mobile_nav__subitem--active' %>"><%= link_to t(:history, scope: :todo), plant_todos_path(@plant), class: 'mobile_nav__sublink' %></li>
+            <li class="mobile_nav__subitem <%= active == 'new' && 'mobile_nav__subitem--active' %>"><%= link_to t(:new, scope: :todo), new_plant_todo_path(@plant), class: 'mobile_nav__sublink' %></li>
           </ul>
         </li>
         <% end %>

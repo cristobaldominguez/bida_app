@@ -252,6 +252,15 @@ es:
           celcius: 'ºC'
           fahrenheit: 'ºF'
           GPM: 'GPM'
+      todo:
+        completed: 'Completado'
+        title: 'Título'
+        description: 'Descripción'
+        label: 'Etiqueta'
+        deadline: 'Fecha Límite'
+        responsible_id: 'Responsable'
+        created_by_id: 'Creador'
+        detail: 'Detalle'
       user:
         name: 'Nombre'
         lastname: 'Apellido'

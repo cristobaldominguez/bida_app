@@ -1,0 +1,52 @@
+<%= form_with(model: [@plant, todo], local: true) do |form| %>
+  <% if todo.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(todo.errors.count, "error") %> prohibited this todo from being saved:</h2>
+
+      <ul>
+      <% todo.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :title %>
+    <%= form.text_field :title %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div class="field">
+    <%= form.check_box :completed %> <%= form.label :completed %>
+  </div>
+
+  <div class="field todo_label">
+    <%= form.label :label, class: 'todo_label__margins' %>
+    <ul class="color_labels">
+    <%= form.collection_radio_buttons(:label, @labels, :first, :second) do |b| %>
+      <li class="color_labels__item">
+        <%= b.label(class: "color_labels__label color_labels__color-#{b.text}") { b.radio_button(class: "color_labels__input") + "<span class='color_labels__span'></span>".html_safe } %>
+      </li>
+    <% end %>
+    </ul>
+  </div>
+
+  <div class="field">
+    <%= form.label :deadline %>
+    <%= form.date_select :deadline %>
+  </div>
+
+  <div class="field">
+    <%= form.label :responsible %>
+    <%= form.collection_select(:responsible_id, @biofiltro_users, :id, :full_name, {prompt: t(:select_responsible, scope: :todo)}) %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit class: 'action-btn' %>
+  </div>
+<% end %>

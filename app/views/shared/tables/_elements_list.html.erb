@@ -1,4 +1,5 @@
 <% css_class = css_class || nil %>
+<% tbody_class = tbody_class || nil %>
 
 <section class="elements_list">
   <% if defined? title %>
@@ -19,7 +20,7 @@
           <% end %>
         </tr>
       </thead>
-      <tbody>
+      <tbody <%= "class=#{tbody_class}" if tbody_class.present? %>>
         <%= yield %>
       </tbody>
     </table>

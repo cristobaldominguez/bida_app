@@ -14,6 +14,7 @@ class Plant < ApplicationRecord
   has_many :alerts, dependent: :destroy
   has_many :supports, dependent: :destroy
   has_many :inspections, dependent: :destroy
+  has_many :todos
 
   has_many :task_lists
   has_many :logbooks

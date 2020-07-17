@@ -1,0 +1,48 @@
+<% if can? :edit, Todo %>
+  <%= render 'shared/buttons/option_button', alt: 'header' do %>
+    <li class="option-button__option"><%= link_to t(:edit, scope: :global), edit_plant_todo_path(@plant, @todo), class: 'option-button__option-link' %></li>
+    <% if can? :create, Todo %>
+    <li class="option-button__option"><%= link_to t(:new, scope: :todo), new_plant_todo_path(@plant, @todo), class: 'option-button__option-link' %></li>
+    <li class="option-button__separator"></li>
+    <% if can? :destroy, Todo %><li class="option-button__option"><%= link_to t(:destroy, scope: :global), plant_todo_path(@plant, @todo), class: 'option-button__option-link', method: :delete, data: { confirm: t(:confirm, scope: :global) } %></li><% end %>
+    <% end %>
+  <% end %>
+<% end %>
+
+<h2 class="main__titles"><%= @todo.title %></h2>
+<h3 class="main__subtitle"><%= t(:title, scope: :todo) %></h3>
+
+<p>
+  <strong><%= t(:description, scope: [:activerecord, :attributes, :todo]) %>:</strong>
+  <%= @todo.description %>
+</p>
+
+<p>
+  <strong><%= t(:completed, scope: [:activerecord, :attributes, :todo]) %>:</strong>
+  <%= @todo.completed %>
+</p>
+
+<p>
+  <strong><%= t(:label, scope: [:activerecord, :attributes, :todo]) %>:</strong>
+  <%= @todo.label %>
+</p>
+
+<p>
+  <strong><%= t(:deadline, scope: [:activerecord, :attributes, :todo]) %>:</strong>
+  <%= @todo.deadline %>
+</p>
+
+<p>
+  <strong><%= t(:responsible, scope: [:activerecord, :attributes, :todo]) %>:</strong>
+  <%= @todo.responsible.full_name %>
+</p>
+
+<p>
+  <strong><%= t(:created_by, scope: [:activerecord, :attributes, :todo]) %>:</strong>
+  <%= @todo.created_by.full_name %>
+</p>
+
+<p>
+  <strong><%= t(:detail, scope: [:activerecord, :attributes, :todo]) %>:</strong>
+  <%= @todo.detail %>
+</p>

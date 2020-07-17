@@ -209,7 +209,7 @@
     <%# end %>
 
     <!-- Tasks & Task Lists -->
-    <%= render 'shared/tables/elements_list', headers: [t(:active, scope: :global).camelcase, t(:task, scope: [:activerecord, :models]).pluralize, t(:options, scope: :global).camelcase], title: 'Logbook', css_class: 'logbook' do %>
+    <%= render 'shared/tables/elements_list', headers: [t(:active, scope: :global).camelcase, t(:task, scope: [:activerecord, :models]).pluralize, t(:options, scope: :global).camelcase], title: 'Logbook', css_class: 'logbook', tbody_class: 'logbook_draggable_list' do %>
       <%= form.fields_for :task_lists, @task_list do |task_list| %>
       <%= task_list.fields_for :tasks, @tasks do |task| %>
       <tr class="table_main__table-row">

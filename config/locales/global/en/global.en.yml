@@ -40,3 +40,5 @@ en:
       previous_month: 'Next Month'
       next_month: 'Prev Month'
     hi: "Hi %{name}!"
+    done: 'Done'
+    undone: 'Undone'

@@ -40,3 +40,5 @@ es:
       previous_month: 'Próximo Mes'
       next_month: 'Mes Previo'
     hi: "¡Hola %{name}!"
+    done: 'Realizados'
+    undone: 'No Realizados'
