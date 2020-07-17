@@ -11,3 +11,6 @@ es:
     notification_subject: "[BIDA] › Ticket de Alerta: %{text}"
     notification_title: "Nueva Alerta %{text}"
     review_ticket: 'Revisa esta Alerta'
+    successfully_created: 'La alerta fue exitosamente creada.'
+    successfully_updated: 'La alerta fue exitosamente actualizada.'
+    successfully_deleted: 'La alerta fue exitosamente eliminada.'

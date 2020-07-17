@@ -18,7 +18,7 @@ class InspectionsController < ApplicationController
     @inspection = @plant.inspections.find(params[:id])
     @fluents = @inspection.fluents.includes(:output, :color, :odor).order(:output_id)
   rescue ActiveRecord::RecordNotFound => _e
-    redirect_to pages_no_permission_path, notice: 'Access not Allowed'
+    redirect_to pages_no_permission_path, notice: t(:access_not_allowed, scope: :global)
   end
 
   # GET /inspections/new
@@ -38,7 +38,7 @@ class InspectionsController < ApplicationController
     @inspection = @plant.inspections.find(params[:id])
     @fluents = @inspection.fluents.includes(:output)
   rescue ActiveRecord::RecordNotFound => _e
-    redirect_to pages_no_permission_path, notice: 'Access not Allowed'
+    redirect_to pages_no_permission_path, notice: t(:access_not_allowed, scope: :global)
   end
 
   # POST /inspections
@@ -47,7 +47,7 @@ class InspectionsController < ApplicationController
     respond_to do |format|
       if @inspection.save
         @inspection.send_notifications!
-        format.html { redirect_to plant_inspections_path(@plant), notice: 'Inspection was successfully created.' }
+        format.html { redirect_to plant_inspections_path(@plant), notice: t(:successfully_created, scope: :inspection) }
         format.json { render :show, status: :created, location: @inspection }
       else
         format.html { render :new }
@@ -61,7 +61,7 @@ class InspectionsController < ApplicationController
   def update
     respond_to do |format|
       if @inspection.update(inspection_params)
-        format.html { redirect_to plant_inspections_path(@plant), notice: 'Inspection was successfully updated.' }
+        format.html { redirect_to plant_inspections_path(@plant), notice: t(:successfully_updated, scope: :inspection) }
         format.json { render :show, status: :ok, location: @inspection }
       else
         format.html { render :edit }
@@ -75,7 +75,7 @@ class InspectionsController < ApplicationController
   def destroy
     @inspection.inactive!
     respond_to do |format|
-      format.html { redirect_to plant_inspections_path(@plant), notice: 'Inspection was successfully destroyed.' }
+      format.html { redirect_to plant_inspections_path(@plant), notice: t(:successfully_deleted, scope: :inspection) }
       format.json { head :no_content }
     end
   end

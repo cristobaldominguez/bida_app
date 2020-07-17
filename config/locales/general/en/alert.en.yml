@@ -10,3 +10,6 @@ en:
     notification_subject: "[BIDA] › Alert Ticket: %{text}"
     notification_title: "New Alert %{text}"
     review_ticket: 'Review this Alert'
+    successfully_created: 'Alert was successfully created.'
+    successfully_updated: 'Alert was successfully updated.'
+    successfully_deleted: 'Alert was successfully destroyed.'

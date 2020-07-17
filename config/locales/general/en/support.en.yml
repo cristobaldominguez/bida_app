@@ -11,3 +11,6 @@ en:
     notification_subject: "[BIDA] › Ticket Support: %{text}"
     notification_title: "New Support %{text}"
     review_ticket: 'Review this Ticket Support'
+    successfully_created: 'Support was successfully created.'
+    successfully_updated: 'Support was successfully updated.'
+    successfully_deleted: 'Support was successfully destroyed.'

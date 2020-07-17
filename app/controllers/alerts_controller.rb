@@ -17,7 +17,7 @@ class AlertsController < ApplicationController
     @plant = Plant.find(params[:plant_id])
     @alert = @plant.alerts.find(params[:id])
   rescue ActiveRecord::RecordNotFound => _e
-    redirect_to pages_no_permission_path, notice: 'Access not Allowed'
+    redirect_to pages_no_permission_path, notice: t(:access_not_allowed, scope: :global)
   end
 
   # GET /alerts/new
@@ -32,7 +32,7 @@ class AlertsController < ApplicationController
     respond_to do |format|
       if @alert.save
         @alert.send_notifications!
-        format.html { redirect_to plant_alerts_path(@alert.plant), notice: 'Alert was successfully created.' }
+        format.html { redirect_to plant_alerts_path(@alert.plant), notice: t(:successfully_created, scope: :alert) }
         format.json { render :show, status: :created, location: @alert }
       else
         format.html { render :new }
@@ -46,7 +46,7 @@ class AlertsController < ApplicationController
     @plant = Plant.find(params[:plant_id])
     @alert = @plant.alerts.find(params[:id])
   rescue ActiveRecord::RecordNotFound => _e
-    redirect_to pages_no_permission_path, notice: 'Access not Allowed'
+    redirect_to pages_no_permission_path, notice: t(:access_not_allowed, scope: :global)
   end
 
   # PATCH/PUT /alerts/1
@@ -56,7 +56,7 @@ class AlertsController < ApplicationController
     params_alert[:status_id] = params_alert[:incident_resolution].length > 10 ? Status.find_by(name: 'Fixed').id : params_alert[:status_id]
     respond_to do |format|
       if @alert.update(alert_params)
-        format.html { redirect_to plant_alerts_path(@plant), notice: 'Alert was successfully updated.' }
+        format.html { redirect_to plant_alerts_path(@plant), notice: t(:successfully_updated, scope: :alert) }
         format.json { render :show, status: :ok, location: @alert }
       else
         format.html { render :edit }
@@ -70,7 +70,7 @@ class AlertsController < ApplicationController
   def destroy
     @alert.inactive!
     respond_to do |format|
-      format.html { redirect_to plant_alerts_path(@plant), notice: 'Alert was successfully destroyed.' }
+      format.html { redirect_to plant_alerts_path(@plant), notice: t(:successfully_deleted, scope: :alert) }
       format.json { head :no_content }
     end
   end

@@ -11,3 +11,6 @@ es:
     notification_subject: "[BIDA] › Ticket de Soporte: %{text}"
     notification_title: "Nuevo Soporte %{text}"
     review_ticket: 'Revisa este ticket de soporte'
+    successfully_created: 'El soporte fue exitosamente creado.'
+    successfully_updated: 'El soporte fue exitosamente actualizado.'
+    successfully_deleted: 'El soporte fue exitosamente eliminado.'

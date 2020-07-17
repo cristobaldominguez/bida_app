@@ -22,3 +22,6 @@ es:
     notification_subject: "[BIDA] › Ticket de Inspección: %{text}"
     notification_title: "Nueva Inspección %{text}"
     review_ticket: 'Revisa esta Inspección'
+    successfully_created: 'La inspección fue exitosamente creada.'
+    successfully_updated: 'La inspección fue exitosamente actualizada.'
+    successfully_deleted: 'La inspección fue exitosamente eliminada.'

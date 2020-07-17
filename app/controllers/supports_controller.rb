@@ -15,7 +15,7 @@ class SupportsController < ApplicationController
   def show
     @support.work_summaries = @support.work_summaries.active
   rescue ActiveRecord::RecordNotFound => _e
-    redirect_to pages_no_permission_path, notice: 'Access not Allowed'
+    redirect_to pages_no_permission_path, notice: t(:access_not_allowed, scope: :global)
   end
 
   # GET /plants/1/supports/new
@@ -30,7 +30,7 @@ class SupportsController < ApplicationController
     respond_to do |format|
       if @support.save
         @support.send_notifications!
-        format.html { redirect_to plant_supports_path(@plant), notice: 'Support was successfully created.' }
+        format.html { redirect_to plant_supports_path(@plant), notice: t(:successfully_created, scope: :inspection) }
         format.json { render :show, status: :created, location: @support }
       else
         format.html { render :new }
@@ -43,7 +43,7 @@ class SupportsController < ApplicationController
   def edit
     @work_summary = @support.work_summaries.build if @support.work_summaries.empty?
   rescue ActiveRecord::RecordNotFound => _e
-    redirect_to pages_no_permission_path, notice: 'Access not Allowed'
+    redirect_to pages_no_permission_path, notice: t(:access_not_allowed, scope: :global)
   end
 
   # PATCH/PUT /plants/1/plants/1/supports/1
@@ -51,7 +51,7 @@ class SupportsController < ApplicationController
   def update
     respond_to do |format|
       if @support.update(support_params)
-        format.html { redirect_to plant_supports_path(@plant), notice: 'Support was successfully updated.' }
+        format.html { redirect_to plant_supports_path(@plant), notice: t(:successfully_updated, scope: :inspection) }
         format.json { render :show, status: :ok, location: @support }
       else
         format.html { render :edit }
@@ -65,7 +65,7 @@ class SupportsController < ApplicationController
   def destroy
     @support.inactive!
     respond_to do |format|
-      format.html { redirect_to plant_supports_path(@plant), notice: 'Support was successfully destroyed.' }
+      format.html { redirect_to plant_supports_path(@plant), notice: t(:successfully_deleted, scope: :inspection) }
       format.json { head :no_content }
     end
   end
