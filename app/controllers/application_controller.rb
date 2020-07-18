@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   before_action :set_locale, :set_locale_var
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_user_plants, :set_plant, :user_plants_associated, :set_nav_variables
+  around_action :set_current_user
 
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to pages_no_permission_path, notice: exception.message
@@ -58,5 +59,13 @@ class ApplicationController < ActionController::Base
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(:name, :lastname, :address01, :address02, :phone, :mobile, :email, :password) }
     devise_parameter_sanitizer.permit(:account_update) { |u| u.permit(:name, :lastname, :address01, :address02, :phone, :mobile, :email, :password, :current_password) }
+  end
+
+  def set_current_user
+    Current.user = current_user
+    yield
+  ensure
+    # to address the thread variable leak issues in Puma/Thin webserver
+    Current.user = nil
   end
 end
