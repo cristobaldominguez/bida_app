@@ -3,6 +3,8 @@ class Todo < ApplicationRecord
   belongs_to :responsible, class_name: 'User'
   belongs_to :created_by, class_name: 'User'
 
+  serialize :detail
+
   has_many_attached :images
 
   scope :created_or_responsible, ->(current_user) { where(created_by: current_user).or(where(responsible: current_user)) }
