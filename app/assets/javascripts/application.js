@@ -15,7 +15,7 @@
 //= require turbolinks
 //= require PubSub
 //= require jquery-3.4.1
-//= require sortablejs/Sortable.js
+//= require sortablejs/Sortable
 //= require popper
 //= require chartkick
 //= require pikaday
