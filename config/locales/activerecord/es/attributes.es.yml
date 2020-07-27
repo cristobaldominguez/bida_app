@@ -259,8 +259,11 @@ es:
         label: 'Etiqueta'
         deadline: 'Fecha Límite'
         responsible_id: 'Responsable'
+        responsible: 'Responsable'
         created_by_id: 'Creador'
+        created_by: 'Creador'
         detail: 'Detalle'
+        images: 'Imágenes'
       user:
         name: 'Nombre'
         lastname: 'Apellido'

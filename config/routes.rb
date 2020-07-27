@@ -28,7 +28,12 @@ Rails.application.routes.draw do
         end
       end
       resources :logbooks, except: %i[new create]
-      resources :inspections, :alerts, :flows, :graphs, :graph_standards, :todos
+      resources :inspections, :alerts, :flows, :graphs, :graph_standards
+      resources :todos do
+        member do
+          delete 'delete_image/:image_id', to: 'todos#delete_image', as: 'delete_image'
+        end
+      end
       resources :flow_reports do
         collection do
           get 'custom'

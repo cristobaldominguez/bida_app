@@ -259,6 +259,7 @@ en:
         responsible_id: 'Responsible'
         created_by_id: 'Created By'
         detail: 'Detail'
+        images: 'Images'
       user:
         name: 'Name'
         lastname: 'Lastname'

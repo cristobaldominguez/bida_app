@@ -36,7 +36,7 @@
     </ul>
   </div>
 
-  <div class="field">
+  <div class="field no-border date">
     <%= form.label :deadline %>
     <%= form.date_select :deadline %>
   </div>
@@ -44,6 +44,11 @@
   <div class="field">
     <%= form.label :responsible %>
     <%= form.collection_select(:responsible_id, @biofiltro_users, :id, :full_name, {prompt: t(:select_responsible, scope: :todo)}) %>
+  </div>
+
+  <div class="field">
+    <%= form.label :image %>
+    <%= form.file_field :images, multiple: true %>
   </div>
 
   <div class="actions">

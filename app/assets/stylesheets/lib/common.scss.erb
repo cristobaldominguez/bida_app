@@ -1721,3 +1721,33 @@ button.modal-footer {
 		margin: 5px 10px 0 0;
 	}
 }
+
+.todo {
+
+	&__image {
+		list-style: none;
+		margin: 5px;
+		position: relative;
+
+		&s-list {
+			margin: 0;
+			padding: 0;
+			display: flex;
+		}
+
+		&-delete {
+			position: absolute;
+			top: 3px;
+			right: 3px;
+			color: var(--red);
+
+			&:hover {
+				text-decoration: none;
+			}
+
+			&.update-error {
+				font-family: 'update';
+			}
+		}
+	}
+}

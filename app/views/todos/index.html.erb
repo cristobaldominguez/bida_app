@@ -24,7 +24,9 @@
     <span class="table_main__table-label--<%= label %>"></span>
     <input type="checkbox" name="completed" value="Completed" <%= 'checked' if todo.completed %> disabled>
   </td>
-  <td class="table_main__table-data--left-text"><%= todo.title %></td>
+  <td class="table_main__table-data--left-text">
+    <%= link_to todo.title, [@plant, todo], class: 'table_main__link-show' %>
+  </td>
   <td class="table_main__table-data--options">
     <a href="#" class="table_main__link--options"></a>
     <div class="options_menu">

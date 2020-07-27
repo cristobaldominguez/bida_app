@@ -1,5 +1,5 @@
 class TodosController < ApplicationController
-  before_action :set_todo, only: %i[show edit update destroy]
+  before_action :set_todo, only: %i[show edit update destroy delete_image]
   before_action :set_labels, only: %i[new create edit update]
 
   def index
@@ -14,11 +14,11 @@ class TodosController < ApplicationController
 
   def new
     @todo = Todo.new
-    @biofiltro_users = User.filtered_by(@plant).from_biofiltro.sort
+    @biofiltro_users = User.active.filtered_by(@plant).from_biofiltro.sort
   end
 
   def edit
-    @biofiltro_users = User.filtered_by(@plant).from_biofiltro.sort
+    @biofiltro_users = User.active.filtered_by(@plant).from_biofiltro.sort
   end
 
   def create
@@ -55,6 +55,15 @@ class TodosController < ApplicationController
     end
   end
 
+  def delete_image
+    @image = ActiveStorage::Attachment.find(params[:image_id])
+    @image.purge
+
+    respond_to do |format|
+      format.js { render :delete_image, status: :ok }
+    end
+  end
+
   private
 
   def set_labels
@@ -66,6 +75,6 @@ class TodosController < ApplicationController
   end
 
   def todo_params
-    params.require(:todo).permit(:title, :description, :completed, :label, :deadline, :responsible_id, detail: {})
+    params.require(:todo).permit(:title, :description, :completed, :label, :deadline, :responsible_id, images: [], detail: {})
   end
 end

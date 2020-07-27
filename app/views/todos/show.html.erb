@@ -42,6 +42,20 @@
   <%= @todo.created_by.full_name %>
 </p>
 
+<% if @todo.images.attached? %>
+  <div>
+    <strong><%= t(:images, scope: [:activerecord, :attributes, :todo]) %>:</strong>
+    <ul class="todo__images-list">
+    <% @todo.images.each do |image| %>
+      <li class="todo__image" data-id="<%= image.id %>">
+        <%= link_to '', delete_image_plant_todo_path(@plant, @todo, image.id), class: 'todo__image-delete update-error', method: :delete, remote: true, data: {confirm: t(:confirm, scope: :global)} %>
+        <%= image_tag image.variant(resize: "200x200") %>
+      </li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
 <p>
   <strong><%= t(:detail, scope: [:activerecord, :attributes, :todo]) %>:</strong>
   <%= @todo.detail %>
