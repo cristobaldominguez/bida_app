@@ -87,7 +87,7 @@ class PlantsController < ApplicationController
     # @sampling_lists_filtered = @plant.sampling_lists.includes(:access).select { |sampling_list| sampling_list.access.name == 'External' }.last
 
     @task_list = @plant.task_lists.last
-    @tasks = @task_list.tasks.sort
+    @tasks = @task_list.tasks.sort_by(&:sort)
   end
 
   def update

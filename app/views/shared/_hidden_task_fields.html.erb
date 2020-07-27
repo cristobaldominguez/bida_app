@@ -8,6 +8,7 @@
 <input class="i18n_comment_<%= locale %>" type="hidden" name="plant[task_lists_attributes][0][tasks_attributes][0][i18n_comment][<%= locale %>]" value="<%= task.object.i18n_comment[locale] %>">
 <% end %>
 
+<%= task.hidden_field :sort, id: nil, class: 'sort' %>
 <%= task.hidden_field :season, id: nil, class: 'season' %>
 <%= task.hidden_field :responsible, id: nil, class: 'responsible' %>
 <%= task.hidden_field :input_type, id: nil, class: 'input_type' %>

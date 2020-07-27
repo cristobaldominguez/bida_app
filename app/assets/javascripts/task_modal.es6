@@ -537,6 +537,7 @@ document.addEventListener('turbolinks:load', function() {
           <input class="plant_id" type="hidden" name="plant[task_lists_attributes][0][plant_id]" value="${ plant_id }">
 
           <input class="task_id" type="hidden" name="plant[task_lists_attributes][0][tasks_attributes][0][id]"${ task_id }>
+          <input class="sort" type="hidden" value="1" name="plant[task_lists_attributes][0][tasks_attributes][0][sort]">
           ${ name_locales.join(' ') }
           <input class="season" type="hidden" name="plant[task_lists_attributes][0][tasks_attributes][0][season]" value="${ season || '' }">
           ${ comment_locales.join(' ') }
@@ -572,6 +573,7 @@ document.addEventListener('turbolinks:load', function() {
         const inputs = task.querySelectorAll('input:not(.plant_id)')
         inputs.forEach((input, _) => {
           input.name = input.name.replace(regex_name, (match, ind) => ind === 49 ? `[${i}]` : match)
+          input.value = input.classList.contains('sort') ? i + 1 : input.value
         })
       })
     }
@@ -651,7 +653,28 @@ document.addEventListener('turbolinks:load', function() {
     return { init }
   })()
 
+  const DraggableTasks = (() => {
+
+    const logbook_draggable_list = document.querySelector('.logbook_draggable_list')
+
+    function init() {
+
+      if (logbook_draggable_list) {
+        new Sortable(logbook_draggable_list, {
+          animation: 150,
+          ghostClass: 'sortable-ghost',
+          draggable: ".table_main__table-row",
+          onEnd: function() { Events.emit('taskmodal/render/idChecker', null) }
+        })
+      }
+
+    }
+
+    return { init }
+  })()
+
   TaskModal.setup()
+  DraggableTasks.init()
 
   // Event triggered before modal will be show
   $('#plant_logbook').on('shown.bs.modal', function (e) {
