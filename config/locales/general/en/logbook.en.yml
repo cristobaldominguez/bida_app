@@ -4,6 +4,8 @@ en:
     edit: "Editing %{plant} Logbook"
     history: 'Logbook History'
     task: 'Task'
+    todo: 'To-Do'
+    completed: 'Completed'
     value: 'Value'
     date: 'Date'
     responsible: 'Responsible Party'

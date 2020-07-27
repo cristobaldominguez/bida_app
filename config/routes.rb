@@ -32,6 +32,7 @@ Rails.application.routes.draw do
       resources :todos do
         member do
           delete 'delete_image/:image_id', to: 'todos#delete_image', as: 'delete_image'
+          patch 'completed/:value', to: 'todos#completed', as: 'completed'
         end
       end
       resources :flow_reports do

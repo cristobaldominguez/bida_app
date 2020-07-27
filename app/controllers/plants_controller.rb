@@ -131,6 +131,10 @@ class PlantsController < ApplicationController
     @logs = Processing::Logbook.get_logs_from(@plant, current_user).sort_by(&:date).reverse
     @densities = [['Low', t(:low, scope: :density)], ['Medium', t(:medium, scope: :density)], ['High Density', t(:high, scope: :density)]]
     @odor = [['Low', t(:low, scope: :odor)], ['Medium', t(:medium, scope: :odor)], ['Strong Odor', t(:strong, scope: :odor)]]
+
+    can_see_all_todos = current_user.admin? || current_user.operations_manager?
+    @todos = can_see_all_todos ? @plant.todos.to_be_done.sort_by(&:sort) : @plant.todos.to_be_done.created_or_responsible(current_user).sort_by(&:sort)
+
     @pikaday = {
       firstDay: first_day_of_week,
       i18n: {

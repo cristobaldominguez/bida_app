@@ -12,7 +12,7 @@ class Todo < ApplicationRecord
   scope :undone, -> { where completed: false }
   scope :done, -> { where completed: true }
   scope :done_today, -> { where 'deadline < ?', Date.today }
-  scope :done_in_future, -> { where 'deadline > ?', Date.today }
+  scope :to_be_done, -> { where 'deadline > ? AND completed IS false', Date.today - 7.days }
 
   enum label: %i[red orange yellow green blue purple]
 end

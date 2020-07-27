@@ -25,18 +25,27 @@ document.addEventListener('turbolinks:load', function() {
       btn.addEventListener('change', onChangeInput)
     })
 
+    const todo_checkboxes = document.querySelectorAll('.todo__complete')
+    todo_checkboxes.forEach((todo, i) => {
+      todo.addEventListener('change', onChangeTodo)
+    });
+
 
     function init() {}
 
     function onChangeInput(e) {
-      apiCall({ id: e.target.dataset.id, value: e.target.value })
+      callLogsAPI({ id: e.target.dataset.id, value: e.target.value })
     }
 
-    function onChangeCheckbox(e){
-      apiCall({ id: e.target.dataset.id, value: e.target.checked ? 1 : '' })
+    function onChangeCheckbox(e) {
+      callLogsAPI({ id: e.target.dataset.id, value: e.target.checked ? 1 : '' })
     }
 
-    function apiCall({ id, value }) {
+    function onChangeTodo(e) {
+      callToDoAPI({ id: e.target.dataset.id, value: e.target.checked ? 1 : 0, plant_id: e.target.dataset.plant_id })
+    }
+
+    function callLogsAPI({ id, value }) {
       $.ajax({
         url: `/logs/${id}`,
         type: 'PATCH',
@@ -56,6 +65,30 @@ document.addEventListener('turbolinks:load', function() {
                               .children('.table_main__api-response')
                               .append('<div class="updated__red update-error"></div>')
       })
+    }
+
+    function callToDoAPI({ id, value, plant_id }) {
+      $.ajax({
+        url: `/plants/${plant_id}/todos/${id}/completed/${value}`,
+        type: 'PATCH',
+        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+        dataType: 'json',
+        data: { todo: { completed: value } }
+      })
+      .done(data => {
+        const todo = $(`.todo__complete[data-id="${data.id}"]`)
+        const tbody = todo.closest('tbody')
+
+        todo.closest('.table_main__table-row').toggle( 'slow', function(elem) {
+          if (tbody.children().length > 1) {
+            $(this).remove()
+          } else {
+            todo.closest('.elements_list').remove()
+          }
+
+        })
+      })
+      .fail( error => console.log(error) )
     }
 
     return { init, state}

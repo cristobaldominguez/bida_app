@@ -7,6 +7,21 @@
 </div> -->
 <%# end %>
 
+<% if @todos.any? %>
+<%= render 'shared/tables/elements_list', headers: [t(:completed, scope: :logbook), t(:todo, scope: :logbook)], css_class: 'todos' do %>
+<% @todos.each do |todo| %>
+<tr class="table_main__table-row">
+  <td class="table_main__table-data">
+    <input type="checkbox" class="todo__complete" value="false" <%= 'checked' if todo.completed %> data-id="<%= todo.id %>" data-plant_id="<%= todo.plant_id %>">
+  </td>
+  <td class="table_main__table-data--left-text">
+    <%= link_to todo.title, edit_plant_todo_path(@plant, todo), class: 'table_main__link-show' %>
+  </td>
+</tr>
+<% end %>
+<% end %>
+<% end %>
+
 <% date = nil %>
 <%= render 'shared/tables/elements_list', headers: [t(:task, scope: :logbook), '', t(:value, scope: :logbook)] do %>
 <% if @logs.any? %>

@@ -64,6 +64,16 @@ class TodosController < ApplicationController
     end
   end
 
+  def completed
+    @todo = Todo.find(params[:id])
+    @todo.completed = ActiveModel::Type::Boolean.new.cast(params[:value])
+    @todo.save
+
+    respond_to do |format|
+      format.json { render json: {id: @todo.id}, status: :ok }
+    end
+  end
+
   private
 
   def set_labels
