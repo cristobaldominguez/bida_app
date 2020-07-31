@@ -64,7 +64,7 @@
         <% end %>
 
         <h1 class="header_logo">
-          <a class="header_logo__link" href="/<%= @locale %>/"><svg class="header_logo__svg"><use xlink:href="#logo"></use><svg></a>
+          <a class="header_logo__link" href="<%= user_signed_in? ? authenticated_root_path(@locale) : unauthenticated_root_path(@locale) %>"><svg class="header_logo__svg"><use xlink:href="#logo"></use><svg></a>
         </h1>
 
         <% if user_signed_in? %>
