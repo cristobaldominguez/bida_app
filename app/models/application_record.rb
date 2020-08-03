@@ -6,6 +6,7 @@ class ApplicationRecord < ActiveRecord::Base
   scope :active, -> { where active: true }
   scope :inactive, -> { where active: false }
   scope :sort_by_id, -> { order('id ASC') }
+  scope :without_value, -> { where(value: [nil, '']) }
   scope :created_between, ->(start_date, end_date) { where('date BETWEEN ? AND ?', start_date, end_date) }
 
   def self.human_enum_name(enum_name, enum_value)
