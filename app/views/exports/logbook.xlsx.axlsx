@@ -1,0 +1,41 @@
+require 'pp'
+
+wb = xlsx_package.workbook
+
+wb.add_worksheet(name: @logbook.plant.name) do |sheet|
+
+  # Class Styles
+  header_center = wb.styles.add_style({alignment: { horizontal: :center, vertical: :center, wrap_text: true}, border: { style: :thin, color: "5CCBF5" }, bg_color: "5CCBF5", fg_color: "1A3762", b: true, sz: 15})
+  header_left = wb.styles.add_style({alignment: { horizontal: :left, vertical: :center, wrap_text: true}, border: { style: :thin, color: "5CCBF5" }, bg_color: "5CCBF5", fg_color: "1A3762", b: true, sz: 15})
+  header_day_name = wb.styles.add_style({alignment: { horizontal: :center, vertical: :center, wrap_text: true}, border: { style: :thin, color: "5CCBF5" }, bg_color: "5CCBF5", fg_color: "1A3762", sz: 10})
+
+  cell_left = wb.styles.add_style({alignment: { horizontal: :left, vertical: :center, wrap_text: true}})
+  cell_center = wb.styles.add_style({alignment: { horizontal: :center, vertical: :center, wrap_text: true}})
+
+  # Setting up Variables
+  logbook_date = @logbook.created_at
+  logbook_date_year = logbook_date.year
+  logbook_date_month = logbook_date.month
+  end_of_month = @logbook.created_at.end_of_month.strftime('%d').to_i
+  days_of_month = (1..end_of_month).to_a
+
+  header_styles = [header_left, header_left] + days_of_month.map {|_| header_center }
+  cell_styles = [cell_left, cell_left] + days_of_month.map {|_| cell_center }
+
+  # Create the header row
+  sheet.add_row [t(:task, scope: [:activerecord, :models]), t(:comment, scope: [:activerecord, :attributes, :task])] + days_of_month.map {|day| "#{day}/#{logbook_date_month}" }, style: header_styles, height: 60
+  sheet.add_row ['', ''] + days_of_month.map {|day| l(Date.new(logbook_date_year, logbook_date_month, day), format: "%A").capitalize }, style: header_day_name, height: 40
+
+  sheet.merge_cells "A1:A2"
+  sheet.merge_cells "B1:B2"
+
+  # Create entries for each item
+  @logs.each do |log_group|
+    monthly_values = days_of_month.map do |day|
+      log = log_group.second.select { |log| log.date == Date.new(logbook_date_year, logbook_date_month, day) }.first
+      log.present? ? log.value.present? ? log.value : 'no value' : ''
+    end
+
+    sheet.add_row [Task.find(log_group.first).i18n_name[:en], Task.find(log_group.first).i18n_comment[:en]] + monthly_values, style: cell_styles
+  end
+end

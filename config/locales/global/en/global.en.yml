@@ -8,6 +8,7 @@ en:
     show: 'show'
     edit: 'edit'
     destroy: 'destroy'
+    download: 'download'
     new: "New %{name}"
     edit_profile: 'Edit Profile'
     change_password: 'Change Password'

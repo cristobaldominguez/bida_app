@@ -69,6 +69,11 @@ gem 'whenever', require: false
 # Excel Imports
 gem 'roo', '~> 2.7.0'
 
+# Excel Export
+gem 'rubyzip'
+gem 'caxlsx'
+gem 'caxlsx_rails'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'bullet'

@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   scope '(:locale)', locale: /#{I18n.available_locales.join("|")}/ do
     get 'pages/index'
     get 'pages/no_permission'
+    get 'exports/logbook/:id', to: 'exports#logbook', as: 'export_logbook'
 
     resources :log_standards, :bounds, :standards, :charts
     resources :logs, only: [:update]

@@ -11,6 +11,11 @@
           <% if can? :read, Logbook %><li class="options_menu__item"><%= link_to t(:show, scope: :global), [@plant, logbook], class: 'options_menu__link' %></li><% end %>
           <% if can? :edit, Logbook %><li class="options_menu__item"><%= link_to t(:edit, scope: :global), edit_plant_logbook_path(@plant, logbook), class: 'options_menu__link' %></li><% end %>
           <% if can? :destroy, Logbook %><li class="options_menu__item"><%= link_to t(:destroy, scope: :global), [@plant, logbook], class: 'options_menu__link', method: :delete, data: { confirm: t(:confirm, scope: :global) } %></li><% end %>
+
+          <% if can? :read, Logbook %>
+          <div class="options_menu__separator"></div>
+          <li class="options_menu__item"><%= link_to t(:download, scope: :global), export_logbook_path(logbook, format: :xlsx), class: 'options_menu__link' %></li>
+          <% end %>
         </ul>
         <div class="unclick"></div>
       </div>
