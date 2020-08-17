@@ -43,7 +43,7 @@ class Processing::Log
   end
 
   def weekly_validate?
-    @cycle['days'].select { |day| day['day'] == @current_day }.any?
+    @cycle['days'].map { |day| day['day'] }.include? @current_day
   end
 
   def every_2_weeks_validate?
@@ -55,9 +55,8 @@ class Processing::Log
   end
 
   def monthly_validate?
-    return false unless is_same_week?
-
-    @cycle['days'].map { |day| current_day?(day) }.include? true
+    dates = day_to_method
+    dates.include? @current_date
   end
 
   def every_x_months_validate?
@@ -78,49 +77,29 @@ class Processing::Log
     @current_date.strftime('%W').to_i.odd? || false
   end
 
-  def current_day?(day)
-    return false if day['week'] > @current_date.week_of_month
-
-    day_pos = day_position_in_week(day['day'])
-    date = day_date_number(day_pos)
-    return false unless date
-
-    log_date = Date.new(@current_date.year, @current_date.month, date)
-    log_date == @current_date
-  end
-
   def define_cycle_week(cycles)
     cycle_num = odd_week? && cycles[1] ? 1 : nil      # Setea la variable cycle_num con el numero del ciclo de la semana 1
     even_week? && cycles[2] ? 2 : cycle_num           # Si en la variable anterior no se definio el valor, setea la variable con el numero 2
-  end
-
-  def day_position_in_week(day)
-    week = %w[mon tue wed thu fri sat sun]
-    week.index(day)
-  end
-
-  def day_date_number(day_pos)
-    weeks_of_month = @current_date.week_split
-    this_week = @current_date.week_of_month - 1
-    next_week = @current_date.week_of_month
-
-    check_day(weeks_of_month[this_week], weeks_of_month[next_week], day_pos)
-  end
-
-  def check_day(this_week, next_week, day_pos)
-    doit_this_week = this_week[day_pos]
-
-    return doit_this_week if doit_this_week.present?
-
-    has_day_next_week = next_week.present? && next_week[day_pos].present?
-    has_day_next_week ? next_week[day_pos] : false
   end
 
   def month_present?
     @cycle['months'].select { |month| month['month'] == @current_date.month }.present?
   end
 
-  def is_same_week?
-    @cycle['days'].map {|d| d['week'] }.include? @current_date.week_of_month
+  def day_to_method
+    @cycle['days'].map do |day|
+      mthd = "#{num_in_words(day['week'])}_#{complete_day_name(day['day'])}_in_month"
+      @current_date.send(mthd)
+    end
+  end
+
+  def complete_day_name(day)
+    week = { 'mon': 'monday', 'tue': 'tuesday', 'wed': 'wednesday', 'thu': 'thursday', 'fri': 'friday', 'sat': 'saturday', 'sun': 'sunday' }
+    week[day]
+  end
+
+  def num_in_words(num)
+    words = ['', 'first', 'second', 'third', 'fourth']
+    words[num]
   end
 end

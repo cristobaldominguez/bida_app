@@ -50,8 +50,7 @@ class Plant < ApplicationRecord
   scope :filter_by_id, ->(id) { where.not(id: id) }
 
   def generate_logbook
-    logbook = logbooks.create(task_list: task_lists.last)
-    GenerateLogsJob.perform_later(logbook)
+    logbooks.create(task_list: task_lists.last)
   end
 
   def filter_unit_number

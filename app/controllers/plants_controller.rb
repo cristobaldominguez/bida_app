@@ -150,11 +150,7 @@ class PlantsController < ApplicationController
   end
 
   def self.generate_plants_logbooks
-    plants = Plant.active
-    plants.each do |plant|
-      logbook = plant.logbooks.create
-      LogsController.generate_monthly_logs(logbook, Date.today)
-    end
+    Plant.active.map { |plant| plant.logbooks.create }
   end
 
   private
@@ -232,12 +228,12 @@ class PlantsController < ApplicationController
     end
   end
 
-  def generate_month_logs(logbook)
-    current_date = Date.today
-    days_of_month = current_date.week_split.flatten.reject(&:nil?)
-
-    days_of_month.map { |day| log_creation(logbook, Date.new(current_date.year, current_date.month, day)) }
-  end
+  # def generate_month_logs(logbook)
+  #   current_date = Date.today
+  #   days_of_month = current_date.week_split.flatten.reject(&:nil?)
+  #
+  #   days_of_month.map { |day| log_creation(logbook, Date.new(current_date.year, current_date.month, day)) }
+  # end
 
   def log_creation(logbook, actual_date)
     new_logs = @plant.current_log_standards.map do |cls|

@@ -1,40 +1,6 @@
 class LogsController < ApplicationController
   load_and_authorize_resource
 
-  def self.generate_monthly_logs(logbook, current_date)
-    @@logbook = logbook
-    @@tasks = @@logbook.task_list.tasks
-    days_of_month = current_date.week_split.flatten.reject(&:nil?)
-    logs = days_of_month.map { |day| log_creation(Date.new(current_date.year, current_date.month, day)) }
-
-    logs.flatten.map(&:save)
-  end
-
-  def self.log_creation(actual_date)
-    generate_log(actual_date).reject(&:nil?)
-  end
-
-  def self.generate_log(actual_date)
-    @@tasks.map do |task|
-      log = Log.new(logbook: @@logbook, value: '', date: actual_date, task: task)
-      Processing::Log.new(log, actual_date).generate? ? log : nil
-    end
-  end
-
-  # Genera tasks a partir de un array de Tasks
-  def self.generate_logs(current_date)
-    days_of_month = current_date.week_split.flatten.reject(&:nil?)
-
-    logs = days_of_month.map { |day| log_creation_from_task(Date.new(current_date.year, current_date.month, day)) }
-    logs.flatten.map(&:save)
-  end
-
-  def self.log_creation_from_task(actual_date)
-    new_logs = @@tasks.map do |task|
-      log = generate_log(actual_date).reject(&:nil?)
-    end
-  end
-
   def update
     respond_to do |format|
       if @log.update(alert_params)
@@ -47,9 +13,23 @@ class LogsController < ApplicationController
     end
   end
 
+  def self.generate_monthly_logs(logbook)
+    @logbook = logbook
+    task_dates = Processing::TaskDatesCreation.new(@logbook).get_dates
+    current_time = @logbook.created_at.beginning_of_month
+    @unsaved_logs = task_dates.keys.map { |key| task_dates[key].map { |date| "(#{key}, #{@logbook.id}, '#{date}', '#{current_time}', '#{current_time}')" }}.flatten
+
+    insert_logs_into_db
+  end
+
   private
 
+  def self.insert_logs_into_db
+    raw_sql = "INSERT INTO logs (task_id, logbook_id, date, created_at, updated_at) VALUES " + @unsaved_logs.join(', ')
+    ActiveRecord::Base.connection.execute raw_sql
+  end
+
   def alert_params
-    params.require(:log).permit(:id, :logbook_id, :active, :value, :document, :date)
+    params.require(:log).permit(:id, :task_id, :logbook_id, :active, :value, :date, :document)
   end
 end
