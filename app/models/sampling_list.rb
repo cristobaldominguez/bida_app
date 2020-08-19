@@ -1,3 +1,29 @@
+# == Schema Information
+#
+# Table name: sampling_lists
+#
+#  id           :bigint           not null, primary key
+#  active       :boolean          default(TRUE)
+#  date         :date
+#  per_cycle    :integer
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  access_id    :bigint
+#  frecuency_id :bigint
+#  plant_id     :bigint
+#
+# Indexes
+#
+#  index_sampling_lists_on_access_id     (access_id)
+#  index_sampling_lists_on_frecuency_id  (frecuency_id)
+#  index_sampling_lists_on_plant_id      (plant_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (access_id => accesses.id)
+#  fk_rails_...  (frecuency_id => frecuencies.id)
+#  fk_rails_...  (plant_id => plants.id)
+
 class SamplingList < ApplicationRecord
   belongs_to :plant, optional: true
   belongs_to :access

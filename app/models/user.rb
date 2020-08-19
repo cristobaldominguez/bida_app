@@ -1,3 +1,37 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id                     :bigint           not null, primary key
+#  active                 :boolean          default(TRUE), not null
+#  address01              :string
+#  address02              :string
+#  confirmation_sent_at   :datetime
+#  confirmation_token     :string
+#  confirmed_at           :datetime
+#  email                  :string           default(""), not null
+#  employee               :integer          default("company")
+#  encrypted_password     :string           default(""), not null
+#  filtered               :boolean          default(FALSE)
+#  interface_color        :integer          default("light")
+#  lastname               :string           default(""), not null
+#  locale                 :string           default("en"), not null
+#  mobile                 :string
+#  name                   :string           default(""), not null
+#  phone                  :string
+#  remember_created_at    :datetime
+#  reset_password_sent_at :datetime
+#  reset_password_token   :string
+#  role                   :integer          default("no_role")
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#
+# Indexes
+#
+#  index_users_on_confirmation_token    (confirmation_token) UNIQUE
+#  index_users_on_email                 (email) UNIQUE
+#  index_users_on_reset_password_token  (reset_password_token) UNIQUE
+
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable

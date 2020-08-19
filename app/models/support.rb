@@ -1,3 +1,31 @@
+# == Schema Information
+#
+# Table name: supports
+#
+#  id               :bigint           not null, primary key
+#  active           :boolean          default(TRUE), not null
+#  client_onsite    :boolean
+#  end_date         :date
+#  start_date       :date
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  bf_technician_id :bigint
+#  client_id        :bigint
+#  plant_id         :bigint
+#  user_id          :bigint
+#
+# Indexes
+#
+#  index_supports_on_bf_technician_id  (bf_technician_id)
+#  index_supports_on_client_id         (client_id)
+#  index_supports_on_plant_id          (plant_id)
+#  index_supports_on_user_id           (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (plant_id => plants.id)
+#  fk_rails_...  (user_id => users.id)
+
 class Support < ApplicationRecord
   belongs_to :user
   belongs_to :plant

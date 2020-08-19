@@ -1,3 +1,32 @@
+# == Schema Information
+#
+# Table name: tasks
+#
+#  id           :bigint           not null, primary key
+#  active       :boolean          default(TRUE)
+#  cycle        :string
+#  data_type    :integer          default("other")
+#  frecuency    :integer          default("daily")
+#  i18n_comment :jsonb
+#  i18n_name    :jsonb
+#  input_type   :integer          default("checkbox")
+#  responsible  :integer          default(0)
+#  season       :integer          default("no")
+#  sort         :integer          default(1)
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  task_list_id :bigint
+#
+# Indexes
+#
+#  index_tasks_on_i18n_comment  (i18n_comment) USING gin
+#  index_tasks_on_i18n_name     (i18n_name) USING gin
+#  index_tasks_on_task_list_id  (task_list_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (task_list_id => task_lists.id)
+
 class Task < ApplicationRecord
   belongs_to :task_list
   has_many :logs

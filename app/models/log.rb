@@ -1,3 +1,26 @@
+# == Schema Information
+#
+# Table name: logs
+#
+#  id         :bigint           not null, primary key
+#  active     :boolean          default(TRUE)
+#  date       :date
+#  value      :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  logbook_id :bigint
+#  task_id    :bigint
+#
+# Indexes
+#
+#  index_logs_on_logbook_id  (logbook_id)
+#  index_logs_on_task_id     (task_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (logbook_id => logbooks.id)
+#  fk_rails_...  (task_id => tasks.id)
+
 class Log < ApplicationRecord
   belongs_to :logbook
   belongs_to :task
