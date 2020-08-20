@@ -22,3 +22,12 @@ es:
       green: 'Verde'
       blue: 'Azul'
       purple: 'Morado'
+    notification_mail:
+      subject: '[BIDA] › Resumen de Tareas'
+      hi: "¡Hola %{name}!"
+      intro: 'Un rápido resumen de tu lista de ToDos'
+      assignated_text: 'Hoy se te asignaron estos ToDos'
+      created_text: 'Asignaste últimamente estos ToDos'
+      to_expire_text: "Para mañana (%{date}) deberán estar realizadas estos ToDos"
+      outro: 'Saludos!'
+      go_worms: 'GO WORMS!'

@@ -74,6 +74,31 @@ class TodosController < ApplicationController
     end
   end
 
+  def self.daily_mailing
+    created_today_todos = Todo.where("created_at > ? ", Date.today - 24.hours)
+    about_to_expire_todos = Todo.where(deadline: Date.tomorrow).where(completed: false)
+
+    to_expire_users_todos = created_today_todos.pluck(:responsible_id, :created_by_id).flatten.uniq
+    users_with_tomorrow_deadlines_todos = about_to_expire_todos.pluck(:responsible_id, :created_by_id).flatten.uniq
+
+    users_ids = (to_expire_users_todos + users_with_tomorrow_deadlines_todos).flatten.uniq.sort
+    return if users_ids.blank?
+
+    users_todos = {}
+    users_ids.map do |user_id|
+      users_todos[user_id] = {}
+      users_todos[user_id][:assignated] = created_today_todos.where(responsible_id: user_id).to_a
+      users_todos[user_id][:created] = created_today_todos.where(created_by_id: user_id).to_a
+      users_todos[user_id][:to_expire] = about_to_expire_todos.where(created_by_id: user_id).to_a
+    end
+
+    users = User.where(id: users_ids).sort
+    users_todos.each do |key, todos|
+      user = users.find_by(id: key)
+      NotificationMailer.todos_notification(user, todos).deliver_later
+    end
+  end
+
   private
 
   def set_labels

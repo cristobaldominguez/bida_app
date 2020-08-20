@@ -26,6 +26,15 @@ class NotificationMailer < ApplicationMailer
     end
   end
 
+  def todos_notification(user, todos)
+    @user = user
+    @todos = todos
+
+    I18n.with_locale(@user.locale) do
+      mail(to: email_with_name, subject: I18n.t(:subject, scope: [:todo, :notification_mail]))
+    end
+  end
+
   def email_with_name
     "#{@user.full_name} <#{@user.email}>"
   end

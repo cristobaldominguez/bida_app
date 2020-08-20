@@ -22,3 +22,12 @@ en:
       green: 'Green'
       blue: 'Blue'
       purple: 'Purple'
+    notification_mail:
+      subject: '[BIDA] › ToDos Summary'
+      hi: "Good Morning %{name}!"
+      intro: 'Just a quick summary about your ToDo list'
+      assignated_text: "You've been assigned this ToDos today"
+      created_text: 'You have assigned this ToDos lately'
+      to_expire_text: "This ToDos need to be done by tomorrow (%{date})"
+      outro: 'All the best,'
+      go_worms: 'GO WORMS!'

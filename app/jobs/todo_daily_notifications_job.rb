@@ -1,7 +1,7 @@
 class TodoDailyNotificationsJob < ApplicationJob
   queue_as :default
 
-  def perform(*args)
-    # Do something later
+  def perform
+    TodosController.daily_mailing
   end
 end

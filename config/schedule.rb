@@ -25,3 +25,7 @@ every '30 0 1 * *' do
   runner 'GeneratePlantsLogbooksJob.perform_later'
   # runner 'GeneratePlantsSamplingsJob.perform_later'
 end
+
+every 1.day, at: '2:00 am' do
+  runner 'TodoDailyNotificationsJob.perform_later'
+end
