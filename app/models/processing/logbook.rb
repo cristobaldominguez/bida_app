@@ -33,6 +33,7 @@ class Processing::Logbook
   def self.employee_can_execute?
     return true if @current_user.admin? # Todos los administradores podran ver todos los Logs
     return true if in_charge? # Se revisa si es el encargado directo o el gerente de operaciones de la planta
+    return false unless @task.responsible < 1
 
     current_task = @task.responsible.zero? # Si responsible == 0, la empresa se hace responsable. responsible == -1 se hace responsable Biofiltro
     current_task && @current_user.company? || !current_task && @current_user.biofiltro?
