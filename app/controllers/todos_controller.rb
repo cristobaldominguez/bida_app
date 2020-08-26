@@ -94,7 +94,7 @@ class TodosController < ApplicationController
 
     users = User.where(id: users_ids).sort
     users_todos.each do |key, todos|
-      user = users.find_by(id: key)
+      user = users.find { |u| u.id == key }
       NotificationMailer.todos_notification(user, todos).deliver_later
     end
   end
