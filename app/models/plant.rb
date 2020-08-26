@@ -112,4 +112,18 @@ class Plant < ApplicationRecord
   def cover_hero
     cover.variant(resize: '2280')
   end
+
+  def in_high_season?
+    return false if high_season["in"].blank? && high_season["out"].blank?
+
+    current_date = Date.today
+    begin
+      in_date = Date.parse(high_season["in"])
+      out_date = Date.parse(high_season["out"])
+    rescue ArgumentError
+      flash.now[:alert] = 'Fechas no válidas'
+    end
+
+    in_date < current_date && out_date > current_date
+  end
 end

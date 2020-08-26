@@ -27,7 +27,7 @@
 
     <%= render 'shared/layout/notifications' %>
 
-    <header class="main_header <%= @plant.present? && @plant.high_season ? 'main_header--high-season' : '' %>">
+    <header class="main_header <%= @plant.present? && @plant.in_high_season? ? 'main_header--high-season' : '' %>">
       <div class="main_header__upper">
 
         <% if user_signed_in? %>

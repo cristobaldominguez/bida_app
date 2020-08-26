@@ -129,6 +129,20 @@
     <%= form.text_area :report_preface %>
   </div>
 
+<div class="space"></div>
+
+  <div class="highseason">
+
+    <h2 class="cell_division"><%= t(:high_season, scope: [:activerecord, :attributes, :plant]) %></h2>
+
+    <div class="">
+      <input type="date" name="plant[high_season][in]" class="datepicker datepicker-input" value="<%= Date.parse(@plant.high_season['in']).strftime("%D") %>">
+      <input type="date" name="plant[high_season][out]" class="datepicker datepicker-input" value="<%= Date.parse(@plant.high_season['out']).strftime("%D") %>">
+    </div>
+  </div>
+
+  <div class="space"></div>
+
   <!-- <div class="field">
     <h3>Standards</h3>
     <table class="table-standards">

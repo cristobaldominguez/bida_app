@@ -141,17 +141,15 @@
 </div>
 <% end %>
 
+<% if @plant.high_season['in'].present? && @plant.high_season['out'].present? %>
 <div class="space"></div>
 
-<div class="highseason <%= @plant.high_season ? 'active' : '' %>">
+<div class="highseason <%= @plant.in_high_season? ? 'active' : '' %>">
 
   <h2 class="cell_division"><%= t(:high_season, scope: [:activerecord, :attributes, :plant]) %></h2>
-
-  <label class="switch">
-    <input type="checkbox" <%= @plant.high_season ? 'checked' : '' %> class="highseason__input">
-    <span class="slider round"></span>
-  </label>
+  <p class="highseason__dates"><%= l(Date.parse(@plant.high_season['in']), format: :short) %> > <%= l(Date.parse(@plant.high_season['out']), format: :short) %></p>
 </div>
+<% end %>
 
 <div class="space"></div>
 
