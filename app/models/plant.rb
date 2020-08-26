@@ -8,7 +8,7 @@
 #  address02                      :string
 #  code                           :string
 #  flow_design                    :integer
-#  high_season                    :boolean          default(FALSE)
+#  high_season                    :jsonb
 #  name                           :string
 #  phone                          :string
 #  report_preface                 :string
