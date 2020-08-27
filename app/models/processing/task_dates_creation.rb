@@ -77,9 +77,7 @@ module Processing
       return dates_arr if @task.no?                                 # Si el task no tiene temporadas
 
       methd = @task.in_season? ? 'between_high_season?' : 'between_low_season?'
-      filtered_dates = dates_arr.filter {|t| @plant.send(methd.to_sym, t) }
-
-      filtered_dates
+      dates_arr.filter {|t| @plant.send(methd.to_sym, t) }
     end
 
     def method_from_days(days, current_date = nil)
