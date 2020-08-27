@@ -136,8 +136,8 @@
     <h2 class="cell_division"><%= t(:high_season, scope: [:activerecord, :attributes, :plant]) %></h2>
 
     <div class="">
-      <input type="date" name="plant[high_season][in]" class="datepicker datepicker-input" value="<%= @high_season_in || '' %>">
-      <input type="date" name="plant[high_season][out]" class="datepicker datepicker-input" value="<%= @high_season_out || '' %>">
+      <input type="date" name="plant[high_season][in]" class="datepicker datepicker-input" value="<%= @high_season_in || '' %>" placeholder="Start Date">
+      <input type="date" name="plant[high_season][out]" class="datepicker datepicker-input" value="<%= @high_season_out || '' %>" placeholder="End Date">
     </div>
   </div>
 
