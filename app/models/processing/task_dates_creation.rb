@@ -5,6 +5,7 @@ module Processing
   class TaskDatesCreation
     def initialize(logbook)
       @logbook = logbook
+      @plant = @logbook.plant
       @tasks = @logbook.task_list.tasks
       @current_date = @logbook.created_at
       @date = { year: @current_date.year, month: @current_date.month }
@@ -20,8 +21,9 @@ module Processing
       @tasks.map do |task|
         @task = task
         @cycle = JSON.parse(task.cycle) if task.cycle.present?
+        dts_arr = frecuency_dates
 
-        _dates_arr = frecuency_dates
+        _dates_arr = check_season(dts_arr)
         _dates_arr.present? && @dates[task.id] = _dates_arr
       end
 
@@ -71,6 +73,15 @@ module Processing
       months.map { |month| method_from_days(@cycle['days'], month) }.flatten
     end
 
+    def check_season(dates_arr)
+      return dates_arr if @task.no?                                 # Si el task no tiene temporadas
+
+      methd = @task.in_season? ? 'between_high_season?' : 'between_low_season?'
+      filtered_dates = dates_arr.filter {|t| @plant.send(methd.to_sym, t) }
+
+      filtered_dates
+    end
+
     def method_from_days(days, current_date = nil)
       current_date ||= @current_date
       @cycle['days'].map do |day|
@@ -81,7 +92,7 @@ module Processing
 
     def complete_day_name(day)
       days = { 'mon': 'monday', 'tue': 'tuesday', 'wed': 'wednesday', 'thu': 'thursday', 'fri': 'friday', 'sat': 'saturday', 'sun': 'sunday' }
-      days[day]
+      days[day.to_sym]
     end
 
     def num_in_words(num)

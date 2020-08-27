@@ -114,16 +114,56 @@ class Plant < ApplicationRecord
   end
 
   def in_high_season?
-    return false if high_season["in"].blank? && high_season["out"].blank?
+    return false if high_season['in'].blank? && high_season['out'].blank?
 
     current_date = Date.today
     begin
-      in_date = Date.parse(high_season["in"])
-      out_date = Date.parse(high_season["out"])
+      in_date = Date.parse(high_season['in'])
+      out_date = Date.parse(high_season['out'])
     rescue ArgumentError
       flash.now[:alert] = 'Fechas no válidas'
     end
 
     in_date < current_date && out_date > current_date
+  end
+
+  def without_seasons?(date)
+    season = check_season(date)
+    season == :no_season
+  end
+
+  def between_high_season?(date)
+    season = check_season(date)
+    return false if season == :out_season
+
+    true
+  end
+
+  def between_low_season?(date)
+    season = check_season(date)
+    return false if season == :in_season
+
+    true
+  end
+
+  def check_season(date = Date.today)
+    return :no_season if high_season['in'].blank? && high_season['out'].blank?
+
+    current_date = current_year_date_from_string(date)
+    begin
+      in_date = current_year_date_from_string(high_season['in'])
+      out_date = current_year_date_from_string(high_season['out'])
+    rescue ArgumentError
+      return :no_valid_dates
+    end
+
+    in_date <= current_date && current_date <= out_date ? :in_season : :out_season
+  end
+
+  def current_year_date_from_string(str)
+    current_year = Date.today.year
+    data = str.split('-')
+
+    Date.parse("#{current_year}-#{data.second}-#{data.third}")
   end
 end

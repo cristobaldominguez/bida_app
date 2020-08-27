@@ -27,7 +27,7 @@ class Processing::Logbook
   end
 
   def self.cross_season?
-    @plant.high_season && @task.out_season? || !@plant.high_season && @task.in_season?
+    @plant.in_high_season? && @task.out_season? || !@plant.in_high_season? && @task.in_season?
   end
 
   def self.employee_can_execute?

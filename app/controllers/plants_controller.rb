@@ -5,6 +5,7 @@ class PlantsController < ApplicationController
   before_action :set_users, :set_frecuencies, only: %i[new edit create update]
   before_action :set_season, :set_log_frecuency, :set_value_types, only: %i[new edit create update show]
   before_action :set_responsibles, only: %i[edit update show]
+  before_action :set_high_season_dates, only: %i[show edit]
 
   load_and_authorize_resource
 
@@ -234,6 +235,11 @@ class PlantsController < ApplicationController
   #
   #   days_of_month.map { |day| log_creation(logbook, Date.new(current_date.year, current_date.month, day)) }
   # end
+
+  def set_high_season_dates
+    @high_season_in = Date.parse(@plant.high_season['in']).strftime("%D") if @plant.high_season['in'].present?
+    @high_season_out = Date.parse(@plant.high_season['out']).strftime("%D") if @plant.high_season['out'].present?
+  end
 
   def log_creation(logbook, actual_date)
     new_logs = @plant.current_log_standards.map do |cls|
