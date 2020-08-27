@@ -43,3 +43,5 @@ en:
     hi: "Hi %{name}!"
     done: 'Done'
     undone: 'Undone'
+    start_date: 'Start Date'
+    end_date: 'End Date'

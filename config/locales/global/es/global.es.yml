@@ -43,3 +43,5 @@ es:
     hi: "¡Hola %{name}!"
     done: 'Realizados'
     undone: 'No Realizados'
+    start_date: 'Fecha de inicio'
+    end_date: 'Fecha de término'
