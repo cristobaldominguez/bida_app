@@ -29,5 +29,6 @@ en:
       assignated_text: "You've been assigned this ToDos today"
       created_text: 'You have assigned this ToDos lately'
       to_expire_text: "This ToDos need to be done by tomorrow (%{date})"
+      will_expire_text: 'This ToDos will expire tomorrow (%{date})'
       outro: 'All the best,'
       go_worms: 'GO WORMS!'

@@ -47,5 +47,20 @@
 </table>
 <% end %>
 
+<% if @todos[:will_expire].present? %>
+<p style="margin-bottom:0;"><%= t(:will_expire_text, scope: [:todo, :notification_mail], date: l(Date.tomorrow, format: :default)) %></p>
+
+<table width="100%">
+  <tbody>
+  <% @todos[:will_expire].each_with_index do |todo,index| %>
+  <tr style="<%= @todos[:will_expire].size == index + 1 ? '' : 'border-bottom: 1px solid #ccc;' %>">
+    <td>- <%= todo.title %></td>
+    <td><%= link_to t(:show, scope: :global), edit_plant_todo_url(@user.locale, todo.plant_id, todo.id), style: 'text-decoration:none;' %></td>
+  </tr>
+  <% end %>
+  </tbody>
+</table>
+<% end %>
+
 <p style="margin-bottom:0;"><%= t(:outro, scope: [:todo, :notification_mail]) %></p>
 <p style="margin-bottom:0;"><%= t(:go_worms, scope: [:todo, :notification_mail]) %></p>

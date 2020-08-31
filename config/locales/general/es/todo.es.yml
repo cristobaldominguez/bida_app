@@ -29,5 +29,6 @@ es:
       assignated_text: 'Hoy se te asignaron estos ToDos'
       created_text: 'Asignaste últimamente estos ToDos'
       to_expire_text: "Para mañana (%{date}) deberán estar realizadas estos ToDos"
+      will_expire_text: 'Mañana (%{date}) expirarán estos ToDos'
       outro: 'Saludos!'
       go_worms: 'GO WORMS!'

@@ -90,6 +90,7 @@ class TodosController < ApplicationController
       users_todos[user_id][:assignated] = created_today_todos.where(responsible_id: user_id).to_a
       users_todos[user_id][:created] = created_today_todos.where(created_by_id: user_id).to_a
       users_todos[user_id][:to_expire] = about_to_expire_todos.where(created_by_id: user_id).to_a
+      users_todos[user_id][:will_expire] = about_to_expire_todos.where(responsible_id: user_id).to_a
     end
 
     users = User.where(id: users_ids).sort
