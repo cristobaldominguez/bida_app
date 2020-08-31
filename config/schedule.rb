@@ -26,6 +26,6 @@ every '30 0 1 * *' do
   # runner 'GeneratePlantsSamplingsJob.perform_later'
 end
 
-every 1.day, at: '2:00 am' do
+every 1.day, at: '6:00 am' do
   runner 'TodoDailyNotificationsJob.perform_later'
 end
