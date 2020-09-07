@@ -72,6 +72,7 @@ es:
           odors: 'Olores'
           run_off_chemicals: 'No quedan químicos'
           worms_mortality: 'Mortalidad de Lombrices'
+          leaking: 'Esta goteando'
       industry:
         industries:
           beverage: 'Bebidas'

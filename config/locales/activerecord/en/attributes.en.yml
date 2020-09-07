@@ -70,6 +70,7 @@ en:
           odors: 'Odors'
           run_off_chemicals: 'Run Off Chemicals'
           worms_mortality: 'Worms Mortality'
+          leaking: 'Leaking'
       industry:
         industries:
           beverage: 'Beverage'
