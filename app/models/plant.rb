@@ -134,16 +134,12 @@ class Plant < ApplicationRecord
 
   def between_high_season?(date)
     season = check_season(date)
-    return false if season == :out_season
-
-    true
+    (season != :out_season || season != :no_valid_dates)
   end
 
   def between_low_season?(date)
     season = check_season(date)
-    return false if season == :in_season
-
-    true
+    (season != :in_season || season != :no_valid_dates)
   end
 
   def check_season(date = Date.today)
