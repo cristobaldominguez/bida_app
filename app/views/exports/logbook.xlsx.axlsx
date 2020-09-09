@@ -19,15 +19,16 @@ wb.add_worksheet(name: @logbook.plant.name) do |sheet|
   end_of_month = @logbook.created_at.end_of_month.strftime('%d').to_i
   days_of_month = (1..end_of_month).to_a
 
-  header_styles = [header_left, header_left] + days_of_month.map {|_| header_center }
-  cell_styles = [cell_left, cell_left] + days_of_month.map {|_| cell_center }
+  header_styles = [header_left, header_left, header_left] + days_of_month.map {|_| header_center }
+  cell_styles = [cell_left, cell_left, cell_left] + days_of_month.map {|_| cell_center }
 
   # Create the header row
-  sheet.add_row [t(:task, scope: [:activerecord, :models]), t(:comment, scope: [:activerecord, :attributes, :task])] + days_of_month.map {|day| "#{day}/#{logbook_date_month}" }, style: header_styles, height: 60
-  sheet.add_row ['', ''] + days_of_month.map {|day| l(Date.new(logbook_date_year, logbook_date_month, day), format: "%A").capitalize }, style: header_day_name, height: 40
+  sheet.add_row [t(:task, scope: [:activerecord, :models]), t(:responsible, scope: [:activerecord, :attributes, :task]), t(:comment, scope: [:activerecord, :attributes, :task])] + days_of_month.map {|day| "#{day}/#{logbook_date_month}" }, style: header_styles, height: 60
+  sheet.add_row ['', '', ''] + days_of_month.map {|day| l(Date.new(logbook_date_year, logbook_date_month, day), format: "%A").capitalize }, style: header_day_name, height: 40
 
   sheet.merge_cells "A1:A2"
   sheet.merge_cells "B1:B2"
+  sheet.merge_cells "C1:C2"
 
   # Create entries for each item
   @logs.each do |log_group|
@@ -36,6 +37,6 @@ wb.add_worksheet(name: @logbook.plant.name) do |sheet|
       log.present? ? log.value.present? ? log.value : 'no value' : ''
     end
 
-    sheet.add_row [Task.find(log_group.first).i18n_name[:en], Task.find(log_group.first).i18n_comment[:en]] + monthly_values, style: cell_styles
+    sheet.add_row [Task.find(log_group.first).i18n_name[:en], Responsible.name(Task.find(log_group.first)), Task.find(log_group.first).i18n_comment[:en]] + monthly_values, style: cell_styles
   end
 end
