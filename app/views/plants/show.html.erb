@@ -182,6 +182,7 @@
   </table>
 </div> -->
 
+<% if @task_list.present? %>
 <h2 class="cell_division"><%= t(:logbook, scope: [:activerecord, :models]) %></h2>
 
 <%= render 'shared/tables/elements_list', headers: [t(:task, scope: [:activerecord, :models]).pluralize, t(:responsible, scope: [:activerecord, :attributes, :plant])] do %>
@@ -196,6 +197,7 @@
   </td>
   <td class="table_main__table-data"><%= Responsible.name(task) %></td>
 </tr>
+<% end %>
 <% end %>
 <% end %>
 

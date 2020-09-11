@@ -26,8 +26,8 @@ class PlantsController < ApplicationController
     # @sampling_lists = @plant.sampling_lists.includes(:access, samplings: [standard: %i[option]]).group_by { |k| k.access.name }.map { |_, v| v.max_by(&:created_at) }
     # @samplings = @sampling_lists.map { |sl| { sl.access.name => sl.samplings.group_by { |s| s.standard.option.name }.map { |_, v| v.max_by(&:created_at) } } }
     # @graph_standards = @plant.graph_standards.includes(:chart)
-    @task_lists = @plant.task_lists.includes(:tasks)
-    # @task_list = @task_lists.last.tasks.sort
+    @task_lists = @plant.task_lists.present? ? @plant.task_lists.includes(:tasks) : []
+    @task_list = @task_lists.present? ? @task_lists.last.tasks.sort : []
 
     @system_size = @plant.system_size.sum
     @volume_metric = @system_size > 1 ? @plant.country.metric.volume.pluralize : @plant.country.metric.volume

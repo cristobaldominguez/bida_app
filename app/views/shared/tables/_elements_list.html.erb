@@ -20,11 +20,9 @@
           <% end %>
         </tr>
       </thead>
-      <% if tbody_class.present? %>
       <tbody <%= "class=#{tbody_class}" if tbody_class.present? %>>
         <%= yield %>
       </tbody>
-      <% end %>
     </table>
   </main>
 </section>
