@@ -1,0 +1,10 @@
+<tr class="table_main__table-row">
+  <td class="table_main__table-data--left-text">
+    <input type="checkbox" name="active" value="Boat" <%= 'checked' if task.active %> disabled>
+    <%= localize(task.i18n_name) %>
+    <% if any_locale?(task.i18n_comment) %>
+    <span class="table_main__table-data-span"><%= localize(task.i18n_comment) %></span>
+    <% end %>
+  </td>
+  <td class="table_main__table-data"><%= Responsible.name(task) %></td>
+</tr>

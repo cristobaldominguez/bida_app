@@ -182,22 +182,11 @@
   </table>
 </div> -->
 
-<% if @task_list.present? %>
+<% if @tasks.present? %>
 <h2 class="cell_division"><%= t(:logbook, scope: [:activerecord, :models]) %></h2>
 
 <%= render 'shared/tables/elements_list', headers: [t(:task, scope: [:activerecord, :models]).pluralize, t(:responsible, scope: [:activerecord, :attributes, :plant])] do %>
-<% @task_list.each do |task| %>
-<tr class="table_main__table-row">
-  <td class="table_main__table-data--left-text">
-    <input type="checkbox" name="active" value="Boat" <%= 'checked' if task.active %> disabled>
-    <%= localize(task.i18n_name) %>
-    <% if any_locale?(task.i18n_comment) %>
-    <span class="table_main__table-data-span"><%= localize(task.i18n_comment) %></span>
-    <% end %>
-  </td>
-  <td class="table_main__table-data"><%= Responsible.name(task) %></td>
-</tr>
-<% end %>
+  <%= render partial: 'task', collection: @tasks, as: :task, cached: true  %>
 <% end %>
 <% end %>
 
