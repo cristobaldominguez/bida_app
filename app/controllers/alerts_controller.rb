@@ -103,7 +103,7 @@ class AlertsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def alert_params
-    params.require(:alert).permit(:user_id, :plant_id, :incident_type_id, :status_id,
+    params.require(:alert).permit(:user_id, :plant_id, :incident_type_id, :status_id, :image,
       :priority_id, :incident_description, :negative_impact, :solution, :incident_resolution,
       :solution_target_date, :technician_hours_required, user_ids: [])
   end

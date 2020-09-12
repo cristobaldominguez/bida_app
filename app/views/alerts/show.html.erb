@@ -36,20 +36,33 @@
   <p class="view_info__title"><%= t(:priority_id, scope: [:activerecord, :attributes, :alert]) %></p>
 </div>
 
+<% if @alert.incident_description.present? %>
 <div class="view_info">
   <p class="view_info__data"><%= @alert.incident_description %></p>
   <p class="view_info__title"><%= t(:incident_description, scope: [:activerecord, :attributes, :alert]) %></p>
 </div>
+<% end %>
 
+<% if @alert.image.attached? %>
+<div class="view_info">
+  <%= image_tag @alert.image %>
+  <p class="view_info__title"><%= t(:image, scope: [:activerecord, :attributes, :alert]) %></p>
+</div>
+<% end %>
+
+<% if @alert.negative_impact.present? %>
 <div class="view_info">
   <p class="view_info__data"><%= @alert.negative_impact %></p>
   <p class="view_info__title"><%= t(:negative_impact, scope: [:activerecord, :attributes, :alert]) %></p>
 </div>
+<% end %>
 
+<% if @alert.solution.present? %>
 <div class="view_info">
   <p class="view_info__data"><%= @alert.solution %></p>
   <p class="view_info__title"><%= t(:solution, scope: [:activerecord, :attributes, :alert]) %></p>
 </div>
+<% end %>
 
 <% if @alert.incident_resolution.present? %>
 <div class="view_info">

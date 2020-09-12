@@ -13,6 +13,7 @@ en:
         solution: 'Solution'
         solution_target_date: 'Solution Target Date'
         technician_hours_required: 'Technician Hours Required'
+        image: 'Image'
       bed_compaction:
         bed_compactions:
           normal: 'Normal'

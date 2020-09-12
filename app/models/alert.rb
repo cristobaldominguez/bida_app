@@ -44,6 +44,8 @@ class Alert < ApplicationRecord
 
   has_and_belongs_to_many :users
 
+  has_one_attached :image
+
   def send_notifications!
     users = user_ids.map { |i| User.find(i) }
     users.each do |user|
