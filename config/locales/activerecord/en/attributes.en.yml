@@ -71,6 +71,7 @@ en:
           run_off_chemicals: 'Run Off Chemicals'
           worms_mortality: 'Worms Mortality'
           leaking: 'Leaking'
+          low_level: 'Low level'
       industry:
         industries:
           beverage: 'Beverage'

@@ -73,6 +73,7 @@ es:
           run_off_chemicals: 'No quedan químicos'
           worms_mortality: 'Mortalidad de Lombrices'
           leaking: 'Gotera'
+          low_level: 'Bajo Nivel'
       industry:
         industries:
           beverage: 'Bebidas'
