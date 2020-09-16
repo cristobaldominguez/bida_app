@@ -73,6 +73,7 @@ en:
           worms_mortality: 'Worms Mortality'
           leaking: 'Leaking'
           low_level: 'Low level'
+          flush_system: 'Flush System'
       industry:
         industries:
           beverage: 'Beverage'

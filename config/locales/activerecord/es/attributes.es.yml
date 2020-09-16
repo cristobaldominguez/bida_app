@@ -75,6 +75,7 @@ es:
           worms_mortality: 'Mortalidad de Lombrices'
           leaking: 'Gotera'
           low_level: 'Bajo Nivel'
+          flush_system: 'Sistema de Lavado de Corrales'
       industry:
         industries:
           beverage: 'Bebidas'
