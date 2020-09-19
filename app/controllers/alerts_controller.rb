@@ -8,7 +8,7 @@ class AlertsController < ApplicationController
   # GET /alerts.json
   def index
     @plant = Plant.find(params[:plant_id])
-    @alerts = @plant.alerts.active.includes(:incident_type).order('id DESC')
+    @alerts = @plant.alerts.active.includes(:incident_type, :status).order('id DESC')
   end
 
   # GET /alerts/1
