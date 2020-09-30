@@ -76,6 +76,7 @@ es:
           leaking: 'Gotera'
           low_level: 'Bajo Nivel'
           flush_system: 'Sistema de Lavado de Corrales'
+          high_total_suspended_solids_level_on_influent: 'Alto nivel de Sólidos Suspendidos en el Afluente'
       industry:
         industries:
           beverage: 'Bebidas'

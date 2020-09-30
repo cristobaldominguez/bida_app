@@ -74,6 +74,7 @@ en:
           leaking: 'Leaking'
           low_level: 'Low level'
           flush_system: 'Flush System'
+          high_total_suspended_solids_level_on_influent: 'High Total Suspended Solids Level on Influent'
       industry:
         industries:
           beverage: 'Beverage'
