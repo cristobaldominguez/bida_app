@@ -75,6 +75,7 @@ en:
           low_level: 'Low level'
           flush_system: 'Flush System'
           high_total_suspended_solids_level_on_influent: 'High Total Suspended Solids Level on Influent'
+          high_temperature_on_raw_wastewater: 'High temperature on raw wastewater'
       industry:
         industries:
           beverage: 'Beverage'

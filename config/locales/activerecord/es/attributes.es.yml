@@ -77,6 +77,7 @@ es:
           low_level: 'Bajo Nivel'
           flush_system: 'Sistema de Lavado de Corrales'
           high_total_suspended_solids_level_on_influent: 'Alto nivel de Sólidos Suspendidos en el Afluente'
+          high_temperature_on_raw_wastewater: 'Alta temperatura en agua residual cruda'
       industry:
         industries:
           beverage: 'Bebidas'
