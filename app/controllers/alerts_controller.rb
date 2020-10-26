@@ -97,7 +97,7 @@ class AlertsController < ApplicationController
 
   def generate_users
     @users = User.filtered_by(@plant).sort
-    @company_users = User.from_company.sort
+    @company_users = User.filtered_by(@plant).from_company.sort
     @biofiltro_users = User.filtered_by(@plant).from_biofiltro.sort
   end
 
