@@ -43,11 +43,17 @@
 </div>
 <% end %>
 
-<% if @alert.image.attached? %>
-<div class="view_info">
-  <%= image_tag @alert.image %>
-  <p class="view_info__title"><%= t(:image, scope: [:activerecord, :attributes, :alert]) %></p>
-</div>
+<% if @alert.images.attached? %>
+  <div>
+    <strong><%= t(:images, scope: [:activerecord, :attributes, :todo]) %>:</strong>
+    <ul class="todo__images-list">
+    <% @alert.images.each do |image| %>
+      <li class="todo__image" data-id="<%= image.id %>">
+        <%= image_tag image.variant(resize: "400x400") %>
+      </li>
+    <% end %>
+    </ul>
+  </div>
 <% end %>
 
 <% if @alert.negative_impact.present? %>

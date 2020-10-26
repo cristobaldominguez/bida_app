@@ -97,14 +97,14 @@ class AlertsController < ApplicationController
 
   def generate_users
     @users = User.filtered_by(@plant).sort
-    @company_users = User.filtered_by(@plant).from_company.sort
+    @company_users = User.from_company.sort
     @biofiltro_users = User.filtered_by(@plant).from_biofiltro.sort
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def alert_params
-    params.require(:alert).permit(:user_id, :plant_id, :incident_type_id, :status_id, :image,
+    params.require(:alert).permit(:user_id, :plant_id, :incident_type_id, :status_id,
       :priority_id, :incident_description, :negative_impact, :solution, :incident_resolution,
-      :solution_target_date, :technician_hours_required, user_ids: [])
+      :solution_target_date, :technician_hours_required, images: [], user_ids: [])
   end
 end

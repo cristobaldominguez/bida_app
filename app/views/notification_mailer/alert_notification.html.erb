@@ -36,14 +36,24 @@
 </div>
 <% end %>
 
-<% if @alert.image.attached? %>
+<% if @alert.images.attached? %>
 <div class="view_info">
   <p class="view_info__title" style="margin-bottom:0;"><%= t(:image, scope: [:activerecord, :attributes, :alert]) %></p>
+  <ul class="alert__images-list">
   <% if Rails.env.development? %>
-  <%= image_tag @alert.image %>
-  <% else %>
-  <%= image_tag @alert.image.service_url&.split("?")&.first %>
+  <% @alert.images.each do |image| %>
+    <li class="alert__image">
+      <%= image_tag image.variant(resize: "600x600") %>
+    </li>
   <% end %>
+  <% else %>
+  <% @alert.images.each do |image| %>
+    <li class="alert__image">
+      <%= image_tag image.service_url&.split("?")&.first.variant(resize: "600x600") %>
+    </li>
+  <% end %>
+  <% end %>
+</ul>
 </div>
 <% end %>
 
