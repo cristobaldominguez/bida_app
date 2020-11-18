@@ -78,7 +78,7 @@ class AlertsController < ApplicationController
   private
 
   def set_incident_type
-    @incidents = IncidentType.all_names
+    @incidents = IncidentType.i18n_name(params[:locale] || I18n.default_locale)
   end
 
   def set_status

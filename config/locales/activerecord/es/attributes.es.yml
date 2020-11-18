@@ -67,6 +67,7 @@ es:
           annualy: 'Anualmente'
           every_x_months: 'Cada x Meses'
       incident_type:
+        name: 'Nombre'
         incident_types:
           ph_imbalance: 'pH Desbalanceado'
           flooding: 'Inundación'

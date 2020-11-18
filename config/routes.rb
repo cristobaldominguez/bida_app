@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     get 'pages/no_permission'
     get 'exports/logbook/:id', to: 'exports#logbook', as: 'export_logbook'
 
-    resources :log_standards, :bounds, :standards, :charts
+    resources :log_standards, :bounds, :standards, :charts, :incident_types
     resources :logs, only: [:update]
 
     get 'locales/show', to: 'locales#show'

@@ -8,7 +8,7 @@
   <% end %>
 <% end %>
 
-<h2 class="main__title"><%= t(:alert, scope: [:activerecord, :models]) %> <%= @alert.title %></h2>
+<h2 class="main__title"><%= t(:alert, scope: [:activerecord, :models]) %> <%= @alert.title(current_locale) %></h2>
 
 <% if @alert.users.present? %>
 <div class="view_info">

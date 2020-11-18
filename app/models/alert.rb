@@ -53,11 +53,11 @@ class Alert < ApplicationRecord
     end
   end
 
-  def title
-    "##{id} #{incident_type.name}"
+  def title(locale)
+    "##{id} #{incident_type.i18n_name[locale.to_s]}"
   end
 
-  def subject
-    "##{id}: #{incident_type.name}"
+  def subject(locale)
+    "##{id}: #{incident_type.i18n_name[locale.to_s]}"
   end
 end

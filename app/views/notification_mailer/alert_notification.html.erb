@@ -11,12 +11,12 @@
   }
 </style>
 
-<h1><%= t(:notification_title, scope: :alert, text: @alert.subject) %></h1>
+<h1><%= t(:notification_title, scope: :alert, text: @alert.subject(@user.locale.to_s)) %></h1>
 
 
 <div class="view_info">
   <p class="view_info__title" style="margin-bottom:0;"><%= t(:incident_type_id, scope: [:activerecord, :attributes, :alert]) %></p>
-  <p class="view_info__data" style="margin-top:0;"><%= t(@alert.incident_type.name.parameterize(separator: '_'), scope: [:activerecord, :attributes, :incident_type, :incident_types]) %></p>
+  <p class="view_info__data" style="margin-top:0;"><%= @alert.incident_type.i18n_name[@user.locale.to_s] %></p>
 </div>
 
 <div class="view_info">

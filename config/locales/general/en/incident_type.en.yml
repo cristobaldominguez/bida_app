@@ -1,0 +1,7 @@
+en:
+  incident_type:
+    index: 'Incident Types'
+    new: 'New Incident Type'
+    edit: 'Editing Incident Type'
+    title: 'Incident Type'
+    title_plural: 'Incident Types'

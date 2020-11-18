@@ -1,0 +1,31 @@
+<% if can? :create, IncidentType %>
+  <%= render 'shared/buttons/option_button', alt: 'header' do %>
+    <li class="option-button__option"><%= link_to t(:new, scope: :incident_type).downcase, new_incident_type_path, class: 'option-button__option-link' %></li>
+  <% end %>
+<% end %>
+
+<h2 class="main__title"><%= t(:index, scope: :incident_type) %></h2>
+
+<%= render 'shared/tables/elements_list', headers: [t(:name, scope: [:activerecord, :attributes, :incident_type]), t(:options, scope: :global).capitalize], title: t(:title_plural, scope: :incident_type) do %>
+    <% @incident_types.each do |incident_type| %>
+      <tr class="table_main__table-row">
+        <td class="table_main__table-data--left-text">
+          <%= incident_type.i18n_name[current_locale.to_s] %>
+          <% if current_locale != I18n.default_locale %>
+          <span class="table_main__table-data-span"><%= incident_type.i18n_name[I18n.default_locale.to_s] %></span>
+          <% end %>
+        </td>
+        <td class="table_main__table-data--options">
+          <a href="#" class="table_main__link--options"></a>
+          <div class="options_menu">
+            <ul class="options_menu__list">
+              <% if can? :read, IncidentType %><li class="options_menu__item"><%= link_to t(:show, scope: :global), incident_type, class: 'options_menu__link' %></li><% end %>
+              <% if can? :edit, IncidentType %><li class="options_menu__item"><%= link_to t(:edit, scope: :global), edit_incident_type_path(incident_type), class: 'options_menu__link', data: { turbolinks: false } %></li><% end %>
+              <% if can? :destroy, IncidentType %><li class="options_menu__item"><%= link_to t(:destroy, scope: :global), incident_type, class: 'options_menu__link', method: :delete, data: { confirm: t(:confirm, scope: :global) } %></li><% end %>
+            </ul>
+            <div class="unclick"></div>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+<% end %>

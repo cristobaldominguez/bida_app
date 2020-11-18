@@ -65,6 +65,7 @@ en:
           annualy: 'Annualy'
           every_x_months: 'Every x Months'
       incident_type:
+        name: 'Name'
         incident_types:
           ph_imbalance: 'pH Imbalance'
           flooding: 'Flooding'

@@ -1,0 +1,9 @@
+<% if can? :read, IncidentType %>
+  <%= render 'shared/buttons/option_button', alt: 'header' do %>
+    <li class="option-button__option"><%= link_to t(:show, scope: :global).downcase, @incident_type, class: 'option-button__option-link' %></li>
+  <% end %>
+<% end %>
+
+<h2 class="main__title"><%= t(:edit, scope: :incident_type) %></h2>
+
+<%= render 'form', incident_type: @incident_type %>

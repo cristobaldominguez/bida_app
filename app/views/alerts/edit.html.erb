@@ -4,6 +4,6 @@
   <% end %>
 <% end %>
 
-<h2 class="main__title">Editing Alert <%= @alert.title %></h2>
+<h2 class="main__title">Editing Alert <%= @alert.title(current_locale) %></h2>
 
 <%= render 'form', alert: @alert %>

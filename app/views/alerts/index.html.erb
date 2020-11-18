@@ -9,7 +9,7 @@
 <%= render 'shared/tables/elements_list', headers: [t(:incident, scope: :alert), t(:status_id, scope: [:activerecord, :attributes, :alert]), t(:options, scope: :global).camelcase], title: t(:all, scope: :alert) do %>
 <% @alerts.each do |alert| %>
   <tr class="table_main__table-row">
-    <td class="table_main__table-data--left-text"><%= link_to alert.title, plant_alert_path(@plant, alert), class: 'table_main__link-show' %></td>
+    <td class="table_main__table-data--left-text"><%= link_to alert.title(current_locale), plant_alert_path(@plant, alert), class: 'table_main__link-show' %></td>
     <td class="table_main__table-data"><%= t(alert.status.name.parameterize(separator: '_'), scope: [:activerecord, :attributes, :status, :statuses]) %></td>
     <td class="table_main__table-data--options">
       <a href="#" class="table_main__link--options"></a>

@@ -4,7 +4,7 @@ class NotificationMailer < ApplicationMailer
     @alert = alert
 
     I18n.with_locale(@user.locale) do
-      mail(to: email_with_name, subject: I18n.t(:notification_subject, scope: :alert, text: @alert.subject))
+      mail(to: email_with_name, subject: I18n.t(:notification_subject, scope: :alert, text: @alert.subject(@user.locale)))
     end
   end
 

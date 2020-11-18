@@ -23,6 +23,11 @@ class ApplicationRecord < ActiveRecord::Base
     params_translations(names)
   end
 
+  def self.all_i18n_names(locale)
+    names = self.active.sort.pluck(:id, :i18n_name).map {|n| [n.first, n.second[locale]] }
+    params_translations(names)
+  end
+
   def self.params_translations(options)
     options.map { |opt| [opt.first, model_name.name.classify.constantize.human_enum_name(model_name.plural.to_sym, opt.second.parameterize(separator: '_'))] }
   end
