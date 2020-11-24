@@ -1,11 +1,13 @@
-<%= form_with(model: incident_type, local: true) do |form| %>
+<%= form_with(model: incident_type, local: true, html: { class: "incident_type_form" }) do |form| %>
 
-  <% I18n.available_locales.map do |locale| %>
-  <div class="field date">
-    <label for="name[<%= locale.to_s %>]"><%= t(:name, scope: [:activerecord, :attributes, :incident_type]) %> (<%= locale %>)</label>
-    <input type="text" value="<%= incident_type.i18n_name[locale.to_s] %>" name="incident_type[i18n_name][<%= locale.to_s %>]" id="i18n_name_<%= locale %>">
+  <div class="field fields">
+    <% I18n.available_locales.map do |locale| %>
+    <div class="field_with_message">
+      <label for="name[<%= locale.to_s %>]"><%= t(:name, scope: [:activerecord, :attributes, :incident_type]) %> (<%= locale %>)</label>
+      <input type="text" value="<%= incident_type.i18n_name[locale.to_s] %>" name="incident_type[i18n_name][<%= locale.to_s %>]" data-required="true" data-error="<%= t(:name_required, scope: [:task]) %>">
+    </div>
+    <% end %>
   </div>
-  <% end %>
 
   <div class="actions">
     <%= form.submit class: 'action-btn' %>

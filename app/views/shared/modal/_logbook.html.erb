@@ -7,13 +7,13 @@
     <div class="steps__trail">
 
       <div class="step-1">
-        <div class="field">
+        <div class="field fields">
           <% I18n.available_locales.each_with_index do |locale, index| %>
           <label for="task_name"><%= t(:name, scope: [:activerecord, :attributes, :task]) %> (<%= locale %>)</label>
           <input type="text" value="" name="name" id="i18n_name_<%= locale %>" data-required="true" data-error="<%= t(:name_required, scope: :task) %>" data-target="i18n_name_<%= locale %>">
           <% end %>
         </div>
-        <div class="field">
+        <div class="field fields">
           <% I18n.available_locales.each_with_index do |locale, index| %>
           <label for="task_comment"><%= t(:comment, scope: [:activerecord, :attributes, :task]) %> (<%= locale %>)</label>
           <input type="text" value="" name="comment" id="i18n_comment_<%= locale %>" data-target="i18n_comment_<%= locale %>">
