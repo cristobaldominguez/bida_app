@@ -53,6 +53,8 @@
     <td class="table_main__table-data <%= class_name %>">
       <% if input_type == 'checkbox' %>
       <input class="check-input form__checkbox" type="checkbox" value="<%= log.value %>" data-id="<%= log.id %>" />
+      <% elsif ['number'].include?(input_type) && log.task.data_type == '0-9' %>
+      <%= collection_select(:log, :value, @number_range, :first, :second, { prompt: t(:select_number, scope: :global) }, class: 'form__select') %>
       <% elsif ['number'].include?(input_type) %>
       <div class="field__value">
         <input step="any" class="number-input form__input" type="number" value="<%= log.value %>" data-id="<%= log.id %>" />
@@ -68,6 +70,15 @@
       <div class="form__inline">
         <input type="radio" class="form__radio-button" name="logbook[log][<%= log.id %>][value]" value="No" data-id="<%= log.id %>" />
         <label for="logbook[log][<%= log.id %>][value]"><%= t(:_no, scope: :global) %></label>
+      </div>
+      <% elsif input_type == 'full/not_full' %>
+      <div class="form__inline">
+        <input type="radio" class="form__radio-button" name="logbook[log][<%= log.id %>][value]" value="full" data-id="<%= log.id %>" />
+        <label for="logbook[log][<%= log.id %>][value]"><%= t(:full, scope: :global) %></label>
+      </div>
+      <div class="form__inline">
+        <input type="radio" class="form__radio-button" name="logbook[log][<%= log.id %>][value]" value="not_full" data-id="<%= log.id %>" />
+        <label for="logbook[log][<%= log.id %>][value]"><%= t(:not_full, scope: :global) %></label>
       </div>
       <% elsif input_type == 'Low/Medium/High Density' %>
       <%= collection_select(:log, :value, @densities, :first, :second, {prompt: t(:select_alt, scope: :global)}, class: 'form__select', data: {id: log.id}) %>

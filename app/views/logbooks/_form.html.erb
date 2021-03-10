@@ -52,12 +52,16 @@
 
         <% if input_type == 'checkbox' %>
         <%= log.check_box :value, { class: 'check' }, '1', '' %>
+        <% elsif ['number'].include?(input_type) && task.object.data_type == '0-9' %>
+        <%= log.collection_select(:value, @number_range, :first, :second, {prompt: t(:select_number, scope: :global)})  %>
         <% elsif ['number'].include?(input_type) %>
         <%= log.bf_number_field :value, task.object.data_type, step: :any %>
         <% elsif input_type == 'date' %>
         <%= log.text_field :value, class: 'datepicker' %>
         <% elsif input_type == 'yes/no' %>
         <%= log.collection_radio_buttons(:value, [['Yes', t(:_yes, scope: :global)],['No', t(:_no, scope: :global)]], :first, :second) %>
+        <% elsif input_type == 'full/not_full' %>
+        <%= log.collection_radio_buttons(:value, [['full', t(:full, scope: :global)],['not_full', t(:not_full, scope: :global)]], :first, :second) %>
         <% elsif input_type == 'Low/Medium/High Density' %>
         <%= log.collection_select(:value, [['Low', t(:low, scope: :density)],['Medium', t(:medium, scope: :density)],['High Density', t(:high, scope: :density)]], :first, :second, {prompt: t(:select_alt, scope: :global)})  %>
         <% elsif input_type == 'Low/Medium/Strong Odor' %>

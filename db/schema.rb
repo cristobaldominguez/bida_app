@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_18_210519) do
+ActiveRecord::Schema.define(version: 2020_12_03_214616) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -304,7 +304,9 @@ ActiveRecord::Schema.define(version: 2020_11_18_210519) do
     t.string "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "plant_id"
     t.index ["logbook_id"], name: "index_logs_on_logbook_id"
+    t.index ["plant_id"], name: "index_logs_on_plant_id"
     t.index ["task_id"], name: "index_logs_on_task_id"
   end
 
@@ -661,6 +663,7 @@ ActiveRecord::Schema.define(version: 2020_11_18_210519) do
   add_foreign_key "logbooks", "plants"
   add_foreign_key "logbooks", "task_lists"
   add_foreign_key "logs", "logbooks"
+  add_foreign_key "logs", "plants"
   add_foreign_key "logs", "tasks"
   add_foreign_key "metrics", "metric_types"
   add_foreign_key "plants", "companies"

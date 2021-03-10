@@ -20,6 +20,9 @@ es:
       yes/no: 'Si/No'
       Low/Medium/High Density: 'Baja/Media/Alta Densidad'
       Low/Medium/Strong Odor: 'Bajo/Media/Fuerte Olor'
+      full/not_full: 'Lleno/No Lleno'
+      PPM: 'PPM'
+      0-9: '0-9'
     data_types:
       other: 'Otro'
       pH: 'pH'
@@ -39,4 +42,7 @@ es:
       temperature: 'Temperatura'
       moisture: 'Humedad'
       GPM: 'GPM'
+      cleanings: 'Limpiezas'
+      PPM: 'PPM'
+      0-9: '0-9'
     add_default_tasks: "<span>Agrega</span> <span>tareas</span>"

@@ -6,6 +6,7 @@ class PlantsController < ApplicationController
   before_action :set_season, :set_log_frecuency, :set_value_types, only: %i[new edit create update show]
   before_action :set_responsibles, only: %i[edit update show]
   before_action :set_high_season_dates, only: %i[show edit]
+  before_action :set_number_range, only: %i[new edit create update logbook]
 
   load_and_authorize_resource
 
@@ -202,14 +203,9 @@ class PlantsController < ApplicationController
     @data_types = Task.data_types.map { |key, _| [key, t(key == '%' ? '_%' : key, scope: %i[task data_types])] }
   end
 
-  # def build_samplings(sampling_lists, standards)
-  #   sampling_lists.each do |sampling_list|
-  #     standards.each do |standard|
-  #       # N+1
-  #       sampling_list.samplings.find_or_initialize_by(standard: standard)
-  #     end
-  #   end
-  # end
+  def set_number_range
+    @number_range = (0..9).map { |n| [n, n] }
+  end
 
   def assign_plant_to_current_user
     current_user.plants << @plant
