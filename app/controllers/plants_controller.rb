@@ -44,7 +44,7 @@ class PlantsController < ApplicationController
 
     @task_list = @plant.task_lists.build
     # @task_list.tasks.build
-    @responsibles = Responsible.get_complete_list(@plant)
+    @responsibles = Responsible.get_complete_list
   end
 
   def create
@@ -195,7 +195,7 @@ class PlantsController < ApplicationController
 
   def set_responsibles
     @company = params[:company_id].present? ? Company.find(params[:company_id]) : Plant.find(params[:id]).company
-    @responsibles = Responsible.get_complete_list(@plant)
+    @responsibles = Responsible.get_complete_list
   end
 
   def set_value_types
