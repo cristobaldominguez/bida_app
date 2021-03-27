@@ -8,6 +8,7 @@ class ApplicationRecord < ActiveRecord::Base
   scope :sort_by_id, -> { order('id ASC') }
   scope :without_value, -> { where(value: [nil, '']) }
   scope :created_between, ->(start_date, end_date) { where('date BETWEEN ? AND ?', start_date, end_date) }
+  scope :created_before, ->(date) { where('created_at <= ?', date) }
 
   def self.human_enum_name(enum_name, enum_value)
     I18n.t("activerecord.attributes.#{model_name.i18n_key}.#{enum_name.to_s.pluralize}.#{enum_value}")

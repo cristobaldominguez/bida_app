@@ -128,7 +128,6 @@ class PlantsController < ApplicationController
   end
 
   def logbook
-    @current_date = Date.today
     @plant = Plant.find(params[:id])
     @logs = Processing::Logbook.get_logs_from(@plant, current_user).sort_by(&:date).reverse
     @densities = [['Low', t(:low, scope: :density)], ['Medium', t(:medium, scope: :density)], ['High Density', t(:high, scope: :density)]]

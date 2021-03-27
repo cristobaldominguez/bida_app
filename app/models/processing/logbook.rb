@@ -1,10 +1,10 @@
 class Processing::Logbook
-  def self.get_logs_from(plant, current_user)
+  def self.get_logs_from(plant, current_user, date = Date.today - 1.month)
     @plant = plant
     @current_user = current_user
     @responsibles_ids = (@plant.users.all_operations_managers.pluck(:id) + [current_user.id]).uniq
 
-    tasks_ids = @plant.task_lists.last.tasks.pluck(:id)
+    tasks_ids = @plant.task_lists.created_before(date.end_of_month).last.tasks.pluck(:id)
     logbooks = @plant.logbooks.pluck(:id)
     @from_db = ::Log.includes(:task).where(task_id: tasks_ids).where(logbook_id: logbooks).active.until_date(Date.today.next).last_of_every_task
 
