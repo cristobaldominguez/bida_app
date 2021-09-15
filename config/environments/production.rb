@@ -98,15 +98,15 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.default :charset => 'utf-8'
+  config.action_mailer.default charset: 'utf-8'
   config.action_mailer.smtp_settings = {
-    address: 'smtp.gmail.com',
+    address: Rails.application.credentials.dig(:email, :address),
     port: 587,
     domain: Rails.application.credentials.dig(:app, :domain),
-    authentication: 'plain',
+    authentication: :login,
     enable_starttls_auto: true,
-    user_name: Rails.application.credentials.dig(:production, :username),
-    password: Rails.application.credentials.dig(:production, :password)
+    user_name: Rails.application.credentials.dig(:email, :username),
+    password: Rails.application.credentials.dig(:email, :password)
   }
 
   config.action_mailer.default_url_options = { host: Rails.application.credentials.dig(:app, :host) }

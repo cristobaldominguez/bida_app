@@ -73,13 +73,13 @@ Rails.application.configure do
 
   # Devise email service
   config.action_mailer.smtp_settings = {
-    address: 'smtp.gmail.com',
+    address: Rails.application.credentials.dig(:email, :address),
     port: 587,
     domain: Rails.application.credentials.dig(:app, :domain),
-    authentication: 'plain',
+    authentication: :login,
     enable_starttls_auto: true,
-    user_name: Rails.application.credentials.dig(:gmail, :username),
-    password: Rails.application.credentials.dig(:gmail, :password)
+    user_name: Rails.application.credentials.dig(:email, :username),
+    password: Rails.application.credentials.dig(:email, :password)
   }
 
   config.action_mailer.default_url_options = { host: 'localhost:3000' }
